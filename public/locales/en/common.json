@@ -1,0 +1,22 @@
+{
+    "common": {
+        "signIn": "Sign in",
+        "signUp": "Sign up"
+    },
+    "landing": {
+        "simplify_your_accounts": "Simplify your accounts, simplify your life",
+        "your_best_friend": "Your best friend to keep your accounts clear",
+        "makes_it_easy": "Red First makes it easy for people to plan their daily accounts while keeping larger goals in sight.",
+        "whatsDifferentAbout": "What's Different About Red First?",
+        "hasBoostedWorkflowAbility": "Red First has boosted my workflow. The ability to maintain visibility of the most important milestones at all times keeps you motivated.",
+        "weHaveBeenAbleCancel": "We have been able to cancel many subscriptions since using Red First. There is no longer confusion between my accounts and everyone is much clearer.",
+        "hasBoostedMyAccountsAbility": "Red First has boosted my accounts. The ability to maintain visibility of the most important milestones at all times keeps me motivated.",
+        "advancedBuiltInReports": "Advanced built-in reports",
+        "setEstimatesForYourAccounts": "Set estimates for your accounts and track progress toward your goals. Our customizable dashboard helps you create the reports you need.",
+        "everythingYouNeedOnePlace": "Everything you need in one place",
+        "stopJumpingFromOneService": "Stop jumping from one service to another to take care of your money, do accounts, track and clearly keep track of your expenses. Red First offers a productivity solution.",
+        "trackTheProgressOfAll": "Track the progress of all your accounts",
+        "seeHowYourDailyAccountsFitInto": "See how your daily accounts fit into a bigger picture. Go from tracking progress at the milestone level to the smallest detail. Don't lose sight of the big picture again.",
+        "manageProvidesAllTheFunctionality": "Manage provides all the functionality your team needs, without the complexity. Our software is tailor-made for modern digital product teams."
+    }
+}

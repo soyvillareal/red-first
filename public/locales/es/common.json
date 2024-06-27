@@ -1,0 +1,22 @@
+{
+    "common": {
+        "signIn": "Iniciar sesión",
+        "signUp": "Registrate"
+    },
+    "landing": {
+        "simplify_your_accounts": "Simplifica tu cuentas, simplifica tu vida",
+        "your_best_friend": "Su mejor amigo para tener las cuentas claras",
+        "makes_it_easy": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio.",
+        "whatsDifferentAbout": "¿Que tiene de diferente Red First?",
+        "hasBoostedWorkflowAbility": "Red First ha potenciado mi flujo de trabajo. La capacidad de mantener la visibilidad de los hitos más importantes en todo momento mantiene motivada.",
+        "weHaveBeenAbleCancel": "Hemos podido cancelar muchas suscripciones desde que usamos Red First. Ya no hay confusión entre mis cuentas y todos está mucho mas claro.",
+        "hasBoostedMyAccountsAbility": "Red First ha potenciado mis cuentas. La capacidad de mantener la visibilidad de los hitos más importantes en todo momento me mantiene motivado.",
+        "advancedBuiltInReports": "Informes integrados avanzados",
+        "setEstimatesForYourAccounts": "Establezca estimaciones de sus cuentas y realice un seguimiento del progreso hacia sus objetivos. Nuestro panel personalizable lo ayuda a crear los informes que necesita.",
+        "everythingYouNeedOnePlace": "Todo lo que necesitas en un solo lugar",
+        "stopJumpingFromOneService": "Deja de saltar de un servicio a otro para cuidar tu dinero, sacar cuentas, realizar un seguimiento y llevar con claridad tus gastos. Red First ofrece una solución de productividad.",
+        "trackTheProgressOfAll": "Seguimiento del progreso de todas tus cuentas",
+        "seeHowYourDailyAccountsFitInto": "Vea cómo sus cuentas diarias encajan en una visión más amplia. Vaya desde el seguimiento del progreso a nivel de hito hasta el más mínimo detalle. No vuelvas a perder de vista el panorama general.",
+        "manageProvidesAllTheFunctionality": "Manage proporciona toda la funcionalidad que su equipo necesita, sin la complejidad. Nuestro software está hecho a medida para los equipos de productos digitales modernos."
+    }
+}
