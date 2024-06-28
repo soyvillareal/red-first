@@ -26,15 +26,24 @@
         "search": "Search...",
         "view": "View",
         "toggleColumns": "Toggle columns",
+        "action": "Action",
+        "openMenu": "Open menu",
+        "edit": "Edit"
+    },
+    "money": {
+        "title": "Income and expenses",
+        "income": "Income",
+        "expense": "Expense",
         "concept": "Concept",
         "amount": "Amount",
         "date": "Date",
         "userName": "User name"
     },
-    "money": {
-        "incomeExpenses": "Income and expenses",
-        "income": "Income",
-        "expense": "Expense"
+    "users": {
+        "title": "Users",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone"
     },
     "landing": {
         "simplify_your_accounts": "Simplify your accounts, simplify your life",

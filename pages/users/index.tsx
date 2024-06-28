@@ -10,7 +10,7 @@ import { DataTable } from './components/DataTable';
 import { mockData } from './data/data.mock';
 import DashboardLayout from '@/components/DashboardLayout';
 import { loadTranslations } from '@/lib/i18n';
-import { columnsFn } from './constants';
+import { columns } from './constants';
 
 const Money = () => {
   const { t } = useTranslation();
@@ -42,11 +42,11 @@ const Money = () => {
         <ContextLayout.Body>
           <div className='mb-4 flex items-center justify-between space-y-2'>
             <h2 className='text-2xl font-bold tracking-tight'>
-              {t('money.title')}
+              {t('users.title')}
             </h2>
           </div>
           <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-            <DataTable data={mockData} columns={columnsFn(t)} />
+            <DataTable data={mockData} columns={columns} />
           </div>
         </ContextLayout.Body>
       </DashboardLayout>

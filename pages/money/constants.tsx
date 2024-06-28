@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import MoneyIcon from '@/components/icons/MoneyIcon';
 
-import { Task } from './data/schema';
+import { MoneySchema } from './data/schema';
 import { DataTableColumnHeader } from './components/DataTableColumnHeader';
 
 export const types = [
@@ -19,12 +19,12 @@ export const types = [
   },
 ];
 
-export const columnsFn = (t: TFunction): ColumnDef<Task>[] => {
+export const columnsFn = (t: TFunction): ColumnDef<MoneySchema>[] => {
   return [
     {
       accessorKey: 'concept',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='table.concept' />
+        <DataTableColumnHeader column={column} i18nTitle='money.concept' />
       ),
       cell: ({ row }) => {
         const type = types.find(
@@ -55,7 +55,7 @@ export const columnsFn = (t: TFunction): ColumnDef<Task>[] => {
     {
       accessorKey: 'amount',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='table.amount' />
+        <DataTableColumnHeader column={column} i18nTitle='money.amount' />
       ),
       cell: ({ row }) => {
         return (
@@ -68,7 +68,7 @@ export const columnsFn = (t: TFunction): ColumnDef<Task>[] => {
     {
       accessorKey: 'date',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='table.date' />
+        <DataTableColumnHeader column={column} i18nTitle='money.date' />
       ),
       cell: ({ row }) => {
         return (
@@ -84,7 +84,7 @@ export const columnsFn = (t: TFunction): ColumnDef<Task>[] => {
     {
       accessorKey: 'userName',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='table.userName' />
+        <DataTableColumnHeader column={column} i18nTitle='money.userName' />
       ),
       cell: ({ row }) => {
         return (

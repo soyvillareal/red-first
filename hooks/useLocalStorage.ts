@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 interface LocalStorageProps<T> {
   key: string;
   defaultValue: T;
+  parseValue?: boolean;
 }
 
 export default function useLocalStorage<T>({
   key,
   defaultValue,
+  parseValue = true,
 }: LocalStorageProps<T>) {
   // Inicializar el estado con el valor por defecto. Este estado se actualizará
   // posteriormente si encontramos un valor en localStorage.
@@ -19,7 +21,11 @@ export default function useLocalStorage<T>({
       // Verificar si estamos en el lado del cliente
       const storedValue = localStorage.getItem(key);
       if (storedValue !== null) {
-        setValue(JSON.parse(storedValue) as T);
+        if (parseValue) {
+          setValue(JSON.parse(storedValue) as T);
+        } else {
+          setValue(storedValue as T);
+        }
       }
     }
   }, [key]);

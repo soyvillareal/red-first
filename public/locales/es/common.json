@@ -26,15 +26,25 @@
         "search": "Buscar...",
         "view": "Ver",
         "toggleColumns": "Alternar columnas",
+        "action": "Acción",
+        "openMenu": "Open menu",
+        "edit": "Editar"
+    },
+    "money": {
+        "title": "Ingresos y egresos",
+        "income": "Ingresos",
+        "expense": "Egresos",
         "concept": "Concepto",
         "amount": "Monto",
         "date": "Fecha",
         "userName": "Usuario"
     },
-    "money": {
-        "incomeExpenses": "Ingresos y egresos",
-        "income": "Ingresos",
-        "expense": "Egresos"
+    "users": {
+        "title": "Users",
+        "name": "Nombre",
+        "email": "Correo",
+        "date": "Fecha",
+        "phone": "Telefono"
     },
     "landing": {
         "simplify_your_accounts": "Simplifica tu cuentas, simplifica tu vida",

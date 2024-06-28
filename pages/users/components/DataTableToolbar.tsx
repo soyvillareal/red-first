@@ -5,8 +5,6 @@ import { Button } from '@/components/custom/button';
 import { Input } from '@/components/ui/input';
 import { DataTableViewOptions } from './DataTableViewOptions';
 
-import { types } from '../constants';
-import { DataTableFacetedFilter } from './DataTableFacetedFilter';
 import CloseIcon from '@/components/icons/CloseIcon';
 
 interface DataTableToolbarProps<TData> {
@@ -25,23 +23,12 @@ export function DataTableToolbar<TData>({
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
           placeholder={t('table.search')}
-          value={
-            (table.getColumn('userName')?.getFilterValue() as string) ?? ''
-          }
+          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('userName')?.setFilterValue(event.target.value)
+            table.getColumn('name')?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
-        <div className='flex gap-x-2'>
-          {table.getColumn('concept') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('concept')}
-              title='Types'
-              options={types}
-            />
-          )}
-        </div>
         {isFiltered && (
           <Button
             variant='ghost'
