@@ -1,10 +1,12 @@
 'use client';
 
+import React, { PropsWithChildren } from 'react';
 import Sidebar from '@/components/Sidebar';
 import useIsCollapsed from '@/hooks/useIsCollapsed';
-import React, { PropsWithChildren } from 'react';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-const Dashboard = ({ children }: PropsWithChildren) => {
+const DashboardLayout = ({ children }: PropsWithChildren) => {
   const [isCollapsed, setIsCollapsed] = useIsCollapsed();
 
   return (
@@ -15,9 +17,11 @@ const Dashboard = ({ children }: PropsWithChildren) => {
         className={`overflow-x-hidden pt-16 transition-[margin] md:overflow-y-hidden md:pt-0 ${
           isCollapsed ? 'md:ml-14' : 'md:ml-64'
         } h-full`}
-      ></main>
+      >
+        {children}
+      </main>
     </div>
   );
 };
 
-export default Dashboard;
+export default DashboardLayout;

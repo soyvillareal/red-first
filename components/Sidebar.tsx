@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Layout } from './custom/layout';
+import { ContextLayout } from './custom/layout';
 import { Button } from './custom/button';
 import Nav from './Nav';
 import { cn } from '@/lib/utils';
@@ -47,9 +47,9 @@ export default function Sidebar({
         } w-full bg-black md:hidden`}
       />
 
-      <Layout fixed className={navOpened ? 'h-svh' : ''}>
+      <ContextLayout fixed className={navOpened ? 'h-svh' : ''}>
         {/* Header */}
-        <Layout.Header
+        <ContextLayout.Header
           sticky
           className='z-50 flex justify-between px-4 py-3 shadow-sm md:px-4'
         >
@@ -69,7 +69,7 @@ export default function Sidebar({
           >
             {navOpened ? <CloseIcon /> : <MenuIcon />}
           </Button>
-        </Layout.Header>
+        </ContextLayout.Header>
 
         {/* Navigation links */}
         <Nav
@@ -93,7 +93,7 @@ export default function Sidebar({
             className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`}
           />
         </Button>
-      </Layout>
+      </ContextLayout>
     </aside>
   );
 }

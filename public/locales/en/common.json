@@ -2,10 +2,39 @@
     "common": {
         "signIn": "Sign in",
         "signUp": "Sign up",
-        "logOut": "Log out"
+        "logOut": "Log out",
+        "noResults": "No results.",
+        "noResultsFound": "No results found."
     },
     "dashboard": {
         "title": "Dashboard"
+    },
+    "table": {
+        "asc": "ASC",
+        "desc": "DESC",
+        "hide": "Hide",
+        "clearFilters": "Clear filters",
+        "selected": "{{size}} Selected",
+        "rowSelected": "{{selected}} of {{total}} row(s) selected",
+        "rowsPerPage": "Rows per page",
+        "pageOf": "Page {{page}} of {{pages}}",
+        "goToFirstPage": "Go to first page",
+        "goToPreviusPage": "Go to previous page",
+        "goToNextPage": "Go to next page",
+        "goToLastPage": "Go to last page",
+        "reset": "Reset",
+        "search": "Search...",
+        "view": "View",
+        "toggleColumns": "Toggle columns",
+        "concept": "Concept",
+        "amount": "Amount",
+        "date": "Date",
+        "userName": "User name"
+    },
+    "money": {
+        "incomeExpenses": "Income and expenses",
+        "income": "Income",
+        "expense": "Expense"
     },
     "landing": {
         "simplify_your_accounts": "Simplify your accounts, simplify your life",

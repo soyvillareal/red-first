@@ -15,7 +15,7 @@ const ChevronDownIcon = ({ className, width = 24, height = 24 }: IIconsProps) =>
       <path
         d='M37 18L25 30L13 18'
         stroke='#000000'
-        stroke-width='4'
+        strokeWidth='4'
         stroke-linecap='round'
         stroke-linejoin='round'
       />

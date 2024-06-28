@@ -1,4 +1,5 @@
 import { Column } from '@tanstack/react-table';
+import { useTranslation } from 'next-i18next';
 
 import { Button } from '@/components/custom/button';
 import {
@@ -17,16 +18,18 @@ import EyeNoneIcon from '@/components/icons/EyeNoneIcon';
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>;
-  title: string;
+  i18nTitle: string;
 }
 
 export function DataTableColumnHeader<TData, TValue>({
   column,
-  title,
+  i18nTitle,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
+  const { t } = useTranslation();
+
   if (!column.getCanSort()) {
-    return <div className={cn(className)}>{title}</div>;
+    return <div className={cn(className)}>{t(i18nTitle)}</div>;
   }
 
   return (
@@ -38,7 +41,7 @@ export function DataTableColumnHeader<TData, TValue>({
             size='sm'
             className='-ml-3 h-8 data-[state=open]:bg-accent'
           >
-            <span>{title}</span>
+            <span>{t(i18nTitle)}</span>
             {column.getIsSorted() === 'desc' ? (
               <ArrowDownIcon className='ml-2 h-4 w-4' />
             ) : column.getIsSorted() === 'asc' ? (
@@ -51,16 +54,16 @@ export function DataTableColumnHeader<TData, TValue>({
         <DropdownMenuContent align='start'>
           <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
             <ArrowUpIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-            Asc
+            {t('table.asc')}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
             <ArrowDownIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-            Desc
+            {t('table.desc')}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
             <EyeNoneIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-            Hide
+            {t('table.hide')}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

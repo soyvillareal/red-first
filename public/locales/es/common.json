@@ -2,10 +2,39 @@
     "common": {
         "signIn": "Iniciar sesión",
         "signUp": "Registrate",
-        "logOut": "Cerrar sesión"
+        "logOut": "Cerrar sesión",
+        "noResults": "Sin resultados.",
+        "noResultsFound": "No se encontraron resultados."
     },
     "dashboard": {
         "title": "Panel de control"
+    },
+    "table": {
+        "asc": "ASC",
+        "desc": "DESC",
+        "hide": "Ocultar",
+        "clearFilters": "Limpiar filtros",
+        "selected": "{{size}} Seleccionado",
+        "rowSelected": "{{selected}} de {{total}} fila(s) seleccionadas",
+        "rowsPerPage": "Filas por página",
+        "pageOf": "Página {{page}} de {{pages}}",
+        "goToFirstPage": "Ir a la primera página",
+        "goToPreviusPage": "Ir a la página anterior",
+        "goToNextPage": "Ir a la página siguiente",
+        "goToLastPage": "Ir a la última página",
+        "reset": "Restablecer",
+        "search": "Buscar...",
+        "view": "Ver",
+        "toggleColumns": "Alternar columnas",
+        "concept": "Concepto",
+        "amount": "Monto",
+        "date": "Fecha",
+        "userName": "Usuario"
+    },
+    "money": {
+        "incomeExpenses": "Ingresos y egresos",
+        "income": "Ingresos",
+        "expense": "Egresos"
     },
     "landing": {
         "simplify_your_accounts": "Simplifica tu cuentas, simplifica tu vida",

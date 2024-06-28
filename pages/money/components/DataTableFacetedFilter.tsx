@@ -1,9 +1,10 @@
-import * as React from 'react'
-import { Column } from '@tanstack/react-table'
+import { ComponentType } from 'react';
+import { useTranslation } from 'next-i18next';
+import { Column } from '@tanstack/react-table';
 
-import { cn } from '@/lib/utils'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/custom/button'
+import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/custom/button';
 import {
   Command,
   CommandEmpty,
@@ -12,24 +13,24 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/components/ui/command'
+} from '@/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
-import { Separator } from '@/components/ui/separator'
-import CheckIcon from '@/components/icons/CheckIcon'
-import PlusCircledIcon from '@/components/icons/PlusCircledIcon'
+} from '@/components/ui/popover';
+import { Separator } from '@/components/ui/separator';
+import CheckIcon from '@/components/icons/CheckIcon';
+import PlusCircledIcon from '@/components/icons/PlusCircledIcon';
 
 interface DataTableFacetedFilterProps<TData, TValue> {
-  column?: Column<TData, TValue>
-  title?: string
+  column?: Column<TData, TValue>;
+  title?: string;
   options: {
-    label: string
-    value: string
-    icon?: React.ComponentType<{ className?: string }>
-  }[]
+    label: string;
+    value: string;
+    icon?: ComponentType<{ className?: string }>;
+  }[];
 }
 
 export function DataTableFacetedFilter<TData, TValue>({
@@ -37,8 +38,9 @@ export function DataTableFacetedFilter<TData, TValue>({
   title,
   options,
 }: DataTableFacetedFilterProps<TData, TValue>) {
-  const facets = column?.getFacetedUniqueValues()
-  const selectedValues = new Set(column?.getFilterValue() as string[])
+  const { t } = useTranslation();
+  const facets = column?.getFacetedUniqueValues();
+  const selectedValues = new Set(column?.getFilterValue() as string[]);
 
   return (
     <Popover>
@@ -61,7 +63,9 @@ export function DataTableFacetedFilter<TData, TValue>({
                     variant='secondary'
                     className='rounded-sm px-1 font-normal'
                   >
-                    {selectedValues.size} selected
+                    {t('table.selected', {
+                      replace: { size: selectedValues.size },
+                    })}
                   </Badge>
                 ) : (
                   options
@@ -85,23 +89,23 @@ export function DataTableFacetedFilter<TData, TValue>({
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty>{t('common.noResultsFound')}</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
-                const isSelected = selectedValues.has(option.value)
+                const isSelected = selectedValues.has(option.value);
                 return (
                   <CommandItem
                     key={option.value}
                     onSelect={() => {
                       if (isSelected) {
-                        selectedValues.delete(option.value)
+                        selectedValues.delete(option.value);
                       } else {
-                        selectedValues.add(option.value)
+                        selectedValues.add(option.value);
                       }
-                      const filterValues = Array.from(selectedValues)
+                      const filterValues = Array.from(selectedValues);
                       column?.setFilterValue(
                         filterValues.length ? filterValues : undefined
-                      )
+                      );
                     }}
                   >
                     <div
@@ -115,7 +119,13 @@ export function DataTableFacetedFilter<TData, TValue>({
                       <CheckIcon className={cn('h-4 w-4')} />
                     </div>
                     {option.icon && (
-                      <option.icon className='mr-2 h-4 w-4 text-muted-foreground' />
+                      <option.icon
+                        className={`mr-2 h-4 w-4 text-muted-foreground ${
+                          option.value === 'expense'
+                            ? 'text-primary'
+                            : 'text-green'
+                        }`}
+                      />
                     )}
                     <span>{option.label}</span>
                     {facets?.get(option.value) && (
@@ -124,7 +134,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                       </span>
                     )}
                   </CommandItem>
-                )
+                );
               })}
             </CommandGroup>
             {selectedValues.size > 0 && (
@@ -135,7 +145,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     onSelect={() => column?.setFilterValue(undefined)}
                     className='justify-center text-center'
                   >
-                    Clear filters
+                    {t('table.clearFilters')}
                   </CommandItem>
                 </CommandGroup>
               </>
@@ -144,5 +154,5 @@ export function DataTableFacetedFilter<TData, TValue>({
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

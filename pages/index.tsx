@@ -1,14 +1,15 @@
 import Head from 'next/head';
+import { GetStaticProps } from 'next';
+
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import Testimonial from '../components/Testimonial';
 import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
-import { GetStaticProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { loadTranslations } from '@/lib/i18n';
 
-export default function Home() {
+const Home = () => {
   return (
     <div>
       <Head>
@@ -25,13 +26,10 @@ export default function Home() {
       </>
     </div>
   );
-}
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale ?? 'en')),
-    },
-    revalidate: 60 * 60 * 24, // 24 hours
-  };
 };
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  return loadTranslations(context.locale);
+};
+
+export default Home;

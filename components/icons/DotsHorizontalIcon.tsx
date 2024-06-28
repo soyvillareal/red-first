@@ -19,14 +19,14 @@ const DotsHorizontalIcon = ({
       <g
         id='Free-Icons'
         stroke='none'
-        stroke-width='1'
+        strokeWidth='1'
         fill='none'
-        fill-rule='evenodd'
+        fillRule='evenodd'
       >
         <g
           transform='translate(-1119 -756)'
           fill='#000000'
-          fill-rule='nonzero'
+          fillRule='nonzero'
           id='Group'
         >
           <g transform='translate(1115 746)' id='Shape'>
