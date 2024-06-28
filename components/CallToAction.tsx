@@ -16,12 +16,21 @@ const CallToAction = () => {
         </h2>
         {/* Button */}
         <div>
-          <Link
-            href='#'
-            className='p-3 px-6 pt-2 text-primary bg-white rounded-full shadow-2xl baseline hover:bg-gray-900'
-          >
-            {t(user ? 'dashboard.title' : 'common.signUp')}
-          </Link>
+          {user ? (
+            <Link
+              href='/dashboard'
+              className='p-3 px-6 pt-2 text-primary bg-white rounded-full shadow-2xl baseline hover:bg-gray-900'
+            >
+              {t('dashboard.title')}
+            </Link>
+          ) : (
+            <Link
+              href='/api/auth/signup'
+              className='p-3 px-6 pt-2 text-primary bg-white rounded-full shadow-2xl baseline hover:bg-gray-900'
+            >
+              {t('common.signUp')}
+            </Link>
+          )}
         </div>
       </div>
     </section>

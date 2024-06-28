@@ -41,10 +41,10 @@ const Navbar = () => {
             </Link>
             {/* Register button */}
             <Link
-              href='/api/auth/signup'
+              href='/api/auth/login'
               className='hidden p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent md:block'
             >
-              {t(user ? 'dashboard.title' : 'common.signUp')}
+              {t('common.signUp')}
             </Link>
           </div>
         )}

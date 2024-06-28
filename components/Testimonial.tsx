@@ -49,12 +49,21 @@ const Testimonial = () => {
         </div>
         {/* Button */}
         <div className='my-16'>
-          <Link
-            href='#'
-            className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'
-          >
-            {t(user ? 'dashboard.title' : 'common.signUp')}
-          </Link>
+          {user ? (
+            <Link
+              href='/dashboard'
+              className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'
+            >
+              {t('dashboard.title')}
+            </Link>
+          ) : (
+            <Link
+              href='/api/auth/signup'
+              className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'
+            >
+              {t('common.signUp')}
+            </Link>
+          )}
         </div>
       </div>
     </section>
