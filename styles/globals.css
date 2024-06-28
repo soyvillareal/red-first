@@ -4,40 +4,38 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 360, 100%, 100%;
+    --foreground: 0, 0%, 0%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 228, 39%, 23%; /* darkBlue */
+    --card-foreground: 0, 0%, 98%; /* veryLightGray */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 228, 39%, 23%; /* darkBlue */
+    --popover-foreground: 0, 0%, 98%; /* veryLightGray */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 12, 88%, 59%; /* brightRed */
+    --primary-foreground: 0, 0%, 98%; /* veryLightGray */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 13, 100%, 96%; /* veryPaleRed */
+    --secondary-foreground: 233, 12%, 13%; /* veryDarkBlue */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 227, 12%, 61%; /* darkGrayishBlue */
+    --muted-foreground: 0, 0%, 98%; /* veryLightGray */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 12, 88%, 69%; /* brightRedLight */
+    --accent-foreground: 233, 12%, 13%; /* veryDarkBlue */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 12, 88%, 95%; /* brightRedSupLight */
+    --destructive-foreground: 0, 0%, 98%; /* veryLightGray */
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    --border: 227, 12%, 61%; /* darkGrayishBlue */
+    --input: 227, 12%, 61%; /* darkGrayishBlue */
+    --ring: 12, 88%, 59%; /* brightRed */
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 12, 88%, 59%; /* brightRed */
+    --foreground: 13, 100%, 96%; /* veryPaleRed */
 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -66,7 +64,14 @@
   }
 }
 
-/* New styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
 
 body {
   background-image: url('../public/images/bg-tablet-pattern.svg');
@@ -89,51 +94,4 @@ body {
   #cta {
     background-image: url('../public/images/bg-simplify-section-mobile.svg');
   }
-}
-
-/* Hamburger Menu */
-.hamburger {
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
-  transition: all 0.25s;
-  position: relative;
-}
-
-.hamburger-top,
-.hamburger-middle,
-.hamburger-bottom {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 2px;
-  background: #000;
-  transform: rotate(0);
-  transition: all 0.5s;
-}
-
-.hamburger-middle {
-  transform: translateY(7px);
-}
-
-.hamburger-bottom {
-  transform: translateY(14px);
-}
-
-.open {
-  transform: rotate(90deg);
-  transform: translateY(0px);
-}
-
-.open .hamburger-top {
-  transform: rotate(45deg) translateY(6px) translate(6px);
-}
-
-.open .hamburger-middle {
-  display: none;
-}
-
-.open .hamburger-bottom {
-  transform: rotate(-45deg) translateY(6px) translate(-6px);
 }

@@ -1,7 +1,11 @@
 {
     "common": {
         "signIn": "Sign in",
-        "signUp": "Sign up"
+        "signUp": "Sign up",
+        "logOut": "Log out"
+    },
+    "dashboard": {
+        "title": "Dashboard"
     },
     "landing": {
         "simplify_your_accounts": "Simplify your accounts, simplify your life",

@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 const CallToAction = () => {
   const { t } = useTranslation();
+  const { user } = useUser();
+
   return (
-    <section id='cta' className='bg-brightRed'>
+    <section id='cta' className='bg-primary'>
       {/* Flex Container */}
       <div className='container flex flex-col items-center justify-between px-6 py-24 mx-auto space-y-12 md:py-12 md:flex-row md:space-y-0'>
         {/* Heading */}
@@ -15,9 +18,9 @@ const CallToAction = () => {
         <div>
           <Link
             href='#'
-            className='p-3 px-6 pt-2 text-brightRed bg-white rounded-full shadow-2xl baseline hover:bg-gray-900'
+            className='p-3 px-6 pt-2 text-primary bg-white rounded-full shadow-2xl baseline hover:bg-gray-900'
           >
-            {t('common.signUp')}
+            {t(user ? 'dashboard.title' : 'common.signUp')}
           </Link>
         </div>
       </div>

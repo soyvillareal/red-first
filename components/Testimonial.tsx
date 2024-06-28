@@ -4,9 +4,11 @@ import { useTranslation } from 'next-i18next';
 import avatarAnisha from '../public/images/avatar-anisha.png';
 import avatarAli from '../public/images/avatar-ali.png';
 import avatarRichard from '../public/images/avatar-richard.png';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 const Testimonial = () => {
   const { t } = useTranslation();
+  const { user } = useUser();
 
   return (
     <section id='testimonials'>
@@ -19,28 +21,28 @@ const Testimonial = () => {
         {/* Testimonials Container */}
         <div className='flex flex-col mt-24 md:flex-row md:space-x-6'>
           {/* Testimonial 1 */}
-          <div className='flex flex-col items-center p-6 space-y-6 rounded-lg bg-veryLightGray md:w-1/3'>
+          <div className='flex flex-col items-center p-6 space-y-6 rounded-lg bg-card-foreground md:w-1/3'>
             <img src={avatarAnisha.src} className='w-16 -mt-14' alt='' />
-            <h5 className='text-lg font-bold'>Anisha Li</h5>
-            <p className='text-sm text-darkGrayishBlue'>
+            <h5 className='text-lg font-bold text-muted'>Anisha Li</h5>
+            <p className='text-sm text-muted'>
               “{t('landing.hasBoostedWorkflowAbility')}”
             </p>
           </div>
 
           {/* Testimonial 2 */}
-          <div className='hidden flex-col items-center p-6 space-y-6 rounded-lg bg-veryLightGray md:flex md:w-1/3'>
+          <div className='hidden flex-col items-center p-6 space-y-6 rounded-lg bg-card-foreground md:flex md:w-1/3'>
             <img src={avatarAli.src} className='w-16 -mt-14' alt='' />
-            <h5 className='text-lg font-bold'>Ali Bravo</h5>
-            <p className='text-sm text-darkGrayishBlue'>
+            <h5 className='text-lg font-bold text-muted'>Ali Bravo</h5>
+            <p className='text-sm text-muted'>
               “{t('landing.weHaveBeenAbleCancel')}”
             </p>
           </div>
 
           {/* Testimonial 3 */}
-          <div className='hidden flex-col items-center p-6 space-y-6 rounded-lg bg-veryLightGray md:flex md:w-1/3'>
+          <div className='hidden flex-col items-center p-6 space-y-6 rounded-lg bg-card-foreground md:flex md:w-1/3'>
             <img src={avatarRichard.src} className='w-16 -mt-14' alt='' />
-            <h5 className='text-lg font-bold'>Richard Watts</h5>
-            <p className='text-sm text-darkGrayishBlue'>
+            <h5 className='text-lg font-bold text-muted'>Richard Watts</h5>
+            <p className='text-sm text-muted'>
               “{t('landing.hasBoostedMyAccountsAbility')}”
             </p>
           </div>
@@ -49,9 +51,9 @@ const Testimonial = () => {
         <div className='my-16'>
           <Link
             href='#'
-            className='p-3 px-6 pt-2 text-white bg-brightRed rounded-full baseline hover:bg-brightRedLight'
+            className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'
           >
-            {t('common.signUp')}
+            {t(user ? 'dashboard.title' : 'common.signUp')}
           </Link>
         </div>
       </div>

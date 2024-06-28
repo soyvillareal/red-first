@@ -1,10 +1,11 @@
 const path = require('path');
+const { languages, defaultLanguage } = require('./lib/i18nConfig');
 
 module.exports = {
   localePath: path.resolve('./public/locales'),
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'es'],
+    defaultLocale: defaultLanguage,
+    locales: languages,
   },
   interpolation: {
     escapeValue: false,

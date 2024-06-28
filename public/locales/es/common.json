@@ -1,7 +1,11 @@
 {
     "common": {
         "signIn": "Iniciar sesión",
-        "signUp": "Registrate"
+        "signUp": "Registrate",
+        "logOut": "Cerrar sesión"
+    },
+    "dashboard": {
+        "title": "Panel de control"
     },
     "landing": {
         "simplify_your_accounts": "Simplifica tu cuentas, simplifica tu vida",
