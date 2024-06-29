@@ -51,7 +51,7 @@ const Testimonial = () => {
         <div className='my-16'>
           {user ? (
             <Link
-              href='/dashboard'
+              href='/reports'
               className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'
             >
               {t('dashboard.title')}

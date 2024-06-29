@@ -13,6 +13,7 @@ import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon';
 import ChevronRightIcon from '@/components/icons/ChevronRightIcon';
 import ChevronsLeftIcon from '@/components/icons/ChevronsLeftIcon';
 import ChevronsRightIcon from '@/components/icons/ChevronsRightIcon';
+import { pageSizes } from '@/lib/contants';
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -48,7 +49,7 @@ export function DataTablePagination<TData>({
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side='top'>
-              {[10, 20, 30, 40, 50].map((pageSize) => (
+              {pageSizes.map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
                   {pageSize}
                 </SelectItem>

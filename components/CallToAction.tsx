@@ -18,7 +18,7 @@ const CallToAction = () => {
         <div>
           {user ? (
             <Link
-              href='/dashboard'
+              href='/reports'
               className='p-3 px-6 pt-2 text-primary bg-white rounded-full shadow-2xl baseline hover:bg-gray-900'
             >
               {t('dashboard.title')}

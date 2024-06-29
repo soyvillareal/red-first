@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -26,17 +27,21 @@ import {
 
 import { DataTablePagination } from './DataTablePagination';
 import { DataTableToolbar } from './DataTableToolbar';
+import { Button } from '@/components/custom/button';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  total: number;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  total,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -64,6 +69,10 @@ export function DataTable<TData, TValue>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
+
+  const handleClick = useCallback(() => {
+    router.push('/movements/new');
+  }, [router])
 
   return (
     <div className='space-y-4'>
@@ -117,6 +126,13 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+      </div>
+      <div className='mt-5 border rounded-md flex justify-between items-center p-4'>
+        {/* Label "Total" alineado a la derecha */}
+        <div>${total}</div>
+
+        {/* Botón "Nuevo" alineado a la izquierda */}
+        <Button onClick={handleClick}>Nuevo</Button>
       </div>
       <DataTablePagination table={table} />
     </div>

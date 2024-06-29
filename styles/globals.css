@@ -7,7 +7,7 @@
     --background: hsl(360, 100%, 100%);
     --foreground: hsl(0, 0%, 0%);
 
-    --card: hsl(228, 39%, 23%); /* darkBlue */
+    --card: hsl(180, 2%, 90%); /* darkBlue */
     --card-foreground: hsl(0, 0%, 98%); /* veryLightGray */
 
     --popover: hsl(12, 88%, 69%); /* darkBlue */
@@ -20,7 +20,7 @@
     --secondary-foreground: hsl(233, 12%, 13%); /* veryDarkBlue */
 
     --muted: hsl(227, 12%, 61%); /* darkGrayishBlue */
-    --muted-foreground: hsl(0, 0%, 98%); /* veryLightGray */
+    --muted-foreground: hsl(0, 0%, 0%); /* veryLightGray */
 
     --accent: hsl(12, 88%, 69%); /* brightRedLight */
     --accent-foreground: hsl(233, 12%, 13%); /* veryDarkBlue */

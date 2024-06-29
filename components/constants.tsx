@@ -13,7 +13,7 @@ export const sidelinks: SideLink[] = [
   {
     title: 'Ingresos y egresos',
     label: '',
-    href: '/money',
+    href: '/movements',
     icon: <IncomeIcon width={18} />,
   },
   {

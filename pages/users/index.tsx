@@ -1,20 +1,18 @@
 import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
-import Link from 'next/link';
 
 import { ContextLayout } from '@/components/custom/layout';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
+import DashboardLayout from '@/components/DashboardLayout';
+import { loadTranslations } from '@/lib/i18n';
+import { UserNav } from '@/components/UserNav';
 
 import { DataTable } from './components/DataTable';
 import { mockData } from './data/data.mock';
-import DashboardLayout from '@/components/DashboardLayout';
-import { loadTranslations } from '@/lib/i18n';
 import { columns } from './constants';
 
 const Money = () => {
   const { t } = useTranslation();
-  const { user } = useUser();
 
   return (
     <ContextLayout>
@@ -22,20 +20,7 @@ const Money = () => {
         {/* ===== Top Heading ===== */}
         <ContextLayout.Header sticky>
           <div className='ml-auto flex items-center space-x-4'>
-            <div className='flex col-row items-center justify-center md:gap-2 py-3 px-5 text-white bg-primary rounded-full baseline'>
-              {user && user.picture && (
-                <Avatar>
-                  <AvatarImage src={user.picture} />
-                  <AvatarFallback>{user.nickname}</AvatarFallback>
-                </Avatar>
-              )}
-              <Link
-                href='/api/auth/logout'
-                className='text-white hover:underline mr-4'
-              >
-                {t('common.logOut')}
-              </Link>
-            </div>
+            <UserNav />
           </div>
         </ContextLayout.Header>
 

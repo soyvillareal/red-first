@@ -5,16 +5,17 @@ import MoneyIcon from '@/components/icons/MoneyIcon';
 
 import { MoneySchema } from './data/schema';
 import { DataTableColumnHeader } from './components/DataTableColumnHeader';
+import { EMovementType } from '@/lib/types';
 
 export const types = [
   {
-    value: 'income',
-    label: 'money.income',
+    value: EMovementType.INCOME,
+    label: 'movements.income',
     icon: MoneyIcon,
   },
   {
-    value: 'expense',
-    label: 'money.expense',
+    value: EMovementType.EXPENSE,
+    label: 'movements.expense',
     icon: MoneyIcon,
   },
 ];
@@ -22,9 +23,38 @@ export const types = [
 export const columnsFn = (t: TFunction): ColumnDef<MoneySchema>[] => {
   return [
     {
+      accessorKey: 'amount',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} i18nTitle='movements.amount' />
+      ),
+      cell: ({ row }) => {
+        return (
+          <div className='flex w-[100px] items-center'>
+            <span>{row.getValue('amount')}</span>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: 'userName',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} i18nTitle='movements.userName' />
+      ),
+      cell: ({ row }) => {
+        return (
+          <div className='flex items-center'>
+            <span>{row.getValue('userName')}</span>
+          </div>
+        );
+      },
+      filterFn: (row, id, value) => {
+        return value.includes(row.getValue(id));
+      },
+    },
+    {
       accessorKey: 'concept',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='money.concept' />
+        <DataTableColumnHeader column={column} i18nTitle='movements.concept' />
       ),
       cell: ({ row }) => {
         const type = types.find(
@@ -53,43 +83,14 @@ export const columnsFn = (t: TFunction): ColumnDef<MoneySchema>[] => {
       },
     },
     {
-      accessorKey: 'amount',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='money.amount' />
-      ),
-      cell: ({ row }) => {
-        return (
-          <div className='flex w-[100px] items-center'>
-            <span>{row.getValue('amount')}</span>
-          </div>
-        );
-      },
-    },
-    {
       accessorKey: 'date',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='money.date' />
+        <DataTableColumnHeader column={column} i18nTitle='movements.date' />
       ),
       cell: ({ row }) => {
         return (
           <div className='flex items-center'>
             <span>{row.getValue('date')}</span>
-          </div>
-        );
-      },
-      filterFn: (row, id, value) => {
-        return value.includes(row.getValue(id));
-      },
-    },
-    {
-      accessorKey: 'userName',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='money.userName' />
-      ),
-      cell: ({ row }) => {
-        return (
-          <div className='flex items-center'>
-            <span>{row.getValue('userName')}</span>
           </div>
         );
       },

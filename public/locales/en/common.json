@@ -30,7 +30,7 @@
         "openMenu": "Open menu",
         "edit": "Edit"
     },
-    "money": {
+    "movements": {
         "title": "Income and expenses",
         "income": "Income",
         "expense": "Expense",
