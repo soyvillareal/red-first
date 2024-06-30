@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import {
   Bar,
   BarChart,
@@ -9,10 +10,14 @@ import {
   YAxis,
 } from 'recharts';
 
-import { mockData } from './Overview.mock';
 import { EMovementType } from '@/lib/types';
 
+import { mockData } from './Overview.mock';
+import { parsedNumber } from './Overview.constants';
+
 export function Overview() {
+  const { t } = useTranslation();
+
   return (
     <ResponsiveContainer width='100%' height={400}>
       <BarChart
@@ -26,19 +31,21 @@ export function Overview() {
           fontSize={12}
           tickLine={false}
           axisLine={false}
+          tickFormatter={(value: string) => {
+            return t(`months.${value}`);
+          }}
         />
         <YAxis
           fontSize={12}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(value: number) => {
-            if (value < 0) {
-              return `$${-value}`;
-            }
-            return `$${value}`;
+          tickFormatter={parsedNumber}
+        />
+        <Tooltip
+          formatter={(value: number, name: string) => {
+            return [parsedNumber(value), t(`movements.${name}`)];
           }}
         />
-        <Tooltip />
         <Bar dataKey={EMovementType.INCOME} fill='#82ca9d' />
         <Bar dataKey={EMovementType.EXPENSE} fill='#ff4040' />
       </BarChart>

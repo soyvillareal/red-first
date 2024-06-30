@@ -7,7 +7,7 @@ const EditIcon = ({ className, width = 20, height = 20 }: IIconsProps) => {
       className={className}
       width={width}
       height={height}
-      fill='#000000'
+      fill='currentColor'
       viewBox='0 0 0.72 0.72'
       xmlns='http://www.w3.org/2000/svg'
     >

@@ -7,7 +7,7 @@ const ArrowDownIcon = ({ className, width = 24, height = 24 }: IIconsProps) => {
       className={className}
       width={width}
       height={height}
-      fill='#000000'
+      fill='currentColor'
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 1.56 1.56'
       enableBackground='new 0 0 52 52'

@@ -1,61 +1,61 @@
 export const mockData = [
   {
-    name: 'Jan',
+    name: 'jan',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'Feb',
+    name: 'feb',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'Mar',
+    name: 'mar',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'Apr',
+    name: 'apr',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'May',
+    name: 'may',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'Jun',
+    name: 'jun',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'Jul',
+    name: 'jul',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'Aug',
+    name: 'aug',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'Sep',
+    name: 'sep',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'Oct',
+    name: 'oct',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'Nov',
+    name: 'nov',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: 'Dec',
+    name: 'dec',
     income: Math.floor(Math.random() * 5000) + 1000,
     expense: -Math.floor(Math.random() * 5000) + 1000,
   },

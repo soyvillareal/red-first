@@ -19,6 +19,20 @@
         "admin": "Administrador",
         "user": "Usuario"
     },
+    "months": {
+        "jan": "Ene",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Abr",
+        "may": "May",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Ago",
+        "sep": "Sep",
+        "oct": "Oct",
+        "nov": "Nov",
+        "dec": "Dic"
+    },
     "dashboard": {
         "title": "Panel de control",
         "recentMovements": "Movimientos recientes",
