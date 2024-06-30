@@ -41,7 +41,7 @@ export function DataTableToolbar<TData>({
                 <DataTableFacetedFilter
                   key={i}
                   column={table.getColumn(filter as string)}
-                  title='Types'
+                  title={t('table.types')}
                   options={types}
                 />
               );

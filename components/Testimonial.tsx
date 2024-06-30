@@ -23,7 +23,11 @@ const Testimonial = () => {
         <div className='flex flex-col mt-24 md:flex-row md:space-x-6'>
           {/* Testimonial 1 */}
           <div className='flex flex-col items-center p-6 space-y-6 rounded-lg bg-card-foreground md:w-1/3'>
-            <img src={avatarAnisha.src} className='w-16 -mt-14' alt='' />
+            <img
+              src={avatarAnisha.src}
+              className='w-16 -mt-14'
+              alt={t('common.avatar')}
+            />
             <h5 className='text-lg font-bold text-muted'>Anisha Li</h5>
             <p className='text-sm text-muted'>
               “{t('landing.hasBoostedWorkflowAbility')}”
@@ -32,7 +36,11 @@ const Testimonial = () => {
 
           {/* Testimonial 2 */}
           <div className='hidden flex-col items-center p-6 space-y-6 rounded-lg bg-card-foreground md:flex md:w-1/3'>
-            <img src={avatarAli.src} className='w-16 -mt-14' alt='' />
+            <img
+              src={avatarAli.src}
+              className='w-16 -mt-14'
+              alt={t('common.avatar')}
+            />
             <h5 className='text-lg font-bold text-muted'>Ali Bravo</h5>
             <p className='text-sm text-muted'>
               “{t('landing.weHaveBeenAbleCancel')}”
@@ -41,7 +49,11 @@ const Testimonial = () => {
 
           {/* Testimonial 3 */}
           <div className='hidden flex-col items-center p-6 space-y-6 rounded-lg bg-card-foreground md:flex md:w-1/3'>
-            <img src={avatarRichard.src} className='w-16 -mt-14' alt='' />
+            <img
+              src={avatarRichard.src}
+              className='w-16 -mt-14'
+              alt={t('common.avatar')}
+            />
             <h5 className='text-lg font-bold text-muted'>Richard Watts</h5>
             <p className='text-sm text-muted'>
               “{t('landing.hasBoostedMyAccountsAbility')}”

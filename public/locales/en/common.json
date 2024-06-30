@@ -4,20 +4,33 @@
         "signUp": "Sign up",
         "logOut": "Log out",
         "noResults": "No results.",
-        "noResultsFound": "No results found."
+        "noResultsFound": "No results found.",
+        "download": "Descargar",
+        "avatar": "Avatar",
+        "save": "Save",
+        "enter": "Enter"
     },
     "languages": {
         "title": "Language ({{lang}})",
         "es": "Spanish",
         "en": "English"
     },
+    "roles": {
+        "admin": "Administrator",
+        "user": "User"
+    },
     "dashboard": {
-        "title": "Dashboard"
+        "title": "Dashboard",
+        "recentMovements": "Recent movements",
+        "movements": "Movements",
+        "balance": "Balance",
+        "youMadeMovementsMonth": "You made {{movements}} movements this month"
     },
     "table": {
         "asc": "ASC",
         "desc": "DESC",
         "hide": "Hide",
+        "types": "Types",
         "clearFilters": "Clear filters",
         "selected": "{{size}} Selected",
         "rowSelected": "{{selected}} of {{total}} row(s) selected",
@@ -44,11 +57,30 @@
         "date": "Date",
         "userName": "User name"
     },
+    "newMovement": {
+        "title": "New movement",
+        "concept": "Concept",
+        "amount": "Amount",
+        "date": "Date",
+        "type": "Type",
+        "pickDate": "Pick a date",
+        "thisAmountRepresentsValue": "This amount represents the value of the movement.",
+        "theConceptIsUsedToCategorizeIt": "The concept is used to categorize movement.",
+        "dateOfMovementUsedToTrack": "The date of movement is used to track when it happened."
+    },
     "users": {
         "title": "Users",
         "name": "Name",
         "email": "Email",
         "phone": "Phone"
+    },
+    "editUser": {
+        "title": "Edit user",
+        "name": "Name",
+        "role": "Role",
+        "nameOfTheUserToEdentifyIt": "The name of the user is used to identify it.",
+        "roleOfTheUser": "The role is used to grant permissions to the user, you should be careful with this option.",
+        "writeName": "Write the name..."
     },
     "landing": {
         "simplify_your_accounts": "Simplify your accounts, simplify your life",
@@ -64,6 +96,7 @@
         "stopJumpingFromOneService": "Stop jumping from one service to another to take care of your money, do accounts, track and clearly keep track of your expenses. Red First offers a productivity solution.",
         "trackTheProgressOfAll": "Track the progress of all your accounts",
         "seeHowYourDailyAccountsFitInto": "See how your daily accounts fit into a bigger picture. Go from tracking progress at the milestone level to the smallest detail. Don't lose sight of the big picture again.",
-        "manageProvidesAllTheFunctionality": "Manage provides all the functionality your team needs, without the complexity. Our software is tailor-made for modern digital product teams."
+        "manageProvidesAllTheFunctionality": "Manage provides all the functionality your team needs, without the complexity. Our software is tailor-made for modern digital product teams.",
+        "description": "Description"
     }
 }

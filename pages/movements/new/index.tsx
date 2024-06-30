@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next';
 
 import { loadTranslations } from '@/lib/i18n';
 import DashboardLayout from '@/components/atoms/DashboardLayout';
@@ -9,6 +10,8 @@ import { MovementForm } from '@/components/atoms/MovementForm';
 import { routes } from '@/lib/contants';
 
 export default function NewMovement() {
+  const { t } = useTranslation();
+
   return (
     <ContextLayout>
       <DashboardLayout>
@@ -20,7 +23,10 @@ export default function NewMovement() {
         </ContextLayout.Header>
 
         <ContextLayout.Body>
-          <ContentSection title='Nuevo movimiento' goBackUrl={routes.movements}>
+          <ContentSection
+            title={t('newMovement.title')}
+            goBackUrl={routes.movements}
+          >
             <MovementForm />
           </ContentSection>
         </ContextLayout.Body>

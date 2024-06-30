@@ -4,20 +4,33 @@
         "signUp": "Registrate",
         "logOut": "Cerrar sesión",
         "noResults": "Sin resultados.",
-        "noResultsFound": "No se encontraron resultados."
+        "noResultsFound": "No se encontraron resultados.",
+        "download": "Descargar",
+        "avatar": "Avatar",
+        "save": "Guardar",
+        "enter": "Ingresar"
     },
     "languages": {
         "title": "Idioma ({{lang}})",
         "es": "Español",
         "en": "Inglés"
     },
+    "roles": {
+        "admin": "Administrador",
+        "user": "Usuario"
+    },
     "dashboard": {
-        "title": "Panel de control"
+        "title": "Panel de control",
+        "recentMovements": "Movimientos recientes",
+        "movements": "Movimientos",
+        "balance": "Saldo",
+        "youMadeMovementsMonth": "Realizaste {{movements}} movimientos este mes"
     },
     "table": {
         "asc": "ASC",
         "desc": "DESC",
         "hide": "Ocultar",
+        "types": "Tipos",
         "clearFilters": "Limpiar filtros",
         "selected": "{{size}} Seleccionado",
         "rowSelected": "{{selected}} de {{total}} fila(s) seleccionadas",
@@ -44,12 +57,31 @@
         "date": "Fecha",
         "userName": "Usuario"
     },
+    "newMovement": {
+        "title": "Nuevo movimiento",
+        "concept": "Concepto",
+        "amount": "Monto",
+        "date": "Fecha",
+        "type": "Tipo",
+        "pickDate": "Selecciona una fecha",
+        "thisAmountRepresentsValue": "Este monto representa el valor del movimiento.",
+        "theConceptIsUsedToCategorizeIt": "El concepto se utiliza para categorizar el movimiento.",
+        "dateOfMovementUsedToTrack": "La fecha del movimiento se utiliza para rastrear cuándo ocurrió."
+    },
     "users": {
-        "title": "Users",
+        "title": "Usuarios",
         "name": "Nombre",
         "email": "Correo",
         "date": "Fecha",
         "phone": "Telefono"
+    },
+    "editUser": {
+        "title": "Editar usuario",
+        "name": "Nombre",
+        "role": "Rol",
+        "nameOfTheUserToEdentifyIt": "El nombre del usuario se utiliza para identificarlo.",
+        "roleOfTheUser": "El rol se utiliza para otorgar permisos al usuario, debes tener cuidado con esta opción.",
+        "writeName": "Escribe el nombre..."
     },
     "landing": {
         "simplify_your_accounts": "Simplifica tu cuentas, simplifica tu vida",
@@ -65,6 +97,7 @@
         "stopJumpingFromOneService": "Deja de saltar de un servicio a otro para cuidar tu dinero, sacar cuentas, realizar un seguimiento y llevar con claridad tus gastos. Red First ofrece una solución de productividad.",
         "trackTheProgressOfAll": "Seguimiento del progreso de todas tus cuentas",
         "seeHowYourDailyAccountsFitInto": "Vea cómo sus cuentas diarias encajan en una visión más amplia. Vaya desde el seguimiento del progreso a nivel de hito hasta el más mínimo detalle. No vuelvas a perder de vista el panorama general.",
-        "manageProvidesAllTheFunctionality": "Manage proporciona toda la funcionalidad que su equipo necesita, sin la complejidad. Nuestro software está hecho a medida para los equipos de productos digitales modernos."
+        "manageProvidesAllTheFunctionality": "Manage proporciona toda la funcionalidad que su equipo necesita, sin la complejidad. Nuestro software está hecho a medida para los equipos de productos digitales modernos.",
+        "description": "Descripción"
     }
 }

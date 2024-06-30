@@ -1,7 +1,9 @@
+import { useCallback } from 'react';
+import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import dayjs from 'dayjs';
+
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/custom/Button';
 import { Calendar } from '@/components/ui/calendar';
@@ -26,39 +28,18 @@ import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
 import { EMovementType } from '@/lib/types';
 
-const accountFormSchema = z.object({
-  amount: z
-    .number()
-    .min(2, {
-      message: 'Name must be at least 2 characters.',
-    })
-    .max(30, {
-      message: 'Name must not be longer than 30 characters.',
-    }),
-  concept: z.nativeEnum(EMovementType, {
-    required_error: 'Please select a valid concept.',
-  }),
-  date: z.date({
-    required_error: 'A date of birth is required.',
-  }),
-});
-
-type AccountFormValues = z.infer<typeof accountFormSchema>;
-
-// This can come from your database or API.
-const defaultValues: Partial<AccountFormValues> = {
-  amount: 0,
-  concept: EMovementType.INCOME,
-  date: new Date(),
-};
+import { MovementFormValues } from './MovementForm.types';
+import { movementFormSchema } from './MovementForm.schema';
+import { defaultValues } from './MovementForm.constants';
 
 export function MovementForm() {
-  const methods = useForm<AccountFormValues>({
-    resolver: zodResolver(accountFormSchema),
+  const { t } = useTranslation();
+  const methods = useForm<MovementFormValues>({
+    resolver: zodResolver(movementFormSchema),
     defaultValues,
   });
 
-  function onSubmit(data: AccountFormValues) {
+  const onSubmit = useCallback((data: MovementFormValues) => {
     toast({
       title: 'You submitted the following values:',
       description: (
@@ -67,7 +48,7 @@ export function MovementForm() {
         </pre>
       ),
     });
-  }
+  }, []);
 
   return (
     <Form {...methods}>
@@ -77,7 +58,7 @@ export function MovementForm() {
           name='amount'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Monto</FormLabel>
+              <FormLabel>{t('newMovement.amount')}</FormLabel>
               <FormControl>
                 <Input
                   type='number'
@@ -86,7 +67,7 @@ export function MovementForm() {
                 />
               </FormControl>
               <FormDescription>
-                This amount represents the value of the movement.
+                {t('newMovement.thisAmountRepresentsValue')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -97,7 +78,7 @@ export function MovementForm() {
           name='concept'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Concept</FormLabel>
+              <FormLabel>{t('newMovement.concept')}</FormLabel>
               <div className='relative w-max'>
                 <FormControl>
                   <select
@@ -119,7 +100,7 @@ export function MovementForm() {
                 <ChevronDownIcon className='absolute right-3 top-2.5 h-4 w-4 opacity-50' />
               </div>
               <FormDescription>
-                The concept of the movement is used to categorize it.
+                {t('newMovement.theConceptIsUsedToCategorizeIt')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -130,7 +111,7 @@ export function MovementForm() {
           name='date'
           render={({ field }) => (
             <FormItem className='flex flex-col'>
-              <FormLabel>Date</FormLabel>
+              <FormLabel>{t('newMovement.date')}</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -144,7 +125,7 @@ export function MovementForm() {
                       {field.value ? (
                         dayjs(field.value).format('MMM D, YYYY')
                       ) : (
-                        <span>Pick a date</span>
+                        <span>{t('newMovement.pickDate')}</span>
                       )}
                       <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
                     </Button>
@@ -163,13 +144,13 @@ export function MovementForm() {
                 </PopoverContent>
               </Popover>
               <FormDescription>
-                The date of movement is used to track when it happened.
+                {t('newMovement.dateOfMovementUsedToTrack')}
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type='submit'>Generar movimiento</Button>
+        <Button type='submit'>{t('common.enter')}</Button>
       </HookForm>
     </Form>
   );

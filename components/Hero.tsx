@@ -42,7 +42,7 @@ const Hero = () => {
         <div className='md:w-1/2'>
           <Image
             src='images/illustration-intro.svg'
-            alt='Descripción'
+            alt={t('landing.description')}
             width={500}
             height={500}
             fetchPriority='high'

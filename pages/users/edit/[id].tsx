@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { loadTranslations } from '@/lib/i18n';
 
@@ -10,6 +11,7 @@ import { UserForm } from '@/components/atoms/UserForm';
 import { routes } from '@/lib/contants';
 
 export default function EditUser() {
+  const { t } = useTranslation();
   const { query } = useRouter();
 
   console.log('query: ', query);
@@ -25,7 +27,7 @@ export default function EditUser() {
         </ContextLayout.Header>
 
         <ContextLayout.Body>
-          <ContentSection title='Editar usuario' goBackUrl={routes.users}>
+          <ContentSection title={t('editUser.title')} goBackUrl={routes.users}>
             <UserForm />
           </ContentSection>
         </ContextLayout.Body>

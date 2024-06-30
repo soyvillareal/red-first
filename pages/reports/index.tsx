@@ -1,3 +1,6 @@
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next';
+
 import { ContextLayout } from '@/components/custom/layout';
 import { Button } from '@/components/custom/Button';
 import {
@@ -8,14 +11,16 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { UserNav } from '@/components/atoms/UserNav';
-import { RecentSales } from './components/RecentSales';
-import { Overview } from './components/Overview';
 import DashboardLayout from '@/components/atoms/DashboardLayout';
 import Dollar2Icon from '@/components/icons/Dollar2Icon';
-import { GetStaticProps } from 'next';
 import { loadTranslations } from '@/lib/i18n';
 
+import { RecentSales } from './components/RecentSales';
+import { Overview } from './components/Overview';
+
 export default function Dashboard() {
+  const { t } = useTranslation();
+
   return (
     <ContextLayout>
       <DashboardLayout>
@@ -29,9 +34,11 @@ export default function Dashboard() {
         {/* ===== Main ===== */}
         <ContextLayout.Body>
           <div className='mb-2 flex items-center justify-between space-y-2'>
-            <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
+            <h1 className='text-2xl font-bold tracking-tight'>
+              {t('dashboard.title')}
+            </h1>
             <div className='flex items-center space-x-2'>
-              <Button>Download</Button>
+              <Button>{t('common.download')}</Button>
             </div>
           </div>
           <div className='space-y-4'>
@@ -39,7 +46,7 @@ export default function Dashboard() {
               <Card>
                 <CardHeader>
                   <CardTitle className='text-secondary-foreground'>
-                    Overview
+                    {t('dashboard.movements')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className='pl-2'>
@@ -48,10 +55,10 @@ export default function Dashboard() {
               </Card>
 
               <div>
-                <Card>
+                <Card className='border-b-0'>
                   <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                     <CardTitle className='text-secondary-foreground text-sm font-medium'>
-                      Total Revenue
+                      {t('dashboard.balance')}
                     </CardTitle>
                     <Dollar2Icon className='h-4 w-4 text-secondary-foreground' />
                   </CardHeader>
@@ -59,18 +66,19 @@ export default function Dashboard() {
                     <div className='text-secondary-foreground text-2xl font-bold'>
                       $45,231.89
                     </div>
-                    <p className='text-secondary-foreground text-xs text-muted-foreground'>
-                      +20.1% from last month
-                    </p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
                     <CardTitle className='text-secondary-foreground'>
-                      Recent Sales
+                      {t('dashboard.recentMovements')}
                     </CardTitle>
                     <CardDescription className='text-secondary-foreground'>
-                      You made 265 sales this month.
+                      {t('dashboard.youMadeMovementsMonth', {
+                        replace: {
+                          movements: 265,
+                        },
+                      })}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>

@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 
 import { mockData } from './Overview.mock';
+import { EMovementType } from '@/lib/types';
 
 export function Overview() {
   return (
@@ -38,8 +39,8 @@ export function Overview() {
           }}
         />
         <Tooltip />
-        <Bar dataKey='income' fill='#82ca9d' />
-        <Bar dataKey='expense' fill='#ff4040' />
+        <Bar dataKey={EMovementType.INCOME} fill='#82ca9d' />
+        <Bar dataKey={EMovementType.EXPENSE} fill='#ff4040' />
       </BarChart>
     </ResponsiveContainer>
   );

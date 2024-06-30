@@ -1,6 +1,7 @@
+import { useCallback } from 'react';
+import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/custom/Button';
 import {
@@ -18,35 +19,18 @@ import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
 import { EUserRole } from '@/lib/types';
 
-const accountFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: 'Name must be at least 2 characters.',
-    })
-    .max(30, {
-      message: 'Name must not be longer than 30 characters.',
-    }),
-  role: z.nativeEnum(EUserRole, {
-    required_error: 'Please select a valid concept.',
-  }),
-});
-
-type AccountFormValues = z.infer<typeof accountFormSchema>;
-
-// This can come from your database or API.
-const defaultValues: Partial<AccountFormValues> = {
-  name: '',
-  role: EUserRole.USER,
-};
+import { UserFormValues } from './UserForm.types';
+import { userFormSchema } from './UserForm.schema';
+import { defaultValues } from './UserForm.constants';
 
 export function UserForm() {
-  const methods = useForm<AccountFormValues>({
-    resolver: zodResolver(accountFormSchema),
+  const { t } = useTranslation();
+  const methods = useForm<UserFormValues>({
+    resolver: zodResolver(userFormSchema),
     defaultValues,
   });
 
-  function onSubmit(data: AccountFormValues) {
+  const onSubmit = useCallback((data: UserFormValues) => {
     toast({
       title: 'You submitted the following values:',
       description: (
@@ -55,22 +39,22 @@ export function UserForm() {
         </pre>
       ),
     });
-  }
+  }, []);
 
   return (
     <Form {...methods}>
-      <HookForm className='space-y-8' onSubmit={onSubmit} methods={methods}>
+      <HookForm className='space-y-5' onSubmit={onSubmit} methods={methods}>
         <FormField
           control={methods.control}
           name='name'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{t('editUser.name')}</FormLabel>
               <FormControl>
-                <Input placeholder='Write the name' {...field} />
+                <Input placeholder={t('editUser.writeName')} {...field} />
               </FormControl>
               <FormDescription>
-                The name of the user is used to identify it.
+                {t('editUser.nameOfTheUserToEdentifyIt')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -81,7 +65,7 @@ export function UserForm() {
           name='role'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Role</FormLabel>
+              <FormLabel>{t('editUser.role')}</FormLabel>
               <div className='relative w-max'>
                 <FormControl>
                   <select
@@ -94,7 +78,7 @@ export function UserForm() {
                     {Object.values(EUserRole).map((type) => {
                       return (
                         <option key={type} value={type}>
-                          {type}
+                          {t(`roles.${type}`)}
                         </option>
                       );
                     })}
@@ -102,14 +86,14 @@ export function UserForm() {
                 </FormControl>
                 <ChevronDownIcon className='absolute right-3 top-2.5 h-4 w-4 opacity-50' />
               </div>
-              <FormDescription>
-                The role of the user is used to categorize it.
+              <FormDescription className='text-red'>
+                {t('editUser.roleOfTheUser')}
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type='submit'>Guardar</Button>
+        <Button type='submit'>{t('common.save')}</Button>
       </HookForm>
     </Form>
   );
