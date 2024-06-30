@@ -6,6 +6,11 @@
         "noResults": "Sin resultados.",
         "noResultsFound": "No se encontraron resultados."
     },
+    "languages": {
+        "title": "Idioma ({{lang}})",
+        "es": "Español",
+        "en": "Inglés"
+    },
     "dashboard": {
         "title": "Panel de control"
     },

@@ -1,7 +1,6 @@
 import { useTranslation } from 'next-i18next';
-import { Table } from '@tanstack/react-table';
 
-import { Button } from '@/components/custom/button';
+import { Button } from '@/components/custom/Button';
 import {
   Select,
   SelectContent,
@@ -15,9 +14,7 @@ import ChevronsLeftIcon from '@/components/icons/ChevronsLeftIcon';
 import ChevronsRightIcon from '@/components/icons/ChevronsRightIcon';
 import { pageSizes } from '@/lib/contants';
 
-interface DataTablePaginationProps<TData> {
-  table: Table<TData>;
-}
+import { DataTablePaginationProps } from './Table.types';
 
 export function DataTablePagination<TData>({
   table,

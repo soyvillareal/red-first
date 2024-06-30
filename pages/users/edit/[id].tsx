@@ -2,10 +2,10 @@ import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { loadTranslations } from '@/lib/i18n';
 
-import DashboardLayout from '@/components/DashboardLayout';
-import ContentSection from '@/components/ContentSection';
+import DashboardLayout from '@/components/atoms/DashboardLayout';
+import ContentSection from '@/components/atoms/ContentSection';
 import { ContextLayout } from '@/components/custom/layout';
-import { UserNav } from '@/components/UserNav';
+import { UserNav } from '@/components/atoms/UserNav';
 
 import { UserForm } from './UserForm';
 

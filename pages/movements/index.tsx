@@ -1,17 +1,26 @@
+import { useCallback } from 'react';
 import { GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
 import { ContextLayout } from '@/components/custom/layout';
-
-import { DataTable } from './components/DataTable';
-import { mockData } from './data/data.mock';
-import DashboardLayout from '@/components/DashboardLayout';
+import DashboardLayout from '@/components/atoms/DashboardLayout';
+import { DataTable } from '@/components/atoms/Table/DataTable';
+import { UserNav } from '@/components/atoms/UserNav';
+import { routes } from '@/lib/contants';
 import { loadTranslations } from '@/lib/i18n';
-import { columnsFn } from './constants';
-import { UserNav } from '@/components/UserNav';
+
+import { mockData } from './movements.mock';
+import { columnsFn } from './movements.constants';
+import { Button } from '@/components/custom/Button';
 
 const Money = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+
+  const handleClick = useCallback(() => {
+    router.push(routes.newMovement);
+  }, [router]);
 
   return (
     <ContextLayout>
@@ -30,7 +39,19 @@ const Money = () => {
             </h2>
           </div>
           <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-            <DataTable data={mockData} total={100000} columns={columnsFn(t)} />
+            <DataTable
+              data={mockData}
+              columns={columnsFn(t)}
+              footerChildren={
+                <div className='mt-5 border rounded-md flex justify-between items-center p-4'>
+                  {/* Label "Total" alineado a la derecha */}
+                  <div>${200000}</div>
+
+                  {/* Botón "Nuevo" alineado a la izquierda */}
+                  <Button onClick={handleClick}>Nuevo</Button>
+                </div>
+              }
+            />
           </div>
         </ContextLayout.Body>
       </DashboardLayout>

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { routes } from '@/lib/contants';
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -22,14 +23,14 @@ const Hero = () => {
           <div className='flex justify-center md:justify-start'>
             {user ? (
               <Link
-                href='/reports'
+                href={routes.reports}
                 className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'
               >
                 {t('dashboard.title')}
               </Link>
             ) : (
               <Link
-                href='/api/auth/signup'
+                href={routes.signUp}
                 className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'
               >
                 {t('common.signUp')}

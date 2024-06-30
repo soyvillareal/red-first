@@ -6,7 +6,6 @@ import YoutubeIcon from './icons/YoutubeIcon';
 import XIcon from './icons/XIcon';
 import PinterestIcon from './icons/PinterestIcon';
 import InstagramIcon from './icons/InstagramIcon';
-import LanguageSelector from './LanguageSelector';
 
 const Footer = () => {
   return (
@@ -49,7 +48,6 @@ const Footer = () => {
 
         {/* Logo */}
         <div className='flex flex-row justify-center items-center gap-3'>
-          <LanguageSelector />
           <LogoWhiteIcon />
         </div>
       </div>

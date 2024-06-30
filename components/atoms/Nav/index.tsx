@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { Button, buttonVariants } from './custom/button';
+import { Button, buttonVariants } from '@/components/custom/Button';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from './ui/collapsible';
+} from '@/components/ui/collapsible';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,23 +12,17 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from './ui/tooltip';
+} from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import useCheckActiveNav from '@/hooks/useCheckActiveNav';
-import { SideLink } from './types';
-import ChevronDownIcon from './icons/ChevronDownIcon';
-
-interface NavProps extends React.HTMLAttributes<HTMLDivElement> {
-  isCollapsed: boolean;
-  links: SideLink[];
-  closeNav: () => void;
-}
+import { NavLinkProps, NavProps, SideLink } from './Nav.types';
+import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
 
 export default function Nav({
   links,
@@ -73,11 +67,6 @@ export default function Nav({
       </TooltipProvider>
     </div>
   );
-}
-
-interface NavLinkProps extends SideLink {
-  subLink?: boolean;
-  closeNav: () => void;
 }
 
 function NavLink({

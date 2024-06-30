@@ -2,9 +2,9 @@ import { TFunction } from 'next-i18next';
 import { ColumnDef } from '@tanstack/react-table';
 
 import MoneyIcon from '@/components/icons/MoneyIcon';
+import { DataTableColumnHeader } from '@/components/atoms/Table/DataTableColumnHeader';
 
-import { MoneySchema } from './data/schema';
-import { DataTableColumnHeader } from './components/DataTableColumnHeader';
+import { MoneySchema } from './movements.schema';
 import { EMovementType } from '@/lib/types';
 
 export const types = [
@@ -25,7 +25,11 @@ export const columnsFn = (t: TFunction): ColumnDef<MoneySchema>[] => {
     {
       accessorKey: 'amount',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='movements.amount' />
+        <DataTableColumnHeader
+          column={column}
+          i18nTitle='movements.amount'
+          hasDropdown
+        />
       ),
       cell: ({ row }) => {
         return (
@@ -38,7 +42,11 @@ export const columnsFn = (t: TFunction): ColumnDef<MoneySchema>[] => {
     {
       accessorKey: 'userName',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='movements.userName' />
+        <DataTableColumnHeader
+          column={column}
+          i18nTitle='movements.userName'
+          hasDropdown
+        />
       ),
       cell: ({ row }) => {
         return (
@@ -54,7 +62,11 @@ export const columnsFn = (t: TFunction): ColumnDef<MoneySchema>[] => {
     {
       accessorKey: 'concept',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='movements.concept' />
+        <DataTableColumnHeader
+          column={column}
+          i18nTitle='movements.concept'
+          hasDropdown
+        />
       ),
       cell: ({ row }) => {
         const type = types.find(
@@ -85,7 +97,11 @@ export const columnsFn = (t: TFunction): ColumnDef<MoneySchema>[] => {
     {
       accessorKey: 'date',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} i18nTitle='movements.date' />
+        <DataTableColumnHeader
+          column={column}
+          i18nTitle='movements.date'
+          hasDropdown
+        />
       ),
       cell: ({ row }) => {
         return (

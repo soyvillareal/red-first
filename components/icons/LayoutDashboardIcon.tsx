@@ -8,10 +8,10 @@ const LayoutDashboardIcon = ({
 }: IIconsProps) => {
   return (
     <svg
-      fill='#000000'
       className={className}
       width={width}
       height={height}
+      fill='currentColor'
       viewBox='0 0 24 24'
       xmlns='http://www.w3.org/2000/svg'
     >

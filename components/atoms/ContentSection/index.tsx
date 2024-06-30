@@ -1,12 +1,9 @@
-import { Separator } from '@/components/ui/separator';
-import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
-interface ContentSectionProps {
-  title: string;
-  goBackUrl?: string;
-  children: JSX.Element;
-}
+import { Separator } from '@/components/ui/separator';
+import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon';
+
+import { ContentSectionProps } from './ContentSection.types';
 
 export default function ContentSection({
   title,
@@ -20,10 +17,8 @@ export default function ContentSection({
           className='group flex flex-row justify-start items-center gap-2 hover:underline'
           href={goBackUrl}
         >
-          <ChevronLeft className='h-6 w-6 transition-opacity duration-200 delay-150 group-hover:opacity-50' />
-          <h3 className='text-lg font-medium'>
-            {title}
-          </h3>
+          <ChevronLeftIcon className='h-6 w-6 transition-opacity duration-200 delay-150 group-hover:opacity-50' />
+          <h3 className='text-lg font-medium'>{title}</h3>
         </Link>
       ) : (
         <div className='flex-none'>

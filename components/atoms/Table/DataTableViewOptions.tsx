@@ -1,8 +1,7 @@
 import { useTranslation } from 'next-i18next';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
-import { Table } from '@tanstack/react-table';
 
-import { Button } from '@/components/custom/button';
+import { Button } from '@/components/custom/Button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -12,9 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import MixerHorizontalIcon from '@/components/icons/MixerHorizontalIcon';
 
-interface DataTableViewOptionsProps<TData> {
-  table: Table<TData>;
-}
+import { DataTableViewOptionsProps } from './Table.types';
 
 export function DataTableViewOptions<TData>({
   table,

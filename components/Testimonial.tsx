@@ -5,6 +5,7 @@ import avatarAnisha from '../public/images/avatar-anisha.png';
 import avatarAli from '../public/images/avatar-ali.png';
 import avatarRichard from '../public/images/avatar-richard.png';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { routes } from '@/lib/contants';
 
 const Testimonial = () => {
   const { t } = useTranslation();
@@ -51,14 +52,14 @@ const Testimonial = () => {
         <div className='my-16'>
           {user ? (
             <Link
-              href='/reports'
+              href={routes.reports}
               className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'
             >
               {t('dashboard.title')}
             </Link>
           ) : (
             <Link
-              href='/api/auth/signup'
+              href={routes.signUp}
               className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'
             >
               {t('common.signUp')}

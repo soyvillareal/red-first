@@ -1,7 +1,7 @@
-import { Column } from '@tanstack/react-table';
+import { useCallback } from 'react';
 import { useTranslation } from 'next-i18next';
 
-import { Button } from '@/components/custom/button';
+import { Button } from '@/components/custom/Button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,19 +9,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
 import ArrowDownIcon from '@/components/icons/ArrowDownIcon';
 import ArrowUpIcon from '@/components/icons/ArrowUpIcon';
 import CaretSortIcon from '@/components/icons/CaretSortIcon';
 import EyeNoneIcon from '@/components/icons/EyeNoneIcon';
-import { useCallback } from 'react';
+import { cn } from '@/lib/utils';
 
-interface DataTableColumnHeaderProps<TData, TValue>
-  extends React.HTMLAttributes<HTMLDivElement> {
-  column: Column<TData, TValue>;
-  i18nTitle: string;
-  hasDropdown?: boolean;
-}
+import { DataTableColumnHeaderProps } from './Table.types';
 
 export function DataTableColumnHeader<TData, TValue>({
   i18nTitle,
@@ -44,7 +38,7 @@ export function DataTableColumnHeader<TData, TValue>({
               <Button
                 variant='ghost'
                 size='sm'
-                className='px-0 h-8 data-[state=open]:bg-accent'
+                className='-ml-3 h-8 data-[state=open]:bg-accent'
               >
                 <span>{t(i18nTitle)}</span>
                 {column.getIsSorted() === 'desc' ? (
@@ -77,7 +71,7 @@ export function DataTableColumnHeader<TData, TValue>({
     }
     return (
       <div className='flex flex-row justify-start items-center h-8'>
-        <span className="font-medium text-xs">{t(i18nTitle)}</span>
+        <span className='font-medium text-xs'>{t(i18nTitle)}</span>
       </div>
     );
   }, [t, i18nTitle, column, className, hasDropdown]);

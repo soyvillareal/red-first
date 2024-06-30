@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { routes } from '@/lib/contants';
 
 const CallToAction = () => {
   const { t } = useTranslation();
@@ -18,14 +19,14 @@ const CallToAction = () => {
         <div>
           {user ? (
             <Link
-              href='/reports'
+              href={routes.reports}
               className='p-3 px-6 pt-2 text-primary bg-white rounded-full shadow-2xl baseline hover:bg-gray-900'
             >
               {t('dashboard.title')}
             </Link>
           ) : (
             <Link
-              href='/api/auth/signup'
+              href={routes.signUp}
               className='p-3 px-6 pt-2 text-primary bg-white rounded-full shadow-2xl baseline hover:bg-gray-900'
             >
               {t('common.signUp')}

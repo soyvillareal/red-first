@@ -1,10 +1,8 @@
-import { ComponentType } from 'react';
 import { useTranslation } from 'next-i18next';
-import { Column } from '@tanstack/react-table';
 
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/custom/button';
+import { Button } from '@/components/custom/Button';
 import {
   Command,
   CommandEmpty,
@@ -23,15 +21,7 @@ import { Separator } from '@/components/ui/separator';
 import CheckIcon from '@/components/icons/CheckIcon';
 import PlusCircledIcon from '@/components/icons/PlusCircledIcon';
 
-interface DataTableFacetedFilterProps<TData, TValue> {
-  column?: Column<TData, TValue>;
-  title?: string;
-  options: {
-    label: string;
-    value: string;
-    icon?: ComponentType<{ className?: string }>;
-  }[];
-}
+import { DataTableFacetedFilterProps } from './Table.types';
 
 export function DataTableFacetedFilter<TData, TValue>({
   column,

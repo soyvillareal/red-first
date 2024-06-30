@@ -1,17 +1,5 @@
-import {
-  FieldValues,
-  FormProvider,
-  SubmitHandler,
-  UseFormReturn,
-} from 'react-hook-form'
-
-interface FormProps<T extends FieldValues> {
-  autoComplete?: string
-  onSubmit: SubmitHandler<T>
-  methods: UseFormReturn<T>
-  className?: string;
-  style?: React.CSSProperties
-}
+import { FieldValues, FormProvider } from 'react-hook-form';
+import { FormProps } from './HookForm.types';
 
 const HookForm = <T extends FieldValues>({
   autoComplete = 'on',
@@ -32,7 +20,7 @@ const HookForm = <T extends FieldValues>({
         {children}
       </form>
     </FormProvider>
-  )
-}
+  );
+};
 
-export default HookForm
+export default HookForm;

@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
-import { ContextLayout } from './custom/layout';
-import { Button } from './custom/button';
-import Nav from './Nav';
+import { ContextLayout } from '@/components/custom/layout';
+import { Button } from '@/components/custom/Button';
+import Nav from '@/components/atoms/Nav';
 import { cn } from '@/lib/utils';
-import { sidelinks } from './constants';
-import MenuIcon from './icons/MenuIcon';
-import CloseIcon from './icons/CloseIcon';
-import ChevronsLeftIcon from './icons/ChevronsLeftIcon';
-import LogoIcon from './icons/LogoIcon';
+import MenuIcon from '@/components/icons/MenuIcon';
+import CloseIcon from '@/components/icons/CloseIcon';
+import ChevronsLeftIcon from '@/components/icons/ChevronsLeftIcon';
+import LogoIcon from '@/components/icons/LogoIcon';
 
-interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
-  isCollapsed: boolean;
-  setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { sidelinks } from './Sidebar.constants';
+import { SidebarProps } from './Sidebar.types';
 
 export default function Sidebar({
   className,

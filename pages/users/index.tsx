@@ -3,13 +3,13 @@ import { useTranslation } from 'next-i18next';
 
 import { ContextLayout } from '@/components/custom/layout';
 
-import DashboardLayout from '@/components/DashboardLayout';
+import { DataTable } from '@/components/atoms/Table/DataTable';
+import DashboardLayout from '@/components/atoms/DashboardLayout';
+import { UserNav } from '@/components/atoms/UserNav';
 import { loadTranslations } from '@/lib/i18n';
-import { UserNav } from '@/components/UserNav';
 
-import { DataTable } from './components/DataTable';
-import { mockData } from './data/data.mock';
-import { columns } from './constants';
+import { mockData } from './users.mock';
+import { columns } from './users.constants';
 
 const Money = () => {
   const { t } = useTranslation();

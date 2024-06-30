@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import dayjs from 'dayjs';
 import { cn } from '@/lib/utils';
-import { Button, buttonVariants } from '@/components/custom/button';
+import { Button, buttonVariants } from '@/components/custom/Button';
 import { Calendar } from '@/components/ui/calendar';
 import {
   Form,

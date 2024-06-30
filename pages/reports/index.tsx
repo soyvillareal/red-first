@@ -1,5 +1,5 @@
 import { ContextLayout } from '@/components/custom/layout';
-import { Button } from '@/components/custom/button';
+import { Button } from '@/components/custom/Button';
 import {
   Card,
   CardContent,
@@ -7,10 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { UserNav } from '@/components/UserNav';
+import { UserNav } from '@/components/atoms/UserNav';
 import { RecentSales } from './components/RecentSales';
 import { Overview } from './components/Overview';
-import DashboardLayout from '@/components/DashboardLayout';
+import DashboardLayout from '@/components/atoms/DashboardLayout';
 import Dollar2Icon from '@/components/icons/Dollar2Icon';
 import { GetStaticProps } from 'next';
 import { loadTranslations } from '@/lib/i18n';

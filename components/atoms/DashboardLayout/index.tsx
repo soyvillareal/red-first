@@ -1,10 +1,8 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '@/components/atoms/Sidebar';
 import useIsCollapsed from '@/hooks/useIsCollapsed';
-import { GetStaticProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const DashboardLayout = ({ children }: PropsWithChildren) => {
   const [isCollapsed, setIsCollapsed] = useIsCollapsed();
