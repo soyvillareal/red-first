@@ -5,8 +5,8 @@ import DashboardLayout from '@/components/atoms/DashboardLayout';
 import ContentSection from '@/components/atoms/ContentSection';
 import { ContextLayout } from '@/components/custom/layout';
 import { UserNav } from '@/components/atoms/UserNav';
-
-import { MovementForm } from './MovementForm';
+import { MovementForm } from '@/components/atoms/MovementForm';
+import { routes } from '@/lib/contants';
 
 export default function NewMovement() {
   return (
@@ -20,7 +20,7 @@ export default function NewMovement() {
         </ContextLayout.Header>
 
         <ContextLayout.Body>
-          <ContentSection title='Nuevo movimiento' goBackUrl='/movements'>
+          <ContentSection title='Nuevo movimiento' goBackUrl={routes.movements}>
             <MovementForm />
           </ContentSection>
         </ContextLayout.Body>

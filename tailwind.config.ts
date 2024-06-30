@@ -23,6 +23,7 @@ const config = {
         input: 'var(--input)',
         ring: 'var(--ring)',
         green: 'var(--green)',
+        red: 'var(--red)',
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         primary: {

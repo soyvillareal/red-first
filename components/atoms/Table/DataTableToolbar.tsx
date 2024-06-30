@@ -11,6 +11,7 @@ import { DataTableToolbarProps } from './Table.types';
 
 export function DataTableToolbar<TData>({
   table,
+  toolbarOptions,
 }: DataTableToolbarProps<TData>) {
   const { t } = useTranslation();
 
@@ -22,21 +23,32 @@ export function DataTableToolbar<TData>({
         <Input
           placeholder={t('table.search')}
           value={
-            (table.getColumn('userName')?.getFilterValue() as string) ?? ''
+            (table
+              .getColumn(toolbarOptions.searchKey as string)
+              ?.getFilterValue() as string) ?? ''
           }
           onChange={(event) =>
-            table.getColumn('userName')?.setFilterValue(event.target.value)
+            table
+              .getColumn(toolbarOptions.searchKey as string)
+              ?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('concept') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('concept')}
-              title='Types'
-              options={types}
-            />
-          )}
+          {toolbarOptions.filters?.map((filter, i) => {
+            if (table.getColumn(filter as string)) {
+              return (
+                <DataTableFacetedFilter
+                  key={i}
+                  column={table.getColumn(filter as string)}
+                  title='Types'
+                  options={types}
+                />
+              );
+            }
+
+            return null;
+          })}
         </div>
         {isFiltered && (
           <Button

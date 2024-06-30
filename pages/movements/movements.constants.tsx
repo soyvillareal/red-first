@@ -1,22 +1,23 @@
 import { TFunction } from 'next-i18next';
 import { ColumnDef } from '@tanstack/react-table';
 
-import MoneyIcon from '@/components/icons/MoneyIcon';
+import CircleIcon from '@/components/icons/CircleIcon';
 import { DataTableColumnHeader } from '@/components/atoms/Table/DataTableColumnHeader';
 
 import { MoneySchema } from './movements.schema';
 import { EMovementType } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 export const types = [
   {
     value: EMovementType.INCOME,
     label: 'movements.income',
-    icon: MoneyIcon,
+    icon: CircleIcon,
   },
   {
     value: EMovementType.EXPENSE,
     label: 'movements.expense',
-    icon: MoneyIcon,
+    icon: CircleIcon,
   },
 ];
 
@@ -81,9 +82,10 @@ export const columnsFn = (t: TFunction): ColumnDef<MoneySchema>[] => {
           <div className='flex w-[100px] items-center'>
             {type.icon && (
               <type.icon
-                className={`mr-2 h-4 w-4 ${
-                  type.value === 'expense' ? 'text-primary' : 'text-green'
-                }`}
+                className={cn(
+                  'mr-2 h-4 w-4',
+                  type.value === 'expense' ? 'text-red' : 'text-green'
+                )}
               />
             )}
             <span>{t(type.label)}</span>

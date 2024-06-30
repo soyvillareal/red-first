@@ -1,17 +1,24 @@
 import { Column, ColumnDef, Table } from '@tanstack/react-table';
 import { ComponentType } from 'react';
 
-export interface DataTableToolbarProps<TData> {
+export interface DataTablePaginationProps<TData> {
   table: Table<TData>;
 }
 
-export interface DataTablePaginationProps<TData> {
+export interface DataTableToolbarOptions<TData> {
+  searchKey: keyof TData;
+  filters?: (keyof TData)[];
+}
+
+export interface DataTableToolbarProps<TData> {
   table: Table<TData>;
+  toolbarOptions: DataTableToolbarOptions<TData>;
 }
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  toolbarOptions: DataTableToolbarOptions<TData>;
   footerChildren?: React.ReactNode;
 }
 

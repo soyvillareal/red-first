@@ -6,8 +6,8 @@ import DashboardLayout from '@/components/atoms/DashboardLayout';
 import ContentSection from '@/components/atoms/ContentSection';
 import { ContextLayout } from '@/components/custom/layout';
 import { UserNav } from '@/components/atoms/UserNav';
-
-import { UserForm } from './UserForm';
+import { UserForm } from '@/components/atoms/UserForm';
+import { routes } from '@/lib/contants';
 
 export default function EditUser() {
   const { query } = useRouter();
@@ -25,7 +25,7 @@ export default function EditUser() {
         </ContextLayout.Header>
 
         <ContextLayout.Body>
-          <ContentSection title='Editar usuario' goBackUrl='/users'>
+          <ContentSection title='Editar usuario' goBackUrl={routes.users}>
             <UserForm />
           </ContentSection>
         </ContextLayout.Body>

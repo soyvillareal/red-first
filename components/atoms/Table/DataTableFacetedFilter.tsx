@@ -66,7 +66,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                         key={option.value}
                         className='rounded-sm px-1 font-normal'
                       >
-                        {option.label}
+                        {t(option.label)}
                       </Badge>
                     ))
                 )}
@@ -102,22 +102,21 @@ export function DataTableFacetedFilter<TData, TValue>({
                       className={cn(
                         'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
                         isSelected
-                          ? 'bg-primary text-primary-foreground'
-                          : 'opacity-50 [&_svg]:invisible'
+                          ? 'bg-secondary text-primary-foreground'
+                          : 'bg-background opacity-50 [&_svg]:invisible'
                       )}
                     >
                       <CheckIcon className={cn('h-4 w-4')} />
                     </div>
                     {option.icon && (
                       <option.icon
-                        className={`mr-2 h-4 w-4 text-muted-foreground ${
-                          option.value === 'expense'
-                            ? 'text-primary'
-                            : 'text-green'
-                        }`}
+                        className={cn(
+                          'mr-2 h-4 w-4 text-muted-foreground',
+                          option.value === 'expense' ? 'text-red' : 'text-green'
+                        )}
                       />
                     )}
-                    <span>{option.label}</span>
+                    <span>{t(option.label)}</span>
                     {facets?.get(option.value) && (
                       <span className='ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs'>
                         {facets.get(option.value)}
@@ -131,11 +130,14 @@ export function DataTableFacetedFilter<TData, TValue>({
               <>
                 <CommandSeparator />
                 <CommandGroup>
-                  <CommandItem
-                    onSelect={() => column?.setFilterValue(undefined)}
-                    className='justify-center text-center'
-                  >
-                    {t('table.clearFilters')}
+                  <CommandItem className='flex flex-row justify-center items-center'>
+                    <Button
+                      variant='ghost'
+                      onClick={() => column?.setFilterValue(undefined)}
+                      className='justify-center text-center'
+                    >
+                      {t('table.clearFilters')}
+                    </Button>
                   </CommandItem>
                 </CommandGroup>
               </>

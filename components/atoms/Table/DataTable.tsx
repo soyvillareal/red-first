@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -32,10 +30,10 @@ import { DataTableProps } from './Table.types';
 export function DataTable<TData, TValue>({
   columns,
   data,
+  toolbarOptions,
   footerChildren,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation();
-  const router = useRouter();
 
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -66,7 +64,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className='space-y-4'>
-      <DataTableToolbar table={table} />
+      <DataTableToolbar table={table} toolbarOptions={toolbarOptions} />
       <div className='rounded-md border bg-primary-foreground'>
         <Table>
           <TableHeader>

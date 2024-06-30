@@ -42,6 +42,10 @@ const Money = () => {
             <DataTable
               data={mockData}
               columns={columnsFn(t)}
+              toolbarOptions={{
+                searchKey: 'userName',
+                filters: ['concept'],
+              }}
               footerChildren={
                 <div className='mt-5 border rounded-md flex justify-between items-center p-4'>
                   {/* Label "Total" alineado a la derecha */}

@@ -1,10 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import dayjs from 'dayjs';
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/custom/Button';
-import { Calendar } from '@/components/ui/calendar';
 import {
   Form,
   FormControl,
@@ -15,16 +13,10 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
-import CalendarIcon from '@/components/icons/CalendarIcon';
 import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
-import { EMovementType, EUserRole } from '@/lib/types';
+import { EUserRole } from '@/lib/types';
 
 const accountFormSchema = z.object({
   name: z
@@ -75,10 +67,7 @@ export function UserForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input
-                  placeholder='Write the name'
-                  {...field}
-                />
+                <Input placeholder='Write the name' {...field} />
               </FormControl>
               <FormDescription>
                 The name of the user is used to identify it.
