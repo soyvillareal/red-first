@@ -19,18 +19,20 @@ import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
 import { EUserRole } from '@/lib/types';
 
-import { UserFormValues } from './UserForm.types';
+import { UserFormProps, UserFormInputs } from './UserForm.types';
 import { userFormSchema } from './UserForm.schema';
-import { defaultValues } from './UserForm.constants';
 
-export function UserForm() {
+export function UserForm({ userData }: UserFormProps) {
   const { t } = useTranslation();
-  const methods = useForm<UserFormValues>({
+  const methods = useForm<UserFormInputs>({
     resolver: zodResolver(userFormSchema),
-    defaultValues,
+    defaultValues: {
+      name: userData.name,
+      role: userData.role,
+    },
   });
 
-  const onSubmit = useCallback((data: UserFormValues) => {
+  const onSubmit = useCallback((data: UserFormInputs) => {
     toast({
       title: 'You submitted the following values:',
       description: (

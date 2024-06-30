@@ -28,18 +28,18 @@ import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
 import { EMovementType } from '@/lib/types';
 
-import { MovementFormValues } from './MovementForm.types';
+import { MovementFormInputs } from './MovementForm.types';
 import { movementFormSchema } from './MovementForm.schema';
 import { defaultValues } from './MovementForm.constants';
 
 export function MovementForm() {
   const { t } = useTranslation();
-  const methods = useForm<MovementFormValues>({
+  const methods = useForm<MovementFormInputs>({
     resolver: zodResolver(movementFormSchema),
     defaultValues,
   });
 
-  const onSubmit = useCallback((data: MovementFormValues) => {
+  const onSubmit = useCallback((data: MovementFormInputs) => {
     toast({
       title: 'You submitted the following values:',
       description: (

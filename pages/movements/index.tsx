@@ -18,6 +18,8 @@ const Money = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const { total, movements } = mockData;
+
   const handleClick = useCallback(() => {
     router.push(routes.newMovement);
   }, [router]);
@@ -40,7 +42,7 @@ const Money = () => {
           </div>
           <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
             <DataTable
-              data={mockData}
+              data={movements}
               columns={columnsFn(t)}
               toolbarOptions={{
                 searchKey: 'userName',
@@ -48,11 +50,8 @@ const Money = () => {
               }}
               footerChildren={
                 <div className='mt-5 border rounded-md flex justify-between items-center p-4'>
-                  {/* Label "Total" alineado a la derecha */}
-                  <div>${200000}</div>
-
-                  {/* Botón "Nuevo" alineado a la izquierda */}
-                  <Button onClick={handleClick}>Nuevo</Button>
+                  <span>{total}</span>
+                  <Button onClick={handleClick}>{t('common.new')}</Button>
                 </div>
               }
             />

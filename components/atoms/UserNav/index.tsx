@@ -17,13 +17,12 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { languages } from '@/lib/i18nConfig';
-
 import LanguageIcon from '@/components/icons/LanguageIcon';
 import LogOutIcon from '@/components/icons/LogOutIcon';
-import { cn } from '@/lib/utils';
 import LayoutDashboardIcon from '@/components/icons/LayoutDashboardIcon';
+import { cn, getNameInitials } from '@/lib/utils';
 import { dashboardRoutes, routes } from '@/lib/contants';
+import { languages } from '@/lib/i18nConfig';
 
 export const UserNav = () => {
   const { t, i18n } = useTranslation();
@@ -49,7 +48,9 @@ export const UserNav = () => {
           {user && user.picture && (
             <Avatar className='w-10 h-10'>
               <AvatarImage src={user.picture} />
-              <AvatarFallback>{user.nickname}</AvatarFallback>
+              {user.name && (
+                <AvatarFallback>{getNameInitials(user.name)}</AvatarFallback>
+              )}
             </Avatar>
           )}
         </Button>

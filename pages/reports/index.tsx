@@ -15,23 +15,23 @@ import DashboardLayout from '@/components/atoms/DashboardLayout';
 import Dollar2Icon from '@/components/icons/Dollar2Icon';
 import { loadTranslations } from '@/lib/i18n';
 
-import { RecentSales } from './components/RecentSales';
-import { Overview } from './components/Overview';
+import { RecentMovements } from './components/RecentMovements';
+import { MovementsChart } from './components/MovementsChart';
+import { dataMock as props } from './reports.mock';
 
 export default function Dashboard() {
   const { t } = useTranslation();
 
+  const { balance, movements, movementsChart, recentMovements } = props;
+
   return (
     <ContextLayout>
       <DashboardLayout>
-        {/* ===== Top Heading ===== */}
         <ContextLayout.Header>
           <div className='ml-auto flex items-center space-x-4'>
             <UserNav />
           </div>
         </ContextLayout.Header>
-
-        {/* ===== Main ===== */}
         <ContextLayout.Body>
           <div className='mb-2 flex items-center justify-between space-y-2'>
             <h1 className='text-2xl font-bold tracking-tight'>
@@ -50,10 +50,9 @@ export default function Dashboard() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className='pl-2'>
-                  <Overview />
+                  <MovementsChart movements={movementsChart} />
                 </CardContent>
               </Card>
-
               <div>
                 <Card className='border-b-0'>
                   <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
@@ -64,7 +63,7 @@ export default function Dashboard() {
                   </CardHeader>
                   <CardContent>
                     <div className='text-secondary-foreground text-2xl font-bold'>
-                      $45,231.89
+                      {balance}
                     </div>
                   </CardContent>
                 </Card>
@@ -76,13 +75,13 @@ export default function Dashboard() {
                     <CardDescription className='text-secondary-foreground'>
                       {t('dashboard.youMadeMovementsMonth', {
                         replace: {
-                          movements: 265,
+                          movements,
                         },
                       })}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <RecentSales />
+                    <RecentMovements movements={recentMovements} />
                   </CardContent>
                 </Card>
               </div>

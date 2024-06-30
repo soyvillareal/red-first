@@ -1,4 +1,8 @@
 import { z } from 'zod';
 import { userFormSchema } from './UserForm.schema';
 
-export type UserFormValues = z.infer<typeof userFormSchema>;
+export type UserFormInputs = z.infer<typeof userFormSchema>;
+
+export interface UserFormProps {
+  userData: UserFormInputs;
+}

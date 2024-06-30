@@ -10,25 +10,30 @@ import { UserNav } from '@/components/atoms/UserNav';
 import { UserForm } from '@/components/atoms/UserForm';
 import { routes } from '@/lib/contants';
 
+import { mockData as props } from './edit.mock';
+
 export default function EditUser() {
   const { t } = useTranslation();
   const { query } = useRouter();
 
-  console.log('query: ', query);
+  const { name, role } = props;
 
   return (
     <ContextLayout>
       <DashboardLayout>
-        {/* ===== Top Heading ===== */}
         <ContextLayout.Header sticky>
           <div className='ml-auto flex items-center space-x-4'>
             <UserNav />
           </div>
         </ContextLayout.Header>
-
         <ContextLayout.Body>
           <ContentSection title={t('editUser.title')} goBackUrl={routes.users}>
-            <UserForm />
+            <UserForm
+              userData={{
+                name,
+                role,
+              }}
+            />
           </ContentSection>
         </ContextLayout.Body>
       </DashboardLayout>
