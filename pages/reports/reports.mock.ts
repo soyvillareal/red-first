@@ -1,4 +1,4 @@
-import { EMovementType } from '@/lib/types';
+import { EMovementConcept } from '@/lib/types';
 import { ReportsPageProps } from './reports.types';
 
 export const dataMock: ReportsPageProps = {
@@ -73,7 +73,7 @@ export const dataMock: ReportsPageProps = {
       email: 'olivia.martin@email.com',
       avatar: '/avatars/01.png',
       movement: '-$1,999.00',
-      type: EMovementType.EXPENSE,
+      type: EMovementConcept.EXPENSE,
     },
     {
       id: 'b1f1e7c6-54ea-4df2-9eee-1e386c89ba25',
@@ -81,7 +81,7 @@ export const dataMock: ReportsPageProps = {
       email: 'jackson.lee@email.com',
       avatar: '/avatars/02.png',
       movement: '+$39.00',
-      type: EMovementType.INCOME,
+      type: EMovementConcept.INCOME,
     },
     {
       id: '437d2358-9757-4e31-90d9-f919980cdea6',
@@ -89,7 +89,7 @@ export const dataMock: ReportsPageProps = {
       email: 'isabella.nguyen@email.com',
       avatar: '/avatars/03.png',
       movement: '+$299.00',
-      type: EMovementType.INCOME,
+      type: EMovementConcept.INCOME,
     },
     {
       id: '4cf2bc26-d4b7-4965-8625-ed879f86ac3e',
@@ -97,7 +97,7 @@ export const dataMock: ReportsPageProps = {
       email: 'will@email.com',
       avatar: '/avatars/04.png',
       movement: '+$99.00',
-      type: EMovementType.INCOME,
+      type: EMovementConcept.INCOME,
     },
     {
       id: '52e3edbb-37d6-48c0-bad0-bf1022267db6',
@@ -105,7 +105,7 @@ export const dataMock: ReportsPageProps = {
       email: 'Sofia Davis',
       avatar: '/avatars/05.png',
       movement: '-$399.00',
-      type: EMovementType.EXPENSE,
+      type: EMovementConcept.EXPENSE,
     },
   ],
 };

@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
+import { useSession } from 'next-auth/react';
+
+import { routes } from '@/lib/contants';
 
 import avatarAnisha from '../public/images/avatar-anisha.png';
 import avatarAli from '../public/images/avatar-ali.png';
 import avatarRichard from '../public/images/avatar-richard.png';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { routes } from '@/lib/contants';
 
 const Testimonial = () => {
   const { t } = useTranslation();
-  const { user } = useUser();
+  const session = useSession();
 
   return (
     <section id='testimonials'>
@@ -62,7 +63,7 @@ const Testimonial = () => {
         </div>
         {/* Button */}
         <div className='my-16'>
-          {user ? (
+          {session.status === 'authenticated' ? (
             <Link
               href={routes.reports}
               className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'

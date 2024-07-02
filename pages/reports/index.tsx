@@ -14,15 +14,26 @@ import { UserNav } from '@/components/atoms/UserNav';
 import DashboardLayout from '@/components/atoms/DashboardLayout';
 import Dollar2Icon from '@/components/icons/Dollar2Icon';
 import { loadTranslations } from '@/lib/i18n';
+import { propsToCSV } from '@/lib/utils';
 
 import { RecentMovements } from './components/RecentMovements';
 import { MovementsChart } from './components/MovementsChart';
 import { dataMock as props } from './reports.mock';
+import { useCallback } from 'react';
 
 export default function Dashboard() {
   const { t } = useTranslation();
 
   const { balance, movements, movementsChart, recentMovements } = props;
+
+  const handleClickDownload = useCallback(() => {
+    propsToCSV({
+      balance,
+      movements,
+      movementsChart,
+      recentMovements,
+    });
+  }, [balance, movements, movementsChart, recentMovements]);
 
   return (
     <ContextLayout>
@@ -38,7 +49,9 @@ export default function Dashboard() {
               {t('dashboard.title')}
             </h1>
             <div className='flex items-center space-x-2'>
-              <Button>{t('common.download')}</Button>
+              <Button onClick={handleClickDownload} loading={false}>
+                {t('common.download')}
+              </Button>
             </div>
           </div>
           <div className='space-y-4'>

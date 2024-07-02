@@ -10,7 +10,7 @@ export const dashboardRoutes = {
 
 export const routes = {
   ...dashboardRoutes,
-  login: '/api/auth/login',
+  signin: '/api/auth/signin',
   signUp: '/api/auth/signup',
   logout: '/api/auth/logout',
 };

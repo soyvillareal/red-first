@@ -1,7 +1,8 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { gql, useLazyQuery } from '@apollo/client';
 
 import { ContextLayout } from '@/components/custom/layout';
 import DashboardLayout from '@/components/atoms/DashboardLayout';
@@ -13,12 +14,37 @@ import { loadTranslations } from '@/lib/i18n';
 import { mockData } from './movements.mock';
 import { columnsFn } from './movements.constants';
 import { Button } from '@/components/custom/Button';
+import { IGetMovementsWithTotal } from '@/types/graphql/resolvers';
+
+const MovementQuery = gql`
+  query GetMovements {
+    getMovements {
+      movements {
+        id
+        userName
+        amount
+        concept
+        date
+      }
+      total
+    }
+  }
+`;
 
 const Money = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const { total, movements } = mockData;
+  const [
+    getMovementsQuery,
+    { data: movementQueryData, loading: movementQueryLoading },
+  ] = useLazyQuery<{
+    getMovements: IGetMovementsWithTotal;
+  }>(MovementQuery);
+
+  useEffect(() => {
+    getMovementsQuery();
+  }, []);
 
   const handleClick = useCallback(() => {
     router.push(routes.newMovement);
@@ -41,20 +67,22 @@ const Money = () => {
             </h2>
           </div>
           <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-            <DataTable
-              data={movements}
-              columns={columnsFn(t)}
-              toolbarOptions={{
-                searchKey: 'userName',
-                filters: ['concept'],
-              }}
-              footerChildren={
-                <div className='mt-5 border rounded-md flex justify-between items-center p-4'>
-                  <span>{total}</span>
-                  <Button onClick={handleClick}>{t('common.new')}</Button>
-                </div>
-              }
-            />
+            {movementQueryData?.getMovements && (
+              <DataTable
+                data={movementQueryData?.getMovements.movements}
+                columns={columnsFn(t)}
+                toolbarOptions={{
+                  searchKey: 'userName',
+                  filters: ['concept'],
+                }}
+                footerChildren={
+                  <div className='mt-5 border rounded-md flex justify-between items-center p-4'>
+                    <span>{movementQueryData?.getMovements.total}</span>
+                    <Button onClick={handleClick}>{t('common.new')}</Button>
+                  </div>
+                }
+              />
+            )}
           </div>
         </ContextLayout.Body>
       </DashboardLayout>

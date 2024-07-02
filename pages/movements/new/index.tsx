@@ -1,13 +1,13 @@
 import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 
-import { loadTranslations } from '@/lib/i18n';
 import DashboardLayout from '@/components/atoms/DashboardLayout';
 import ContentSection from '@/components/atoms/ContentSection';
 import { ContextLayout } from '@/components/custom/layout';
 import { UserNav } from '@/components/atoms/UserNav';
 import { MovementForm } from '@/components/atoms/MovementForm';
 import { routes } from '@/lib/contants';
+import { loadTranslations } from '@/lib/i18n';
 
 export default function NewMovement() {
   const { t } = useTranslation();

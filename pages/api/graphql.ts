@@ -1,33 +1,35 @@
+import 'reflect-metadata';
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import { makeExecutableSchema } from '@graphql-tools/schema';
-import { gql } from 'graphql-tag';
+import { buildSchema } from 'type-graphql';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth';
 
-const typeDefs = gql`
-  type Query {
-    users: [User!]!
-  }
+import { GraphQLContext } from '@/lib/types';
+import { Resolvers } from '@/lib/graphql/resolvers';
 
-  type User {
-    name: String
-    username: String
-  }
-`;
+import { authOptions } from './auth/[...nextauth]';
 
-const users = [{ name: 'Foo Bar', username: 'foobar' }];
+// Define una función asíncrona para inicializar el esquema y el servidor
+async function initializeApolloServer() {
+  const schema = await buildSchema({
+    resolvers: [Resolvers],
+  });
 
-const resolvers = {
-  Query: {
-    users() {
-      return users;
+  const server = new ApolloServer({ schema });
+  return startServerAndCreateNextHandler(server, {
+    context: async (req: NextApiRequest, res: NextApiResponse): Promise<GraphQLContext> => {
+      const session = await getServerSession(req, res, authOptions);
+      return { headers: req.headers, session };
     },
-  },
-};
+  });
+}
 
-export const schema = makeExecutableSchema({ typeDefs, resolvers });
-
-const server = new ApolloServer({
-  schema,
-});
-
-export default startServerAndCreateNextHandler(server);
+// Exporta una función que maneje las solicitudes, utilizando la inicialización del servidor
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const handle = await initializeApolloServer();
+  return handle(req, res);
+}

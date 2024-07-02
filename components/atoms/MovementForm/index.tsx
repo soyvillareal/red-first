@@ -1,6 +1,7 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 
@@ -26,28 +27,55 @@ import { toast } from '@/components/ui/use-toast';
 import CalendarIcon from '@/components/icons/CalendarIcon';
 import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
-import { EMovementType } from '@/lib/types';
+import { EMovementConcept } from '@/lib/types';
 
 import { MovementFormInputs } from './MovementForm.types';
 import { movementFormSchema } from './MovementForm.schema';
 import { defaultValues } from './MovementForm.constants';
 
+const MovementMutation = gql`
+  mutation ($concept: EMovementConcept!, $amount: String!, $date: String!) {
+    createMovement(movements: { concept: $concept, amount: $amount, date: $date })
+  }
+`;
+
 export function MovementForm() {
   const { t } = useTranslation();
+
   const methods = useForm<MovementFormInputs>({
     resolver: zodResolver(movementFormSchema),
     defaultValues,
   });
 
-  const onSubmit = useCallback((data: MovementFormInputs) => {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  const [createMovement, { loading: movementMutationLoading }] = useMutation(MovementMutation);
+
+  const onSubmit = useCallback(async (data: MovementFormInputs) => {
+    try {
+      const createdMovement = await createMovement({
+        variables: {
+          concept: data.concept,
+          amount: data.amount,
+          date: dayjs(data.date).format('YYYY-MM-DD'),
+        },
+      });
+
+      console.log('createdMovement: ', createdMovement);
+
+      toast({
+        title: 'You submitted the following values:',
+        description: (
+          <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+            <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
+          </pre>
+        ),
+      });
+    } catch (error: any) {
+      console.error('error: ', error);
+      toast({
+        title: 'An error occurred',
+        description: error.message,
+      });
+    }
   }, []);
 
   return (
@@ -88,7 +116,7 @@ export function MovementForm() {
                     )}
                     {...field}
                   >
-                    {Object.values(EMovementType).map((type) => {
+                    {Object.values(EMovementConcept).map((type) => {
                       return (
                         <option key={type} value={type}>
                           {type}
@@ -150,7 +178,9 @@ export function MovementForm() {
             </FormItem>
           )}
         />
-        <Button type='submit'>{t('common.enter')}</Button>
+        <Button type='submit' loading={movementMutationLoading}>
+          {t('common.enter')}
+        </Button>
       </HookForm>
     </Form>
   );

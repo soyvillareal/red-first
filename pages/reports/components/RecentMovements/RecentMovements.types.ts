@@ -1,4 +1,4 @@
-import { EMovementType } from '@/lib/types';
+import { EMovementConcept } from '@/lib/types';
 
 export interface RecentMovementItem {
   id: string;
@@ -6,7 +6,7 @@ export interface RecentMovementItem {
   email: string;
   avatar: string;
   movement: string;
-  type: EMovementType;
+  type: EMovementConcept;
 }
 
 export interface RecentMovementsProps {

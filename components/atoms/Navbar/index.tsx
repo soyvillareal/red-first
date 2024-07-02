@@ -1,14 +1,22 @@
-import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { signIn, useSession } from 'next-auth/react';
 
 import LogoIcon from '@/components/icons/LogoIcon';
 import { UserNav } from '@/components/atoms/UserNav';
-import { routes } from '@/lib/contants';
+import { Button } from '@/components/ui/button';
+import { useCallback } from 'react';
 
 const Navbar = () => {
   const { t } = useTranslation();
-  const { user } = useUser();
+  const session = useSession();
+
+  const handleClickSignIn = useCallback(() => {
+    signIn('auth0');
+  }, []);
+
+  const handleClickSignUp = useCallback(() => {
+    signIn('auth0', undefined, { screen_hint: 'signup' });
+  }, []);
 
   return (
     <nav className='relative container mx-auto p-6'>
@@ -18,21 +26,24 @@ const Navbar = () => {
         <div className='pt-2'>
           <LogoIcon className='sm:w-[300px]' />
         </div>
-        {user ? (
+        {session.status === 'authenticated' ? (
           <UserNav />
         ) : (
           <div className='flex col-row items-center justify-center gap-4 md:gap-8'>
-            {/* Login button */}
-            <Link href={routes.login} className='hover:text-muted'>
+            <Button
+              variant='link'
+              onClick={handleClickSignIn}
+              className='hover:text-muted p-0 mr-0 h-auto'
+            >
               {t('common.signIn')}
-            </Link>
-            {/* Register button */}
-            <Link
-              href={routes.signUp}
-              className='hidden p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent md:block'
+            </Button>
+            <Button
+              variant='link'
+              onClick={handleClickSignUp}
+              className='hidden p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent md:block pb-2'
             >
               {t('common.signUp')}
-            </Link>
+            </Button>
           </div>
         )}
       </div>

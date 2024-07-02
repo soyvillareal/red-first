@@ -10,9 +10,9 @@ import {
   YAxis,
 } from 'recharts';
 
-import { EMovementType } from '@/lib/types';
+import { EMovementConcept } from '@/lib/types';
+import { parsedNumber } from '@/lib/utils';
 
-import { parsedNumber } from './MovementsChart.constants';
 import { MovementsChartProps } from './MovementsChart.types';
 
 export function MovementsChart({ movements }: MovementsChartProps) {
@@ -51,8 +51,8 @@ export function MovementsChart({ movements }: MovementsChartProps) {
             return [parsedNumber(value), t(`movements.${name}`)];
           }}
         />
-        <Bar dataKey={EMovementType.INCOME} fill='#82ca9d' />
-        <Bar dataKey={EMovementType.EXPENSE} fill='#ff4040' />
+        <Bar dataKey={EMovementConcept.INCOME} fill='#82ca9d' />
+        <Bar dataKey={EMovementConcept.EXPENSE} fill='#ff4040' />
       </BarChart>
     </ResponsiveContainer>
   );

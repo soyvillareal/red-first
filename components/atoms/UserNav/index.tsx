@@ -1,7 +1,8 @@
+import { useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { signOut, useSession } from 'next-auth/react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/custom/Button';
@@ -26,7 +27,7 @@ import { languages } from '@/lib/i18nConfig';
 
 export const UserNav = () => {
   const { t, i18n } = useTranslation();
-  const { user } = useUser();
+  const session = useSession();
   const router = useRouter();
   const { pathname, query, asPath } = router;
 
@@ -41,28 +42,36 @@ export const UserNav = () => {
     });
   };
 
+  const handleClickSignOut = useCallback(() => {
+    signOut();
+  }, []);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
-          {user && user.picture && (
+          {session.data && session.data.user.image && (
             <Avatar className='w-10 h-10'>
-              <AvatarImage src={user.picture} />
-              {user.name && (
-                <AvatarFallback>{getNameInitials(user.name)}</AvatarFallback>
+              <AvatarImage src={session.data.user.image} />
+              {session.data.user.name && (
+                <AvatarFallback>
+                  {getNameInitials(session.data.user.name)}
+                </AvatarFallback>
               )}
             </Avatar>
           )}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-56' align='end' forceMount>
-        {user && (
+        {session && session.data && (
           <DropdownMenuLabel className='font-normal'>
             <div className='flex flex-col space-y-1'>
-              <p className='text-sm font-medium leading-none'>{user.name}</p>
-              {user?.email && (
+              <p className='text-sm font-medium leading-none'>
+                {session.data.user.name}
+              </p>
+              {session.data.user?.email && (
                 <p className='text-xs leading-none text-destructive-foreground'>
-                  {user.email}
+                  {session.data.user.email}
                 </p>
               )}
             </div>
@@ -115,13 +124,14 @@ export const UserNav = () => {
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link
-            href={routes.logout}
-            className='flex flex-row justify-center items-center text-white hover:underline mr-4 ml-1'
+          <Button
+            variant='link'
+            onClick={handleClickSignOut}
+            className='flex flex-row justify-center items-center text-white hover:underline mr-4 ml-1 p-0 mr-0 h-auto'
           >
             <LogOutIcon width={17} height={16} />
             <span className='ml-2'>{t('common.logOut')}</span>
-          </Link>
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

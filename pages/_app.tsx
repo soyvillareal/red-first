@@ -1,18 +1,21 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
-import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { SessionProvider } from 'next-auth/react';
+import { ApolloProvider } from '@apollo/client';
 
 import nextI18NextConfig from '@/next-i18next.config.js';
-import { routes } from '@/lib/contants';
+import apolloClient from '@/lib/apollo';
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const { user } = pageProps;
+  const { session } = pageProps;
 
   return (
-    <UserProvider user={user} loginUrl={routes.login}>
-      <Component {...pageProps} />
-    </UserProvider>
+    <SessionProvider session={session}>
+      <ApolloProvider client={apolloClient}>
+        <Component {...pageProps} />
+      </ApolloProvider>
+    </SessionProvider>
   );
 };
 

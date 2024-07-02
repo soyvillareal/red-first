@@ -1,0 +1,138 @@
+import NextAuth, { AuthOptions } from 'next-auth';
+import Auth0Provider from 'next-auth/providers/auth0';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+
+import env from '@/lib/env';
+import prisma from '@/lib/prisma';
+
+const COOKIES_LIFE_TIME = 24 * 60 * 60; // 24 hours
+const COOKIE_PREFIX = env.NODE_ENV === 'production' ? '__Secure-' : '';
+
+export const authOptions: AuthOptions = {
+  theme: {
+    logo: 'https://authjs.dev/img/logo-sm.png',
+  },
+  providers: [
+    Auth0Provider({
+      idToken: true,
+      checks: ['pkce', 'state'],
+      clientId: env.AUTH0_CLIENT_ID,
+      clientSecret: env.AUTH0_CLIENT_SECRET,
+      issuer: env.AUTH0_ISSUER_BASE_URL,
+      authorization: {
+        params: {
+          prompt: 'login',
+          audience: env.AUTH0_AUDIENCE,
+          scope: env.AUTH0_SCOPE,
+          client_id: env.AUTH0_CLIENT_ID,
+          redirect_uri: env.AUTH0_CALLBACK,
+          response_type: 'code',
+        },
+      },
+    }),
+  ],
+  useSecureCookies: env.NODE_ENV === 'production',
+  cookies: {
+    sessionToken: {
+      name: `${COOKIE_PREFIX}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+      },
+    },
+    callbackUrl: {
+      name: `${COOKIE_PREFIX}next-auth.callback-url`,
+      options: {
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+      },
+    },
+    csrfToken: {
+      name: `${COOKIE_PREFIX}next-auth.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+      },
+    },
+    pkceCodeVerifier: {
+      name: `${COOKIE_PREFIX}next-auth.pkce.code_verifier`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+        maxAge: COOKIES_LIFE_TIME,
+      },
+    },
+    state: {
+      name: `${COOKIE_PREFIX}next-auth.state`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+        maxAge: COOKIES_LIFE_TIME,
+      },
+    },
+    nonce: {
+      name: `${COOKIE_PREFIX}next-auth.nonce`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+      },
+    },
+  },
+  adapter: PrismaAdapter(prisma),
+  secret: env.JWT_SECRET,
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  jwt: {
+    secret: env.JWT_SECRET,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  callbacks: {
+    signIn({ profile }) {
+      return !!profile;
+    },
+    redirect({ url, baseUrl }) {
+      return url.startsWith(baseUrl) ? `${baseUrl}/` : baseUrl;
+    },
+    async jwt(props) {
+      const { token, user, account } = props;
+      if (user) {
+        token.id = user.id;
+      }
+
+      if (account) {
+        token.accessToken = account.access_token;
+      }
+      return token;
+    },
+    async session(props) {
+      const { session, token, user } = props;
+      if (typeof token.id === 'string') {
+        session.user.id = token.id;
+      } else {
+        throw new Error('Token id is not valid!');
+      }
+
+      if (typeof token.accessToken === 'string') {
+        session.accessToken = token.accessToken;
+      } else {
+        throw new Error('Access token id is not valid!');
+      }
+      return session;
+    },
+  },
+};
+
+export default NextAuth(authOptions);

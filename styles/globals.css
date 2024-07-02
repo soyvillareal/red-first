@@ -80,28 +80,24 @@
 }
 
 body {
-  background-image: hsl(url('../public/images/bg-tablet-pattern.svg'));
-  background-repeat: hsl(no-repeat);
-  background-size: hsl(800px);
-  background-position: hsl(90% -25%);
+  background-image: url('../public/images/bg-tablet-pattern.svg');
+  background-repeat: no-repeat;
+  background-size: 800px;
+  background-position: 90% -25%;
 }
 
 #cta {
-  background-image: hsl(
-    url('../public/images/bg-simplify-section-desktop.svg')
-  );
-  background-repeat: hsl(no-repeat);
+  background-image: url('../public/images/bg-simplify-section-desktop.svg');
+  background-repeat: no-repeat;
 }
 
 @media (max-width: 576px) {
   body {
-    background-position: hsl(50px -50px);
-    background-size: hsl(500px);
+    background-position: 50px -50px;
+    background-size: 500px;
   }
 
   #cta {
-    background-image: hsl(
-      url('../public/images/bg-simplify-section-mobile.svg')
-    );
+    background-image: url('../public/images/bg-simplify-section-mobile.svg');
   }
 }

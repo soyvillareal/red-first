@@ -4,24 +4,24 @@ import { ColumnDef } from '@tanstack/react-table';
 import CircleIcon from '@/components/icons/CircleIcon';
 import { DataTableColumnHeader } from '@/components/atoms/Table/DataTableColumnHeader';
 
-import { MoneySchema } from './movements.schema';
-import { EMovementType } from '@/lib/types';
+import { movementSchema } from './movements.schema';
+import { EMovementConcept } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 export const types = [
   {
-    value: EMovementType.INCOME,
+    value: EMovementConcept.INCOME,
     label: 'movements.income',
     icon: CircleIcon,
   },
   {
-    value: EMovementType.EXPENSE,
+    value: EMovementConcept.EXPENSE,
     label: 'movements.expense',
     icon: CircleIcon,
   },
 ];
 
-export const columnsFn = (t: TFunction): ColumnDef<MoneySchema>[] => {
+export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => {
   return [
     {
       accessorKey: 'amount',

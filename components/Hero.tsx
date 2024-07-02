@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useSession } from 'next-auth/react';
+
 import { routes } from '@/lib/contants';
 
 const Hero = () => {
   const { t } = useTranslation();
-  const { user } = useUser();
+  const session = useSession();
 
   return (
     <section id='hero'>
@@ -21,7 +22,7 @@ const Hero = () => {
             {t('landing.makes_it_easy')}
           </p>
           <div className='flex justify-center md:justify-start'>
-            {user ? (
+            {session.status === 'authenticated' ? (
               <Link
                 href={routes.reports}
                 className='p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent'

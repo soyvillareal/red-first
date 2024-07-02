@@ -39,7 +39,7 @@
         "recentMovements": "Recent movements",
         "movements": "Movements",
         "balance": "Balance",
-        "youMadeMovementsMonth": "You made {{movements}} movements this month"
+        "youMadeMovementsMonth": "You made {{movements}} movements this month."
     },
     "table": {
         "asc": "ASC",

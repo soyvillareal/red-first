@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useSession } from 'next-auth/react';
 import { routes } from '@/lib/contants';
 
 const CallToAction = () => {
   const { t } = useTranslation();
-  const { user } = useUser();
+  const session = useSession();
 
   return (
     <section id='cta' className='bg-primary'>
@@ -17,7 +17,7 @@ const CallToAction = () => {
         </h2>
         {/* Button */}
         <div>
-          {user ? (
+          {session.status === 'authenticated' ? (
             <Link
               href={routes.reports}
               className='p-3 px-6 pt-2 text-primary bg-white rounded-full shadow-2xl baseline hover:bg-gray-900'
