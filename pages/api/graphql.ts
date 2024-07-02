@@ -5,12 +5,11 @@ import { buildSchema } from 'type-graphql';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 
-import { GraphQLContext } from '@/lib/types';
-import { Resolvers } from '@/lib/graphql/resolvers';
+import { IGraphQLContext } from '@/types';
+import { Resolvers } from '@/server/graphql/resolvers';
 
 import { authOptions } from './auth/[...nextauth]';
 
-// Define una función asíncrona para inicializar el esquema y el servidor
 async function initializeApolloServer() {
   const schema = await buildSchema({
     resolvers: [Resolvers],
@@ -18,14 +17,26 @@ async function initializeApolloServer() {
 
   const server = new ApolloServer({ schema });
   return startServerAndCreateNextHandler(server, {
-    context: async (req: NextApiRequest, res: NextApiResponse): Promise<GraphQLContext> => {
+    context: async (
+      req: NextApiRequest,
+      res: NextApiResponse
+    ): Promise<IGraphQLContext> => {
       const session = await getServerSession(req, res, authOptions);
-      return { headers: req.headers, session };
+
+      if (session === null) {
+        throw new Error('Session is undefined!');
+      }
+
+      const newContext: IGraphQLContext = {
+        headers: req.headers,
+        session,
+      };
+
+      return newContext;
     },
   });
 }
 
-// Exporta una función que maneje las solicitudes, utilizando la inicialización del servidor
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

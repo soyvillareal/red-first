@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
-import { EUserRole } from '@/lib/types';
+import { EUserRole } from '@/types';
 
 import { UserFormProps, UserFormInputs } from './UserForm.types';
 import { userFormSchema } from './UserForm.schema';

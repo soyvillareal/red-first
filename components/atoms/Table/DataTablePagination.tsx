@@ -15,11 +15,45 @@ import ChevronsRightIcon from '@/components/icons/ChevronsRightIcon';
 import { pageSizes } from '@/lib/contants';
 
 import { DataTablePaginationProps } from './Table.types';
+import { useCallback } from 'react';
 
 export function DataTablePagination<TData>({
   table,
+  asyncPagination,
 }: DataTablePaginationProps<TData>) {
   const { t } = useTranslation();
+
+  const handleNextPage = useCallback(() => {
+    if (asyncPagination) {
+      asyncPagination.events.nextPage();
+    } else {
+      table.nextPage();
+    }
+  }, []);
+
+  const handlePreviusPage = useCallback(() => {
+    if (asyncPagination) {
+      asyncPagination.events.previousPage();
+    } else {
+      table.setPageIndex(table.getPageCount() - 1);
+    }
+  }, []);
+
+  const handleFirstPage = useCallback(() => {
+    if (asyncPagination) {
+      asyncPagination.events.firstPage();
+    } else {
+      table.setPageIndex(0);
+    }
+  }, []);
+
+  const handleLastPage = useCallback(() => {
+    if (asyncPagination) {
+      asyncPagination.events.lastPage();
+    } else {
+      table.setPageIndex(table.getPageCount() - 1);
+    }
+  }, []);
 
   return (
     <div className='flex items-center justify-between overflow-auto px-2'>
@@ -66,8 +100,8 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='hidden h-8 w-8 p-0 lg:flex'
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
+            onClick={handleFirstPage}
+            disabled={asyncPagination?.hasPreviousPage === false} // !table.getCanPreviousPage() ||
           >
             <span className='sr-only'>{t('table.goToFirstPage')}</span>
             <ChevronsLeftIcon className='h-4 w-4' />
@@ -75,8 +109,8 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='h-8 w-8 p-0'
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            onClick={handlePreviusPage}
+            disabled={asyncPagination?.hasPreviousPage === false} // !table.getCanPreviousPage() ||
           >
             <span className='sr-only'>{t('table.goToPreviusPage')}</span>
             <ChevronLeftIcon className='h-4 w-4' />
@@ -84,8 +118,8 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='h-8 w-8 p-0'
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            onClick={handleNextPage}
+            disabled={asyncPagination?.hasNextPage === false} // !table.getCanNextPage() ||
           >
             <span className='sr-only'>{t('table.goToNextPage')}</span>
             <ChevronRightIcon className='h-4 w-4' />
@@ -93,8 +127,8 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='hidden h-8 w-8 p-0 lg:flex'
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
+            onClick={handleLastPage}
+            disabled={asyncPagination?.hasNextPage === false} // !table.getCanNextPage() ||
           >
             <span className='sr-only'>{t('table.goToLastPage')}</span>
             <ChevronsRightIcon className='h-4 w-4' />

@@ -79,6 +79,8 @@
         "date": "Date",
         "type": "Type",
         "pickDate": "Pick a date",
+        "income": "Income",
+        "expense": "Expense",
         "thisAmountRepresentsValue": "This amount represents the value of the movement.",
         "theConceptIsUsedToCategorizeIt": "The concept is used to categorize movement.",
         "dateOfMovementUsedToTrack": "The date of movement is used to track when it happened."

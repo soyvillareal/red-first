@@ -1,4 +1,4 @@
-import { EMovementConcept } from '@/lib/types';
+import { EMovementConcept } from '@/types';
 import { ReportsPageProps } from './reports.types';
 
 export const dataMock: ReportsPageProps = {

@@ -10,7 +10,7 @@ import {
   YAxis,
 } from 'recharts';
 
-import { EMovementConcept } from '@/lib/types';
+import { EMovementConcept } from '@/types';
 import { parsedNumber } from '@/lib/utils';
 
 import { MovementsChartProps } from './MovementsChart.types';

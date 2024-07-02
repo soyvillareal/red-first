@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { EMovementConcept } from '@/lib/types';
+import { EMovementConcept } from '@/types';
 
 export const movementFormSchema = z.object({
   amount: z.string(),

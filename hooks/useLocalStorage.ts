@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { LocalStorageProps } from '@/lib/types';
+import { LocalStorageProps } from '@/types';
 
 export default function useLocalStorage<T>({
   key,

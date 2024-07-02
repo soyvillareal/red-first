@@ -1,10 +1,12 @@
 import { Field, InputType, ObjectType, registerEnumType } from 'type-graphql';
-import { MovementConcept, Movements, User } from '@prisma/client';
+import { MovementConcept } from '@prisma/client';
 import {
-  ICreateMovementArgs,
-  IGetMovements,
-  IGetMovementsWithTotal,
+  type IGetMovementsWithTotal,
+  type ICreateMovementArgs,
+  type IGetMovements,
 } from '@/types/graphql/resolvers';
+import { PageOptionsMeta } from './pagination';
+import { type IPageOptionsDataMeta } from '@/types/graphql/pagination';
 
 registerEnumType(MovementConcept, {
   name: 'EMovementConcept',
@@ -50,6 +52,15 @@ export class GetMovementsWithTotal implements IGetMovementsWithTotal {
   @Field(() => [GetMovements])
   movements: GetMovements[];
 
-  @Field(() => Number)
-  total: number;
+  @Field(() => String)
+  total: string;
+}
+
+@ObjectType()
+export class PaginatedMovements
+  extends PageOptionsMeta
+  implements IPageOptionsDataMeta<IGetMovementsWithTotal>
+{
+  @Field(() => GetMovementsWithTotal)
+  data: IGetMovementsWithTotal;
 }

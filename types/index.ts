@@ -1,4 +1,5 @@
 import { IncomingHttpHeaders } from 'http';
+import { DefaultSession } from 'next-auth';
 
 export enum EMovementConcept {
   INCOME = 'income',
@@ -16,7 +17,17 @@ export interface LocalStorageProps<T> {
   parseValue?: boolean;
 }
 
-export interface GraphQLContext {
+export type INextAuthUserSession = DefaultSession['user'] & {
+  id: string;
+};
+
+export interface IGraphQLContextSession {
+  user: INextAuthUserSession;
+  expires: string;
+  accessToken?: string;
+}
+
+export interface IGraphQLContext {
   headers: IncomingHttpHeaders;
-  session?: any;
+  session: IGraphQLContextSession;
 }

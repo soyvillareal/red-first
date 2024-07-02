@@ -3,7 +3,7 @@ import Auth0Provider from 'next-auth/providers/auth0';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 import env from '@/lib/env';
-import prisma from '@/lib/prisma';
+import prisma from '@/server/prisma';
 
 const COOKIES_LIFE_TIME = 24 * 60 * 60; // 24 hours
 const COOKIE_PREFIX = env.NODE_ENV === 'production' ? '__Secure-' : '';
@@ -117,14 +117,12 @@ export const authOptions: AuthOptions = {
       }
       return token;
     },
-    async session(props) {
-      const { session, token, user } = props;
+    async session({ session, token }) {
       if (typeof token.id === 'string') {
         session.user.id = token.id;
       } else {
-        throw new Error('Token id is not valid!');
+        throw new Error('User id is not valid!');
       }
-
       if (typeof token.accessToken === 'string') {
         session.accessToken = token.accessToken;
       } else {

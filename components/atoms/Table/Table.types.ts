@@ -1,8 +1,23 @@
 import { Column, ColumnDef, Table } from '@tanstack/react-table';
 import { ComponentType } from 'react';
 
+export interface IAsyncPagination {
+  page: number;
+  limit: number;
+  order: 'asc' | 'desc';
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  events: {
+    nextPage: () => void;
+    previousPage: () => void;
+    lastPage: () => void;
+    firstPage: () => void;
+  };
+}
+
 export interface DataTablePaginationProps<TData> {
   table: Table<TData>;
+  asyncPagination: IAsyncPagination | null;
 }
 
 export interface DataTableToolbarOptions<TData> {
@@ -18,6 +33,7 @@ export interface DataTableToolbarProps<TData> {
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  asyncPagination: IAsyncPagination | null;
   toolbarOptions: DataTableToolbarOptions<TData>;
   footerChildren?: React.ReactNode;
 }

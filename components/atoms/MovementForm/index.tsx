@@ -27,7 +27,7 @@ import { toast } from '@/components/ui/use-toast';
 import CalendarIcon from '@/components/icons/CalendarIcon';
 import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
-import { EMovementConcept } from '@/lib/types';
+import { EMovementConcept } from '@/types';
 
 import { MovementFormInputs } from './MovementForm.types';
 import { movementFormSchema } from './MovementForm.schema';
@@ -90,7 +90,7 @@ export function MovementForm() {
               <FormControl>
                 <Input
                   type='number'
-                  placeholder='Write the amount'
+                  placeholder="0"
                   {...field}
                 />
               </FormControl>
@@ -116,10 +116,10 @@ export function MovementForm() {
                     )}
                     {...field}
                   >
-                    {Object.values(EMovementConcept).map((type) => {
+                    {Object.values(EMovementConcept).map((concept) => {
                       return (
-                        <option key={type} value={type}>
-                          {type}
+                        <option key={concept} value={concept}>
+                          {t(`newMovement.${concept}`)}
                         </option>
                       );
                     })}

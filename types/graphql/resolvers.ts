@@ -1,4 +1,4 @@
-import { MovementConcept, Movements } from '@prisma/client';
+import { MovementConcept } from '@prisma/client';
 
 export interface ICreateMovementArgs {
   amount: string;
@@ -16,5 +16,5 @@ export interface IGetMovements {
 
 export interface IGetMovementsWithTotal {
   movements: IGetMovements[];
-  total: number;
+  total: string;
 }

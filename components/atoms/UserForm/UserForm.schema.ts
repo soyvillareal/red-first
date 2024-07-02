@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { EUserRole } from '@/lib/types';
+import { EUserRole } from '@/types';
 
 export const userFormSchema = z.object({
   name: z

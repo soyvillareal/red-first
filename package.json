@@ -8,9 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "generate:migration:local": "dotenv -e .env.local -- npx prisma migrate dev --name init",
-    "generate:migration:dev": "dotenv -e .env.local -- npx prisma migrate dev --name init",
-    "generate:migration:staging": "dotenv -e .env.local -- npx prisma migrate dev --name init",
-    "generate:migration:prod": "dotenv -e .env.local -- npx prisma migrate dev --name init"
+    "generate:migration:dev": "dotenv -e .env.dev -- npx prisma migrate dev --name init",
+    "generate:migration:staging": "dotenv -e .env.staging -- npx prisma migrate dev --name init",
+    "generate:migration:prod": "dotenv -e .env.prod -- npx prisma migrate dev --name init"
   },
   "dependencies": {
     "@apollo/client": "^3.10.4",

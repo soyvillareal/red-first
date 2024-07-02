@@ -1,4 +1,4 @@
-import { EMovementConcept } from '@/lib/types';
+import { EMovementConcept } from '@/types';
 
 export interface RecentMovementItem {
   id: string;

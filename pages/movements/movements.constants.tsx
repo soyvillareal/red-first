@@ -5,7 +5,7 @@ import CircleIcon from '@/components/icons/CircleIcon';
 import { DataTableColumnHeader } from '@/components/atoms/Table/DataTableColumnHeader';
 
 import { movementSchema } from './movements.schema';
-import { EMovementConcept } from '@/lib/types';
+import { EMovementConcept } from '@/types';
 import { cn } from '@/lib/utils';
 
 export const types = [

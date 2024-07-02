@@ -1,4 +1,4 @@
-import { EUserRole } from '@/lib/types';
+import { EUserRole } from '@/types';
 import { EditUserProps } from './edit.types';
 
 export const mockData: EditUserProps = {

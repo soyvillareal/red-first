@@ -32,6 +32,7 @@ export function DataTable<TData, TValue>({
   data,
   toolbarOptions,
   footerChildren,
+  asyncPagination,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation();
 
@@ -116,7 +117,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       {footerChildren}
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table} asyncPagination={asyncPagination} />
     </div>
   );
 }
