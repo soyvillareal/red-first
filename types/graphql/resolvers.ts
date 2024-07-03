@@ -18,3 +18,5 @@ export interface IGetMovementsWithTotal {
   movements: IGetMovements[];
   total: string;
 }
+
+export type TValidsTypes = keyof Omit<IGetMovements, 'id'>

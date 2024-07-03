@@ -59,3 +59,7 @@ export const propsToCSV = (data: ReportsPageProps) => {
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   saveAs(blob, 'report.csv');
 };
+
+export const fillArray = (length: number) => {
+  return Array.from({ length }, (_, i) => i);
+};

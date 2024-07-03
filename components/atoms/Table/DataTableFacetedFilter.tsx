@@ -22,6 +22,7 @@ import CheckIcon from '@/components/icons/CheckIcon';
 import PlusCircledIcon from '@/components/icons/PlusCircledIcon';
 
 import { DataTableFacetedFilterProps } from './Table.types';
+import { useCallback } from 'react';
 
 export function DataTableFacetedFilter<TData, TValue>({
   column,
@@ -31,6 +32,20 @@ export function DataTableFacetedFilter<TData, TValue>({
   const { t } = useTranslation();
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(column?.getFilterValue() as string[]);
+
+  const handleSelect = useCallback(
+    (value: string, selected: boolean) => {
+      if (selected) {
+        selectedValues.delete(value);
+      } else {
+        selectedValues.clear();
+        selectedValues.add(value);
+      }
+      const filterValues = Array.from(selectedValues);
+      column?.setFilterValue(filterValues.length ? filterValues : undefined);
+    },
+    [selectedValues, column]
+  );
 
   return (
     <Popover>
@@ -86,17 +101,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                 return (
                   <CommandItem
                     key={option.value}
-                    onSelect={() => {
-                      if (isSelected) {
-                        selectedValues.delete(option.value);
-                      } else {
-                        selectedValues.add(option.value);
-                      }
-                      const filterValues = Array.from(selectedValues);
-                      column?.setFilterValue(
-                        filterValues.length ? filterValues : undefined
-                      );
-                    }}
+                    onSelect={() => handleSelect(option.value, isSelected)}
                   >
                     <div
                       className={cn(

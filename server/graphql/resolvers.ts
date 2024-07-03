@@ -8,17 +8,27 @@ import {
 } from 'type-graphql';
 import dayjs from 'dayjs';
 
-import { type IGraphQLContext } from '../../types';
+import { EMovementConcept, type IGraphQLContext } from '../../types';
 import { MovementsRepository } from '../dataAccess/movements';
 import { CreateMovementArgs, PaginatedMovements } from './schemas/movements';
 import { PaginationArgs } from './schemas/pagination';
-import { getSkipped, numberWithCurrency, pageMeta } from '../utils';
-import { checkIsLogged, checkPagination } from '../middleware';
 import {
-  IGetMovementsWithTotal,
-  type IGetMovements,
-} from '@/types/graphql/resolvers';
-import { type IPageOptionsDataMeta } from '@/types/graphql/pagination';
+  responseCodes,
+  getSkipped,
+  mockPagination,
+  numberWithCurrency,
+  pageMeta,
+} from '../utils';
+import { checkIsLogged, checkPagination } from '../middleware';
+import { type IGetMovementsWithTotal } from '@/types/graphql/resolvers';
+import {
+  type IPaginationParams,
+  type IPageOptionsDataMeta,
+} from '@/types/graphql/pagination';
+import {
+  checkCreateMovement,
+  checkGetMovements,
+} from '../middleware/movements';
 
 @Resolver()
 export class Resolvers {
@@ -29,7 +39,7 @@ export class Resolvers {
   }
 
   @Mutation(() => String)
-  @UseMiddleware(checkIsLogged)
+  @UseMiddleware(checkIsLogged, checkCreateMovement)
   async createMovement(
     @Arg('movements', () => CreateMovementArgs)
     { amount, concept, date }: CreateMovementArgs,
@@ -46,12 +56,15 @@ export class Resolvers {
       });
 
       if (createdMovement === null) {
-        throw new Error('Whoops! Something went wrong!');
+        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }
 
-      return 'Movement created successfully!';
+      return responseCodes.MOVEMENTS.MOVEMENT_CREATED_SUCCESSFULLY;
     } catch (error) {
-      return 'Whoops! Something went wrong!';
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
     }
   }
 
@@ -59,47 +72,60 @@ export class Resolvers {
     name: 'getMovements',
     description: 'Get movements',
   })
-  @UseMiddleware(checkIsLogged, checkPagination)
+  @UseMiddleware(checkIsLogged, checkPagination, checkGetMovements)
   async getMovements(
     @Arg('pagination', () => PaginationArgs) paginationArgs: PaginationArgs,
     @Ctx() context: IGraphQLContext
-  ): Promise<IPageOptionsDataMeta<IGetMovementsWithTotal> | string> {
+  ): Promise<IPageOptionsDataMeta<IGetMovementsWithTotal>> {
     try {
-      const { page, limit, order } = paginationArgs;
+      const { page, limit, order, filterType, queryValue, fieldOrder } =
+        paginationArgs;
       const userId = context.session.user.id;
 
+      let filterConcept = filterType as EMovementConcept | null;
+
       const totalMovements = await this.movementsRepository.getTotalMovements(
-        userId
+        userId,
+        filterConcept,
+        queryValue
       );
 
       if (totalMovements === null) {
-        throw new Error(`Whoops! Something went wrong!`);
+        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }
 
       if (totalMovements === 0) {
-        throw new Error('No movements found!');
+        throw new Error(responseCodes.MOVEMENTS.NOT_FOUND);
       }
 
-      const pageFilterOptions = {
+      const pageFilterOptions: IPaginationParams = {
         limit,
         skip: getSkipped(totalMovements, page, limit),
         order,
+        filterType: filterConcept,
+        queryValue,
+        fieldOrder,
       };
 
-      const sumMovements = await this.movementsRepository.getSumMovements(
+      const totalAmounts = await this.movementsRepository.getTotalAmounts(
         {
           userId,
         },
         pageFilterOptions
       );
 
-      if (sumMovements === null) {
-        throw new Error(`Whoops! Something went wrong!`);
+      if (totalAmounts === null) {
+        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }
 
-      if (sumMovements === undefined) {
-        throw new Error('No movements found!');
+      if (totalAmounts === undefined) {
+        throw new Error(responseCodes.MOVEMENTS.NOT_FOUND);
       }
+
+      const sumMovements = totalAmounts.reduce((acc, current) => {
+        const currentAmount = BigInt(current.amount);
+        return acc + currentAmount;
+      }, BigInt(0));
 
       const movements = await this.movementsRepository.getMovements(
         {
@@ -109,7 +135,7 @@ export class Resolvers {
       );
 
       if (movements === null) {
-        throw new Error(`Whoops! Something went wrong!`);
+        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }
 
       const parsedMovements = movements.map((movement) => {
@@ -149,9 +175,18 @@ export class Resolvers {
       return entities;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        return error.message;
+        return mockPagination<IGetMovementsWithTotal>(error.message, {
+          movements: [],
+          total: numberWithCurrency('0'),
+        });
       }
-      return 'Whoops! Something went wrong!';
+      return mockPagination<IGetMovementsWithTotal>(
+        responseCodes.ERROR.SOMETHING_WENT_WRONG,
+        {
+          movements: [],
+          total: numberWithCurrency(BigInt(0)),
+        }
+      );
     }
   }
 }

@@ -1,4 +1,8 @@
-export interface IPageMeta {
+import { EMovementConcept, IGraphQLErrorContext } from '..';
+
+export type TPageOrder = 'asc' | 'desc';
+
+export interface IPageMeta extends IGraphQLErrorContext {
   page: number;
   limit: number;
   itemCount: number;
@@ -28,11 +32,17 @@ export interface IPageMetaParameters {
 export interface IPaginationArgs {
   page: number;
   limit: number;
-  order: 'asc' | 'desc';
+  order: TPageOrder;
+  filterType: string | null;
+  queryValue?: string;
+  fieldOrder: string;
 }
 
 export interface IPaginationParams {
   limit: number;
   skip: number;
-  order: 'asc' | 'desc';
+  order: TPageOrder;
+  filterType: EMovementConcept | null;
+  queryValue?: string;
+  fieldOrder?: string;
 }

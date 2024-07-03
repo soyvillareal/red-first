@@ -31,3 +31,7 @@ export interface IGraphQLContext {
   headers: IncomingHttpHeaders;
   session: IGraphQLContextSession;
 }
+
+export interface IGraphQLErrorContext {
+  errorMessage?: string | undefined;
+}

@@ -1,5 +1,10 @@
-// lib/apolloClient.js
-import { ApolloClient, InMemoryCache, HttpLink, from } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  from,
+  gql,
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { getSession } from 'next-auth/react';
 
@@ -12,8 +17,10 @@ const authLink = setContext(async (_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: session?.accessToken ? `Bearer ${session.accessToken}` : "",
-    }
+      authorization: session?.accessToken
+        ? `Bearer ${session.accessToken}`
+        : '',
+    },
   };
 });
 
@@ -21,5 +28,55 @@ const apolloClient = new ApolloClient({
   link: from([authLink, httpLink]),
   cache: new InMemoryCache(),
 });
+
+export const MovementMutation = gql`
+  mutation ($concept: EMovementConcept!, $amount: String!, $date: String!) {
+    createMovement(
+      movements: { concept: $concept, amount: $amount, date: $date }
+    )
+  }
+`;
+
+export const MovementQuery = gql`
+  query GetMovements(
+    $page: Float!
+    $limit: Float!
+    $order: String!
+    $filterType: String
+    $queryValue: String
+    $fieldOrder: String!
+  ) {
+    getMovements(
+      pagination: {
+        page: $page
+        limit: $limit
+        order: $order
+        filterType: $filterType
+        queryValue: $queryValue
+        fieldOrder: $fieldOrder
+      }
+    ) {
+      data {
+        total
+        movements {
+          id
+          userName
+          amount
+          concept
+          date
+        }
+      }
+      meta {
+        page
+        limit
+        itemCount
+        pageCount
+        hasPreviousPage
+        hasNextPage
+        errorMessage
+      }
+    }
+  }
+`;
 
 export default apolloClient;

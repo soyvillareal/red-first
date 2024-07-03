@@ -1,23 +1,16 @@
-import { Column, ColumnDef, Table } from '@tanstack/react-table';
+import {
+  Column,
+  ColumnDef,
+  ColumnFiltersState,
+  OnChangeFn,
+  PaginationState,
+  SortingState,
+  Table,
+} from '@tanstack/react-table';
 import { ComponentType } from 'react';
-
-export interface IAsyncPagination {
-  page: number;
-  limit: number;
-  order: 'asc' | 'desc';
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
-  events: {
-    nextPage: () => void;
-    previousPage: () => void;
-    lastPage: () => void;
-    firstPage: () => void;
-  };
-}
 
 export interface DataTablePaginationProps<TData> {
   table: Table<TData>;
-  asyncPagination: IAsyncPagination | null;
 }
 
 export interface DataTableToolbarOptions<TData> {
@@ -33,7 +26,18 @@ export interface DataTableToolbarProps<TData> {
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  asyncPagination: IAsyncPagination | null;
+  pageCount: number;
+  loading?: boolean;
+  values: {
+    sorting: SortingState;
+    pagination: PaginationState;
+    columnFilters: ColumnFiltersState
+  };
+  events: {
+    onSortingChange: OnChangeFn<SortingState>;
+    onPaginationChange: OnChangeFn<PaginationState>;
+    onColumnFiltersChange: OnChangeFn<ColumnFiltersState>;
+  };
   toolbarOptions: DataTableToolbarOptions<TData>;
   footerChildren?: React.ReactNode;
 }

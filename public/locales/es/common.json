@@ -116,5 +116,25 @@
         "seeHowYourDailyAccountsFitInto": "Vea cómo sus cuentas diarias encajan en una visión más amplia. Vaya desde el seguimiento del progreso a nivel de hito hasta el más mínimo detalle. No vuelvas a perder de vista el panorama general.",
         "manageProvidesAllTheFunctionality": "Manage proporciona toda la funcionalidad que su equipo necesita, sin la complejidad. Nuestro software está hecho a medida para los equipos de productos digitales modernos.",
         "description": "Descripción"
+    },
+    "responseCodes": {
+        "SOMETHING_WENT_WRONG": "Upss lo sentimos, algo salió mal :(",
+        "SESSION_UNDEFINED": "Por favor inicie sesión nuevamente.",
+        "USER_NOT_LOGGED_IN": "El usuario no ha iniciado sesión.",
+        "INVALID_DATE_FORMAT": "Formato de fecha inválido.",
+        "INVALID_FILTER_TYPE": "Tipo de filtro inválido.",
+        "INVALID_FIELD_ORDER": "Orden de campo inválido.",
+        "PAGE_UNDEFINED": "Algo no salió bien, por favor intente nuevamente.",
+        "PAGE_MUST_BE_NUMBER": "Algo no salió bien, por favor intente nuevamente.",
+        "LIMIT_INVALID": "Algo no salió bien, por favor intente nuevamente.",
+        "ORDER_INVALID": "Algo no salió bien, por favor intente nuevamente.",
+        "NOT_FOUND": "Movimiento no encontrado.",
+        "AMOUNT_ZERO": "Por favor ingrese un monto superior a cero.",
+        "AMOUNT_NEGATIVE": "El monto no puede ser negativo.",
+        "AMOUNT_TOO_HIGH": "El monto es demasiado alto.",
+        "MOVEMENT_CREATED_SUCCESSFULLY": "Movimiento creado exitosamente.",
+        "ENTER_VALID_CONCEPT": "Por favor ingrese un concepto válido.",
+        "ENTER_VALID_DATE": "Por favor ingrese una fecha válida.",
+        "ENTER_VALID_AMOUNT": "Por favor ingrese un monto válido."
     }
 }

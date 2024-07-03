@@ -29,8 +29,8 @@ export const logger = createLogger({
   ],
 });
 
-export const numberWithCurrency = (amount: bigint): string => {
-  const amountNumber = parseFloat(amount.toString()) || 0;
+export const numberWithCurrency = (amount: string | bigint): string => {
+  const amountNumber = BigInt(amount) || 0;
   return new Intl.NumberFormat('es-CO', {
     style: 'currency',
     currency: 'COP',
@@ -42,21 +42,22 @@ export const pageMeta = <T>(
   { pageOptions: { limit = 10, page }, itemCount }: IPageMetaParameters
 ): IPageOptionsDataMeta<T> => {
   const pageCount = Math.ceil(itemCount / limit);
+  let newPage = page;
+  if (page < 1 || page > pageCount) {
+    newPage = 1;
+  }
 
   const objectData: IPageOptionsDataMeta<typeof data> = {
     data: data,
     meta: {
-      page,
+      page: newPage,
       limit,
       itemCount: itemCount,
       pageCount: pageCount,
-      hasPreviousPage: page > 1,
-      hasNextPage: page < pageCount,
+      hasPreviousPage: newPage > 1,
+      hasNextPage: newPage < pageCount,
     },
   };
-  if (page < 1 || page > pageCount) {
-    throw new Error('Cursor not found!');
-  }
 
   return objectData;
 };
@@ -68,4 +69,46 @@ export const getSkipped = (itemCount: number, page = 1, limit = 10): number => {
   }
 
   return (page - 1) * limit;
+};
+
+export const mockPagination = <T>(
+  error: string,
+  dataMock: T
+): IPageOptionsDataMeta<T> => {
+  return {
+    data: dataMock,
+    meta: {
+      page: 1,
+      limit: 10,
+      itemCount: 0,
+      pageCount: 0,
+      hasPreviousPage: false,
+      hasNextPage: false,
+      errorMessage: error,
+    },
+  };
+};
+
+export const responseCodes = {
+  ERROR: {
+    SOMETHING_WENT_WRONG: 'SOMETHING_WENT_WRONG',
+    SESSION_UNDEFINED: 'SESSION_UNDEFINED',
+    USER_NOT_LOGGED_IN: 'USER_NOT_LOGGED_IN',
+    INVALID_DATE_FORMAT: 'INVALID_DATE_FORMAT',
+    INVALID_FILTER_TYPE: 'INVALID_FILTER_TYPE',
+    INVALID_FIELD_ORDER: 'INVALID_FIELD_ORDER',
+  },
+  PAGINATION: {
+    PAGE_UNDEFINED: 'PAGE_UNDEFINED',
+    PAGE_MUST_BE_NUMBER: 'PAGE_MUST_BE_NUMBER',
+    LIMIT_INVALID: 'LIMIT_INVALID',
+    ORDER_INVALID: 'ORDER_INVALID',
+  },
+  MOVEMENTS: {
+    NOT_FOUND: 'MOVEMENTS_NOT_FOUND',
+    AMOUNT_ZERO: 'AMOUNT_ZERO',
+    AMOUNT_NEGATIVE: 'AMOUNT_NEGATIVE',
+    AMOUNT_TOO_HIGH: 'AMOUNT_TOO_HIGH',
+    MOVEMENT_CREATED_SUCCESSFULLY: 'MOVEMENT_CREATED_SUCCESSFULLY',
+  },
 };

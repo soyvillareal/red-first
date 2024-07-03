@@ -61,6 +61,6 @@ export class PaginatedMovements
   extends PageOptionsMeta
   implements IPageOptionsDataMeta<IGetMovementsWithTotal>
 {
-  @Field(() => GetMovementsWithTotal)
+  @Field(() => GetMovementsWithTotal, { nullable: true })
   data: IGetMovementsWithTotal;
 }

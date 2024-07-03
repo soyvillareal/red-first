@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 
 import { cn } from '@/lib/utils';
+import { MovementMutation } from '@/lib/apollo';
 import { Button, buttonVariants } from '@/components/custom/Button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -33,21 +34,16 @@ import { MovementFormInputs } from './MovementForm.types';
 import { movementFormSchema } from './MovementForm.schema';
 import { defaultValues } from './MovementForm.constants';
 
-const MovementMutation = gql`
-  mutation ($concept: EMovementConcept!, $amount: String!, $date: String!) {
-    createMovement(movements: { concept: $concept, amount: $amount, date: $date })
-  }
-`;
-
 export function MovementForm() {
   const { t } = useTranslation();
 
   const methods = useForm<MovementFormInputs>({
-    resolver: zodResolver(movementFormSchema),
+    resolver: zodResolver(movementFormSchema(t)),
     defaultValues,
   });
 
-  const [createMovement, { loading: movementMutationLoading }] = useMutation(MovementMutation);
+  const [createMovement, { loading: movementMutationLoading }] =
+    useMutation(MovementMutation);
 
   const onSubmit = useCallback(async (data: MovementFormInputs) => {
     try {
@@ -59,21 +55,12 @@ export function MovementForm() {
         },
       });
 
-      console.log('createdMovement: ', createdMovement);
-
       toast({
-        title: 'You submitted the following values:',
-        description: (
-          <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-            <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-          </pre>
-        ),
+        description: t(`responseCodes.${createdMovement.data.createMovement}`),
       });
     } catch (error: any) {
-      console.error('error: ', error);
       toast({
-        title: 'An error occurred',
-        description: error.message,
+        description: t(`responseCodes.${error.message}`),
       });
     }
   }, []);
@@ -88,11 +75,7 @@ export function MovementForm() {
             <FormItem>
               <FormLabel>{t('newMovement.amount')}</FormLabel>
               <FormControl>
-                <Input
-                  type='number'
-                  placeholder="0"
-                  {...field}
-                />
+                <Input type='number' placeholder='0' {...field} />
               </FormControl>
               <FormDescription>
                 {t('newMovement.thisAmountRepresentsValue')}

@@ -115,5 +115,25 @@
         "seeHowYourDailyAccountsFitInto": "See how your daily accounts fit into a bigger picture. Go from tracking progress at the milestone level to the smallest detail. Don't lose sight of the big picture again.",
         "manageProvidesAllTheFunctionality": "Manage provides all the functionality your team needs, without the complexity. Our software is tailor-made for modern digital product teams.",
         "description": "Description"
+    },
+    "responseCodes": {
+        "SOMETHING_WENT_WRONG": "Oops, we're sorry, something went wrong :(",
+        "SESSION_UNDEFINED": "Please log in again.",
+        "USER_NOT_LOGGED_IN": "The user is not logged in.",
+        "INVALID_DATE_FORMAT": "Invalid date format.",
+        "INVALID_FILTER_TYPE": "Invalid filter type.",
+        "INVALID_FIELD_ORDER": "Invalid field order.",
+        "PAGE_UNDEFINED": "Something went wrong, please try again.",
+        "PAGE_MUST_BE_NUMBER": "Something went wrong, please try again.",
+        "LIMIT_INVALID": "Something went wrong, please try again.",
+        "ORDER_INVALID": "Something went wrong, please try again.",
+        "NOT_FOUND": "Movement not found.",
+        "AMOUNT_ZERO": "Please enter an amount greater than zero.",
+        "AMOUNT_NEGATIVE": "The amount cannot be negative.",
+        "AMOUNT_TOO_HIGH": "The amount is too high.",
+        "MOVEMENT_CREATED_SUCCESSFULLY": "Movement created successfully.",
+        "ENTER_VALID_CONCEPT": "Please enter a valid concept.",
+        "ENTER_VALID_DATE": "Please enter a valid date.",
+        "ENTER_VALID_AMOUNT": "Please enter a valid amount."
     }
 }

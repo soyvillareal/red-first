@@ -26,34 +26,39 @@ import {
 import { DataTableToolbar } from './DataTableToolbar';
 import { DataTablePagination } from './DataTablePagination';
 import { DataTableProps } from './Table.types';
+import { Skeleton } from '@/components/ui/skeleton';
+import { fillArray } from '@/lib/utils';
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   toolbarOptions,
   footerChildren,
-  asyncPagination,
+  pageCount,
+  loading = false,
+  values: { sorting, pagination, columnFilters },
+  events: { onSortingChange, onPaginationChange, onColumnFiltersChange },
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation();
 
-  const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data,
     columns,
+    pageCount,
     state: {
       sorting,
+      pagination,
       columnVisibility,
-      rowSelection,
       columnFilters,
     },
-    enableRowSelection: true,
-    onRowSelectionChange: setRowSelection,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    manualPagination: true,
+    manualSorting: true,
+    manualFiltering: true,
+    onSortingChange: onSortingChange,
+    onPaginationChange: onPaginationChange,
+    onColumnFiltersChange: onColumnFiltersChange,
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -87,7 +92,19 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {loading ? (
+              fillArray(10).map((_, i) =>
+                table.getHeaderGroups().map((headerGroup, i) => (
+                  <TableRow key={i}>
+                    {headerGroup.headers.map((_, i) => (
+                      <TableCell key={i}>
+                        <Skeleton className='w-[75px] h-[15px] rounded-[4px]' />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              )
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -117,7 +134,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       {footerChildren}
-      <DataTablePagination table={table} asyncPagination={asyncPagination} />
+      <DataTablePagination table={table} />
     </div>
   );
 }

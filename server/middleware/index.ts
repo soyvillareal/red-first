@@ -1,6 +1,8 @@
 import { MiddlewareFn } from 'type-graphql';
+
 import { IGraphQLContext } from '@/types';
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+
+import { responseCodes } from '../utils';
 
 export const checkIsLogged: MiddlewareFn<IGraphQLContext> = async (
   { context },
@@ -8,19 +10,19 @@ export const checkIsLogged: MiddlewareFn<IGraphQLContext> = async (
 ) => {
   try {
     if (context?.session === undefined) {
-      throw new Error('Session is undefined!');
+      throw new Error(responseCodes.ERROR.SESSION_UNDEFINED);
     }
 
     if (context?.session?.user === undefined) {
-      throw new Error('The user is not logged in!');
+      throw new Error(responseCodes.ERROR.USER_NOT_LOGGED_IN);
     }
 
     return next();
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      throw new Error(err.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw error;
     }
-    throw err;
+    throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
   }
 };
 
@@ -29,28 +31,28 @@ export const checkPagination: MiddlewareFn = async ({ args }, next) => {
     const { page, limit, order } = args.pagination;
 
     if (page === undefined) {
-      throw new Error('Page is undefined!');
+      throw new Error(responseCodes.PAGINATION.PAGE_UNDEFINED);
     }
 
     if (typeof page !== 'number') {
-      throw new Error('Page must be a number!');
+      throw new Error(responseCodes.PAGINATION.PAGE_MUST_BE_NUMBER);
     }
 
     const validPagination: number[] = [10, 20, 30, 40, 50];
 
     if (validPagination.includes(limit) === false) {
-      throw new Error(`Limit can by: ${validPagination.join(', ')}`);
+      throw new Error(responseCodes.PAGINATION.LIMIT_INVALID);
     }
 
     if (['asc', 'desc'].includes(order) === false) {
-      throw new Error('Order can be: asc or desc');
+      throw new Error(responseCodes.PAGINATION.ORDER_INVALID);
     }
 
     return next();
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      throw new Error(err.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw error;
     }
-    throw err;
+    throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
   }
 };

@@ -8,6 +8,7 @@ import { types } from '@/pages/movements/movements.constants';
 import { DataTableFacetedFilter } from './DataTableFacetedFilter';
 import { DataTableViewOptions } from './DataTableViewOptions';
 import { DataTableToolbarProps } from './Table.types';
+import { useCallback } from 'react';
 
 export function DataTableToolbar<TData>({
   table,
@@ -16,6 +17,15 @@ export function DataTableToolbar<TData>({
   const { t } = useTranslation();
 
   const isFiltered = table.getState().columnFilters.length > 0;
+
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      table
+        .getColumn(toolbarOptions.searchKey as string)
+        ?.setFilterValue(event.target.value);
+    },
+    []
+  );
 
   return (
     <div className='flex items-center justify-between'>
@@ -27,11 +37,7 @@ export function DataTableToolbar<TData>({
               .getColumn(toolbarOptions.searchKey as string)
               ?.getFilterValue() as string) ?? ''
           }
-          onChange={(event) =>
-            table
-              .getColumn(toolbarOptions.searchKey as string)
-              ?.setFilterValue(event.target.value)
-          }
+          onChange={handleChange}
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
@@ -46,7 +52,6 @@ export function DataTableToolbar<TData>({
                 />
               );
             }
-
             return null;
           })}
         </div>

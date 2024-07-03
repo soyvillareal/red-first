@@ -9,7 +9,7 @@ export interface ICreateUserRepository {
 
 export interface IGetMovementsRepository {
   id: string;
-  amount: bigint;
+  amount: string;
   concept: MovementConcept;
   date: Date;
   user: {
@@ -19,4 +19,8 @@ export interface IGetMovementsRepository {
 
 export interface IGetMovementsParams {
   userId: string;
+}
+
+export interface IGetTotalAmountsResult {
+  amount: string;
 }

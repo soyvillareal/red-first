@@ -3,10 +3,18 @@ import {
   type IPaginationArgs,
   type IPageMeta,
   type IPageOptionsMeta,
+  type TPageOrder,
 } from '@/types/graphql/pagination';
+import { IGraphQLErrorContext } from '@/types';
 
 @ObjectType()
-export class PageMeta implements IPageMeta {
+export class GraphQLErrorContext implements IGraphQLErrorContext {
+  @Field(() => String, { nullable: true })
+  errorMessage?: string | undefined;
+}
+
+@ObjectType()
+export class PageMeta extends GraphQLErrorContext implements IPageMeta {
   @Field(() => Number)
   page: number;
 
@@ -41,5 +49,14 @@ export class PaginationArgs implements IPaginationArgs {
   limit: number;
 
   @Field(() => String, { defaultValue: 'asc' })
-  order: 'asc' | 'desc';
+  order: TPageOrder;
+
+  @Field(() => String, { nullable: true })
+  filterType: string | null;
+
+  @Field(() => String, { nullable: true })
+  queryValue?: string | undefined;
+
+  @Field(() => String)
+  fieldOrder: string;
 }

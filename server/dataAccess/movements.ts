@@ -4,8 +4,10 @@ import {
   type IGetMovementsRepository,
   type ICreateUserRepository,
   type IGetMovementsParams,
+  IGetTotalAmountsResult,
 } from '@/types/dataAccess/movements';
 import { IPaginationParams } from '@/types/graphql/pagination';
+import { EMovementConcept } from '@/types';
 
 export class MovementsRepository {
   private prisma: PrismaClient;
@@ -24,7 +26,7 @@ export class MovementsRepository {
       const createdMovement = await this.prisma.movements.create({
         data: {
           user: { connect: { id: userId } },
-          amount: parseFloat(amount),
+          amount,
           concept,
           date: new Date(date),
         },
@@ -38,9 +40,17 @@ export class MovementsRepository {
 
   public getMovements = async (
     { userId }: IGetMovementsParams,
-    { limit, skip, order }: IPaginationParams
+    {
+      limit,
+      skip,
+      order,
+      queryValue,
+      filterType,
+      fieldOrder = 'date',
+    }: IPaginationParams
   ): Promise<IGetMovementsRepository[] | null> => {
     try {
+      console.log('queryValue: ', queryValue);
       const movements = await this.prisma.movements.findMany({
         select: {
           id: true,
@@ -55,12 +65,44 @@ export class MovementsRepository {
         },
         where: {
           userId,
+          concept: filterType || undefined,
+          OR: [
+            {
+              amount: {
+                contains: queryValue,
+                mode: 'insensitive',
+              },
+            },
+            {
+              user: {
+                OR: [
+                  {
+                    name: {
+                      contains: queryValue,
+                      mode: 'insensitive',
+                    },
+                    email: {
+                      contains: queryValue,
+                      mode: 'insensitive',
+                    },
+                  },
+                ],
+              },
+            },
+          ],
         },
         skip,
         take: limit,
-        orderBy: {
-          id: order,
-        },
+        orderBy:
+          fieldOrder === 'userName'
+            ? {
+                user: {
+                  name: order,
+                },
+              }
+            : {
+                [fieldOrder]: order,
+              },
       });
 
       return movements;
@@ -69,11 +111,41 @@ export class MovementsRepository {
     }
   };
 
-  public getTotalMovements = async (userId: string): Promise<number | null> => {
+  public getTotalMovements = async (
+    userId: string,
+    filterType: EMovementConcept | null,
+    queryValue?: string
+  ): Promise<number | null> => {
     try {
+      const numberQueryValue = parseFloat(queryValue || '0');
       const totalMovements = await this.prisma.movements.count({
         where: {
           userId,
+          concept: filterType || undefined,
+          OR: [
+            {
+              amount: {
+                contains: queryValue,
+                mode: 'insensitive',
+              },
+            },
+            {
+              user: {
+                OR: [
+                  {
+                    name: {
+                      contains: queryValue,
+                      mode: 'insensitive',
+                    },
+                    email: {
+                      contains: queryValue,
+                      mode: 'insensitive',
+                    },
+                  },
+                ],
+              },
+            },
+          ],
         },
       });
 
@@ -83,31 +155,71 @@ export class MovementsRepository {
     }
   };
 
-  public getSumMovements = async (
+  public getTotalAmounts = async (
     { userId }: IGetMovementsParams,
-    { limit, skip, order }: IPaginationParams
-  ): Promise<bigint | undefined | null> => {
+    {
+      limit,
+      skip,
+      order,
+      filterType,
+      queryValue,
+      fieldOrder = 'date',
+    }: IPaginationParams
+  ): Promise<IGetTotalAmountsResult[] | undefined | null> => {
     try {
-      const totalMovements = await this.prisma.movements.aggregate({
-        _sum: {
+      const totalAmounts = await this.prisma.movements.findMany({
+        select: {
           amount: true,
         },
         where: {
           userId,
+          concept: filterType || undefined,
+          OR: [
+            {
+              amount: {
+                contains: queryValue,
+                mode: 'insensitive',
+              },
+            },
+            {
+              user: {
+                OR: [
+                  {
+                    name: {
+                      contains: queryValue,
+                      mode: 'insensitive',
+                    },
+                    email: {
+                      contains: queryValue,
+                      mode: 'insensitive',
+                    },
+                  },
+                ],
+              },
+            },
+          ],
         },
         skip,
         take: limit,
-        orderBy: {
-          id: order,
-        },
+        orderBy:
+          fieldOrder === 'userName'
+            ? {
+                user: {
+                  name: order,
+                },
+              }
+            : {
+                [fieldOrder]: order,
+              },
       });
 
-      if (totalMovements === null) {
+      if (totalAmounts === null) {
         return undefined;
       }
 
-      return totalMovements._sum.amount ?? undefined;
+      return totalAmounts;
     } catch (error) {
+      console.log('sumMovements: ', error);
       return null;
     }
   };

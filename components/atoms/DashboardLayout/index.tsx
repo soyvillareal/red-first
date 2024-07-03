@@ -1,8 +1,10 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
+
 import Sidebar from '@/components/atoms/Sidebar';
 import useIsCollapsed from '@/hooks/useIsCollapsed';
+import { Toaster } from '@/components/ui/toaster';
 
 const DashboardLayout = ({ children }: PropsWithChildren) => {
   const [isCollapsed, setIsCollapsed] = useIsCollapsed();
@@ -18,6 +20,7 @@ const DashboardLayout = ({ children }: PropsWithChildren) => {
       >
         {children}
       </main>
+      <Toaster />
     </div>
   );
 };

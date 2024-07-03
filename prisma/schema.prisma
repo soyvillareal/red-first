@@ -21,7 +21,7 @@ enum MovementConcept {
 model Movements {
   id        String          @unique @default(uuid())
   userId    String
-  amount    BigInt
+  amount    String
   concept   MovementConcept
   date      DateTime        @default(now()) @map(name: "date")
   updatedAt DateTime        @default(now()) @map(name: "updated_at")
