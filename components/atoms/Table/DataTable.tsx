@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import {
-  ColumnFiltersState,
-  SortingState,
   VisibilityState,
   flexRender,
   getCoreRowModel,
@@ -26,8 +24,7 @@ import {
 import { DataTableToolbar } from './DataTableToolbar';
 import { DataTablePagination } from './DataTablePagination';
 import { DataTableProps } from './Table.types';
-import { Skeleton } from '@/components/ui/skeleton';
-import { fillArray } from '@/lib/utils';
+import DataTableItemSkeleton from '@/components/skeleton/DataTableItemSkeleton';
 
 export function DataTable<TData, TValue>({
   columns,
@@ -93,17 +90,7 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {loading ? (
-              fillArray(10).map((_, i) =>
-                table.getHeaderGroups().map((headerGroup, i) => (
-                  <TableRow key={i}>
-                    {headerGroup.headers.map((_, i) => (
-                      <TableCell key={i}>
-                        <Skeleton className='w-[75px] h-[15px] rounded-[4px]' />
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              )
+              <DataTableItemSkeleton table={table} />
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

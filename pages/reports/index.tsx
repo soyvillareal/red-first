@@ -17,7 +17,6 @@ import Dollar2Icon from '@/components/icons/Dollar2Icon';
 import { loadTranslations } from '@/lib/i18n';
 import { currencySite, propsToCSV } from '@/lib/utils';
 import { AdditionalMovementsChartQuery } from '@/lib/apollo';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   IGetAdditionalMovements,
   IGetMovementsChart,
@@ -28,6 +27,8 @@ import { RecentMovements } from './components/RecentMovements';
 import { MovementsChart } from './components/MovementsChart';
 import { IReportsCSV } from './reports.types';
 import SelectorYear from './components/SelectorYear';
+import ReportBalanceSkeleton from '@/components/skeleton/ReportBalanceSkeleton';
+import ReportMovementsSkeleton from '@/components/skeleton/ReportMovementsSkeleton';
 
 export default function Dashboard() {
   const { t } = useTranslation();
@@ -48,21 +49,16 @@ export default function Dashboard() {
 
   useEffect(() => {
     (async () => {
-      try {
-        const additionalMovements = await getAdditionalMovements();
+      const additionalMovements = await getAdditionalMovements();
 
-        if (additionalMovements.data) {
-          setReportData((prev) => ({
-            ...prev,
-            balance: additionalMovements.data?.getAdditionalMovements.balance,
-            movements:
-              additionalMovements.data?.getAdditionalMovements.movements,
-            recentMovements:
-              additionalMovements.data?.getAdditionalMovements.recentMovements,
-          }));
-        }
-      } catch (error) {
-        console.log('error', error);
+      if (additionalMovements.data) {
+        setReportData((prev) => ({
+          ...prev,
+          balance: additionalMovements.data?.getAdditionalMovements.balance,
+          movements: additionalMovements.data?.getAdditionalMovements.movements,
+          recentMovements:
+            additionalMovements.data?.getAdditionalMovements.recentMovements,
+        }));
       }
     })();
   }, []);
@@ -153,12 +149,7 @@ export default function Dashboard() {
                   </CardHeader>
                   <CardContent>
                     {additionalMovementQueryLoading ? (
-                      <div className='flex items-center gap-2'>
-                        <span className='text-secondary-foreground text-2xl font-bold'>
-                          $
-                        </span>
-                        <Skeleton className='w-80 h-6 rounded-[4px]' />
-                      </div>
+                      <ReportBalanceSkeleton />
                     ) : (
                       <div className='text-secondary-foreground text-2xl font-bold'>
                         {
@@ -175,9 +166,7 @@ export default function Dashboard() {
                       {t('dashboard.recentMovements')}
                     </CardTitle>
                     {additionalMovementQueryLoading ? (
-                      <div className='flex items-center'>
-                        <Skeleton className='w-80 h-4 rounded-[2px]' />
-                      </div>
+                      <ReportMovementsSkeleton />
                     ) : (
                       <CardDescription className='text-secondary-foreground'>
                         {t('dashboard.youMadeMovementsMonth', {

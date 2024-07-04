@@ -8,9 +8,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ValidYearsQuery } from '@/lib/apollo';
+import SelectorYearSkeleton from '@/components/skeleton/SelectorYearSkeleton';
 
 import { ISelectorYearProps } from './SelectorYear.types';
-import { Skeleton } from '@/components/ui/skeleton';
 
 const SelectorYear = ({ value, onValueChange }: ISelectorYearProps) => {
   const {
@@ -21,20 +21,22 @@ const SelectorYear = ({ value, onValueChange }: ISelectorYearProps) => {
   }>(ValidYearsQuery);
 
   return additionalMovementQueryLoading ? (
-    <Skeleton className='w-[80px] h-8 rounded-[4px] mt-[0px!important]' />
+    <SelectorYearSkeleton />
   ) : (
-    <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className='bg-accent w-[80px] h-8 mt-[0px!important]'>
-        <SelectValue placeholder='Select year' />
-      </SelectTrigger>
-      <SelectContent side='top'>
-        {additionalMovementQueryData?.getValidYears.map((year) => (
-          <SelectItem key={year} value={year}>
-            {year}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    additionalMovementQueryData && (
+      <Select value={value} onValueChange={onValueChange}>
+        <SelectTrigger className='bg-accent w-[80px] h-8 mt-[0px!important]'>
+          <SelectValue placeholder='Select year' />
+        </SelectTrigger>
+        <SelectContent side='top'>
+          {additionalMovementQueryData?.getValidYears.map((year) => (
+            <SelectItem className='cursor-pointer' key={year} value={year}>
+              {year}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    )
   );
 };
 

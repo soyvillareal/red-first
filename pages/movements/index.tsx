@@ -24,9 +24,9 @@ import {
 } from '@/types/graphql/resolvers';
 import { usePagination } from '@/hooks/usePagination';
 import { useSorting } from '@/hooks/useSorting';
-import { Skeleton } from '@/components/ui/skeleton';
 import { ColumnFiltersState } from '@tanstack/react-table';
 import { useDebounce } from '@/hooks/useDebounce';
+import DataTableFooterSkeleton from '@/components/skeleton/DataTableFooterSkeleton';
 
 const Movements = () => {
   const { t } = useTranslation();
@@ -34,7 +34,8 @@ const Movements = () => {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const { pagination, onPaginationChange, page, limit } = usePagination();
-  const { sorting, onSortingChange, field, order } = useSorting<TValidsMovementTypes>('date');
+  const { sorting, onSortingChange, field, order } =
+    useSorting<TValidsMovementTypes>('date');
 
   const { debouncedValue, debouncedLoading } =
     useDebounce<ColumnFiltersState>(columnFilters);
@@ -99,7 +100,7 @@ const Movements = () => {
               footerChildren={
                 <div className='mt-5 border rounded-md flex justify-between items-center p-4'>
                   {movementQueryLoading || debouncedLoading ? (
-                    <Skeleton className='w-[120px] h-[20px] rounded-[4px]' />
+                    <DataTableFooterSkeleton />
                   ) : (
                     <span>{movementQueryData?.getMovements.data.total}</span>
                   )}

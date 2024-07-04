@@ -1,8 +1,10 @@
-import { MiddlewareFn } from 'type-graphql';
 import dayjs from 'dayjs';
+import { MiddlewareFn } from 'type-graphql';
+import { MovementConcept } from '@prisma/client';
 
-import { EMovementConcept, IGraphQLContext } from '@/types';
+import { IGraphQLContext } from '@/types';
 import { type TValidsMovementTypes } from '@/types/graphql/resolvers';
+
 import { responseCodes } from '../utils';
 
 export const checkCreateMovement: MiddlewareFn<IGraphQLContext> = async (
@@ -49,10 +51,11 @@ export const checkGetMovements: MiddlewareFn<IGraphQLContext> = async (
   try {
     const { filterType, fieldOrder } = args.pagination;
 
+    console.log('filterType: ', filterType);
     let filterConcept = null;
     if (filterType !== null && filterType !== undefined) {
-      filterConcept = filterType as EMovementConcept;
-      if (Object.values(EMovementConcept).includes(filterConcept) === false) {
+      filterConcept = filterType as MovementConcept;
+      if (Object.values(MovementConcept).includes(filterConcept) === false) {
         throw new Error(responseCodes.ERROR.INVALID_FILTER_TYPE);
       }
     }

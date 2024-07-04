@@ -15,12 +15,12 @@ import { useLazyQuery } from '@apollo/client';
 import { fillArray, formatNumber, numberWithCurrency } from '@/lib/utils';
 import { MovementsChartQuery } from '@/lib/apollo';
 import { type IGetMovementsChart } from '@/types/graphql/resolvers';
+import MovementsChartSkeleton from '@/components/skeleton/MovementsChartSkeleton';
 
 import {
   type IMovementsChartProps,
   type IGetMovementsQueryParams,
 } from './MovementsChart.types';
-import { Skeleton } from '@/components/ui/skeleton';
 
 export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
   const { t } = useTranslation();
@@ -88,7 +88,7 @@ export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
   return (
     <ResponsiveContainer width='100%' height={400}>
       {movementQueryLoading ? (
-        <Skeleton className='w-full h-full' />
+        <MovementsChartSkeleton />
       ) : (
         <BarChart
           data={movementQueryData?.getMovementsChart}

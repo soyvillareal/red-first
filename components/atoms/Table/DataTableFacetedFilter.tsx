@@ -101,6 +101,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                 return (
                   <CommandItem
                     key={option.value}
+                    className='cursor-pointer'
                     onSelect={() => handleSelect(option.value, isSelected)}
                   >
                     <div

@@ -18,7 +18,6 @@ import {
 } from '@/types/graphql/pagination';
 import { UserQuery } from '@/lib/apollo';
 
-import { mockData as props } from './users.mock';
 import { columns } from './users.constants';
 import { IGetUsers, TValidsUserTypes } from '@/types/graphql/resolvers';
 

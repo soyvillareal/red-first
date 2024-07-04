@@ -115,7 +115,7 @@ export class UsersResolvers {
           id: user.id,
           name: user.name ?? '',
           email: user.email ?? '',
-          phone: user.phone ?? '',
+          phone: user.phone ?? '--',
         };
       });
 

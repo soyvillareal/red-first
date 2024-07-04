@@ -24,10 +24,11 @@ import LayoutDashboardIcon from '@/components/icons/LayoutDashboardIcon';
 import { cn, getNameInitials } from '@/lib/utils';
 import { dashboardRoutes, routes } from '@/lib/contants';
 import { languages } from '@/lib/i18nConfig';
+import UserNavSkeleton from '@/components/skeleton/UserNavSkeleton';
 
 export const UserNav = () => {
   const { t, i18n } = useTranslation();
-  const session = useSession();
+  const { data: sessionData, status, update } = useSession();
   const router = useRouter();
   const { pathname, query, asPath } = router;
 
@@ -46,16 +47,18 @@ export const UserNav = () => {
     signOut();
   }, []);
 
-  return (
+  return status === 'loading' ? (
+    <UserNavSkeleton />
+  ) : (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
-          {session.data && session.data.user.image && (
+        <Button variant='ghost' className='relative w-8 h-8 rounded-full'>
+          {sessionData && sessionData.user.image && (
             <Avatar className='w-10 h-10'>
-              <AvatarImage src={session.data.user.image} />
-              {session.data.user.name && (
+              <AvatarImage src={sessionData.user.image} />
+              {sessionData.user.name && (
                 <AvatarFallback>
-                  {getNameInitials(session.data.user.name)}
+                  {getNameInitials(sessionData.user.name)}
                 </AvatarFallback>
               )}
             </Avatar>
@@ -63,15 +66,15 @@ export const UserNav = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-56' align='end' forceMount>
-        {session && session.data && (
+        {sessionData && sessionData && (
           <DropdownMenuLabel className='font-normal'>
             <div className='flex flex-col space-y-1'>
               <p className='text-sm font-medium leading-none'>
-                {session.data.user.name}
+                {sessionData.user.name}
               </p>
-              {session.data.user?.email && (
+              {sessionData.user?.email && (
                 <p className='text-xs leading-none text-destructive-foreground'>
-                  {session.data.user.email}
+                  {sessionData.user.email}
                 </p>
               )}
             </div>
