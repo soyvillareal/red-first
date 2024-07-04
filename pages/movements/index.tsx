@@ -18,7 +18,10 @@ import {
   IPageOptionsDataMeta,
   IPaginationArgs,
 } from '@/types/graphql/pagination';
-import { type IGetMovementsWithTotal } from '@/types/graphql/resolvers';
+import {
+  TValidsMovementTypes,
+  type IGetMovementsWithTotal,
+} from '@/types/graphql/resolvers';
 import { usePagination } from '@/hooks/usePagination';
 import { useSorting } from '@/hooks/useSorting';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -31,7 +34,7 @@ const Movements = () => {
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const { pagination, onPaginationChange, page, limit } = usePagination();
-  const { sorting, onSortingChange, field, order } = useSorting('date');
+  const { sorting, onSortingChange, field, order } = useSorting<TValidsMovementTypes>('date');
 
   const { debouncedValue, debouncedLoading } =
     useDebounce<ColumnFiltersState>(columnFilters);
@@ -43,7 +46,7 @@ const Movements = () => {
     {
       getMovements: IPageOptionsDataMeta<IGetMovementsWithTotal>;
     },
-    IPaginationArgs
+    IPaginationArgs<TValidsMovementTypes>
   >(MovementQuery);
 
   useEffect(() => {

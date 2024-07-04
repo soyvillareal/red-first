@@ -2,6 +2,9 @@ import { useCallback } from 'react';
 import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { UserRole } from '@prisma/client';
+import { useMutation } from '@apollo/client';
+
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/custom/Button';
 import {
@@ -17,31 +20,51 @@ import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
-import { EUserRole } from '@/types';
+import { UserMutation } from '@/lib/apollo';
+import { type IUpdateUserArgs } from '@/types/graphql/resolvers';
 
-import { UserFormProps, UserFormInputs } from './UserForm.types';
+import { type IUserFormProps, type TUserFormInputs } from './UserForm.types';
 import { userFormSchema } from './UserForm.schema';
 
-export function UserForm({ userData }: UserFormProps) {
+export function UserForm({ userId, userData }: IUserFormProps) {
   const { t } = useTranslation();
-  const methods = useForm<UserFormInputs>({
-    resolver: zodResolver(userFormSchema),
+  const methods = useForm<TUserFormInputs>({
+    resolver: zodResolver(userFormSchema(t)),
     defaultValues: {
       name: userData.name,
       role: userData.role,
     },
   });
 
-  const onSubmit = useCallback((data: UserFormInputs) => {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }, []);
+  const [updateUser, { loading: userMutationLoading }] = useMutation<
+    {
+      updateUser: string;
+    },
+    IUpdateUserArgs
+  >(UserMutation);
+
+  const onSubmit = useCallback(
+    async (data: TUserFormInputs) => {
+      try {
+        const updatedUser = await updateUser({
+          variables: {
+            userId,
+            name: data.name,
+            role: data.role,
+          },
+        });
+
+        toast({
+          description: t(`responseCodes.${updatedUser.data?.updateUser}`),
+        });
+      } catch (error: any) {
+        toast({
+          description: t(`responseCodes.${error.message}`),
+        });
+      }
+    },
+    [userData]
+  );
 
   return (
     <Form {...methods}>
@@ -77,7 +100,7 @@ export function UserForm({ userData }: UserFormProps) {
                     )}
                     {...field}
                   >
-                    {Object.values(EUserRole).map((type) => {
+                    {Object.values(UserRole).map((type) => {
                       return (
                         <option key={type} value={type}>
                           {t(`roles.${type}`)}
@@ -95,7 +118,9 @@ export function UserForm({ userData }: UserFormProps) {
             </FormItem>
           )}
         />
-        <Button type='submit'>{t('common.save')}</Button>
+        <Button type='submit' loading={userMutationLoading}>
+          {t('common.save')}
+        </Button>
       </HookForm>
     </Form>
   );

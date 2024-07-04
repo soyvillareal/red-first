@@ -1,17 +1,19 @@
 import { z } from 'zod';
+import { TFunction } from 'next-i18next';
+import { UserRole } from '@prisma/client';
 
-import { EUserRole } from '@/types';
-
-export const userFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: 'Name must be at least 2 characters.',
-    })
-    .max(30, {
-      message: 'Name must not be longer than 30 characters.',
+export const userFormSchema = (t: TFunction) => {
+  return z.object({
+    name: z
+      .string()
+      .min(2, {
+        message: t('editUser.nameMusBeLeast'),
+      })
+      .max(30, {
+        message: t('editUser.nameMustBeLonger'),
+      }),
+    role: z.nativeEnum(UserRole, {
+      required_error: t('editUser.enterValidConcept'),
     }),
-  role: z.nativeEnum(EUserRole, {
-    required_error: 'Please select a valid concept.',
-  }),
-});
+  });
+};

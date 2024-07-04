@@ -18,6 +18,11 @@ enum MovementConcept {
   expense
 }
 
+enum UserRole {
+  admin
+  user
+}
+
 model Movements {
   id        String          @unique @default(uuid())
   userId    String
@@ -68,7 +73,9 @@ model User {
   name          String?
   email         String?     @unique
   emailVerified DateTime?   @map("email_verified")
+  phone         String?     @unique @map("phone")
   image         String?
+  role          UserRole    @default(user)
   createdAt     DateTime    @default(now()) @map(name: "created_at")
   updatedAt     DateTime    @updatedAt @map(name: "updated_at")
   movements     Movements[]

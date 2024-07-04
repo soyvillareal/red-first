@@ -15,7 +15,6 @@ export default function NewMovement() {
   return (
     <ContextLayout>
       <DashboardLayout>
-        {/* ===== Top Heading ===== */}
         <ContextLayout.Header sticky>
           <div className='ml-auto flex items-center space-x-4'>
             <UserNav />

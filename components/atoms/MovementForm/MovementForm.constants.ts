@@ -1,10 +1,10 @@
-import { EMovementConcept } from '@/types';
+import { MovementConcept } from '@prisma/client';
 
-import { MovementFormInputs } from './MovementForm.types';
+import { TMovementFormInputs } from './MovementForm.types';
 
 // This can come from your database or API.
-export const defaultValues: Partial<MovementFormInputs> = {
+export const defaultValues: Partial<TMovementFormInputs> = {
   amount: '',
-  concept: EMovementConcept.INCOME,
+  concept: MovementConcept.income,
   date: new Date(),
 };

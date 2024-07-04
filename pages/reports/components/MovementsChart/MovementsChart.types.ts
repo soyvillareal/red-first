@@ -1,21 +1,10 @@
-export interface MovementChartItem {
-  name:
-    | 'jan'
-    | 'feb'
-    | 'mar'
-    | 'apr'
-    | 'may'
-    | 'jun'
-    | 'jul'
-    | 'aug'
-    | 'sep'
-    | 'oct'
-    | 'nov'
-    | 'dec';
-  income: number;
-  expense: number;
+import { IGetMovementsChart } from '@/types/graphql/resolvers';
+
+export interface IGetMovementsQueryParams {
+  year: string;
 }
 
-export interface MovementsChartProps {
-  movements: MovementChartItem[];
+export interface IMovementsChartProps {
+  callbackState: (loading: boolean, data?: IGetMovementsChart[]) => void;
+  year: string;
 }

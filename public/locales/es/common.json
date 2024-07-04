@@ -34,10 +34,15 @@
         "nov": "Nov",
         "dec": "Dic"
     },
+    "sidebar": {
+        "reports": "Reportes",
+        "incomeAndExpenses": "Ingresos y egresos",
+        "users": "Usuarios"
+    },
     "dashboard": {
         "title": "Panel de control",
         "recentMovements": "Movimientos recientes",
-        "movements": "Movimientos",
+        "movements": "Movimientos ({{currency}})",
         "balance": "Saldo",
         "youMadeMovementsMonth": "Realizaste {{movements}} movimientos este mes."
     },
@@ -98,7 +103,20 @@
         "role": "Rol",
         "nameOfTheUserToEdentifyIt": "El nombre del usuario se utiliza para identificarlo.",
         "roleOfTheUser": "El rol se utiliza para otorgar permisos al usuario, debes tener cuidado con esta opción.",
-        "writeName": "Escribe el nombre..."
+        "writeName": "Escribe el nombre...",
+        "nameMusBeLeast": "El nombre debe tener al menos 2 caracteres.",
+        "nameMustBeLonger": "El nombre no debe tener más de 30 caracteres.",
+        "enterValidConcept": "Por favor seleccione un concepto válido."
+    },
+    "reportCSV": {
+        "movements": "Movimientos",
+        "name": "Nombre",
+        "income": "Ingresos",
+        "expense": "Egresos",
+        "recentMovements": "Movimientos recientes",
+        "email": "Correo",
+        "movement": "Movimiento",
+        "balance": "Saldo"
     },
     "landing": {
         "simplify_your_accounts": "Simplifica tu cuentas, simplifica tu vida",
@@ -128,13 +146,18 @@
         "PAGE_MUST_BE_NUMBER": "Algo no salió bien, por favor intente nuevamente.",
         "LIMIT_INVALID": "Algo no salió bien, por favor intente nuevamente.",
         "ORDER_INVALID": "Algo no salió bien, por favor intente nuevamente.",
-        "NOT_FOUND": "Movimiento no encontrado.",
+        "NOT_FOUND": "No se encontrarón movimientos :(",
         "AMOUNT_ZERO": "Por favor ingrese un monto superior a cero.",
         "AMOUNT_NEGATIVE": "El monto no puede ser negativo.",
         "AMOUNT_TOO_HIGH": "El monto es demasiado alto.",
-        "MOVEMENT_CREATED_SUCCESSFULLY": "Movimiento creado exitosamente.",
+        "MOVEMENT_CREATED_SUCCESSFULLY": "¡Movimiento creado exitosamente!",
         "ENTER_VALID_CONCEPT": "Por favor ingrese un concepto válido.",
         "ENTER_VALID_DATE": "Por favor ingrese una fecha válida.",
-        "ENTER_VALID_AMOUNT": "Por favor ingrese un monto válido."
+        "ENTER_VALID_AMOUNT": "Por favor ingrese un monto válido.",
+        "USERS_NOT_FOUND": "No se encontraron usuarios :(",
+        "NAME_EMPTY": "El nombre no puede estar vacío.",
+        "NAME_TOO_SHORT": "El nombre debe tener al menos 2 caracteres.",
+        "NAME_TOO_LONG": "El nombre no debe tener más de 30 caracteres.",
+        "USER_UPDATED_SUCCESSFULLY": "¡Usuario actualizado exitosamente!"
     }
 }

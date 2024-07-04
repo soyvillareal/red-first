@@ -7,31 +7,37 @@ import {
   UseMiddleware,
 } from 'type-graphql';
 import dayjs from 'dayjs';
+import { type MovementConcept } from '@prisma/client';
 
-import { EMovementConcept, type IGraphQLContext } from '../../types';
-import { MovementsRepository } from '../dataAccess/movements';
-import { CreateMovementArgs, PaginatedMovements } from './schemas/movements';
-import { PaginationArgs } from './schemas/pagination';
+import {
+  type TValidsMovementTypes,
+  type IGetMovementsWithTotal,
+} from '@/types/graphql/resolvers';
+import {
+  type IPaginationParams,
+  type IPageOptionsDataMeta,
+  type IPaginationArgs,
+} from '@/types/graphql/pagination';
+import { numberWithCurrency } from '@/lib/utils';
+
+import {
+  checkCreateMovement,
+  checkGetMovements,
+} from '../../middleware/movements';
+import { checkIsLogged, checkPagination } from '../../middleware';
+import { type IGraphQLContext } from '../../../types';
+import { MovementsRepository } from '../../dataAccess/movements';
+import { CreateMovementArgs, PaginatedMovements } from '../schemas/movements';
+import { PaginationArgs } from '../schemas/pagination';
 import {
   responseCodes,
   getSkipped,
   mockPagination,
-  numberWithCurrency,
   pageMeta,
-} from '../utils';
-import { checkIsLogged, checkPagination } from '../middleware';
-import { type IGetMovementsWithTotal } from '@/types/graphql/resolvers';
-import {
-  type IPaginationParams,
-  type IPageOptionsDataMeta,
-} from '@/types/graphql/pagination';
-import {
-  checkCreateMovement,
-  checkGetMovements,
-} from '../middleware/movements';
+} from '../../utils';
 
 @Resolver()
-export class Resolvers {
+export class MovementsResolvers {
   protected movementsRepository: MovementsRepository;
 
   constructor() {
@@ -41,7 +47,7 @@ export class Resolvers {
   @Mutation(() => String)
   @UseMiddleware(checkIsLogged, checkCreateMovement)
   async createMovement(
-    @Arg('movements', () => CreateMovementArgs)
+    @Arg('movement', () => CreateMovementArgs)
     { amount, concept, date }: CreateMovementArgs,
     @Ctx() context: IGraphQLContext
   ) {
@@ -74,7 +80,8 @@ export class Resolvers {
   })
   @UseMiddleware(checkIsLogged, checkPagination, checkGetMovements)
   async getMovements(
-    @Arg('pagination', () => PaginationArgs) paginationArgs: PaginationArgs,
+    @Arg('pagination', () => PaginationArgs)
+    paginationArgs: IPaginationArgs<TValidsMovementTypes>,
     @Ctx() context: IGraphQLContext
   ): Promise<IPageOptionsDataMeta<IGetMovementsWithTotal>> {
     try {
@@ -82,7 +89,7 @@ export class Resolvers {
         paginationArgs;
       const userId = context.session.user.id;
 
-      let filterConcept = filterType as EMovementConcept | null;
+      let filterConcept = filterType as MovementConcept | null;
 
       const totalMovements = await this.movementsRepository.getTotalMovements(
         userId,
@@ -98,7 +105,7 @@ export class Resolvers {
         throw new Error(responseCodes.MOVEMENTS.NOT_FOUND);
       }
 
-      const pageFilterOptions: IPaginationParams = {
+      const pageFilterOptions: IPaginationParams<TValidsMovementTypes> = {
         limit,
         skip: getSkipped(totalMovements, page, limit),
         order,
@@ -108,9 +115,7 @@ export class Resolvers {
       };
 
       const totalAmounts = await this.movementsRepository.getTotalAmounts(
-        {
-          userId,
-        },
+        userId,
         pageFilterOptions
       );
 
@@ -128,9 +133,7 @@ export class Resolvers {
       }, BigInt(0));
 
       const movements = await this.movementsRepository.getMovements(
-        {
-          userId,
-        },
+        userId,
         pageFilterOptions
       );
 

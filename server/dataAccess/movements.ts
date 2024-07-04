@@ -1,13 +1,12 @@
-import { Movements, PrismaClient } from '@prisma/client';
+import { type MovementConcept, type Movements, PrismaClient } from '@prisma/client';
 
 import {
   type IGetMovementsRepository,
   type ICreateUserRepository,
-  type IGetMovementsParams,
-  IGetTotalAmountsResult,
+  type IGetTotalAmountsResult,
 } from '@/types/dataAccess/movements';
-import { IPaginationParams } from '@/types/graphql/pagination';
-import { EMovementConcept } from '@/types';
+import { type IPaginationParams } from '@/types/graphql/pagination';
+import { TValidsMovementTypes } from '@/types/graphql/resolvers';
 
 export class MovementsRepository {
   private prisma: PrismaClient;
@@ -39,7 +38,7 @@ export class MovementsRepository {
   };
 
   public getMovements = async (
-    { userId }: IGetMovementsParams,
+    userId: string,
     {
       limit,
       skip,
@@ -47,10 +46,9 @@ export class MovementsRepository {
       queryValue,
       filterType,
       fieldOrder = 'date',
-    }: IPaginationParams
+    }: IPaginationParams<TValidsMovementTypes>
   ): Promise<IGetMovementsRepository[] | null> => {
     try {
-      console.log('queryValue: ', queryValue);
       const movements = await this.prisma.movements.findMany({
         select: {
           id: true,
@@ -113,7 +111,7 @@ export class MovementsRepository {
 
   public getTotalMovements = async (
     userId: string,
-    filterType: EMovementConcept | null,
+    filterType: MovementConcept | null,
     queryValue?: string
   ): Promise<number | null> => {
     try {
@@ -156,7 +154,7 @@ export class MovementsRepository {
   };
 
   public getTotalAmounts = async (
-    { userId }: IGetMovementsParams,
+    userId: string,
     {
       limit,
       skip,
@@ -164,7 +162,7 @@ export class MovementsRepository {
       filterType,
       queryValue,
       fieldOrder = 'date',
-    }: IPaginationParams
+    }: IPaginationParams<TValidsMovementTypes>
   ): Promise<IGetTotalAmountsResult[] | undefined | null> => {
     try {
       const totalAmounts = await this.prisma.movements.findMany({
@@ -219,7 +217,6 @@ export class MovementsRepository {
 
       return totalAmounts;
     } catch (error) {
-      console.log('sumMovements: ', error);
       return null;
     }
   };

@@ -11,6 +11,15 @@
         "enter": "Enter",
         "new": "New"
     },
+    "languages": {
+        "title": "Language ({{lang}})",
+        "es": "Spanish",
+        "en": "English"
+    },
+    "roles": {
+        "admin": "Administrator",
+        "user": "User"
+    },
     "months": {
         "jan": "Jan",
         "feb": "Feb",
@@ -25,19 +34,15 @@
         "nov": "Nov",
         "dec": "Dec"
     },
-    "languages": {
-        "title": "Language ({{lang}})",
-        "es": "Spanish",
-        "en": "English"
-    },
-    "roles": {
-        "admin": "Administrator",
-        "user": "User"
+    "sidebar": {
+        "reports": "Reports",
+        "incomeAndExpenses": "Income and expenses",
+        "users": "Users"
     },
     "dashboard": {
         "title": "Dashboard",
         "recentMovements": "Recent movements",
-        "movements": "Movements",
+        "movements": "Movements ({{currency}})",
         "balance": "Balance",
         "youMadeMovementsMonth": "You made {{movements}} movements this month."
     },
@@ -97,7 +102,20 @@
         "role": "Role",
         "nameOfTheUserToEdentifyIt": "The name of the user is used to identify it.",
         "roleOfTheUser": "The role is used to grant permissions to the user, you should be careful with this option.",
-        "writeName": "Write the name..."
+        "writeName": "Write the name...",
+        "nameMusBeLeast": "Name must be at least 2 characters.",
+        "nameMustBeLonger": "Name must not be longer than 30 characters.",
+        "enterValidConcept": "Please select a valid concept."
+    },
+    "reportCSV": {
+        "movements": "Movements",
+        "name": "Name",
+        "income": "Income",
+        "expense": "Expense",
+        "recentMovements": "Recent movements",
+        "email": "Email",
+        "movement": "Movement",
+        "balance": "Balance"
     },
     "landing": {
         "simplify_your_accounts": "Simplify your accounts, simplify your life",
@@ -127,13 +145,18 @@
         "PAGE_MUST_BE_NUMBER": "Something went wrong, please try again.",
         "LIMIT_INVALID": "Something went wrong, please try again.",
         "ORDER_INVALID": "Something went wrong, please try again.",
-        "NOT_FOUND": "Movement not found.",
+        "NOT_FOUND": "No movements found :(",
         "AMOUNT_ZERO": "Please enter an amount greater than zero.",
         "AMOUNT_NEGATIVE": "The amount cannot be negative.",
         "AMOUNT_TOO_HIGH": "The amount is too high.",
-        "MOVEMENT_CREATED_SUCCESSFULLY": "Movement created successfully.",
+        "MOVEMENT_CREATED_SUCCESSFULLY": "Movement created successfully!",
         "ENTER_VALID_CONCEPT": "Please enter a valid concept.",
         "ENTER_VALID_DATE": "Please enter a valid date.",
-        "ENTER_VALID_AMOUNT": "Please enter a valid amount."
+        "ENTER_VALID_AMOUNT": "Please enter a valid amount.",
+        "USERS_NOT_FOUND": "No users found :(",
+        "NAME_EMPTY": "Name cannot be empty.",
+        "NAME_TOO_SHORT": "Name must be at least 2 characters.",
+        "NAME_TOO_LONG": "Name must not be longer than 30 characters.",
+        "USER_UPDATED_SUCCESSFULLY": "User updated successfully!"
     }
 }

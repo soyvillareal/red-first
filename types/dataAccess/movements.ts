@@ -17,10 +17,6 @@ export interface IGetMovementsRepository {
   };
 }
 
-export interface IGetMovementsParams {
-  userId: string;
-}
-
 export interface IGetTotalAmountsResult {
   amount: string;
 }

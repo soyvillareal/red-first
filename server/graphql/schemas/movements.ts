@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType, registerEnumType } from 'type-graphql';
+import { Field, InputType, ObjectType } from 'type-graphql';
 import { MovementConcept } from '@prisma/client';
 import {
   type IGetMovementsWithTotal,
@@ -7,15 +7,6 @@ import {
 } from '@/types/graphql/resolvers';
 import { PageOptionsMeta } from './pagination';
 import { type IPageOptionsDataMeta } from '@/types/graphql/pagination';
-
-registerEnumType(MovementConcept, {
-  name: 'EMovementConcept',
-  description: 'Movements types',
-  valuesConfig: {
-    expense: { description: 'Expense' },
-    income: { description: 'Income' },
-  },
-});
 
 @InputType()
 export class CreateMovementArgs implements ICreateMovementArgs {

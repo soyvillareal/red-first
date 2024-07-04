@@ -32,7 +32,7 @@ const apolloClient = new ApolloClient({
 export const MovementMutation = gql`
   mutation ($concept: EMovementConcept!, $amount: String!, $date: String!) {
     createMovement(
-      movements: { concept: $concept, amount: $amount, date: $date }
+      movement: { concept: $concept, amount: $amount, date: $date }
     )
   }
 `;
@@ -76,6 +76,83 @@ export const MovementQuery = gql`
         errorMessage
       }
     }
+  }
+`;
+
+export const UserMutation = gql`
+  mutation ($userId: String!, $name: String!, $role: EUserRole!) {
+    updateUser(user: { userId: $userId, name: $name, role: $role })
+  }
+`;
+
+export const UserQuery = gql`
+  query GetUsers(
+    $page: Float!
+    $limit: Float!
+    $order: String!
+    $filterType: String
+    $queryValue: String
+    $fieldOrder: String!
+  ) {
+    getUsers(
+      pagination: {
+        page: $page
+        limit: $limit
+        order: $order
+        filterType: $filterType
+        queryValue: $queryValue
+        fieldOrder: $fieldOrder
+      }
+    ) {
+      data {
+        id
+        name
+        email
+        phone
+      }
+      meta {
+        page
+        limit
+        itemCount
+        pageCount
+        hasPreviousPage
+        hasNextPage
+        errorMessage
+      }
+    }
+  }
+`;
+
+export const MovementsChartQuery = gql`
+  query GetMovementsChart($year: String!) {
+    getMovementsChart(year: $year) {
+      name
+      income
+      expense
+    }
+  }
+`;
+
+export const AdditionalMovementsChartQuery = gql`
+  query GetAdditionalMovements {
+    getAdditionalMovements {
+      balance
+      movements
+      recentMovements {
+        id
+        name
+        email
+        image
+        movement
+        concept
+      }
+    }
+  }
+`;
+
+export const ValidYearsQuery = gql`
+  query GetValidYears {
+    getValidYears
   }
 `;
 

@@ -29,14 +29,6 @@ export const logger = createLogger({
   ],
 });
 
-export const numberWithCurrency = (amount: string | bigint): string => {
-  const amountNumber = BigInt(amount) || 0;
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-  }).format(amountNumber);
-};
-
 export const pageMeta = <T>(
   data: T,
   { pageOptions: { limit = 10, page }, itemCount }: IPageMetaParameters
@@ -110,5 +102,15 @@ export const responseCodes = {
     AMOUNT_NEGATIVE: 'AMOUNT_NEGATIVE',
     AMOUNT_TOO_HIGH: 'AMOUNT_TOO_HIGH',
     MOVEMENT_CREATED_SUCCESSFULLY: 'MOVEMENT_CREATED_SUCCESSFULLY',
+  },
+  USERS: {
+    NOT_FOUND: 'USERS_NOT_FOUND',
+    NAME_EMPTY: 'NAME_EMPTY',
+    NAME_TOO_SHORT: 'NAME_TOO_SHORT',
+    NAME_TOO_LONG: 'NAME_TOO_LONG',
+    USER_UPDATED_SUCCESSFULLY: 'USER_UPDATED_SUCCESSFULLY',
+  },
+  REPORTS: {
+    NOT_FOUND: 'MOVEMENTS_NOT_FOUND',
   },
 };

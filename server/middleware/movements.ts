@@ -2,7 +2,7 @@ import { MiddlewareFn } from 'type-graphql';
 import dayjs from 'dayjs';
 
 import { EMovementConcept, IGraphQLContext } from '@/types';
-import { TValidsTypes } from '@/types/graphql/resolvers';
+import { type TValidsMovementTypes } from '@/types/graphql/resolvers';
 import { responseCodes } from '../utils';
 
 export const checkCreateMovement: MiddlewareFn<IGraphQLContext> = async (
@@ -10,7 +10,7 @@ export const checkCreateMovement: MiddlewareFn<IGraphQLContext> = async (
   next
 ) => {
   try {
-    const { amount, date } = args.movements;
+    const { amount, date } = args.movement;
 
     const amountNumber = BigInt(amount);
     // Validating the maximun and minimum value for BigInt in Postgres
@@ -57,7 +57,7 @@ export const checkGetMovements: MiddlewareFn<IGraphQLContext> = async (
       }
     }
 
-    const fieldsValids: TValidsTypes[] = [
+    const fieldsValids: TValidsMovementTypes[] = [
       'amount',
       'userName',
       'concept',

@@ -101,7 +101,11 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     signIn({ profile }) {
-      return !!profile;
+      if (profile === undefined || profile === null) {
+        return false;
+      }
+      
+      return true;
     },
     redirect({ url, baseUrl }) {
       return url.startsWith(baseUrl) ? `${baseUrl}/` : baseUrl;

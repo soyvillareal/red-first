@@ -1,16 +1,6 @@
 import { IncomingHttpHeaders } from 'http';
 import { DefaultSession } from 'next-auth';
 
-export enum EMovementConcept {
-  INCOME = 'income',
-  EXPENSE = 'expense',
-}
-
-export enum EUserRole {
-  ADMIN = 'admin',
-  USER = 'user',
-}
-
 export interface LocalStorageProps<T> {
   key: string;
   defaultValue: T;

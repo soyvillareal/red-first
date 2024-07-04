@@ -4,10 +4,10 @@ import { SortingState } from '@tanstack/react-table';
 import { IUseSorting } from '@/types/hooks';
 import { TPageOrder } from '@/types/graphql/pagination';
 
-export function useSorting(
-  initialField = 'id',
+export function useSorting<T extends string>(
+  initialField: T,
   initialOrder: TPageOrder = 'asc'
-): IUseSorting {
+): IUseSorting<T> {
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: initialField,
@@ -19,6 +19,6 @@ export function useSorting(
     sorting,
     onSortingChange: setSorting,
     order: !sorting.length ? initialOrder : sorting[0].desc ? 'desc' : 'asc',
-    field: sorting.length ? sorting[0].id : initialField,
+    field: (sorting.length ? sorting[0].id : initialField) as T,
   };
 }

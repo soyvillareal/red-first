@@ -1,4 +1,5 @@
-import { EMovementConcept, IGraphQLErrorContext } from '..';
+import { MovementConcept } from '@prisma/client';
+import { type IGraphQLErrorContext } from '@/types';
 
 export type TPageOrder = 'asc' | 'desc';
 
@@ -29,20 +30,20 @@ export interface IPageMetaParameters {
   itemCount: number;
 }
 
-export interface IPaginationArgs {
+export interface IPaginationArgs<T = unknown> {
   page: number;
   limit: number;
   order: TPageOrder;
   filterType: string | null;
   queryValue?: string;
-  fieldOrder: string;
+  fieldOrder: T;
 }
 
-export interface IPaginationParams {
+export interface IPaginationParams<T> {
   limit: number;
   skip: number;
   order: TPageOrder;
-  filterType: EMovementConcept | null;
+  filterType: MovementConcept | null;
   queryValue?: string;
-  fieldOrder?: string;
+  fieldOrder?: T;
 }

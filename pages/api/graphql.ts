@@ -1,18 +1,30 @@
 import 'reflect-metadata';
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import { buildSchema } from 'type-graphql';
+import { buildSchema, registerEnumType } from 'type-graphql';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
+import { MovementConcept } from '@prisma/client';
 
 import { IGraphQLContext } from '@/types';
-import { Resolvers } from '@/server/graphql/resolvers';
+import { MovementsResolvers } from '@/server/graphql/resolvers/movements';
+import { UsersResolvers } from '@/server/graphql/resolvers/users';
+import { ReportsResolvers } from '@/server/graphql/resolvers/reports';
 
 import { authOptions } from './auth/[...nextauth]';
 
 async function initializeApolloServer() {
+  registerEnumType(MovementConcept, {
+    name: 'EMovementConcept',
+    description: 'Movements concepts',
+    valuesConfig: {
+      expense: { description: 'Expense' },
+      income: { description: 'Income' },
+    },
+  });
+
   const schema = await buildSchema({
-    resolvers: [Resolvers],
+    resolvers: [MovementsResolvers, UsersResolvers, ReportsResolvers],
   });
 
   const server = new ApolloServer({ schema });

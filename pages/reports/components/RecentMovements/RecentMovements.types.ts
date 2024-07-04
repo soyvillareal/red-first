@@ -1,14 +1,6 @@
-import { EMovementConcept } from '@/types';
+import { IGetRecentMovements } from "@/types/graphql/resolvers";
 
-export interface RecentMovementItem {
-  id: string;
-  name: string;
-  email: string;
-  avatar: string;
-  movement: string;
-  type: EMovementConcept;
-}
-
-export interface RecentMovementsProps {
-  movements: RecentMovementItem[];
+export interface IRecentMovementsProps {
+  isLoading: boolean;
+  movements: IGetRecentMovements[] | undefined;
 }

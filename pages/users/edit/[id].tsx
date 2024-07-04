@@ -1,6 +1,5 @@
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 import { loadTranslations } from '@/lib/i18n';
 
 import DashboardLayout from '@/components/atoms/DashboardLayout';
@@ -10,13 +9,13 @@ import { UserNav } from '@/components/atoms/UserNav';
 import { UserForm } from '@/components/atoms/UserForm';
 import { routes } from '@/lib/contants';
 
-import { mockData as props } from './edit.mock';
+import { UsersRepository } from '@/server/dataAccess/users';
+import { type IEditServerSideParams, type IEditUserProps } from './edit.types';
 
-export default function EditUser() {
+export default function EditUser({ user }: IEditUserProps) {
   const { t } = useTranslation();
-  const { query } = useRouter();
 
-  const { name, role } = props;
+  const { id, name, role } = user;
 
   return (
     <ContextLayout>
@@ -29,8 +28,9 @@ export default function EditUser() {
         <ContextLayout.Body>
           <ContentSection title={t('editUser.title')} goBackUrl={routes.users}>
             <UserForm
+              userId={id}
               userData={{
-                name,
+                name: name ?? '',
                 role,
               }}
             />
@@ -41,15 +41,55 @@ export default function EditUser() {
   );
 }
 
-export async function getStaticPaths() {
-  const paths = [
-    { params: { id: 'clxwmjate0008xgvbccum3cmv' } },
-    { params: { id: '0vlxwmcum3ccvjate008xgmbc' } },
-  ];
+export const getServerSideProps: GetServerSideProps<
+  IEditUserProps,
+  IEditServerSideParams
+> = async (context) => {
+  const userId = context.params?.id;
 
-  return { paths, fallback: false };
-}
+  const translations = await loadTranslations(context.locale);
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  return loadTranslations(context.locale);
+  if (userId === null || userId === undefined) {
+    return {
+      props: {
+        ...translations.props,
+      },
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    };
+  }
+
+  try {
+    const userRepository = new UsersRepository();
+
+    const foundUser = await userRepository.getUserById(userId);
+
+    if (foundUser === null || foundUser === undefined) {
+      return {
+        redirect: {
+          destination: '/404', // Cambia esto por tu ruta deseada
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        user: foundUser,
+        ...translations.props,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        ...translations.props,
+      },
+      redirect: {
+        destination: '/error',
+        permanent: false,
+      },
+    };
+  }
 };

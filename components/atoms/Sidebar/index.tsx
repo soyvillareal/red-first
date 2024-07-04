@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
+
 import { ContextLayout } from '@/components/custom/layout';
 import { Button } from '@/components/custom/Button';
 import Nav from '@/components/atoms/Nav';
@@ -16,6 +18,7 @@ export default function Sidebar({
   isCollapsed,
   setIsCollapsed,
 }: SidebarProps) {
+  const { t } = useTranslation();
   const [navOpened, setNavOpened] = useState(false);
 
   /* Make body not scrollable when navBar is opened */
@@ -76,7 +79,7 @@ export default function Sidebar({
           }`}
           closeNav={() => setNavOpened(false)}
           isCollapsed={isCollapsed}
-          links={sidelinks}
+          links={sidelinks(t)}
         />
 
         {/* Scrollbar width toggle button */}

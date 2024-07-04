@@ -1,21 +1,21 @@
 import { TFunction } from 'next-i18next';
 import { ColumnDef } from '@tanstack/react-table';
+import { MovementConcept } from '@prisma/client';
 
 import CircleIcon from '@/components/icons/CircleIcon';
 import { DataTableColumnHeader } from '@/components/atoms/Table/DataTableColumnHeader';
+import { cn } from '@/lib/utils';
 
 import { movementSchema } from './movements.schema';
-import { EMovementConcept } from '@/types';
-import { cn } from '@/lib/utils';
 
 export const types = [
   {
-    value: EMovementConcept.INCOME,
+    value: MovementConcept.income,
     label: 'movements.income',
     icon: CircleIcon,
   },
   {
-    value: EMovementConcept.EXPENSE,
+    value: MovementConcept.expense,
     label: 'movements.expense',
     icon: CircleIcon,
   },

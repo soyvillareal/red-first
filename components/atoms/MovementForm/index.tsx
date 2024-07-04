@@ -1,9 +1,10 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
+import { MovementConcept } from '@prisma/client';
 
 import { cn } from '@/lib/utils';
 import { MovementMutation } from '@/lib/apollo';
@@ -28,16 +29,15 @@ import { toast } from '@/components/ui/use-toast';
 import CalendarIcon from '@/components/icons/CalendarIcon';
 import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
-import { EMovementConcept } from '@/types';
 
-import { MovementFormInputs } from './MovementForm.types';
+import { type TMovementFormInputs } from './MovementForm.types';
 import { movementFormSchema } from './MovementForm.schema';
 import { defaultValues } from './MovementForm.constants';
 
 export function MovementForm() {
   const { t } = useTranslation();
 
-  const methods = useForm<MovementFormInputs>({
+  const methods = useForm<TMovementFormInputs>({
     resolver: zodResolver(movementFormSchema(t)),
     defaultValues,
   });
@@ -45,7 +45,7 @@ export function MovementForm() {
   const [createMovement, { loading: movementMutationLoading }] =
     useMutation(MovementMutation);
 
-  const onSubmit = useCallback(async (data: MovementFormInputs) => {
+  const onSubmit = useCallback(async (data: TMovementFormInputs) => {
     try {
       const createdMovement = await createMovement({
         variables: {
@@ -99,7 +99,7 @@ export function MovementForm() {
                     )}
                     {...field}
                   >
-                    {Object.values(EMovementConcept).map((concept) => {
+                    {Object.values(MovementConcept).map((concept) => {
                       return (
                         <option key={concept} value={concept}>
                           {t(`newMovement.${concept}`)}

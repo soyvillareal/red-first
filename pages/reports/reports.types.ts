@@ -1,9 +1,8 @@
-import { MovementChartItem } from './components/MovementsChart/MovementsChart.types';
-import { RecentMovementItem } from './components/RecentMovements/RecentMovements.types';
+import { IGetMovementsChart, IGetRecentMovements } from '@/types/graphql/resolvers';
 
-export interface ReportsPageProps {
-  balance: string;
-  movements: number;
-  movementsChart: MovementChartItem[];
-  recentMovements: RecentMovementItem[];
+export interface IReportsCSV {
+  balance?: string;
+  movements?: number;
+  movementsChart?: IGetMovementsChart[];
+  recentMovements?: IGetRecentMovements[];
 }
