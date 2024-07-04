@@ -87,6 +87,8 @@ export class UsersResolvers {
 
       const totalUsers = await this.usersRepository.getTotalUsers(queryValue);
 
+      console.log('totalUsers: ', totalUsers);
+
       if (totalUsers === null) {
         throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }

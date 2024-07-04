@@ -1,4 +1,8 @@
-import { type MovementConcept, type Movements, PrismaClient } from '@prisma/client';
+import {
+  type MovementConcept,
+  type Movements,
+  PrismaClient,
+} from '@prisma/client';
 
 import {
   type IGetMovementsRepository,
@@ -73,18 +77,10 @@ export class MovementsRepository {
             },
             {
               user: {
-                OR: [
-                  {
-                    name: {
-                      contains: queryValue,
-                      mode: 'insensitive',
-                    },
-                    email: {
-                      contains: queryValue,
-                      mode: 'insensitive',
-                    },
-                  },
-                ],
+                name: {
+                  contains: queryValue,
+                  mode: 'insensitive',
+                },
               },
             },
           ],
@@ -129,18 +125,10 @@ export class MovementsRepository {
             },
             {
               user: {
-                OR: [
-                  {
-                    name: {
-                      contains: queryValue,
-                      mode: 'insensitive',
-                    },
-                    email: {
-                      contains: queryValue,
-                      mode: 'insensitive',
-                    },
-                  },
-                ],
+                name: {
+                  contains: queryValue,
+                  mode: 'insensitive',
+                },
               },
             },
           ],
@@ -181,18 +169,10 @@ export class MovementsRepository {
             },
             {
               user: {
-                OR: [
-                  {
-                    name: {
-                      contains: queryValue,
-                      mode: 'insensitive',
-                    },
-                    email: {
-                      contains: queryValue,
-                      mode: 'insensitive',
-                    },
-                  },
-                ],
+                name: {
+                  contains: queryValue,
+                  mode: 'insensitive',
+                },
               },
             },
           ],

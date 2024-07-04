@@ -69,14 +69,20 @@ export class UsersRepository {
     try {
       const totalUsers = await this.prisma.user.count({
         where: {
-          name: {
-            contains: queryValue,
-            mode: 'insensitive',
-          },
-          email: {
-            contains: queryValue,
-            mode: 'insensitive',
-          },
+          OR: [
+            {
+              name: {
+                contains: queryValue,
+                mode: 'insensitive',
+              },
+            },
+            {
+              email: {
+                contains: queryValue,
+                mode: 'insensitive',
+              },
+            },
+          ],
         },
       });
 
@@ -85,6 +91,7 @@ export class UsersRepository {
       return null;
     }
   };
+
   public getUsers = async ({
     limit,
     skip,
@@ -104,14 +111,20 @@ export class UsersRepository {
           phone: true,
         },
         where: {
-          name: {
-            contains: queryValue,
-            mode: 'insensitive',
-          },
-          email: {
-            contains: queryValue,
-            mode: 'insensitive',
-          },
+          OR: [
+            {
+              name: {
+                contains: queryValue,
+                mode: 'insensitive',
+              },
+            },
+            {
+              email: {
+                contains: queryValue,
+                mode: 'insensitive',
+              },
+            },
+          ],
         },
         skip,
         take: limit,

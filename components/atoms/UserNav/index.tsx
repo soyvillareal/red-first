@@ -114,6 +114,7 @@ export const UserNav = () => {
                   key={i}
                   onClick={() => changeLanguage(language)}
                   className={cn(
+                    'cursor-pointer',
                     i18n.resolvedLanguage === language
                       ? 'underline'
                       : 'hover:text-white'
