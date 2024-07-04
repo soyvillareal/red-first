@@ -15,7 +15,7 @@ import { UserNav } from '@/components/atoms/UserNav';
 import DashboardLayout from '@/components/atoms/DashboardLayout';
 import Dollar2Icon from '@/components/icons/Dollar2Icon';
 import { loadTranslations } from '@/lib/i18n';
-import { currencySite, propsToCSV } from '@/lib/utils';
+import { cn, currencySite, propsToCSV } from '@/lib/utils';
 import { AdditionalMovementsChartQuery } from '@/lib/apollo';
 import {
   IGetAdditionalMovements,
@@ -151,7 +151,14 @@ export default function Dashboard() {
                     {additionalMovementQueryLoading ? (
                       <ReportBalanceSkeleton />
                     ) : (
-                      <div className='text-secondary-foreground text-2xl font-bold'>
+                      <div
+                        className={cn(
+                          'text-secondary-foreground text-2xl font-bold',
+                          additionalMovementQueryData?.getAdditionalMovements.balance.includes(
+                            '-'
+                          ) ? 'text-red' : 'text-green'
+                        )}
+                      >
                         {
                           additionalMovementQueryData?.getAdditionalMovements
                             .balance

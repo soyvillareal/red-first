@@ -16,7 +16,7 @@ import {
   IPageOptionsDataMeta,
   IPaginationArgs,
 } from '@/types/graphql/pagination';
-import { UserQuery } from '@/lib/apollo';
+import { UsersQuery } from '@/lib/apollo';
 
 import { columns } from './users.constants';
 import { IGetUsers, TValidsUserTypes } from '@/types/graphql/resolvers';
@@ -39,7 +39,7 @@ const Users = () => {
       getUsers: IPageOptionsDataMeta<IGetUsers[]>;
     },
     IPaginationArgs<TValidsUserTypes>
-  >(UserQuery);
+  >(UsersQuery);
 
   useEffect(() => {
     const queryValue = debouncedValue.find((filter) => filter.id === 'name')

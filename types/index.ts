@@ -1,3 +1,4 @@
+import { DocumentNode } from '@apollo/client';
 import { IncomingHttpHeaders } from 'http';
 import { DefaultSession } from 'next-auth';
 
@@ -25,3 +26,13 @@ export interface IGraphQLContext {
 export interface IGraphQLErrorContext {
   errorMessage?: string | undefined;
 }
+
+export type TNoStandardCache = {
+  ROOT_QUERY?: Record<string, string> | undefined;
+} & Record<string, string>;
+
+export type TNoStandardQueryDefinitions = {
+  name: {
+    value: string;
+  };
+} & DocumentNode['definitions'][0];

@@ -2,8 +2,13 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { saveAs } from 'file-saver';
 
-import { IReportsCSV } from '@/pages/reports/reports.types';
-import { TFunction } from 'next-i18next';
+import { type IReportsCSV } from '@/pages/reports/reports.types';
+import { type TFunction } from 'next-i18next';
+import { ApolloClient, DocumentNode } from '@apollo/client';
+import {
+  type TNoStandardCache,
+  type TNoStandardQueryDefinitions,
+} from '@/types';
 
 export const currencySite = 'COP';
 
@@ -97,4 +102,51 @@ export const formatNumber = (num: number, precision = 1): string => {
   }
 
   return num.toString();
+};
+
+export const lowercaseFirstLetter = (str: string) => {
+  return str.charAt(0).toLowerCase() + str.slice(1);
+};
+
+// No standard way to extract query variables from Apollo Client cache
+export const findQueryVariables = <T = Record<string, string>>(
+  client: ApolloClient<object>,
+  queryDocument: DocumentNode,
+  keyTopLevel?: string
+): Partial<T> => {
+  const cache = client.cache.extract() as TNoStandardCache;
+  const queryName = lowercaseFirstLetter(
+    (queryDocument.definitions[0] as TNoStandardQueryDefinitions)?.name?.value
+  );
+
+  let queryWithVariables = Object.keys(cache).find((key) =>
+    new RegExp(`^${queryName}\\(.*\\)$`).test(key)
+  );
+  if (queryWithVariables === undefined && cache?.ROOT_QUERY !== undefined) {
+    queryWithVariables = Object.keys(cache.ROOT_QUERY).find((key) =>
+      new RegExp(`^${queryName}\\(.*\\)$`).test(key)
+    );
+  }
+
+  if (queryWithVariables === undefined) {
+    return {} as T;
+  }
+
+  const matches = queryWithVariables.match(/\(([^)]+)\)/);
+
+  if (matches) {
+    const jsonString = matches[1];
+
+    try {
+      const jsonObj = JSON.parse(jsonString);
+      if (keyTopLevel) {
+        return jsonObj[keyTopLevel];
+      }
+      return jsonObj;
+    } catch (e) {
+      return {} as T;
+    }
+  }
+
+  return {} as T;
 };

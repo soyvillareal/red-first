@@ -37,7 +37,7 @@ export const MovementMutation = gql`
   }
 `;
 
-export const MovementQuery = gql`
+export const MovementsQuery = gql`
   query GetMovements(
     $page: Float!
     $limit: Float!
@@ -85,7 +85,7 @@ export const UserMutation = gql`
   }
 `;
 
-export const UserQuery = gql`
+export const UsersQuery = gql`
   query GetUsers(
     $page: Float!
     $limit: Float!
@@ -124,7 +124,7 @@ export const UserQuery = gql`
 `;
 
 export const MovementsChartQuery = gql`
-  query GetMovementsChart($year: String!) {
+  query GetMovementsChart($year: String) {
     getMovementsChart(year: $year) {
       name
       income

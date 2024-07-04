@@ -32,14 +32,16 @@ export class ReportsResolvers {
   })
   @UseMiddleware(checkIsLogged, checkGetMovementsChart)
   async getMovementsChart(
-    @Arg('year', () => String)
-    year: string,
     @Ctx()
-    context: IGraphQLContext
+    context: IGraphQLContext,
+    @Arg('year', () => String, {
+      nullable: true,
+    })
+    year?: string
   ): Promise<IGetMovementsChart[]> {
     try {
       const userId = context.session.user.id;
-      const parsedYear = dayjs(year, 'YYYY');
+      const parsedYear = year ? dayjs(year, 'YYYY') : dayjs();
       const startDate = parsedYear.startOf('year').toDate();
       const endDate = parsedYear.endOf('year').toDate();
 
@@ -66,7 +68,7 @@ export class ReportsResolvers {
       movements.forEach((movement) => {
         const movementDate = dayjs(movement.date);
         if (movementDate.year() === parsedYear.year()) {
-          const monthIndex = movementDate.month(); // Usa month() directamente para obtener el índice
+          const monthIndex = movementDate.month();
           if (movement.concept === 'income') {
             parsedMovementsChart[monthIndex].income += BigInt(movement.amount);
           } else if (movement.concept === 'expense') {
@@ -136,11 +138,19 @@ export class ReportsResolvers {
         throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }
 
-      const balance = await this.reportsRepository.getBalance();
+      const totalIncome = await this.reportsRepository.getIncome();
 
-      if (balance === null) {
+      if (totalIncome === null) {
         throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }
+
+      const totalExpenses = await this.reportsRepository.getExpenses();
+
+      if (totalExpenses === null) {
+        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
+      }
+
+      const balance = BigInt(totalIncome ?? 0) - BigInt(totalExpenses ?? 0);
 
       return {
         balance: numberWithCurrency(balance ?? '0'),

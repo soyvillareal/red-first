@@ -1,13 +1,19 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@apollo/client';
+import { useApolloClient, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { MovementConcept } from '@prisma/client';
 
-import { cn } from '@/lib/utils';
-import { MovementMutation } from '@/lib/apollo';
+import { cn, findQueryVariables } from '@/lib/utils';
+import {
+  AdditionalMovementsChartQuery,
+  MovementMutation,
+  MovementsQuery,
+  MovementsChartQuery,
+  ValidYearsQuery,
+} from '@/lib/apollo';
 import { Button, buttonVariants } from '@/components/custom/Button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -33,17 +39,46 @@ import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
 import { type TMovementFormInputs } from './MovementForm.types';
 import { movementFormSchema } from './MovementForm.schema';
 import { defaultValues } from './MovementForm.constants';
+import { IGetMovementsQueryParams } from '@/pages/reports/components/MovementsChart/MovementsChart.types';
+import { IPaginationArgs } from '@/types/graphql/pagination';
+import { TValidsMovementTypes } from '@/types/graphql/resolvers';
 
 export function MovementForm() {
   const { t } = useTranslation();
+  const client = useApolloClient();
 
   const methods = useForm<TMovementFormInputs>({
     resolver: zodResolver(movementFormSchema(t)),
     defaultValues,
   });
 
-  const [createMovement, { loading: movementMutationLoading }] =
-    useMutation(MovementMutation);
+  const movementsCharLastVariables =
+    findQueryVariables<IGetMovementsQueryParams>(client, MovementsChartQuery);
+  const movementsLastVariables = findQueryVariables<
+    IPaginationArgs<TValidsMovementTypes>
+  >(client, MovementsQuery, 'pagination');
+
+  const [createMovement, { loading: movementMutationLoading }] = useMutation(
+    MovementMutation,
+    {
+      refetchQueries: [
+        {
+          query: MovementsChartQuery,
+          variables: movementsCharLastVariables,
+        },
+        {
+          query: AdditionalMovementsChartQuery,
+        },
+        {
+          query: MovementsQuery,
+          variables: movementsLastVariables,
+        },
+        {
+          query: ValidYearsQuery,
+        },
+      ],
+    }
+  );
 
   const onSubmit = useCallback(async (data: TMovementFormInputs) => {
     try {
@@ -55,12 +90,21 @@ export function MovementForm() {
         },
       });
 
-      toast({
-        description: t(`responseCodes.${createdMovement.data.createMovement}`),
-      });
+      if (createdMovement.data?.createMovement) {
+        toast({
+          description: t(`responseCodes.${createdMovement.data?.createMovement}`),
+        });
+        methods.reset();
+      } else {
+        toast({
+          description: t('responseCodes.SOMETHING_WENT_WRONG'),
+          variant: 'destructive',
+        });
+      }
     } catch (error: any) {
       toast({
         description: t(`responseCodes.${error.message}`),
+        variant: 'destructive',
       });
     }
   }, []);

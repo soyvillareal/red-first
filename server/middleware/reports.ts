@@ -15,7 +15,7 @@ export const checkGetMovementsChart: MiddlewareFn<IGraphQLContext> = async (
   try {
     const { year } = args;
 
-    const parsedYear = dayjs(year, 'YYYY');
+    const parsedYear = year ? dayjs(year, 'YYYY') : dayjs();
     const startDate = parsedYear.startOf('year').toDate();
     const endDate = parsedYear.endOf('year').toDate();
 

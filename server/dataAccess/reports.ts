@@ -110,11 +110,30 @@ export class ReportsRepository {
     }
   };
 
-  public getBalance = async (): Promise<string | undefined | null> => {
+  public getIncome = async (): Promise<string | undefined | null> => {
     try {
       const [{ count }] = await this.prisma.$queryRaw<IGetBalanceResult[]>(
         Prisma.raw(
           `SELECT SUM(CAST(amount AS NUMERIC)) as count FROM movements WHERE concept = '${MovementConcept.income}'`
+        )
+      );
+
+      if (count === null) {
+        return undefined;
+      }
+
+      return count;
+    } catch (error) {
+      console.log('error: ', error);
+      return null;
+    }
+  };
+
+  public getExpenses = async (): Promise<string | undefined | null> => {
+    try {
+      const [{ count }] = await this.prisma.$queryRaw<IGetBalanceResult[]>(
+        Prisma.raw(
+          `SELECT SUM(CAST(amount AS NUMERIC)) as count FROM movements WHERE concept = '${MovementConcept.expense}'`
         )
       );
 

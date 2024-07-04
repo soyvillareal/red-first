@@ -10,7 +10,7 @@ import { DataTable } from '@/components/atoms/Table/DataTable';
 import { UserNav } from '@/components/atoms/UserNav';
 import { routes } from '@/lib/contants';
 import { loadTranslations } from '@/lib/i18n';
-import { MovementQuery } from '@/lib/apollo';
+import { MovementsQuery } from '@/lib/apollo';
 
 import { columnsFn } from './movements.constants';
 import { Button } from '@/components/custom/Button';
@@ -48,7 +48,7 @@ const Movements = () => {
       getMovements: IPageOptionsDataMeta<IGetMovementsWithTotal>;
     },
     IPaginationArgs<TValidsMovementTypes>
-  >(MovementQuery);
+  >(MovementsQuery);
 
   useEffect(() => {
     const filterConcept = debouncedValue.find(
