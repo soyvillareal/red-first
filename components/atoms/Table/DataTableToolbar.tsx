@@ -1,9 +1,10 @@
 import { useTranslation } from 'next-i18next';
 import { useCallback } from 'react';
+import { v4 as uuid } from 'uuid';
 
 import { Button } from '@/components/custom/Button';
 import { Input } from '@/components/ui/input';
-import CloseIcon from '@/components/icons/CloseIcon';
+import { CloseIcon } from '@/components/icons/CloseIcon';
 import { types } from '@/pages/movements/movements.constants';
 
 import { DataTableFacetedFilter } from './DataTableFacetedFilter';
@@ -41,11 +42,11 @@ export function DataTableToolbar<TData>({
           className="h-8 w-[150px] lg:w-[250px]"
         />
         <div className="flex gap-x-2">
-          {toolbarOptions.filters?.map((filter, i) => {
+          {toolbarOptions.filters?.map((filter) => {
             if (table.getColumn(filter as string)) {
               return (
                 <DataTableFacetedFilter
-                  key={i}
+                  key={uuid()}
                   column={table.getColumn(filter as string)}
                   title={t('table.types')}
                   options={types}

@@ -3,13 +3,13 @@
 import Head from 'next/head';
 import React, { PropsWithChildren } from 'react';
 
-import Sidebar from '@/components/atoms/Sidebar';
-import useIsCollapsed from '@/hooks/useIsCollapsed';
+import { Sidebar } from '@/components/atoms/Sidebar';
+import { useIsCollapsed } from '@/hooks/useIsCollapsed';
 import { Toaster } from '@/components/ui/toaster';
 
 import { IDashboardLayoutProps } from './DashboardLayout.types';
 
-const DashboardLayout = ({
+export const DashboardLayout = ({
   children,
   seo,
 }: PropsWithChildren<IDashboardLayoutProps>) => {
@@ -35,5 +35,3 @@ const DashboardLayout = ({
     </div>
   );
 };
-
-export default DashboardLayout;

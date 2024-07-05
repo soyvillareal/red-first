@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/custom/Button';
@@ -18,13 +19,13 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import LanguageIcon from '@/components/icons/LanguageIcon';
-import LogOutIcon from '@/components/icons/LogOutIcon';
-import LayoutDashboardIcon from '@/components/icons/LayoutDashboardIcon';
+import { LanguageIcon } from '@/components/icons/LanguageIcon';
+import { LogOutIcon } from '@/components/icons/LogOutIcon';
+import { LayoutDashboardIcon } from '@/components/icons/LayoutDashboardIcon';
 import { cn, getNameInitials } from '@/lib/utils';
 import { dashboardRoutes, routes } from '@/lib/contants';
 import { languages } from '@/lib/i18nConfig';
-import UserNavSkeleton from '@/components/skeleton/UserNavSkeleton';
+import { UserNavSkeleton } from '@/components/skeleton/UserNavSkeleton';
 import { EUserRole } from '@/types';
 
 export const UserNav = () => {
@@ -122,9 +123,9 @@ export const UserNav = () => {
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
-              {languages.map((language, i) => (
+              {languages.map((language) => (
                 <DropdownMenuItem
-                  key={i}
+                  key={uuidv4()}
                   onClick={() => changeLanguage(language)}
                   className={cn(
                     'cursor-pointer',

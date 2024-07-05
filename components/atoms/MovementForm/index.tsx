@@ -32,9 +32,9 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
-import CalendarIcon from '@/components/icons/CalendarIcon';
-import HookForm from '@/components/atoms/HookForm';
-import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
+import { CalendarIcon } from '@/components/icons/CalendarIcon';
+import { HookForm } from '@/components/atoms/HookForm';
+import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon';
 import { IGetMovementsQueryParams } from '@/pages/reports/components/MovementsChart/MovementsChart.types';
 import { IPaginationArgs } from '@/types/graphql/pagination';
 import { TValidsMovementTypes } from '@/types/graphql/resolvers';
@@ -43,7 +43,7 @@ import { type TMovementFormInputs } from './MovementForm.types';
 import { movementFormSchema } from './MovementForm.schema';
 import { defaultValues } from './MovementForm.constants';
 
-export function MovementForm() {
+export const MovementForm = () => {
   const { t } = useTranslation();
   const client = useApolloClient();
 
@@ -155,13 +155,11 @@ export function MovementForm() {
                     )}
                     {...field}
                   >
-                    {Object.values(MovementConcept).map((concept) => {
-                      return (
-                        <option key={concept} value={concept}>
-                          {t(`newMovement.${concept}`)}
-                        </option>
-                      );
-                    })}
+                    {Object.values(MovementConcept).map((concept) => (
+                      <option key={concept} value={concept}>
+                        {t(`newMovement.${concept}`)}
+                      </option>
+                    ))}
                   </select>
                 </FormControl>
                 <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
@@ -223,4 +221,4 @@ export function MovementForm() {
       </HookForm>
     </Form>
   );
-}
+};

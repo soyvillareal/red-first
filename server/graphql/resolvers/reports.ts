@@ -14,8 +14,10 @@ import { ReportsRepository } from '@/server/dataAccess/reports';
 import { fillArray } from '@/lib/utils';
 import { checkIsAdmin, checkIsLogged } from '@/server/middleware';
 import { checkGetMovementsChart } from '@/server/middleware/reports';
-
-import { GetAditionalMovements, MovementsChart } from '../schemas/reports';
+import {
+  GetAditionalMovements,
+  MovementsChart,
+} from '@/server/graphql/schemas/reports';
 
 @Resolver()
 export class ReportsResolvers {

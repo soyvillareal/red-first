@@ -1,11 +1,10 @@
 import { TFunction } from 'next-i18next';
 
 import { routes } from '@/lib/contants';
-
-import { SideLink } from '../Nav/Nav.types';
-import IncomeIcon from '../../icons/IncomeIcon';
-import LayoutDashboardIcon from '../../icons/LayoutDashboardIcon';
-import UsersIcon from '../../icons/UsersIcon';
+import { SideLink } from '@/components/atoms/Nav/Nav.types';
+import { IncomeIcon } from '@/components/icons/IncomeIcon';
+import { LayoutDashboardIcon } from '@/components/icons/LayoutDashboardIcon';
+import { UsersIcon } from '@/components/icons/UsersIcon';
 
 export const sidelinks = (t: TFunction): SideLink[] => [
   {

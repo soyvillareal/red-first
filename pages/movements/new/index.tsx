@@ -2,15 +2,15 @@ import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { getSession } from 'next-auth/react';
 
-import DashboardLayout from '@/components/atoms/DashboardLayout';
-import ContentSection from '@/components/atoms/ContentSection';
+import { DashboardLayout } from '@/components/atoms/DashboardLayout';
+import { ContentSection } from '@/components/atoms/ContentSection';
 import { ContextLayout } from '@/components/custom/layout';
 import { UserNav } from '@/components/atoms/UserNav';
 import { MovementForm } from '@/components/atoms/MovementForm';
 import { routes } from '@/lib/contants';
 import { loadTranslations } from '@/lib/i18n';
 
-export default function NewMovement() {
+const NewMovement = () => {
   const { t } = useTranslation();
 
   return (
@@ -39,7 +39,9 @@ export default function NewMovement() {
       </DashboardLayout>
     </ContextLayout>
   );
-}
+};
+
+export default NewMovement;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });

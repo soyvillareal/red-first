@@ -2,14 +2,11 @@ import { useTranslation } from 'next-i18next';
 
 import { cn, getNameInitials } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import RecentMovementsSkeleton from '@/components/skeleton/RecentMovementsSkeleton';
+import { RecentMovementsSkeleton } from '@/components/skeleton/RecentMovementsSkeleton';
 
 import { IRecentMovementsProps } from './RecentMovements.types';
 
-export function RecentMovements({
-  isLoading,
-  movements,
-}: IRecentMovementsProps) {
+const RecentMovements = ({ isLoading, movements }: IRecentMovementsProps) => {
   const { t } = useTranslation();
 
   return (
@@ -44,4 +41,6 @@ export function RecentMovements({
       )}
     </div>
   );
-}
+};
+
+export default RecentMovements;

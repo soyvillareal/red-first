@@ -1,7 +1,5 @@
-import { Skeleton } from '../ui/skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const MovementsChartSkeleton = () => {
-  return <Skeleton className="w-full h-full" />;
-};
-
-export default MovementsChartSkeleton;
+export const MovementsChartSkeleton = () => (
+  <Skeleton className="w-full h-full" />
+);

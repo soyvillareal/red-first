@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ValidYearsQuery } from '@/lib/apollo';
-import SelectorYearSkeleton from '@/components/skeleton/SelectorYearSkeleton';
+import { SelectorYearSkeleton } from '@/components/skeleton/SelectorYearSkeleton';
 
 import { ISelectorYearProps } from './SelectorYear.types';
 

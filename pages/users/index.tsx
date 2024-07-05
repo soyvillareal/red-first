@@ -7,7 +7,7 @@ import { getSession } from 'next-auth/react';
 
 import { ContextLayout } from '@/components/custom/layout';
 import { DataTable } from '@/components/atoms/Table/DataTable';
-import DashboardLayout from '@/components/atoms/DashboardLayout';
+import { DashboardLayout } from '@/components/atoms/DashboardLayout';
 import { UserNav } from '@/components/atoms/UserNav';
 import { loadTranslations } from '@/lib/i18n';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -21,7 +21,7 @@ import { UsersQuery } from '@/lib/apollo';
 import { EUserRole } from '@/types';
 import { IGetUsers, TValidsUserTypes } from '@/types/graphql/resolvers';
 
-import { columns } from './users.constants';
+import columns from './users.constants';
 
 const Users = () => {
   const { t } = useTranslation();

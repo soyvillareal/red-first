@@ -7,7 +7,7 @@ import { ColumnFiltersState } from '@tanstack/react-table';
 import { getSession } from 'next-auth/react';
 
 import { ContextLayout } from '@/components/custom/layout';
-import DashboardLayout from '@/components/atoms/DashboardLayout';
+import { DashboardLayout } from '@/components/atoms/DashboardLayout';
 import { DataTable } from '@/components/atoms/Table/DataTable';
 import { UserNav } from '@/components/atoms/UserNav';
 import { routes } from '@/lib/contants';
@@ -25,7 +25,7 @@ import {
 import { usePagination } from '@/hooks/usePagination';
 import { useSorting } from '@/hooks/useSorting';
 import { useDebounce } from '@/hooks/useDebounce';
-import DataTableFooterSkeleton from '@/components/skeleton/DataTableFooterSkeleton';
+import { DataTableFooterSkeleton } from '@/components/skeleton/DataTableFooterSkeleton';
 
 import { columnsFn } from './movements.constants';
 

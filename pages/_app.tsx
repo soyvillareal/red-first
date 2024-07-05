@@ -5,7 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import { ApolloProvider } from '@apollo/client';
 
 import nextI18NextConfig from '@/next-i18next.config';
-import apolloClient from '@/lib/apollo';
+import { apolloClient } from '@/lib/apollo';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { session } = pageProps;

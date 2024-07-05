@@ -11,8 +11,8 @@ module.exports = {
     escapeValue: false,
   },
   react: {
-    useSuspense: false, // Puede ser necesario para evitar problemas de renderizado
+    useSuspense: false, // May be necessary to avoid rendering issues
   },
-  serializeConfig: false, // Puede ser necesario para evitar problemas de serialización en la versión de producción
-  reloadOnPrerender: process.env.NODE_ENV == 'development', // Puede ser necesario para evitar problemas de prerenderizado
+  serializeConfig: false, // May be necessary to avoid serialization issues in production version
+  reloadOnPrerender: process.env.NODE_ENV == 'development', // May be necessary to avoid pre-rendering issues
 };

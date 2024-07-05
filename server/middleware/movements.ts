@@ -4,8 +4,7 @@ import { MovementConcept } from '@prisma/client';
 
 import { IGraphQLContext } from '@/types';
 import { type TValidsMovementTypes } from '@/types/graphql/resolvers';
-
-import { responseCodes } from '../utils';
+import { responseCodes } from '@/server/utils';
 
 export const checkCreateMovement: MiddlewareFn<IGraphQLContext> = async (
   { args },

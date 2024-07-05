@@ -14,8 +14,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { UserNav } from '@/components/atoms/UserNav';
-import DashboardLayout from '@/components/atoms/DashboardLayout';
-import Dollar2Icon from '@/components/icons/Dollar2Icon';
+import { DashboardLayout } from '@/components/atoms/DashboardLayout';
+import { Dollar2Icon } from '@/components/icons/Dollar2Icon';
 import { loadTranslations } from '@/lib/i18n';
 import { cn, currencySite, propsToCSV } from '@/lib/utils';
 import { AdditionalMovementsChartQuery } from '@/lib/apollo';
@@ -23,16 +23,16 @@ import {
   IGetAdditionalMovements,
   IGetMovementsChart,
 } from '@/types/graphql/resolvers';
-import ReportBalanceSkeleton from '@/components/skeleton/ReportBalanceSkeleton';
-import ReportMovementsSkeleton from '@/components/skeleton/ReportMovementsSkeleton';
+import { ReportBalanceSkeleton } from '@/components/skeleton/ReportBalanceSkeleton';
+import { ReportMovementsSkeleton } from '@/components/skeleton/ReportMovementsSkeleton';
 import { EUserRole } from '@/types';
 
-import { RecentMovements } from './components/RecentMovements';
-import { MovementsChart } from './components/MovementsChart';
+import RecentMovements from './components/RecentMovements';
+import MovementsChart from './components/MovementsChart';
 import { IReportsCSV } from './reports.types';
 import SelectorYear from './components/SelectorYear';
 
-export default function Dashboard() {
+export const Dashboard = () => {
   const { t } = useTranslation();
   const [selectedYear, setSelectedYear] = useState('2024');
   const [movementsChartLoading, setMovementsChartLoading] =
@@ -63,7 +63,7 @@ export default function Dashboard() {
         }));
       }
     })();
-  }, []);
+  }, [getAdditionalMovements]);
 
   const handleClickDownload = useCallback(() => {
     if (reportData !== null) {
@@ -213,7 +213,9 @@ export default function Dashboard() {
       </DashboardLayout>
     </ContextLayout>
   );
-}
+};
+
+export default Dashboard;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });

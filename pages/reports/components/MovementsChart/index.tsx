@@ -15,14 +15,14 @@ import { useLazyQuery } from '@apollo/client';
 import { fillArray, formatNumber, numberWithCurrency } from '@/lib/utils';
 import { MovementsChartQuery } from '@/lib/apollo';
 import { type IGetMovementsChart } from '@/types/graphql/resolvers';
-import MovementsChartSkeleton from '@/components/skeleton/MovementsChartSkeleton';
+import { MovementsChartSkeleton } from '@/components/skeleton/MovementsChartSkeleton';
 
 import {
   type IGetMovementsQueryParams,
   type IMovementsChartProps,
 } from './MovementsChart.types';
 
-export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
+const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
   const { t } = useTranslation();
 
   const [
@@ -50,7 +50,7 @@ export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
         callbackState(false);
       }
     })();
-  }, [getMovementsQuery, year]);
+  }, [getMovementsQuery, callbackState, year]);
 
   const [minValue, maxValue, ticks] = useMemo(() => {
     let maxAbsValue = 0;
@@ -104,9 +104,7 @@ export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
             dataKey="name"
             stroke="#888888"
             fontSize={12}
-            tickFormatter={(value: string) => {
-              return t(`months.${value}`);
-            }}
+            tickFormatter={(value: string) => t(`months.${value}`)}
           />
           <YAxis
             ticks={ticks}
@@ -115,9 +113,10 @@ export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
             domain={[minValue, maxValue]}
           />
           <Tooltip
-            formatter={(value: string, name: string) => {
-              return [numberWithCurrency(value), t(`movements.${name}`)];
-            }}
+            formatter={(value: string, name: string) => [
+              numberWithCurrency(value),
+              t(`movements.${name}`),
+            ]}
           />
           <Bar dataKey={MovementConcept.income} fill="#82ca9d" />
           <Bar dataKey={MovementConcept.expense} fill="#ff4040" />
@@ -125,4 +124,6 @@ export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
       )}
     </ResponsiveContainer>
   );
-}
+};
+
+export default MovementsChart;

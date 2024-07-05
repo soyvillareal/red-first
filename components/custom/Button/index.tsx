@@ -3,8 +3,8 @@ import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
+import { LoaderIcon } from '@/components/icons/LoaderIcon';
 
-import LoaderIcon from '../../icons/LoaderIcon';
 import { ButtonProps } from './Button.types';
 
 const buttonVariants = cva(

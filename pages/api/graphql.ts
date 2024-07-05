@@ -13,7 +13,7 @@ import { ReportsResolvers } from '@/server/graphql/resolvers/reports';
 
 import { authOptions } from './auth/[...nextauth]';
 
-async function initializeApolloServer() {
+export const initializeApolloServer = async () => {
   registerEnumType(MovementConcept, {
     name: 'EMovementConcept',
     description: 'Movements concepts',
@@ -43,7 +43,7 @@ async function initializeApolloServer() {
       return newContext;
     },
   });
-}
+};
 
 export default async function handler(
   req: NextApiRequest,

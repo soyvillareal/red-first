@@ -8,10 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon';
-import ChevronRightIcon from '@/components/icons/ChevronRightIcon';
-import ChevronsLeftIcon from '@/components/icons/ChevronsLeftIcon';
-import ChevronsRightIcon from '@/components/icons/ChevronsRightIcon';
+import { ChevronLeftIcon } from '@/components/icons/ChevronLeftIcon';
+import { ChevronRightIcon } from '@/components/icons/ChevronRightIcon';
+import { ChevronsLeftIcon } from '@/components/icons/ChevronsLeftIcon';
+import { ChevronsRightIcon } from '@/components/icons/ChevronsRightIcon';
 import { pageSizes } from '@/lib/contants';
 
 import { DataTablePaginationProps } from './Table.types';

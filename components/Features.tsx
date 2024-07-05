@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next';
 
-const Features = () => {
+export const Features = () => {
   const { t } = useTranslation();
 
   return (
@@ -95,5 +95,3 @@ const Features = () => {
     </section>
   );
 };
-
-export default Features;

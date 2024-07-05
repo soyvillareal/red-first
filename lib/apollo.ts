@@ -24,7 +24,7 @@ const authLink = setContext(async (_, { headers }) => {
   };
 });
 
-const apolloClient = new ApolloClient({
+export const apolloClient = new ApolloClient({
   link: from([authLink, httpLink]),
   cache: new InMemoryCache(),
 });
@@ -155,5 +155,3 @@ export const ValidYearsQuery = gql`
     getValidYears
   }
 `;
-
-export default apolloClient;

@@ -1,17 +1,19 @@
-import { fillArray } from '@/lib/utils';
+import { v4 as uuidv4 } from 'uuid';
 
-import { TableCell, TableRow } from '../ui/table';
-import { Skeleton } from '../ui/skeleton';
+import { fillArray } from '@/lib/utils';
+import { TableCell, TableRow } from '@/components/ui/table';
+import { Skeleton } from '@/components/ui/skeleton';
+
 import { IDataTableItemSkeletonProps } from './skeleton.types';
 
-function DataTableItemSkeleton<TData>({
+export function DataTableItemSkeleton<TData>({
   table,
 }: IDataTableItemSkeletonProps<TData>) {
   return fillArray(10).map(() =>
-    table.getHeaderGroups().map((headerGroup, i) => (
-      <TableRow key={i}>
-        {headerGroup.headers.map((_, i) => (
-          <TableCell key={i}>
+    table.getHeaderGroups().map((headerGroup) => (
+      <TableRow key={uuidv4()}>
+        {headerGroup.headers.map(() => (
+          <TableCell key={uuidv4()}>
             <Skeleton className="w-[75px] h-[15px] rounded-[4px]" />
           </TableCell>
         ))}
@@ -19,5 +21,3 @@ function DataTableItemSkeleton<TData>({
     )),
   );
 }
-
-export default DataTableItemSkeleton;

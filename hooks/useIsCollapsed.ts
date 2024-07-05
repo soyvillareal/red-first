@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import useLocalStorage from './useLocalStorage';
+import { useLocalStorage } from './useLocalStorage';
 
-export default function useIsCollapsed() {
+export const useIsCollapsed = () => {
   const [isCollapsed, setIsCollapsed] = useLocalStorage({
     key: 'collapsed-sidebar',
     defaultValue: false,
@@ -27,4 +27,4 @@ export default function useIsCollapsed() {
   }, [isCollapsed, setIsCollapsed]);
 
   return [isCollapsed, setIsCollapsed] as const;
-}
+};

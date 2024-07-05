@@ -2,12 +2,12 @@ import Head from 'next/head';
 import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 
-import Navbar from '@/components/atoms/Navbar';
-import Hero from '@/components/Hero';
-import Features from '@/components/Features';
-import Testimonial from '@/components/Testimonial';
-import CallToAction from '@/components/CallToAction';
-import Footer from '@/components/Footer';
+import { Navbar } from '@/components/atoms/Navbar';
+import { Hero } from '@/components/Hero';
+import { Features } from '@/components/Features';
+import { Testimonial } from '@/components/Testimonial';
+import { CallToAction } from '@/components/CallToAction';
+import { Footer } from '@/components/Footer';
 import { loadTranslations } from '@/lib/i18n';
 import { SEO } from '@/lib/utils';
 

@@ -1,7 +1,7 @@
 import { ManagementClient } from 'auth0';
 import { createLogger, format, transports } from 'winston';
 
-import env from '@/lib/env';
+import { env } from '@/lib/env';
 import {
   type IPageMetaParameters,
   type IPageOptionsDataMeta,
@@ -69,20 +69,18 @@ export const getSkipped = (itemCount: number, page = 1, limit = 10): number => {
 export const mockPagination = <T>(
   error: string,
   dataMock: T,
-): IPageOptionsDataMeta<T> => {
-  return {
-    data: dataMock,
-    meta: {
-      page: 1,
-      limit: 10,
-      itemCount: 0,
-      pageCount: 0,
-      hasPreviousPage: false,
-      hasNextPage: false,
-      errorMessage: error,
-    },
-  };
-};
+): IPageOptionsDataMeta<T> => ({
+  data: dataMock,
+  meta: {
+    page: 1,
+    limit: 10,
+    itemCount: 0,
+    pageCount: 0,
+    hasPreviousPage: false,
+    hasNextPage: false,
+    errorMessage: error,
+  },
+});
 
 export const updateUserRoleInProvider = async (
   providerAccountId: string,
@@ -93,7 +91,7 @@ export const updateUserRoleInProvider = async (
       domain: env.AUTH0_DOMAIN,
       audience: env.AUTH0_AUDIENCE,
       clientId: env.AUTH0_CLIENT_ID,
-      clientSecret: env.AUTH0_SECRET,
+      clientSecret: env.AUTH0_CLIENT_SECRET,
     });
 
     const rolesProvider = await auth0.roles.getAll();

@@ -1,8 +1,7 @@
 import { MiddlewareFn } from 'type-graphql';
 
 import { EUserRole, IGraphQLContext } from '@/types';
-
-import { responseCodes } from '../utils';
+import { responseCodes } from '@/server/utils';
 
 export const checkIsLogged: MiddlewareFn<IGraphQLContext> = async (
   { context },

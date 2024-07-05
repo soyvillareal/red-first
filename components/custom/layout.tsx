@@ -1,5 +1,10 @@
 import * as React from 'react';
 
+import {
+  type IBodyProps,
+  type IHeaderProps,
+  type ILayoutProps,
+} from '@/components/custom/custom.types';
 import { cn } from '@/lib/utils';
 
 const LayoutContext = React.createContext<{
@@ -7,11 +12,11 @@ const LayoutContext = React.createContext<{
   fixed: boolean;
 } | null>(null);
 
-interface LayoutProps extends React.HTMLAttributes<HTMLDivElement> {
-  fixed?: boolean;
-}
-
-const ContextLayout = ({ className, fixed = false, ...props }: LayoutProps) => {
+const ContextLayout = ({
+  className,
+  fixed = false,
+  ...props
+}: ILayoutProps) => {
   const divRef = React.useRef<HTMLDivElement>(null);
   const [offset, setOffset] = React.useState(0);
 
@@ -44,11 +49,7 @@ const ContextLayout = ({ className, fixed = false, ...props }: LayoutProps) => {
 };
 ContextLayout.displayName = 'Layout';
 
-interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  sticky?: boolean;
-}
-
-const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
+const Header = React.forwardRef<HTMLDivElement, IHeaderProps>(
   ({ className, sticky, ...props }, ref) => {
     // Check if Layout.Header is used within Layout
     const contextVal = React.useContext(LayoutContext);
@@ -76,34 +77,34 @@ const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
 );
 Header.displayName = 'Header';
 
-const Body = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  // Check if Layout.Body is used within Layout
-  const contextVal = React.useContext(LayoutContext);
-  if (contextVal === null) {
-    throw new Error(
-      `Layout.Body must be used within ${ContextLayout.displayName}.`,
-    );
-  }
+const Body = React.forwardRef<HTMLDivElement, IBodyProps>(
+  ({ className, ...props }, ref) => {
+    // Check if Layout.Body is used within Layout
+    const contextVal = React.useContext(LayoutContext);
+    if (contextVal === null) {
+      throw new Error(
+        `Layout.Body must be used within ${ContextLayout.displayName}.`,
+      );
+    }
 
-  return (
-    <div
-      ref={ref}
-      data-layout="body"
-      className={cn(
-        'px-4 py-6 md:overflow-hidden md:px-8',
-        contextVal && contextVal.fixed && 'flex-1',
-        className,
-      )}
-      {...props}
-    />
-  );
-});
+    return (
+      <div
+        ref={ref}
+        data-layout="body"
+        className={cn(
+          'px-4 py-6 md:overflow-hidden md:px-8',
+          contextVal && contextVal.fixed && 'flex-1',
+          className,
+        )}
+        {...props}
+      />
+    );
+  },
+);
 Body.displayName = 'Body';
 
 ContextLayout.Header = Header;
 ContextLayout.Body = Body;
+ContextLayout.className = Body;
 
 export { ContextLayout };

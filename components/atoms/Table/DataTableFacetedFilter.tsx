@@ -19,8 +19,8 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
-import CheckIcon from '@/components/icons/CheckIcon';
-import PlusCircledIcon from '@/components/icons/PlusCircledIcon';
+import { CheckIcon } from '@/components/icons/CheckIcon';
+import { PlusCircledIcon } from '@/components/icons/PlusCircledIcon';
 
 import { DataTableFacetedFilterProps } from './Table.types';
 

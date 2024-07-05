@@ -4,23 +4,23 @@ import { useSession } from 'next-auth/react';
 
 import { ContextLayout } from '@/components/custom/layout';
 import { Button } from '@/components/custom/Button';
-import Nav from '@/components/atoms/Nav';
+import { Nav } from '@/components/atoms/Nav';
 import { cn } from '@/lib/utils';
-import MenuIcon from '@/components/icons/MenuIcon';
-import CloseIcon from '@/components/icons/CloseIcon';
-import ChevronsLeftIcon from '@/components/icons/ChevronsLeftIcon';
-import LogoIcon from '@/components/icons/LogoIcon';
+import { MenuIcon } from '@/components/icons/MenuIcon';
+import { CloseIcon } from '@/components/icons/CloseIcon';
+import { ChevronsLeftIcon } from '@/components/icons/ChevronsLeftIcon';
+import { LogoIcon } from '@/components/icons/LogoIcon';
 import { EUserRole } from '@/types';
 import { routes } from '@/lib/contants';
 
 import { sidelinks } from './Sidebar.constants';
 import { SidebarProps } from './Sidebar.types';
 
-export default function Sidebar({
+export const Sidebar = ({
   className,
   isCollapsed,
   setIsCollapsed,
-}: SidebarProps) {
+}: SidebarProps) => {
   const session = useSession();
   const { t } = useTranslation();
   const [navOpened, setNavOpened] = useState(false);
@@ -104,4 +104,4 @@ export default function Sidebar({
       </ContextLayout>
     </aside>
   );
-}
+};

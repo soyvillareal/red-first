@@ -1,24 +1,16 @@
 module.exports = {
-  env: {
-    es2020: true,
-    browser: true,
-  },
   extends: [
+    'next/core-web-vitals',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    'plugin:ramda/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
-    'plugin:json/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:json/recommended',
   ],
-  overrides: [],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
   settings: {
     'import/extensions': ['.js', '.ts', '.tsx'],
     'import/parsers': {
@@ -34,29 +26,19 @@ module.exports = {
       },
     },
   },
+  parser: '@typescript-eslint/parser',
   plugins: [
+    'react',
     '@typescript-eslint',
+    'prettier',
+    'react-hooks',
     'import',
+    'react-refresh',
     'filenames',
     'fp',
-    'ramda',
-    'react-refresh',
   ],
   rules: {
-    'react-refresh/only-export-components': 'warn',
-    'import/no-duplicates': ['off', { 'prefer-inline': true }],
-    'import/no-extraneous-dependencies': ['error', { devDependencies: false }],
-    'json/*': ['error', 'allowComments'],
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-inferrable-types': 'warn',
-    '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_$' }],
-    'no-useless-constructor': 'off',
-    '@typescript-eslint/no-useless-constructor': 'error',
-    'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['error'],
-    '@typescript-eslint/no-var-requires': 'off',
-    'import/no-named-as-default-member': 'off',
-    'no-param-reassign': 'error',
+    'import/no-unresolved': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -68,8 +50,6 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    'import/no-named-as-default': 'off',
-    'import/prefer-default-export': 'off',
     'import/order': [
       'error',
       {
@@ -88,19 +68,115 @@ module.exports = {
         ignoreDeclarationSort: true,
       },
     ],
+    'fp/no-class': 'error',
+    'no-param-reassign': 'error',
+    '@typescript-eslint/no-use-before-define': ['error'],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { argsIgnorePattern: '^_$' },
+    ],
+    'json/*': ['error', 'allowComments'],
+    'react-refresh/only-export-components': 'warn',
+    'import/no-duplicates': ['off', { 'prefer-inline': true }],
+    'import/no-extraneous-dependencies': ['off', { devDependencies: false }],
+
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: ['..*'],
+      },
+    ],
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-explicit-any': 'error',
+    'prefer-destructuring': 'warn',
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
+    'import/prefer-default-export': 'off',
+    'import/no-default-export': 'error',
+    'no-nested-ternary': 'off',
+    'react/no-unused-prop-types': 'error',
+    'react/hook-use-state': 'error',
+    'react/function-component-definition': [
+      1,
+      { namedComponents: 'arrow-function' },
+    ],
+    'react/jsx-key': 'error',
+    'react/no-array-index-key': 'error',
     'prettier/prettier': [
-      'warn',
+      'error',
       {
         endOfLine: 'auto',
       },
     ],
-    'fp/no-class': 'off',
-    'no-nested-ternary': 'off',
-    'no-unused-expressions': [
-      'error',
-      {
-        allowTernary: true,
-      },
-    ],
+    'no-console': 'error',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    complexity: ['warn', 10],
+    eqeqeq: 'error',
+    'prefer-arrow-callback': 'error',
+    'arrow-body-style': ['warn', 'as-needed'],
+    'func-style': ['error', 'expression'],
   },
+  overrides: [
+    {
+      files: ['*.d.ts'],
+      rules: {
+        'no-var': 'off',
+      },
+    },
+    {
+      files: ['pages/**/*.tsx', 'pages/**/*.ts'],
+      rules: {
+        'import/prefer-default-export': 'error',
+        'import/no-default-export': 'off',
+      },
+    },
+    {
+      files: ['./server/**'],
+      rules: {
+        'fp/no-class': 'off',
+      },
+    },
+    {
+      files: ['*.js', '*.cjs'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+    {
+      files: [
+        'components/custom/**/*.tsx',
+        'components/atoms/**/*.tsx',
+        'components/skeleton/**/*.tsx',
+        'hooks/**/*.{ts,tsx}',
+      ],
+      rules: {
+        'func-style': 'off',
+        'react/function-component-definition': 'off',
+      },
+    },
+    {
+      files: [
+        'components/**/*.{js,jsx,ts,tsx}',
+        'pages/**/*.{js,jsx,ts,tsx}',
+        'hooks/**/*.{js,jsx,ts,tsx}',
+      ],
+      rules: {
+        complexity: ['warn', 13],
+      },
+    },
+    {
+      files: ['lib/**/*.{js,jsx,ts,tsx}', 'server/**/*.{js,ts}'],
+      rules: {
+        complexity: ['warn', 17],
+      },
+    },
+    {
+      files: ['pages/**/*.tsx', '!pages/**/components/**/*.tsx'],
+      rules: {
+        'import/no-default-export': 'off',
+        'react-refresh/only-export-components': 'off',
+        'arrow-body-style': 'off',
+      },
+    },
+  ],
 };

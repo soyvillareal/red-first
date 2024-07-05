@@ -2,8 +2,8 @@ import { z } from 'zod';
 import { TFunction } from 'next-i18next';
 import { MovementConcept } from '@prisma/client';
 
-export const movementFormSchema = (t: TFunction) => {
-  return z.object({
+export const movementFormSchema = (t: TFunction) =>
+  z.object({
     amount: z.string().min(1, {
       message: t(`responseCodes.ENTER_VALID_AMOUNT`),
     }),
@@ -14,4 +14,3 @@ export const movementFormSchema = (t: TFunction) => {
       required_error: t(`responseCodes.ENTER_VALID_DATE`),
     }),
   });
-};

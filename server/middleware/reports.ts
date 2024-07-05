@@ -2,9 +2,8 @@ import dayjs from 'dayjs';
 import { MiddlewareFn } from 'type-graphql';
 
 import { IGraphQLContext } from '@/types';
-
-import { responseCodes } from '../utils';
-import { ReportsRepository } from '../dataAccess/reports';
+import { responseCodes } from '@/server/utils';
+import { ReportsRepository } from '@/server/dataAccess/reports';
 
 const reportsRepository = new ReportsRepository();
 

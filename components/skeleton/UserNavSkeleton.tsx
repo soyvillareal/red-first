@@ -1,7 +1,5 @@
-import { Skeleton } from '../ui/skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const UserNavSkeleton = () => {
-  return <Skeleton className="w-10 h-10 rounded-full" />;
-};
-
-export default UserNavSkeleton;
+export const UserNavSkeleton = () => (
+  <Skeleton className="w-10 h-10 rounded-full" />
+);

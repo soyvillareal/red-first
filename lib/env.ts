@@ -1,9 +1,8 @@
 const AUTH0_BASE_URL = process.env.AUTH0_BASE_URL || 'http://localhost:3000';
 
-export default {
+export const env = {
   NODE_ENV: process.env.NODE_ENV || 'development',
   API_PORT: process.env.API_PORT || 3000,
-  AUTH0_SECRET: process.env.AUTH0_SECRET || '',
   AUTH0_BASE_URL: AUTH0_BASE_URL,
   AUTH0_CALLBACK: `${AUTH0_BASE_URL}/api/auth/callback/auth0`,
   AUTH0_DOMAIN: process.env.AUTH0_DOMAIN || '',

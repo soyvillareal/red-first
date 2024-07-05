@@ -36,9 +36,8 @@ import {
   IPaginationParams,
 } from '@/types/graphql/pagination';
 import { checkGetUsers, checkUpdateUser } from '@/server/middleware/users';
-
-import { PaginatedUsers, UpdateUserArgs } from '../schemas/users';
-import { PaginationArgs } from '../schemas/pagination';
+import { PaginatedUsers, UpdateUserArgs } from '@/server/graphql/schemas/users';
+import { PaginationArgs } from '@/server/graphql/schemas/pagination';
 
 @Resolver()
 export class UsersResolvers {

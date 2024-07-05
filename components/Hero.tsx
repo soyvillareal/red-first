@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 
 import { routes } from '@/lib/contants';
 
-const Hero = () => {
+export const Hero = () => {
   const { t } = useTranslation();
   const session = useSession();
 
@@ -39,13 +39,13 @@ const Hero = () => {
             )}
           </div>
         </div>
-        {/* Image */}
         <div className="md:w-1/2">
           <Image
             src="images/illustration-intro.svg"
             alt={t('landing.description')}
-            width={500}
-            height={500}
+            className="w-auto h-auto"
+            width={400}
+            height={400}
             fetchPriority="high"
             priority
           />
@@ -54,5 +54,3 @@ const Hero = () => {
     </section>
   );
 };
-
-export default Hero;

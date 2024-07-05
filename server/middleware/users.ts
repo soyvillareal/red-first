@@ -2,8 +2,7 @@ import { MiddlewareFn } from 'type-graphql';
 
 import { IGraphQLContext } from '@/types';
 import { TValidsUserTypes } from '@/types/graphql/resolvers';
-
-import { responseCodes } from '../utils';
+import { responseCodes } from '@/server/utils';
 
 export const checkUpdateUser: MiddlewareFn<IGraphQLContext> = async (
   { args },

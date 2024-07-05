@@ -32,19 +32,21 @@ export const SEO = {
   },
 };
 
-export const cn = (...inputs: ClassValue[]) => {
-  return twMerge(clsx(inputs));
-};
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
-export const getNameInitials = (name: string) => {
-  return name
+export const getNameInitials = (name: string) =>
+  name
     .split(' ')
     .map((n) => n[0])
     .join('');
-};
 
 export const numberWithCurrency = (amount: string | bigint): string => {
-  const amountNumber = BigInt(amount) || 0;
+  let amountNumber: bigint | number = 0;
+  try {
+    amountNumber = BigInt(amount);
+  } catch {
+    amountNumber = 0;
+  }
   return new Intl.NumberFormat('es-CO', {
     style: 'currency',
     currency: currencySite,
@@ -100,9 +102,8 @@ export const propsToCSV = (data: IReportsCSV, t: TFunction) => {
   saveAs(blob, 'report.csv');
 };
 
-export const fillArray = (length: number) => {
-  return Array.from({ length }, (_, i) => i);
-};
+export const fillArray = (length: number) =>
+  Array.from({ length }, (_, i) => i);
 
 export const formatNumber = (num: number, precision = 1): string => {
   if (num === null) return '0';
@@ -124,9 +125,8 @@ export const formatNumber = (num: number, precision = 1): string => {
   return num.toString();
 };
 
-export const lowercaseFirstLetter = (str: string) => {
-  return str.charAt(0).toLowerCase() + str.slice(1);
-};
+export const lowercaseFirstLetter = (str: string) =>
+  str.charAt(0).toLowerCase() + str.slice(1);
 
 // No standard way to extract query variables from Apollo Client cache
 export const findQueryVariables = <T = Record<string, string>>(
@@ -155,7 +155,7 @@ export const findQueryVariables = <T = Record<string, string>>(
   const matches = queryWithVariables.match(/\(([^)]+)\)/);
 
   if (matches) {
-    const jsonString = matches[1];
+    const [jsonString] = matches;
 
     try {
       const jsonObj = JSON.parse(jsonString);

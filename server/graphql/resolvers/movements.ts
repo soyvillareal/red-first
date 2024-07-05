@@ -19,22 +19,28 @@ import {
   type IPaginationParams,
 } from '@/types/graphql/pagination';
 import { numberWithCurrency } from '@/lib/utils';
-
 import {
   checkCreateMovement,
   checkGetMovements,
-} from '../../middleware/movements';
-import { checkIsLogged, checkIsUser, checkPagination } from '../../middleware';
-import { type IGraphQLContext } from '../../../types';
-import { MovementsRepository } from '../../dataAccess/movements';
-import { CreateMovementArgs, PaginatedMovements } from '../schemas/movements';
-import { PaginationArgs } from '../schemas/pagination';
+} from '@/server/middleware/movements';
+import {
+  checkIsLogged,
+  checkIsUser,
+  checkPagination,
+} from '@/server/middleware';
+import { type IGraphQLContext } from '@/types';
+import { MovementsRepository } from '@/server/dataAccess/movements';
+import {
+  CreateMovementArgs,
+  PaginatedMovements,
+} from '@/server/graphql/schemas/movements';
+import { PaginationArgs } from '@/server/graphql/schemas/pagination';
 import {
   getSkipped,
   mockPagination,
   pageMeta,
   responseCodes,
-} from '../../utils';
+} from '@/server/utils';
 
 @Resolver()
 export class MovementsResolvers {

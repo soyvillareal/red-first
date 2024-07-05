@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 
 import { routes } from '@/lib/contants';
 
-const CallToAction = () => {
+export const CallToAction = () => {
   const { t } = useTranslation();
   const session = useSession();
 
@@ -38,5 +38,3 @@ const CallToAction = () => {
     </section>
   );
 };
-
-export default CallToAction;

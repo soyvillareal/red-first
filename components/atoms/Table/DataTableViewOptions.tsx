@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import MixerHorizontalIcon from '@/components/icons/MixerHorizontalIcon';
+import { MixerHorizontalIcon } from '@/components/icons/MixerHorizontalIcon';
 
 import { DataTableViewOptionsProps } from './Table.types';
 
@@ -39,18 +39,16 @@ export function DataTableViewOptions<TData>({
             (column) =>
               typeof column.accessorFn !== 'undefined' && column.getCanHide(),
           )
-          .map((column) => {
-            return (
-              <DropdownMenuCheckboxItem
-                key={column.id}
-                className="capitalize cursor-pointer"
-                checked={column.getIsVisible()}
-                onCheckedChange={(value) => column.toggleVisibility(!!value)}
-              >
-                {column.id}
-              </DropdownMenuCheckboxItem>
-            );
-          })}
+          .map((column) => (
+            <DropdownMenuCheckboxItem
+              key={column.id}
+              className="capitalize cursor-pointer"
+              checked={column.getIsVisible()}
+              onCheckedChange={(value) => column.toggleVisibility(!!value)}
+            >
+              {column.id}
+            </DropdownMenuCheckboxItem>
+          ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

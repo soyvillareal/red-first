@@ -2,9 +2,9 @@ import NextAuth, { AuthOptions } from 'next-auth';
 import Auth0Provider from 'next-auth/providers/auth0';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
-import env from '@/lib/env';
-import prisma from '@/server/prisma';
+import { env } from '@/lib/env';
 import { EUserRole, TProfileWithRoles } from '@/types';
+import prisma from '@/lib/db';
 
 const COOKIES_LIFE_TIME = 24 * 60 * 60; // 24 hours
 const COOKIE_PREFIX = env.NODE_ENV === 'production' ? '__Secure-' : '';

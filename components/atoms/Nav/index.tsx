@@ -21,12 +21,17 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
-import useCheckActiveNav from '@/hooks/useCheckActiveNav';
-import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
+import { useCheckActiveNav } from '@/hooks/useCheckActiveNav';
+import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon';
 
 import { NavLinkProps, NavProps, SideLink } from './Nav.types';
 
-function NavLinkIconDropdown({ title, icon, label, sub }: NavLinkProps) {
+export const NavLinkIconDropdown = ({
+  title,
+  icon,
+  label,
+  sub,
+}: NavLinkProps) => {
   const { checkActiveNav } = useCheckActiveNav();
 
   /* Open collapsible by default
@@ -77,9 +82,9 @@ function NavLinkIconDropdown({ title, icon, label, sub }: NavLinkProps) {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
 
-function NavLinkIcon({ title, icon, label, href }: NavLinkProps) {
+const NavLinkIcon = ({ title, icon, label, href }: NavLinkProps) => {
   const { checkActiveNav } = useCheckActiveNav();
   return (
     <Tooltip delayDuration={0}>
@@ -106,16 +111,16 @@ function NavLinkIcon({ title, icon, label, href }: NavLinkProps) {
       </TooltipContent>
     </Tooltip>
   );
-}
+};
 
-function NavLink({
+const NavLink = ({
   title,
   icon,
   label,
   href,
   closeNav,
   subLink = false,
-}: NavLinkProps) {
+}: NavLinkProps) => {
   const { checkActiveNav } = useCheckActiveNav();
   return (
     <Link
@@ -140,9 +145,15 @@ function NavLink({
       )}
     </Link>
   );
-}
+};
 
-function NavLinkDropdown({ title, icon, label, sub, closeNav }: NavLinkProps) {
+export const NavLinkDropdown = ({
+  title,
+  icon,
+  label,
+  sub,
+  closeNav,
+}: NavLinkProps) => {
   const { checkActiveNav } = useCheckActiveNav();
 
   /* Open collapsible by default
@@ -183,14 +194,9 @@ function NavLinkDropdown({ title, icon, label, sub, closeNav }: NavLinkProps) {
       </CollapsibleContent>
     </Collapsible>
   );
-}
+};
 
-export default function Nav({
-  links,
-  isCollapsed,
-  className,
-  closeNav,
-}: NavProps) {
+export const Nav = ({ links, isCollapsed, className, closeNav }: NavProps) => {
   const renderLink = ({ sub, ...rest }: SideLink) => {
     const key = `${rest.title}-${rest.href}`;
     if (isCollapsed && sub)
@@ -228,4 +234,4 @@ export default function Nav({
       </TooltipProvider>
     </div>
   );
-}
+};

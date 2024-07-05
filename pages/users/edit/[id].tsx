@@ -3,8 +3,8 @@ import { useTranslation } from 'next-i18next';
 import { getSession } from 'next-auth/react';
 
 import { loadTranslations } from '@/lib/i18n';
-import DashboardLayout from '@/components/atoms/DashboardLayout';
-import ContentSection from '@/components/atoms/ContentSection';
+import { DashboardLayout } from '@/components/atoms/DashboardLayout';
+import { ContentSection } from '@/components/atoms/ContentSection';
 import { ContextLayout } from '@/components/custom/layout';
 import { UserNav } from '@/components/atoms/UserNav';
 import { UserForm } from '@/components/atoms/UserForm';

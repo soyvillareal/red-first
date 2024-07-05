@@ -8,10 +8,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import ArrowDownIcon from '@/components/icons/ArrowDownIcon';
-import ArrowUpIcon from '@/components/icons/ArrowUpIcon';
-import CaretSortIcon from '@/components/icons/CaretSortIcon';
-import EyeNoneIcon from '@/components/icons/EyeNoneIcon';
+import { ArrowDownIcon } from '@/components/icons/ArrowDownIcon';
+import { ArrowUpIcon } from '@/components/icons/ArrowUpIcon';
+import { CaretSortIcon } from '@/components/icons/CaretSortIcon';
+import { EyeNoneIcon } from '@/components/icons/EyeNoneIcon';
 import { cn } from '@/lib/utils';
 
 import { DataTableColumnHeaderProps } from './Table.types';

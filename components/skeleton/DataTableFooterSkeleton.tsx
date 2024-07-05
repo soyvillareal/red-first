@@ -1,7 +1,5 @@
-import { Skeleton } from '../ui/skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const DataTableFooterSkeleton = () => {
-  return <Skeleton className="w-[120px] h-[20px] rounded-[4px]" />;
-};
-
-export default DataTableFooterSkeleton;
+export const DataTableFooterSkeleton = () => (
+  <Skeleton className="w-[120px] h-[20px] rounded-[4px]" />
+);

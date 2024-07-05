@@ -2,12 +2,12 @@ import Link from 'next/link';
 import { ColumnDef } from '@tanstack/react-table';
 
 import { DataTableColumnHeader } from '@/components/atoms/Table/DataTableColumnHeader';
-import EditIcon from '@/components/icons/EditIcon';
+import { EditIcon } from '@/components/icons/EditIcon';
 import { routes } from '@/lib/contants';
 
 import { UserSchema, usersSchema } from './users.schema';
 
-export const columns: ColumnDef<UserSchema>[] = [
+const columns: ColumnDef<UserSchema>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => (
@@ -17,16 +17,12 @@ export const columns: ColumnDef<UserSchema>[] = [
         hasDropdown
       />
     ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex w-[100px] items-center">
-          <span>{row.getValue('name')}</span>
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
+    cell: ({ row }) => (
+      <div className="flex w-[100px] items-center">
+        <span>{row.getValue('name')}</span>
+      </div>
+    ),
+    filterFn: (row, id, value) => value.includes(row.getValue(id)),
   },
   {
     accessorKey: 'email',
@@ -37,13 +33,11 @@ export const columns: ColumnDef<UserSchema>[] = [
         hasDropdown
       />
     ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex w-[100px] items-center">
-          <span>{row.getValue('email')}</span>
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <div className="flex w-[100px] items-center">
+        <span>{row.getValue('email')}</span>
+      </div>
+    ),
   },
   {
     accessorKey: 'phone',
@@ -54,16 +48,12 @@ export const columns: ColumnDef<UserSchema>[] = [
         hasDropdown
       />
     ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex items-center">
-          <span>{row.getValue('phone')}</span>
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
+    cell: ({ row }) => (
+      <div className="flex items-center">
+        <span>{row.getValue('phone')}</span>
+      </div>
+    ),
+    filterFn: (row, id, value) => value.includes(row.getValue(id)),
   },
   {
     accessorKey: 'actions',
@@ -81,3 +71,5 @@ export const columns: ColumnDef<UserSchema>[] = [
     },
   },
 ];
+
+export default columns;

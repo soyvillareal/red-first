@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-export default function useCheckActiveNav() {
+export const useCheckActiveNav = () => {
   const { pathname } = useRouter();
 
   const checkActiveNav = (nav: string) => {
@@ -12,4 +12,4 @@ export default function useCheckActiveNav() {
   };
 
   return { checkActiveNav };
-}
+};

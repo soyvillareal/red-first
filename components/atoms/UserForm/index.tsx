@@ -18,8 +18,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
-import HookForm from '@/components/atoms/HookForm';
-import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
+import { HookForm } from '@/components/atoms/HookForm';
+import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon';
 import { UserMutation, UsersQuery } from '@/lib/apollo';
 import {
   type IUpdateUserArgs,
@@ -30,7 +30,7 @@ import { IPaginationArgs } from '@/types/graphql/pagination';
 import { type IUserFormProps, type TUserFormInputs } from './UserForm.types';
 import { userFormSchema } from './UserForm.schema';
 
-export function UserForm({ userId, userData }: IUserFormProps) {
+export const UserForm = ({ userId, userData }: IUserFormProps) => {
   const { t } = useTranslation();
   const client = useApolloClient();
   const methods = useForm<TUserFormInputs>({
@@ -131,13 +131,11 @@ export function UserForm({ userId, userData }: IUserFormProps) {
                     )}
                     {...field}
                   >
-                    {Object.values(EUserRoleRoleNormalized).map((role) => {
-                      return (
-                        <option key={role} value={role}>
-                          {t(`roles.${role}`)}
-                        </option>
-                      );
-                    })}
+                    {Object.values(EUserRoleRoleNormalized).map((role) => (
+                      <option key={role} value={role}>
+                        {t(`roles.${role}`)}
+                      </option>
+                    ))}
                   </select>
                 </FormControl>
                 <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
@@ -155,4 +153,4 @@ export function UserForm({ userId, userData }: IUserFormProps) {
       </HookForm>
     </Form>
   );
-}
+};

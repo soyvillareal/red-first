@@ -3,8 +3,8 @@ import { TFunction } from 'next-i18next';
 
 import { EUserRoleRoleNormalized } from '@/types';
 
-export const userFormSchema = (t: TFunction) => {
-  return z.object({
+export const userFormSchema = (t: TFunction) =>
+  z.object({
     name: z
       .string()
       .min(2, {
@@ -17,4 +17,3 @@ export const userFormSchema = (t: TFunction) => {
       required_error: t('editUser.enterValidRole'),
     }),
   });
-};
