@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+
 import { routes } from '@/lib/contants';
 
 export const Hero = () => {

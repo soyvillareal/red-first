@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { IIconsProps } from './icons.types';
 
 export const XIcon = ({ className, width = 21, height = 18 }: IIconsProps) => (
