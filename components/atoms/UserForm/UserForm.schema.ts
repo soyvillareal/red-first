@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { TFunction } from 'next-i18next';
-import { UserRole } from '@prisma/client';
+import { EUserRoleRoleNormalized } from '@/types';
 
 export const userFormSchema = (t: TFunction) => {
   return z.object({
@@ -12,8 +12,8 @@ export const userFormSchema = (t: TFunction) => {
       .max(30, {
         message: t('editUser.nameMustBeLonger'),
       }),
-    role: z.nativeEnum(UserRole, {
-      required_error: t('editUser.enterValidConcept'),
+    role: z.nativeEnum(EUserRoleRoleNormalized, {
+      required_error: t('editUser.enterValidRole'),
     }),
   });
 };

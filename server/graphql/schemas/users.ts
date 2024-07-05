@@ -1,5 +1,5 @@
 import { Field, InputType, ObjectType, registerEnumType } from 'type-graphql';
-import { UserRole } from '@prisma/client';
+import { EUserRoleRoleNormalized } from '@/types';
 
 import {
   type IUpdateUserArgs,
@@ -9,7 +9,7 @@ import { type IPageOptionsDataMeta } from '@/types/graphql/pagination';
 
 import { PageOptionsMeta } from './pagination';
 
-registerEnumType(UserRole, {
+registerEnumType(EUserRoleRoleNormalized, {
   name: 'EUserRole',
   description: 'User roles',
   valuesConfig: {
@@ -26,8 +26,8 @@ export class UpdateUserArgs implements IUpdateUserArgs {
   @Field(() => String)
   name: string;
 
-  @Field(() => UserRole)
-  role: UserRole;
+  @Field(() => EUserRoleRoleNormalized)
+  role: EUserRoleRoleNormalized;
 }
 
 @ObjectType()

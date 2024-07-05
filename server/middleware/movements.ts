@@ -51,7 +51,6 @@ export const checkGetMovements: MiddlewareFn<IGraphQLContext> = async (
   try {
     const { filterType, fieldOrder } = args.pagination;
 
-    console.log('filterType: ', filterType);
     let filterConcept = null;
     if (filterType !== null && filterType !== undefined) {
       filterConcept = filterType as MovementConcept;

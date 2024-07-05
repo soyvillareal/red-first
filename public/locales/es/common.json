@@ -106,7 +106,7 @@
         "writeName": "Escribe el nombre...",
         "nameMusBeLeast": "El nombre debe tener al menos 2 caracteres.",
         "nameMustBeLonger": "El nombre no debe tener más de 30 caracteres.",
-        "enterValidConcept": "Por favor seleccione un concepto válido."
+        "enterValidRole": "Por favor seleccione un role válido."
     },
     "reportCSV": {
         "movements": "Movimientos",
@@ -137,7 +137,6 @@
     },
     "responseCodes": {
         "SOMETHING_WENT_WRONG": "Upss lo sentimos, algo salió mal :(",
-        "SESSION_UNDEFINED": "Por favor inicie sesión nuevamente.",
         "USER_NOT_LOGGED_IN": "El usuario no ha iniciado sesión.",
         "INVALID_DATE_FORMAT": "Formato de fecha inválido.",
         "INVALID_FILTER_TYPE": "Tipo de filtro inválido.",
@@ -158,6 +157,7 @@
         "NAME_EMPTY": "El nombre no puede estar vacío.",
         "NAME_TOO_SHORT": "El nombre debe tener al menos 2 caracteres.",
         "NAME_TOO_LONG": "El nombre no debe tener más de 30 caracteres.",
-        "USER_UPDATED_SUCCESSFULLY": "¡Usuario actualizado exitosamente!"
+        "USER_UPDATED_SUCCESSFULLY": "¡Usuario actualizado exitosamente!",
+        "NOT_AUTHORIZED_TO_THIS_ACTION": "No estás autorizado para realizar esta acción."
     }
 }

@@ -35,10 +35,6 @@ async function initializeApolloServer() {
     ): Promise<IGraphQLContext> => {
       const session = await getServerSession(req, res, authOptions);
 
-      if (session === null) {
-        throw new Error('Session is undefined!');
-      }
-
       const newContext: IGraphQLContext = {
         headers: req.headers,
         session,

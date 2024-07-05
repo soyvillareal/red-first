@@ -11,11 +11,17 @@ import { routes } from '@/lib/contants';
 
 import { UsersRepository } from '@/server/dataAccess/users';
 import { type IEditServerSideParams, type IEditUserProps } from './edit.types';
+import { EUserRole, EUserRoleRoleNormalized } from '@/types';
+import { getSession } from 'next-auth/react';
 
 export default function EditUser({ user }: IEditUserProps) {
   const { t } = useTranslation();
 
-  const { id, name, role } = user;
+  const {
+    id,
+    name,
+    roles: [role],
+  } = user;
 
   return (
     <ContextLayout>
@@ -31,7 +37,7 @@ export default function EditUser({ user }: IEditUserProps) {
               userId={id}
               userData={{
                 name: name ?? '',
-                role,
+                role: role as EUserRoleRoleNormalized,
               }}
             />
           </ContentSection>
@@ -46,8 +52,29 @@ export const getServerSideProps: GetServerSideProps<
   IEditServerSideParams
 > = async (context) => {
   const userId = context.params?.id;
-
+  const session = await getSession({ req: context.req });
   const translations = await loadTranslations(context.locale);
+
+  if (session === null) {
+    return {
+      redirect: {
+        destination: '/api/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  if (session.user.roles.includes(EUserRole.ADMIN) === false) {
+    return {
+      props: {
+        ...translations.props,
+      },
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    };
+  }
 
   if (userId === null || userId === undefined) {
     return {

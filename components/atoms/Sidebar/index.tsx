@@ -12,12 +12,16 @@ import LogoIcon from '@/components/icons/LogoIcon';
 
 import { sidelinks } from './Sidebar.constants';
 import { SidebarProps } from './Sidebar.types';
+import { useSession } from 'next-auth/react';
+import { EUserRole } from '@/types';
+import { routes } from '@/lib/contants';
 
 export default function Sidebar({
   className,
   isCollapsed,
   setIsCollapsed,
 }: SidebarProps) {
+  const session = useSession();
   const { t } = useTranslation();
   const [navOpened, setNavOpened] = useState(false);
 
@@ -79,7 +83,11 @@ export default function Sidebar({
           }`}
           closeNav={() => setNavOpened(false)}
           isCollapsed={isCollapsed}
-          links={sidelinks(t)}
+          links={sidelinks(t).filter(
+            (item) =>
+              session.data?.user.roles.includes(EUserRole.ADMIN) ||
+              [routes.movements].includes(item.href) === true
+          )}
         />
 
         {/* Scrollbar width toggle button */}

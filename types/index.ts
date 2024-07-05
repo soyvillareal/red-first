@@ -1,6 +1,18 @@
 import { DocumentNode } from '@apollo/client';
 import { IncomingHttpHeaders } from 'http';
-import { DefaultSession } from 'next-auth';
+import { type DefaultSession, type Profile } from 'next-auth';
+
+export enum EUserRoleRoleNormalized {
+  admin = 'admin',
+  user = 'user',
+}
+
+export enum EUserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
+export type TProfileWithRoles = Record<string, string> & Profile;
 
 export interface LocalStorageProps<T> {
   key: string;
@@ -10,6 +22,7 @@ export interface LocalStorageProps<T> {
 
 export type INextAuthUserSession = DefaultSession['user'] & {
   id: string;
+  roles: EUserRole[];
 };
 
 export interface IGraphQLContextSession {
@@ -20,7 +33,7 @@ export interface IGraphQLContextSession {
 
 export interface IGraphQLContext {
   headers: IncomingHttpHeaders;
-  session: IGraphQLContextSession;
+  session: IGraphQLContextSession | null;
 }
 
 export interface IGraphQLErrorContext {

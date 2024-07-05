@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 
 import { ContextLayout } from '@/components/custom/layout';
@@ -29,6 +29,9 @@ import { IReportsCSV } from './reports.types';
 import SelectorYear from './components/SelectorYear';
 import ReportBalanceSkeleton from '@/components/skeleton/ReportBalanceSkeleton';
 import ReportMovementsSkeleton from '@/components/skeleton/ReportMovementsSkeleton';
+import { getSession } from 'next-auth/react';
+import { EUserRole } from '@/types';
+import { routes } from '@/lib/contants';
 
 export default function Dashboard() {
   const { t } = useTranslation();
@@ -156,7 +159,9 @@ export default function Dashboard() {
                           'text-secondary-foreground text-2xl font-bold',
                           additionalMovementQueryData?.getAdditionalMovements.balance.includes(
                             '-'
-                          ) ? 'text-red' : 'text-green'
+                          )
+                            ? 'text-red'
+                            : 'text-green'
                         )}
                       >
                         {
@@ -205,6 +210,34 @@ export default function Dashboard() {
   );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  return loadTranslations(context.locale);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+  const translations = await loadTranslations(context.locale);
+
+  if (session === null) {
+    return {
+      redirect: {
+        destination: '/api/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  if (session.user.roles.includes(EUserRole.ADMIN) === false) {
+    return {
+      props: {
+        ...translations.props,
+      },
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      ...translations.props,
+    },
+  };
 };

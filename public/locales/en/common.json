@@ -105,7 +105,7 @@
         "writeName": "Write the name...",
         "nameMusBeLeast": "Name must be at least 2 characters.",
         "nameMustBeLonger": "Name must not be longer than 30 characters.",
-        "enterValidConcept": "Please select a valid concept."
+        "enterValidRole": "Please select a valid role."
     },
     "reportCSV": {
         "movements": "Movements",
@@ -136,7 +136,6 @@
     },
     "responseCodes": {
         "SOMETHING_WENT_WRONG": "Oops, we're sorry, something went wrong :(",
-        "SESSION_UNDEFINED": "Please log in again.",
         "USER_NOT_LOGGED_IN": "The user is not logged in.",
         "INVALID_DATE_FORMAT": "Invalid date format.",
         "INVALID_FILTER_TYPE": "Invalid filter type.",
@@ -157,6 +156,7 @@
         "NAME_EMPTY": "Name cannot be empty.",
         "NAME_TOO_SHORT": "Name must be at least 2 characters.",
         "NAME_TOO_LONG": "Name must not be longer than 30 characters.",
-        "USER_UPDATED_SUCCESSFULLY": "User updated successfully!"
+        "USER_UPDATED_SUCCESSFULLY": "User updated successfully!",
+        "NOT_AUTHORIZED_TO_THIS_ACTION": "You are not authorized to perform this action."
     }
 }

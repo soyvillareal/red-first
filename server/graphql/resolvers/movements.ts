@@ -24,7 +24,7 @@ import {
   checkCreateMovement,
   checkGetMovements,
 } from '../../middleware/movements';
-import { checkIsLogged, checkPagination } from '../../middleware';
+import { checkIsLogged, checkIsUser, checkPagination } from '../../middleware';
 import { type IGraphQLContext } from '../../../types';
 import { MovementsRepository } from '../../dataAccess/movements';
 import { CreateMovementArgs, PaginatedMovements } from '../schemas/movements';
@@ -45,7 +45,7 @@ export class MovementsResolvers {
   }
 
   @Mutation(() => String)
-  @UseMiddleware(checkIsLogged, checkCreateMovement)
+  @UseMiddleware(checkIsLogged, checkCreateMovement, checkIsUser)
   async createMovement(
     @Arg('movement', () => CreateMovementArgs)
     { amount, concept, date }: CreateMovementArgs,
@@ -78,7 +78,7 @@ export class MovementsResolvers {
     name: 'getMovements',
     description: 'Get movements',
   })
-  @UseMiddleware(checkIsLogged, checkPagination, checkGetMovements)
+  @UseMiddleware(checkIsLogged, checkPagination, checkGetMovements, checkIsUser)
   async getMovements(
     @Arg('pagination', () => PaginationArgs)
     paginationArgs: IPaginationArgs<TValidsMovementTypes>,

@@ -1,8 +1,8 @@
-import { UserRole } from '@prisma/client';
+import { type EUserRole } from '@/types';
 
 export interface IGetUserByIdResult {
   id: string;
-  role: UserRole;
+  roles: string[];
   name: string | null;
   email: string | null;
   image: string | null;
@@ -10,7 +10,7 @@ export interface IGetUserByIdResult {
 
 export interface IUpdateUserParams {
   name: string;
-  role: UserRole;
+  role: EUserRole;
 }
 
 export interface IGetUsersRepository {
@@ -18,4 +18,12 @@ export interface IGetUsersRepository {
   name: string | null;
   email: string | null;
   phone: string | null;
+}
+
+export interface IGetAccountDataResult {
+  id: string;
+  access_token: string | null;
+  providerAccountId: string;
+  type: string;
+  scope: string | null;
 }

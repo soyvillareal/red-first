@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useLazyQuery } from '@apollo/client';
@@ -27,6 +27,7 @@ import { useSorting } from '@/hooks/useSorting';
 import { ColumnFiltersState } from '@tanstack/react-table';
 import { useDebounce } from '@/hooks/useDebounce';
 import DataTableFooterSkeleton from '@/components/skeleton/DataTableFooterSkeleton';
+import { getSession } from 'next-auth/react';
 
 const Movements = () => {
   const { t } = useTranslation();
@@ -126,8 +127,24 @@ const Movements = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  return loadTranslations(context.locale);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+  const translations = await loadTranslations(context.locale);
+
+  if (session === null) {
+    return {
+      redirect: {
+        destination: '/api/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      ...translations.props,
+    },
+  };
 };
 
 export default Movements;

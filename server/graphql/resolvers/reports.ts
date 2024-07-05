@@ -13,7 +13,7 @@ import { numberWithCurrency } from '@/lib/utils';
 import { responseCodes } from '@/server/utils';
 import { ReportsRepository } from '@/server/dataAccess/reports';
 import { fillArray } from '@/lib/utils';
-import { checkIsLogged } from '@/server/middleware';
+import { checkIsAdmin, checkIsLogged } from '@/server/middleware';
 import { checkGetMovementsChart } from '@/server/middleware/reports';
 
 import { GetAditionalMovements, MovementsChart } from '../schemas/reports';
@@ -30,7 +30,7 @@ export class ReportsResolvers {
     name: 'getMovementsChart',
     description: 'Get movements report by month.',
   })
-  @UseMiddleware(checkIsLogged, checkGetMovementsChart)
+  @UseMiddleware(checkIsLogged, checkGetMovementsChart, checkIsAdmin)
   async getMovementsChart(
     @Ctx()
     context: IGraphQLContext,
@@ -40,7 +40,6 @@ export class ReportsResolvers {
     year?: string
   ): Promise<IGetMovementsChart[]> {
     try {
-      const userId = context.session.user.id;
       const parsedYear = year ? dayjs(year, 'YYYY') : dayjs();
       const startDate = parsedYear.startOf('year').toDate();
       const endDate = parsedYear.endOf('year').toDate();
@@ -94,14 +93,12 @@ export class ReportsResolvers {
     name: 'getAdditionalMovements',
     description: 'Get additional movements report.',
   })
-  @UseMiddleware(checkIsLogged)
+  @UseMiddleware(checkIsLogged, checkIsAdmin)
   async getAdditionalMovements(
     @Ctx()
     context: IGraphQLContext
   ): Promise<IGetAdditionalMovements> {
     try {
-      const userId = context.session.user.id;
-
       const recentMovements = await this.reportsRepository.getRecentMovements();
 
       if (recentMovements === null) {
@@ -168,7 +165,7 @@ export class ReportsResolvers {
     name: 'getValidYears',
     description: 'Get valid years for movements report.',
   })
-  @UseMiddleware(checkIsLogged)
+  @UseMiddleware(checkIsLogged, checkIsAdmin)
   async getValidYears(): Promise<string[]> {
     try {
       const years = await this.reportsRepository.getValidYears();

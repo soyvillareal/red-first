@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 
 import DashboardLayout from '@/components/atoms/DashboardLayout';
@@ -8,6 +8,7 @@ import { UserNav } from '@/components/atoms/UserNav';
 import { MovementForm } from '@/components/atoms/MovementForm';
 import { routes } from '@/lib/contants';
 import { loadTranslations } from '@/lib/i18n';
+import { getSession } from 'next-auth/react';
 
 export default function NewMovement() {
   const { t } = useTranslation();
@@ -34,6 +35,22 @@ export default function NewMovement() {
   );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  return loadTranslations(context.locale);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+  const translations = await loadTranslations(context.locale);
+
+  if (session === null) {
+    return {
+      redirect: {
+        destination: '/api/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      ...translations.props,
+    },
+  };
 };

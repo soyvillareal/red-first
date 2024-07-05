@@ -38,7 +38,7 @@ model Movements {
 
 model Account {
   id                 String  @id @default(uuid())
-  userId             String  @map("user_id")
+  userId             String  @unique @map("user_id")
   type               String
   provider           String
   providerAccountId  String  @map("provider_account_id")
@@ -75,7 +75,7 @@ model User {
   emailVerified DateTime?   @map("email_verified")
   phone         String?     @unique @map("phone")
   image         String?
-  role          UserRole    @default(user)
+  roles         String[]    @default(["user"])
   createdAt     DateTime    @default(now()) @map(name: "created_at")
   updatedAt     DateTime    @updatedAt @map(name: "updated_at")
   movements     Movements[]

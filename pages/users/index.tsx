@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useLazyQuery } from '@apollo/client';
 import { ColumnFiltersState } from '@tanstack/react-table';
@@ -20,6 +20,8 @@ import { UsersQuery } from '@/lib/apollo';
 
 import { columns } from './users.constants';
 import { IGetUsers, TValidsUserTypes } from '@/types/graphql/resolvers';
+import { EUserRole } from '@/types';
+import { getSession } from 'next-auth/react';
 
 const Users = () => {
   const { t } = useTranslation();
@@ -98,8 +100,36 @@ const Users = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  return loadTranslations(context.locale);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+  const translations = await loadTranslations(context.locale);
+
+  if (session === null) {
+    return {
+      redirect: {
+        destination: '/api/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  if (session.user.roles.includes(EUserRole.ADMIN) === false) {
+    return {
+      props: {
+        ...translations.props,
+      },
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      ...translations.props,
+    },
+  };
 };
 
 export default Users;

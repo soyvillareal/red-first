@@ -1,7 +1,10 @@
+import env from '@/lib/env';
+import { EUserRole } from '@/types';
 import {
   type IPageMetaParameters,
   type IPageOptionsDataMeta,
 } from '@/types/graphql/pagination';
+import { ManagementClient } from 'auth0';
 import { createLogger, format, transports } from 'winston';
 
 export const logger = createLogger({
@@ -81,14 +84,68 @@ export const mockPagination = <T>(
   };
 };
 
+export const updateUserRoleInProvider = async (
+  providerAccountId: string,
+  role: string
+): Promise<boolean> => {
+  try {
+    const auth0 = new ManagementClient({
+      domain: env.AUTH0_DOMAIN,
+      audience: env.AUTH0_AUDIENCE,
+      clientId: env.AUTH0_CLIENT_ID,
+      clientSecret: env.AUTH0_SECRET,
+    });
+
+    const rolesProvider = await auth0.roles.getAll();
+
+    if (rolesProvider === undefined) {
+      return false;
+    }
+
+    const newRole = rolesProvider.data.find((rol) => rol.name === role);
+
+    if (newRole === undefined) {
+      return false;
+    }
+
+    const deletedRoleInProvider = await auth0.users.deleteRoles(
+      { id: providerAccountId },
+      {
+        roles: rolesProvider.data.map((rol) => rol.id),
+      }
+    );
+
+    if (deletedRoleInProvider.status !== 204) {
+      return false;
+    }
+
+    const createdRoleInProvider = await auth0.users.assignRoles(
+      { id: providerAccountId },
+      {
+        roles: [newRole.id],
+      }
+    );
+
+    if (createdRoleInProvider.status !== 204) {
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 export const responseCodes = {
   ERROR: {
     SOMETHING_WENT_WRONG: 'SOMETHING_WENT_WRONG',
-    SESSION_UNDEFINED: 'SESSION_UNDEFINED',
     USER_NOT_LOGGED_IN: 'USER_NOT_LOGGED_IN',
     INVALID_DATE_FORMAT: 'INVALID_DATE_FORMAT',
     INVALID_FILTER_TYPE: 'INVALID_FILTER_TYPE',
     INVALID_FIELD_ORDER: 'INVALID_FIELD_ORDER',
+  },
+  UNAUTHORIZED: {
+    NOT_AUTHORIZED: 'NOT_AUTHORIZED',
   },
   PAGINATION: {
     PAGE_UNDEFINED: 'PAGE_UNDEFINED',
@@ -104,6 +161,7 @@ export const responseCodes = {
     MOVEMENT_CREATED_SUCCESSFULLY: 'MOVEMENT_CREATED_SUCCESSFULLY',
   },
   USERS: {
+    NOT_AUTHORIZED_TO_THIS_ACTION: 'NOT_AUTHORIZED_TO_THIS_ACTION',
     NOT_FOUND: 'USERS_NOT_FOUND',
     NAME_EMPTY: 'NAME_EMPTY',
     NAME_TOO_SHORT: 'NAME_TOO_SHORT',

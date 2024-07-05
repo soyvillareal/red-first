@@ -11,6 +11,7 @@ import {
 } from '@/types';
 
 export const currencySite = 'COP';
+export const rolesSite = ['admin', 'user'];
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));

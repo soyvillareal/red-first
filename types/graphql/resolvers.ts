@@ -1,4 +1,5 @@
-import { MovementConcept, UserRole } from '@prisma/client';
+import { MovementConcept } from '@prisma/client';
+import { type EUserRoleRoleNormalized } from '@/types';
 
 export interface IGetUsers {
   id: string;
@@ -10,7 +11,7 @@ export interface IGetUsers {
 export interface IUpdateUserArgs {
   userId: string;
   name: string;
-  role: UserRole;
+  role: EUserRoleRoleNormalized;
 }
 
 export type TValidsUserTypes = keyof Omit<IGetUsers, 'id'>;

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { UserRole } from '@prisma/client';
+import { EUserRoleRoleNormalized } from '@/types';
 import { useApolloClient, useMutation } from '@apollo/client';
 
 import { cn, findQueryVariables } from '@/lib/utils';
@@ -124,10 +124,10 @@ export function UserForm({ userId, userData }: IUserFormProps) {
                     )}
                     {...field}
                   >
-                    {Object.values(UserRole).map((type) => {
+                    {Object.values(EUserRoleRoleNormalized).map((role) => {
                       return (
-                        <option key={type} value={type}>
-                          {t(`roles.${type}`)}
+                        <option key={role} value={role}>
+                          {t(`roles.${role}`)}
                         </option>
                       );
                     })}

@@ -124,7 +124,6 @@ export class ReportsRepository {
 
       return count;
     } catch (error) {
-      console.log('error: ', error);
       return null;
     }
   };
@@ -143,7 +142,6 @@ export class ReportsRepository {
 
       return count;
     } catch (error) {
-      console.log('error: ', error);
       return null;
     }
   };

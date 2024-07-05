@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { signOut, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/custom/Button';
@@ -25,10 +25,11 @@ import { cn, getNameInitials } from '@/lib/utils';
 import { dashboardRoutes, routes } from '@/lib/contants';
 import { languages } from '@/lib/i18nConfig';
 import UserNavSkeleton from '@/components/skeleton/UserNavSkeleton';
+import { EUserRole } from '@/types';
 
 export const UserNav = () => {
   const { t, i18n } = useTranslation();
-  const { data: sessionData, status, update } = useSession();
+  const { data: sessionData, status } = useSession();
   const router = useRouter();
   const { pathname, query, asPath } = router;
 
@@ -43,13 +44,21 @@ export const UserNav = () => {
     });
   };
 
+  const handleClickSignIn = useCallback(() => {
+    signIn('auth0');
+  }, []);
+
+  const handleClickSignUp = useCallback(() => {
+    signIn('auth0', undefined, { screen_hint: 'signup' });
+  }, []);
+
   const handleClickSignOut = useCallback(() => {
     signOut();
   }, []);
 
   return status === 'loading' ? (
     <UserNavSkeleton />
-  ) : (
+  ) : status === 'authenticated' ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant='ghost' className='relative w-8 h-8 rounded-full'>
@@ -83,7 +92,11 @@ export const UserNav = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Link
-            href={routes.reports}
+            href={
+              sessionData.user.roles.includes(EUserRole.ADMIN)
+                ? routes.reports
+                : routes.movements
+            }
             className={cn(
               'flex flex-row justify-center items-center text-white hover:underline mr-4 ml-1',
               Object.values(dashboardRoutes).includes(pathname)
@@ -139,5 +152,22 @@ export const UserNav = () => {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  ) : (
+    <div className='flex col-row items-center justify-center gap-4 md:gap-8'>
+      <Button
+        variant='link'
+        onClick={handleClickSignIn}
+        className='hover:text-muted p-0 mr-0 h-auto'
+      >
+        {t('common.signIn')}
+      </Button>
+      <Button
+        variant='link'
+        onClick={handleClickSignUp}
+        className='hidden p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent md:block pb-2'
+      >
+        {t('common.signUp')}
+      </Button>
+    </div>
   );
 };

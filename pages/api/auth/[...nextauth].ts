@@ -1,9 +1,10 @@
-import NextAuth, { AuthOptions } from 'next-auth';
+import NextAuth, { AuthOptions, Profile } from 'next-auth';
 import Auth0Provider from 'next-auth/providers/auth0';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 import env from '@/lib/env';
 import prisma from '@/server/prisma';
+import { EUserRole, TProfileWithRoles } from '@/types';
 
 const COOKIES_LIFE_TIME = 24 * 60 * 60; // 24 hours
 const COOKIE_PREFIX = env.NODE_ENV === 'production' ? '__Secure-' : '';
@@ -104,20 +105,26 @@ export const authOptions: AuthOptions = {
       if (profile === undefined || profile === null) {
         return false;
       }
-      
+
       return true;
     },
     redirect({ url, baseUrl }) {
       return url.startsWith(baseUrl) ? `${baseUrl}/` : baseUrl;
     },
-    async jwt(props) {
-      const { token, user, account } = props;
+    async jwt({ token, user, account, profile }) {
+      if (account) {
+        token.accessToken = account.access_token;
+      }
       if (user) {
         token.id = user.id;
       }
+      if (profile !== undefined && profile !== null) {
+        const profileWithRoles = profile as TProfileWithRoles;
+        const userRoles = profileWithRoles[env.AUTH0_ROLES_IDENTIFIER];
 
-      if (account) {
-        token.accessToken = account.access_token;
+        if (userRoles !== undefined && userRoles !== null) {
+          token.userRoles = userRoles;
+        }
       }
       return token;
     },
@@ -131,6 +138,15 @@ export const authOptions: AuthOptions = {
         session.accessToken = token.accessToken;
       } else {
         throw new Error('Access token id is not valid!');
+      }
+
+      session.user.roles = [EUserRole.USER];
+      if (
+        typeof token.userRoles === 'object' &&
+        Array.isArray(token.userRoles) === true &&
+        token.userRoles.length > 0
+      ) {
+        session.user.roles = token.userRoles as EUserRole[];
       }
       return session;
     },

@@ -4,6 +4,7 @@ import {
   type IGetUsersRepository,
   type IUpdateUserParams,
   type IGetUserByIdResult,
+  IGetAccountDataResult,
 } from '@/types/dataAccess/users';
 import { type TValidsUserTypes } from '@/types/graphql/resolvers';
 import { type IPaginationParams } from '@/types/graphql/pagination';
@@ -26,7 +27,9 @@ export class UsersRepository {
         },
         data: {
           name,
-          role,
+          roles: {
+            set: [role],
+          },
         },
       });
 
@@ -46,7 +49,7 @@ export class UsersRepository {
           name: true,
           email: true,
           image: true,
-          role: true,
+          roles: true,
         },
         where: {
           id: userId,
@@ -97,7 +100,6 @@ export class UsersRepository {
     skip,
     order,
     queryValue,
-    filterType,
     fieldOrder = 'name',
   }: IPaginationParams<TValidsUserTypes>): Promise<
     IGetUsersRepository[] | null
@@ -134,6 +136,33 @@ export class UsersRepository {
       });
 
       return users;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  public getAccountData = async (
+    userId: string
+  ): Promise<IGetAccountDataResult | undefined | null> => {
+    try {
+      const foundUser = await this.prisma.account.findUnique({
+        select: {
+          id: true,
+          access_token: true,
+          providerAccountId: true,
+          type: true,
+          scope: true,
+        },
+        where: {
+          userId,
+        },
+      });
+
+      if (foundUser === null) {
+        return undefined;
+      }
+
+      return foundUser;
     } catch (error) {
       return null;
     }
