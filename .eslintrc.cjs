@@ -68,12 +68,6 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    'import/no-extraneous-dependencies': [
-      'error',
-      {
-        devDependencies: true,
-      },
-    ],
     'import/no-named-as-default': 'off',
     'import/prefer-default-export': 'off',
     'import/order': [

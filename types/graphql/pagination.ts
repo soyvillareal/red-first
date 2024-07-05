@@ -1,4 +1,5 @@
 import { MovementConcept } from '@prisma/client';
+
 import { type IGraphQLErrorContext } from '@/types';
 
 export type TPageOrder = 'asc' | 'desc';

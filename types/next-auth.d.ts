@@ -1,4 +1,3 @@
-import NextAuth from 'next-auth';
 import { type INextAuthUserSession } from '@/types';
 
 declare module 'next-auth' {

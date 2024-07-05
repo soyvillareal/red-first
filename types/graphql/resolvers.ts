@@ -1,4 +1,5 @@
 import { MovementConcept } from '@prisma/client';
+
 import { type EUserRoleRoleNormalized } from '@/types';
 
 export interface IGetUsers {
