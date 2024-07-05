@@ -1,4 +1,43 @@
 {
+    "SEO": {
+        "title": "Red First - Simplifica tu cuentas, simplifica tu vida",
+        "description": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio.",
+        "keywords": "Red First, gestión de finanzas,control de gastos,seguimiento de ingresos,reportes financieros,análisis de gastos,herramientas de presupuesto,visualización de datos financieros,gráficos de ingresos,software de finanzas personales,planificación financiera",
+        "openGraph": {
+            "siteName": "Red First",
+            "title": "Red First - Simplifica tu cuentas, simplifica tu vida",
+            "description": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio."
+        },
+        "twitter": {
+            "title": "Red First - Simplifica tu cuentas, simplifica tu vida",
+            "description": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio."
+        },
+        "REPORTS": {
+            "title": "Reportes - Red First",
+            "description": "Visualiza tus reportes financieros con Red First.",
+            "keywords": "reportes,reportes financieros,reportes de ingresos,reportes de egresos,reportes de red first"
+        },
+        "MOVEMENTS": {
+            "title": "Movimientos - Red First",
+            "description": "Gestiona tus movimientos financieros con Red First.",
+            "keywords": "movimientos,gestión de movimientos,ingresos,egresos,movimientos de red first"
+        },
+        "USERS": {
+            "title": "Usuarios - Red First",
+            "description": "Gestiona tus movimientos financieros con Red First.",
+            "keywords": "usuarios,gestión de usuarios,roles de usuario,permisos de usuario,usuarios de red first"
+        },
+        "NEW_MOVEMENT": {
+            "title": "Nuevo movimiento - Red First",
+            "description": "Crea un nuevo movimiento financiero con Red First.",
+            "keywords": "nuevo movimiento,crear movimiento,ingresar movimiento,nuevo movimiento de red first"
+        },
+        "EDIT_USER": {
+            "title": "Editar usuario - Red First",
+            "description": "Edita un usuario de Red First.",
+            "keywords": "editar usuario,modificar usuario,usuario de red first"
+        }
+    },
     "common": {
         "signIn": "Iniciar sesión",
         "signUp": "Registrate",

@@ -14,5 +14,6 @@ export default {
   AUTH0_ROLES_IDENTIFIER: process.env.AUTH0_ROLES_IDENTIFIER || '',
   AUTH0_SCOPE: process.env.AUTH0_SCOPE || 'openid profile email read:shows',
   JWT_SECRET: process.env.JWT_SECRET || '',
+  LOGO_URL: process.env.LOGO_URL || '',
   DATABASE_URL: process.env.DATABASE_URL || '',
 };

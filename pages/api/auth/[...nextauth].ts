@@ -11,7 +11,7 @@ const COOKIE_PREFIX = env.NODE_ENV === 'production' ? '__Secure-' : '';
 
 export const authOptions: AuthOptions = {
   theme: {
-    logo: 'https://authjs.dev/img/logo-sm.png',
+    logo: env.LOGO_URL,
   },
   providers: [
     Auth0Provider({

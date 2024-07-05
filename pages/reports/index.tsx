@@ -15,7 +15,7 @@ import { UserNav } from '@/components/atoms/UserNav';
 import DashboardLayout from '@/components/atoms/DashboardLayout';
 import Dollar2Icon from '@/components/icons/Dollar2Icon';
 import { loadTranslations } from '@/lib/i18n';
-import { cn, currencySite, propsToCSV } from '@/lib/utils';
+import { cn, currencySite, propsToCSV, SEO } from '@/lib/utils';
 import { AdditionalMovementsChartQuery } from '@/lib/apollo';
 import {
   IGetAdditionalMovements,
@@ -93,7 +93,13 @@ export default function Dashboard() {
 
   return (
     <ContextLayout>
-      <DashboardLayout>
+      <DashboardLayout
+        seo={{
+          title: t('SEO.REPORTS.title'),
+          description: t('SEO.REPORTS.description'),
+          keywords: t('SEO.REPORTS.keywords'),
+        }}
+      >
         <ContextLayout.Header>
           <div className='ml-auto flex items-center space-x-4'>
             <UserNav />

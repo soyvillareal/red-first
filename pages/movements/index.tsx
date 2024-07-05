@@ -28,6 +28,7 @@ import { ColumnFiltersState } from '@tanstack/react-table';
 import { useDebounce } from '@/hooks/useDebounce';
 import DataTableFooterSkeleton from '@/components/skeleton/DataTableFooterSkeleton';
 import { getSession } from 'next-auth/react';
+import { SEO } from '@/lib/utils';
 
 const Movements = () => {
   const { t } = useTranslation();
@@ -77,7 +78,13 @@ const Movements = () => {
 
   return (
     <ContextLayout>
-      <DashboardLayout>
+      <DashboardLayout
+        seo={{
+          title: t('SEO.MOVEMENTS.title'),
+          description: t('SEO.MOVEMENTS.description'),
+          keywords: t('SEO.MOVEMENTS.keywords'),
+        }}
+      >
         <ContextLayout.Header sticky>
           <div className='ml-auto flex items-center space-x-4'>
             <UserNav />

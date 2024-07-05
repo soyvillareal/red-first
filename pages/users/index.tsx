@@ -22,6 +22,7 @@ import { columns } from './users.constants';
 import { IGetUsers, TValidsUserTypes } from '@/types/graphql/resolvers';
 import { EUserRole } from '@/types';
 import { getSession } from 'next-auth/react';
+import { SEO } from '@/lib/utils';
 
 const Users = () => {
   const { t } = useTranslation();
@@ -61,7 +62,13 @@ const Users = () => {
 
   return (
     <ContextLayout>
-      <DashboardLayout>
+      <DashboardLayout
+        seo={{
+          title: t('SEO.USERS.title'),
+          description: t('SEO.USERS.description'),
+          keywords: t('SEO.USERS.keywords'),
+        }}
+      >
         <ContextLayout.Header sticky>
           <div className='ml-auto flex items-center space-x-4'>
             <UserNav />

@@ -1,4 +1,43 @@
 {
+    "SEO": {
+        "title": "Red First - Simplify your accounts, simplify your life",
+        "description": "Red First makes it easy for people to plan their daily accounts while keeping broader goals in sight.",
+        "keywords": "Red First, finance management, expense control, income tracking, financial reports, expense analysis, budgeting tools, financial data visualization, income charts, personal finance software, financial planning",
+        "openGraph": {
+            "siteName": "Red First",
+            "title": "Red First - Simplify your accounts, simplify your life",
+            "description": "Red First makes it easy for people to plan their daily accounts while keeping broader goals in sight."
+        },
+        "twitter": {
+            "title": "Red First - Simplify your accounts, simplify your life",
+            "description": "Red First makes it easy for people to plan their daily accounts while keeping broader goals in sight."
+        },
+        "REPORTS": {
+            "title": "Reports - Red First",
+            "description": "View your financial reports with Red First.",
+            "keywords": "reports, financial reports, income reports, expense reports, red first reports"
+        },
+        "MOVEMENTS": {
+            "title": "Movements - Red First",
+            "description": "Manage your financial movements with Red First.",
+            "keywords": "movements, movement management, income, expenses, red first movements"
+        },
+        "USERS": {
+            "title": "Users - Red First",
+            "description": "Manage your financial movements with Red First.",
+            "keywords": "users, user management, user roles, user permissions, red first users"
+        },
+        "NEW_MOVEMENT": {
+            "title": "New movement - Red First",
+            "description": "Create a new financial movement with Red First.",
+            "keywords": "new movement, create movement, enter movement, red first new movement"
+        },
+        "EDIT_USER": {
+            "title": "Edit user - Red First",
+            "description": "Edit a Red First user.",
+            "keywords": "edit user, modify user, red first user"
+        }
+    },
     "common": {
         "signIn": "Sign in",
         "signUp": "Sign up",

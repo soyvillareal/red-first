@@ -11,7 +11,26 @@ import {
 } from '@/types';
 
 export const currencySite = 'COP';
-export const rolesSite = ['admin', 'user'];
+
+export const SEO = {
+  url: 'https://redfirst.com',
+  openGraph: {
+    type: 'website',
+    locale: 'en_IE',
+    url: 'https://redfirst.com',
+    image: {
+      url: '/og-image.png',
+      width: '1200',
+      height: '630',
+    },
+  },
+  twitter: {
+    card: 'summary',
+    site: '@redfirst',
+    creator: '@redfirst',
+    image: '/og-image.png',
+  },
+};
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));

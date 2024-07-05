@@ -13,6 +13,7 @@ import { UsersRepository } from '@/server/dataAccess/users';
 import { type IEditServerSideParams, type IEditUserProps } from './edit.types';
 import { EUserRole, EUserRoleRoleNormalized } from '@/types';
 import { getSession } from 'next-auth/react';
+import { SEO } from '@/lib/utils';
 
 export default function EditUser({ user }: IEditUserProps) {
   const { t } = useTranslation();
@@ -25,7 +26,13 @@ export default function EditUser({ user }: IEditUserProps) {
 
   return (
     <ContextLayout>
-      <DashboardLayout>
+      <DashboardLayout
+        seo={{
+          title: t('SEO.EDIT_USER.title'),
+          description: t('SEO.EDIT_USER.description'),
+          keywords: t('SEO.EDIT_USER.keywords'),
+        }}
+      >
         <ContextLayout.Header sticky>
           <div className='ml-auto flex items-center space-x-4'>
             <UserNav />
