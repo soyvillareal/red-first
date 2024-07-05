@@ -3,8 +3,8 @@ import { Field, ObjectType } from 'type-graphql';
 
 import {
   type IGetAdditionalMovements,
-  type IGetRecentMovements,
   type IGetMovementsChart,
+  type IGetRecentMovements,
   type TValidMonthsKeys,
 } from '@/types/graphql/resolvers';
 

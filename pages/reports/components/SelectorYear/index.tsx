@@ -25,12 +25,12 @@ const SelectorYear = ({ value, onValueChange }: ISelectorYearProps) => {
   ) : (
     additionalMovementQueryData && (
       <Select value={value} onValueChange={onValueChange}>
-        <SelectTrigger className='bg-accent w-[80px] h-8 mt-[0px!important]'>
-          <SelectValue placeholder='Select year' />
+        <SelectTrigger className="bg-accent w-[80px] h-8 mt-[0px!important]">
+          <SelectValue placeholder="Select year" />
         </SelectTrigger>
-        <SelectContent side='top'>
+        <SelectContent side="top">
           {additionalMovementQueryData?.getValidYears.map((year) => (
-            <SelectItem className='cursor-pointer' key={year} value={year}>
+            <SelectItem className="cursor-pointer" key={year} value={year}>
               {year}
             </SelectItem>
           ))}

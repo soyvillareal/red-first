@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
+import { useLazyQuery } from '@apollo/client';
+import { getSession } from 'next-auth/react';
 
 import { ContextLayout } from '@/components/custom/layout';
 import { Button } from '@/components/custom/Button';
@@ -15,23 +17,20 @@ import { UserNav } from '@/components/atoms/UserNav';
 import DashboardLayout from '@/components/atoms/DashboardLayout';
 import Dollar2Icon from '@/components/icons/Dollar2Icon';
 import { loadTranslations } from '@/lib/i18n';
-import { cn, currencySite, propsToCSV, SEO } from '@/lib/utils';
+import { cn, currencySite, propsToCSV } from '@/lib/utils';
 import { AdditionalMovementsChartQuery } from '@/lib/apollo';
 import {
   IGetAdditionalMovements,
   IGetMovementsChart,
 } from '@/types/graphql/resolvers';
-import { useLazyQuery } from '@apollo/client';
+import ReportBalanceSkeleton from '@/components/skeleton/ReportBalanceSkeleton';
+import ReportMovementsSkeleton from '@/components/skeleton/ReportMovementsSkeleton';
+import { EUserRole } from '@/types';
 
 import { RecentMovements } from './components/RecentMovements';
 import { MovementsChart } from './components/MovementsChart';
 import { IReportsCSV } from './reports.types';
 import SelectorYear from './components/SelectorYear';
-import ReportBalanceSkeleton from '@/components/skeleton/ReportBalanceSkeleton';
-import ReportMovementsSkeleton from '@/components/skeleton/ReportMovementsSkeleton';
-import { getSession } from 'next-auth/react';
-import { EUserRole } from '@/types';
-import { routes } from '@/lib/contants';
 
 export default function Dashboard() {
   const { t } = useTranslation();
@@ -75,7 +74,7 @@ export default function Dashboard() {
           movementsChart: reportData.movementsChart,
           recentMovements: reportData.recentMovements,
         },
-        t
+        t,
       );
     }
   }, [t, reportData]);
@@ -88,7 +87,7 @@ export default function Dashboard() {
         movementsChart: data,
       }));
     },
-    []
+    [],
   );
 
   return (
@@ -101,16 +100,16 @@ export default function Dashboard() {
         }}
       >
         <ContextLayout.Header>
-          <div className='ml-auto flex items-center space-x-4'>
+          <div className="ml-auto flex items-center space-x-4">
             <UserNav />
           </div>
         </ContextLayout.Header>
         <ContextLayout.Body>
-          <div className='mb-2 flex items-center justify-between space-y-2'>
-            <h1 className='text-2xl font-bold tracking-tight'>
+          <div className="mb-2 flex items-center justify-between space-y-2">
+            <h1 className="text-2xl font-bold tracking-tight">
               {t('dashboard.title')}
             </h1>
-            <div className='flex items-center space-x-2'>
+            <div className="flex items-center space-x-2">
               <Button
                 onClick={handleClickDownload}
                 disabled={
@@ -123,11 +122,11 @@ export default function Dashboard() {
               </Button>
             </div>
           </div>
-          <div className='space-y-4'>
-            <div className='grid grid-cols-1 gap-4 xl:grid-cols-2'>
-              <Card className='flex flex-col justify-between'>
-                <CardHeader className='flex-row justify-between items-center'>
-                  <CardTitle className='text-secondary-foreground'>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+              <Card className="flex flex-col justify-between">
+                <CardHeader className="flex-row justify-between items-center">
+                  <CardTitle className="text-secondary-foreground">
                     {t('dashboard.movements', {
                       replace: {
                         currency: currencySite,
@@ -141,7 +140,7 @@ export default function Dashboard() {
                     }}
                   />
                 </CardHeader>
-                <CardContent className='pl-6 pb-10'>
+                <CardContent className="pl-6 pb-10">
                   <MovementsChart
                     callbackState={handleCallback}
                     year={selectedYear}
@@ -149,12 +148,12 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
               <div>
-                <Card className='border-b-0'>
-                  <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                    <CardTitle className='text-secondary-foreground text-sm font-medium'>
+                <Card className="border-b-0">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-secondary-foreground text-sm font-medium">
                       {t('dashboard.balance')}
                     </CardTitle>
-                    <Dollar2Icon className='h-4 w-4 text-secondary-foreground' />
+                    <Dollar2Icon className="h-4 w-4 text-secondary-foreground" />
                   </CardHeader>
                   <CardContent>
                     {additionalMovementQueryLoading ? (
@@ -164,10 +163,10 @@ export default function Dashboard() {
                         className={cn(
                           'text-secondary-foreground text-2xl font-bold',
                           additionalMovementQueryData?.getAdditionalMovements.balance.includes(
-                            '-'
+                            '-',
                           )
                             ? 'text-red'
-                            : 'text-green'
+                            : 'text-green',
                         )}
                       >
                         {
@@ -180,13 +179,13 @@ export default function Dashboard() {
                 </Card>
                 <Card>
                   <CardHeader>
-                    <CardTitle className='text-secondary-foreground'>
+                    <CardTitle className="text-secondary-foreground">
                       {t('dashboard.recentMovements')}
                     </CardTitle>
                     {additionalMovementQueryLoading ? (
                       <ReportMovementsSkeleton />
                     ) : (
-                      <CardDescription className='text-secondary-foreground'>
+                      <CardDescription className="text-secondary-foreground">
                         {t('dashboard.youMadeMovementsMonth', {
                           replace: {
                             movements:

@@ -1,15 +1,16 @@
 import { MiddlewareFn } from 'type-graphql';
 
 import { IGraphQLContext } from '@/types';
-import { responseCodes } from '../utils';
 import { TValidsUserTypes } from '@/types/graphql/resolvers';
+
+import { responseCodes } from '../utils';
 
 export const checkUpdateUser: MiddlewareFn<IGraphQLContext> = async (
   { args },
-  next
+  next,
 ) => {
   try {
-    const { name, role } = args.user;
+    const { name } = args.user;
 
     if (name === '') {
       throw new Error(responseCodes.USERS.NAME_EMPTY);
@@ -34,10 +35,10 @@ export const checkUpdateUser: MiddlewareFn<IGraphQLContext> = async (
 
 export const checkGetUsers: MiddlewareFn<IGraphQLContext> = async (
   { args },
-  next
+  next,
 ) => {
   try {
-    const { filterType, fieldOrder } = args.pagination;
+    const { fieldOrder } = args.pagination;
 
     const fieldsValids: TValidsUserTypes[] = ['name', 'email', 'phone'];
 

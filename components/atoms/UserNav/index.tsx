@@ -61,9 +61,9 @@ export const UserNav = () => {
   ) : status === 'authenticated' ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='ghost' className='relative w-8 h-8 rounded-full'>
+        <Button variant="ghost" className="relative w-8 h-8 rounded-full">
           {sessionData && sessionData.user.image && (
-            <Avatar className='w-10 h-10'>
+            <Avatar className="w-10 h-10">
               <AvatarImage src={sessionData.user.image} />
               {sessionData.user.name && (
                 <AvatarFallback>
@@ -74,15 +74,15 @@ export const UserNav = () => {
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-56' align='end' forceMount>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
         {sessionData && sessionData && (
-          <DropdownMenuLabel className='font-normal'>
-            <div className='flex flex-col space-y-1'>
-              <p className='text-sm font-medium leading-none'>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-1">
+              <p className="text-sm font-medium leading-none">
                 {sessionData.user.name}
               </p>
               {sessionData.user?.email && (
-                <p className='text-xs leading-none text-destructive-foreground'>
+                <p className="text-xs leading-none text-destructive-foreground">
                   {sessionData.user.email}
                 </p>
               )}
@@ -101,18 +101,18 @@ export const UserNav = () => {
               'flex flex-row justify-center items-center text-white hover:underline mr-4 ml-1',
               Object.values(dashboardRoutes).includes(pathname)
                 ? 'underline'
-                : ''
+                : '',
             )}
           >
             <LayoutDashboardIcon width={17} height={16} />
-            <span className='ml-2'>{t('dashboard.title')}</span>
+            <span className="ml-2">{t('dashboard.title')}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger className='cursor-pointer hover:underline'>
+          <DropdownMenuSubTrigger className="cursor-pointer hover:underline">
             <LanguageIcon width={21} height={20} />
-            <span className='ml-2'>
+            <span className="ml-2">
               {t('languages.title', {
                 replace: {
                   lang: i18n.resolvedLanguage,
@@ -130,7 +130,7 @@ export const UserNav = () => {
                     'cursor-pointer',
                     i18n.resolvedLanguage === language
                       ? 'underline'
-                      : 'hover:text-white'
+                      : 'hover:text-white',
                   )}
                 >
                   {t(`languages.${language}`)}
@@ -142,29 +142,29 @@ export const UserNav = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Button
-            variant='link'
+            variant="link"
             onClick={handleClickSignOut}
-            className='flex flex-row justify-center items-center text-white hover:underline mr-4 ml-1 p-0 mr-0 h-auto'
+            className="flex flex-row justify-center items-center text-white hover:underline mr-4 ml-1 p-0 mr-0 h-auto"
           >
             <LogOutIcon width={17} height={16} />
-            <span className='ml-2'>{t('common.logOut')}</span>
+            <span className="ml-2">{t('common.logOut')}</span>
           </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <div className='flex col-row items-center justify-center gap-4 md:gap-8'>
+    <div className="flex col-row items-center justify-center gap-4 md:gap-8">
       <Button
-        variant='link'
+        variant="link"
         onClick={handleClickSignIn}
-        className='hover:text-muted p-0 mr-0 h-auto'
+        className="hover:text-muted p-0 mr-0 h-auto"
       >
         {t('common.signIn')}
       </Button>
       <Button
-        variant='link'
+        variant="link"
         onClick={handleClickSignUp}
-        className='hidden p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent md:block pb-2'
+        className="hidden p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent md:block pb-2"
       >
         {t('common.signUp')}
       </Button>

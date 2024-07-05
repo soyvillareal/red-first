@@ -1,4 +1,7 @@
-import { IGetMovementsChart, IGetRecentMovements } from '@/types/graphql/resolvers';
+import {
+  IGetMovementsChart,
+  IGetRecentMovements,
+} from '@/types/graphql/resolvers';
 
 export interface IReportsCSV {
   balance?: string;

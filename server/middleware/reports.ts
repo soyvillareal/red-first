@@ -10,7 +10,7 @@ const reportsRepository = new ReportsRepository();
 
 export const checkGetMovementsChart: MiddlewareFn<IGraphQLContext> = async (
   { args },
-  next
+  next,
 ) => {
   try {
     const { year } = args;
@@ -21,7 +21,7 @@ export const checkGetMovementsChart: MiddlewareFn<IGraphQLContext> = async (
 
     const foundMovements = await reportsRepository.findMovementsPerRange(
       startDate,
-      endDate
+      endDate,
     );
 
     if (foundMovements === null) {

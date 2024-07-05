@@ -2,9 +2,9 @@ import { useCallback } from 'react';
 import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { EUserRoleRoleNormalized } from '@/types';
-import { useApolloClient, useMutation } from '@apollo/client';
+import { ApolloError, useApolloClient, useMutation } from '@apollo/client';
 
+import { EUserRoleRoleNormalized } from '@/types';
 import { cn, findQueryVariables } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/custom/Button';
 import {
@@ -22,13 +22,13 @@ import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
 import { UserMutation, UsersQuery } from '@/lib/apollo';
 import {
-  TValidsUserTypes,
   type IUpdateUserArgs,
+  TValidsUserTypes,
 } from '@/types/graphql/resolvers';
+import { IPaginationArgs } from '@/types/graphql/pagination';
 
 import { type IUserFormProps, type TUserFormInputs } from './UserForm.types';
 import { userFormSchema } from './UserForm.schema';
-import { IPaginationArgs } from '@/types/graphql/pagination';
 
 export function UserForm({ userId, userData }: IUserFormProps) {
   const { t } = useTranslation();
@@ -80,22 +80,29 @@ export function UserForm({ userId, userData }: IUserFormProps) {
             variant: 'destructive',
           });
         }
-      } catch (error: any) {
-        toast({
-          description: t(`responseCodes.${error.message}`),
-          variant: 'destructive',
-        });
+      } catch (error: unknown) {
+        if (error instanceof ApolloError) {
+          toast({
+            description: t(`responseCodes.${error.message}`),
+            variant: 'destructive',
+          });
+        } else {
+          toast({
+            description: t('responseCodes.SOMETHING_WENT_WRONG'),
+            variant: 'destructive',
+          });
+        }
       }
     },
-    [userData]
+    [updateUser, t, userId],
   );
 
   return (
     <Form {...methods}>
-      <HookForm className='space-y-5' onSubmit={onSubmit} methods={methods}>
+      <HookForm className="space-y-5" onSubmit={onSubmit} methods={methods}>
         <FormField
           control={methods.control}
-          name='name'
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('editUser.name')}</FormLabel>
@@ -111,16 +118,16 @@ export function UserForm({ userId, userData }: IUserFormProps) {
         />
         <FormField
           control={methods.control}
-          name='role'
+          name="role"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('editUser.role')}</FormLabel>
-              <div className='relative w-max'>
+              <div className="relative w-max">
                 <FormControl>
                   <select
                     className={cn(
                       buttonVariants({ variant: 'outline' }),
-                      'w-[200px] appearance-none font-normal'
+                      'w-[200px] appearance-none font-normal',
                     )}
                     {...field}
                   >
@@ -133,16 +140,16 @@ export function UserForm({ userId, userData }: IUserFormProps) {
                     })}
                   </select>
                 </FormControl>
-                <ChevronDownIcon className='absolute right-3 top-2.5 h-4 w-4 opacity-50' />
+                <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
               </div>
-              <FormDescription className='text-red'>
+              <FormDescription className="text-red">
                 {t('editUser.roleOfTheUser')}
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type='submit' loading={userMutationLoading}>
+        <Button type="submit" loading={userMutationLoading}>
           {t('common.save')}
         </Button>
       </HookForm>

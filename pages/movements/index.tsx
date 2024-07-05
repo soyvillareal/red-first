@@ -3,6 +3,8 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useLazyQuery } from '@apollo/client';
+import { ColumnFiltersState } from '@tanstack/react-table';
+import { getSession } from 'next-auth/react';
 
 import { ContextLayout } from '@/components/custom/layout';
 import DashboardLayout from '@/components/atoms/DashboardLayout';
@@ -11,24 +13,21 @@ import { UserNav } from '@/components/atoms/UserNav';
 import { routes } from '@/lib/contants';
 import { loadTranslations } from '@/lib/i18n';
 import { MovementsQuery } from '@/lib/apollo';
-
-import { columnsFn } from './movements.constants';
 import { Button } from '@/components/custom/Button';
 import {
   IPageOptionsDataMeta,
   IPaginationArgs,
 } from '@/types/graphql/pagination';
 import {
-  TValidsMovementTypes,
   type IGetMovementsWithTotal,
+  TValidsMovementTypes,
 } from '@/types/graphql/resolvers';
 import { usePagination } from '@/hooks/usePagination';
 import { useSorting } from '@/hooks/useSorting';
-import { ColumnFiltersState } from '@tanstack/react-table';
 import { useDebounce } from '@/hooks/useDebounce';
 import DataTableFooterSkeleton from '@/components/skeleton/DataTableFooterSkeleton';
-import { getSession } from 'next-auth/react';
-import { SEO } from '@/lib/utils';
+
+import { columnsFn } from './movements.constants';
 
 const Movements = () => {
   const { t } = useTranslation();
@@ -54,7 +53,7 @@ const Movements = () => {
 
   useEffect(() => {
     const filterConcept = debouncedValue.find(
-      (filter) => filter.id === 'concept'
+      (filter) => filter.id === 'concept',
     )?.value as string[];
 
     const queryValue = debouncedValue.find((filter) => filter.id === 'userName')
@@ -70,7 +69,7 @@ const Movements = () => {
         fieldOrder: field,
       },
     });
-  }, [page, field, limit, order, debouncedValue]);
+  }, [getMovementsQuery, page, field, limit, order, debouncedValue]);
 
   const handleClick = useCallback(() => {
     router.push(routes.newMovement);
@@ -86,17 +85,17 @@ const Movements = () => {
         }}
       >
         <ContextLayout.Header sticky>
-          <div className='ml-auto flex items-center space-x-4'>
+          <div className="ml-auto flex items-center space-x-4">
             <UserNav />
           </div>
         </ContextLayout.Header>
         <ContextLayout.Body>
-          <div className='mb-4 flex items-center justify-between space-y-2'>
-            <h2 className='text-2xl font-bold tracking-tight'>
+          <div className="mb-4 flex items-center justify-between space-y-2">
+            <h2 className="text-2xl font-bold tracking-tight">
               {t('movements.title')}
             </h2>
           </div>
-          <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
+          <div className="-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0">
             <DataTable
               data={movementQueryData?.getMovements.data.movements || []}
               columns={columnsFn(t)}
@@ -106,7 +105,7 @@ const Movements = () => {
               }}
               loading={movementQueryLoading || debouncedLoading}
               footerChildren={
-                <div className='mt-5 border rounded-md flex justify-between items-center p-4'>
+                <div className="mt-5 border rounded-md flex justify-between items-center p-4">
                   {movementQueryLoading || debouncedLoading ? (
                     <DataTableFooterSkeleton />
                   ) : (

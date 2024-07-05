@@ -6,7 +6,7 @@ import { responseCodes } from '../utils';
 
 export const checkIsLogged: MiddlewareFn<IGraphQLContext> = async (
   { context },
-  next
+  next,
 ) => {
   try {
     if (context?.session?.user === undefined) {
@@ -24,7 +24,7 @@ export const checkIsLogged: MiddlewareFn<IGraphQLContext> = async (
 
 export const checkIsAdmin: MiddlewareFn<IGraphQLContext> = async (
   { context },
-  next
+  next,
 ) => {
   try {
     if (context?.session?.user === undefined) {
@@ -46,7 +46,7 @@ export const checkIsAdmin: MiddlewareFn<IGraphQLContext> = async (
 
 export const checkIsUser: MiddlewareFn<IGraphQLContext> = async (
   { context },
-  next
+  next,
 ) => {
   try {
     if (context?.session?.user === undefined) {

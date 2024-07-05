@@ -31,7 +31,7 @@ async function initializeApolloServer() {
   return startServerAndCreateNextHandler(server, {
     context: async (
       req: NextApiRequest,
-      res: NextApiResponse
+      res: NextApiResponse,
     ): Promise<IGraphQLContext> => {
       const session = await getServerSession(req, res, authOptions);
 
@@ -47,7 +47,7 @@ async function initializeApolloServer() {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const handle = await initializeApolloServer();
   return handle(req, res);

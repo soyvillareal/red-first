@@ -13,13 +13,13 @@ export const columns: ColumnDef<UserSchema>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        i18nTitle='users.name'
+        i18nTitle="users.name"
         hasDropdown
       />
     ),
     cell: ({ row }) => {
       return (
-        <div className='flex w-[100px] items-center'>
+        <div className="flex w-[100px] items-center">
           <span>{row.getValue('name')}</span>
         </div>
       );
@@ -33,13 +33,13 @@ export const columns: ColumnDef<UserSchema>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        i18nTitle='users.email'
+        i18nTitle="users.email"
         hasDropdown
       />
     ),
     cell: ({ row }) => {
       return (
-        <div className='flex w-[100px] items-center'>
+        <div className="flex w-[100px] items-center">
           <span>{row.getValue('email')}</span>
         </div>
       );
@@ -50,13 +50,13 @@ export const columns: ColumnDef<UserSchema>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        i18nTitle='users.phone'
+        i18nTitle="users.phone"
         hasDropdown
       />
     ),
     cell: ({ row }) => {
       return (
-        <div className='flex items-center'>
+        <div className="flex items-center">
           <span>{row.getValue('phone')}</span>
         </div>
       );
@@ -68,7 +68,7 @@ export const columns: ColumnDef<UserSchema>[] = [
   {
     accessorKey: 'actions',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} i18nTitle='table.action' />
+      <DataTableColumnHeader column={column} i18nTitle="table.action" />
     ),
     cell: ({ row }) => {
       const task = usersSchema.parse(row.original);

@@ -1,14 +1,13 @@
 import dayjs from 'dayjs';
-import { Arg, Ctx, Query, Resolver, UseMiddleware } from 'type-graphql';
+import { Arg, Query, Resolver, UseMiddleware } from 'type-graphql';
 
 import {
-  type TValidMonthsKeys,
-  type IGetMovementsChart,
   type IGetAdditionalMovements,
+  type IGetMovementsChart,
   type IGetRecentMovements,
-  IParsedMovementsChart,
+  type IParsedMovementsChart,
+  type TValidMonthsKeys,
 } from '@/types/graphql/resolvers';
-import { type IGraphQLContext } from '@/types';
 import { numberWithCurrency } from '@/lib/utils';
 import { responseCodes } from '@/server/utils';
 import { ReportsRepository } from '@/server/dataAccess/reports';
@@ -32,12 +31,10 @@ export class ReportsResolvers {
   })
   @UseMiddleware(checkIsLogged, checkGetMovementsChart, checkIsAdmin)
   async getMovementsChart(
-    @Ctx()
-    context: IGraphQLContext,
     @Arg('year', () => String, {
       nullable: true,
     })
-    year?: string
+    year?: string,
   ): Promise<IGetMovementsChart[]> {
     try {
       const parsedYear = year ? dayjs(year, 'YYYY') : dayjs();
@@ -46,7 +43,7 @@ export class ReportsResolvers {
 
       const movements = await this.reportsRepository.getChartMovements(
         startDate,
-        endDate
+        endDate,
       );
 
       if (movements === null) {
@@ -61,7 +58,7 @@ export class ReportsResolvers {
             income: BigInt(0),
             expense: BigInt(0),
           };
-        }
+        },
       );
 
       movements.forEach((movement) => {
@@ -94,10 +91,7 @@ export class ReportsResolvers {
     description: 'Get additional movements report.',
   })
   @UseMiddleware(checkIsLogged, checkIsAdmin)
-  async getAdditionalMovements(
-    @Ctx()
-    context: IGraphQLContext
-  ): Promise<IGetAdditionalMovements> {
+  async getAdditionalMovements(): Promise<IGetAdditionalMovements> {
     try {
       const recentMovements = await this.reportsRepository.getRecentMovements();
 
@@ -120,7 +114,7 @@ export class ReportsResolvers {
             movement: newAmount,
             concept: movement.concept,
           };
-        }
+        },
       );
 
       const startOfMonth = dayjs().startOf('month').toDate();
@@ -128,7 +122,7 @@ export class ReportsResolvers {
 
       const countMovements = await this.reportsRepository.countMovementByRange(
         startOfMonth,
-        endOfMonth
+        endOfMonth,
       );
 
       if (countMovements === null) {

@@ -10,13 +10,13 @@ import dayjs from 'dayjs';
 import { type MovementConcept } from '@prisma/client';
 
 import {
-  type TValidsMovementTypes,
   type IGetMovementsWithTotal,
+  type TValidsMovementTypes,
 } from '@/types/graphql/resolvers';
 import {
-  type IPaginationParams,
   type IPageOptionsDataMeta,
   type IPaginationArgs,
+  type IPaginationParams,
 } from '@/types/graphql/pagination';
 import { numberWithCurrency } from '@/lib/utils';
 
@@ -30,10 +30,10 @@ import { MovementsRepository } from '../../dataAccess/movements';
 import { CreateMovementArgs, PaginatedMovements } from '../schemas/movements';
 import { PaginationArgs } from '../schemas/pagination';
 import {
-  responseCodes,
   getSkipped,
   mockPagination,
   pageMeta,
+  responseCodes,
 } from '../../utils';
 
 @Resolver()
@@ -49,10 +49,14 @@ export class MovementsResolvers {
   async createMovement(
     @Arg('movement', () => CreateMovementArgs)
     { amount, concept, date }: CreateMovementArgs,
-    @Ctx() context: IGraphQLContext
+    @Ctx() context: IGraphQLContext,
   ) {
     try {
-      const userId = context.session.user.id;
+      const userId = context?.session?.user.id;
+
+      if (userId === undefined) {
+        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
+      }
 
       const createdMovement = await this.movementsRepository.createUser({
         userId,
@@ -82,19 +86,23 @@ export class MovementsResolvers {
   async getMovements(
     @Arg('pagination', () => PaginationArgs)
     paginationArgs: IPaginationArgs<TValidsMovementTypes>,
-    @Ctx() context: IGraphQLContext
+    @Ctx() context: IGraphQLContext,
   ): Promise<IPageOptionsDataMeta<IGetMovementsWithTotal>> {
     try {
       const { page, limit, order, filterType, queryValue, fieldOrder } =
         paginationArgs;
-      const userId = context.session.user.id;
+      const userId = context?.session?.user.id;
 
-      let filterConcept = filterType as MovementConcept | null;
+      if (userId === undefined) {
+        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
+      }
+
+      const filterConcept = filterType as MovementConcept | null;
 
       const totalMovements = await this.movementsRepository.getTotalMovements(
         userId,
         filterConcept,
-        queryValue
+        queryValue,
       );
 
       if (totalMovements === null) {
@@ -116,7 +124,7 @@ export class MovementsResolvers {
 
       const totalAmounts = await this.movementsRepository.getTotalAmounts(
         userId,
-        pageFilterOptions
+        pageFilterOptions,
       );
 
       if (totalAmounts === null) {
@@ -134,7 +142,7 @@ export class MovementsResolvers {
 
       const movements = await this.movementsRepository.getMovements(
         userId,
-        pageFilterOptions
+        pageFilterOptions,
       );
 
       if (movements === null) {
@@ -172,7 +180,7 @@ export class MovementsResolvers {
             limit,
             page,
           },
-        }
+        },
       );
 
       return entities;
@@ -188,7 +196,7 @@ export class MovementsResolvers {
         {
           movements: [],
           total: numberWithCurrency(BigInt(0)),
-        }
+        },
       );
     }
   }

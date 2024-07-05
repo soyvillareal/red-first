@@ -1,7 +1,7 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useApolloClient, useMutation } from '@apollo/client';
+import { ApolloError, useApolloClient, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { MovementConcept } from '@prisma/client';
@@ -10,8 +10,8 @@ import { cn, findQueryVariables } from '@/lib/utils';
 import {
   AdditionalMovementsChartQuery,
   MovementMutation,
-  MovementsQuery,
   MovementsChartQuery,
+  MovementsQuery,
   ValidYearsQuery,
 } from '@/lib/apollo';
 import { Button, buttonVariants } from '@/components/custom/Button';
@@ -35,13 +35,13 @@ import { toast } from '@/components/ui/use-toast';
 import CalendarIcon from '@/components/icons/CalendarIcon';
 import HookForm from '@/components/atoms/HookForm';
 import ChevronDownIcon from '@/components/icons/ChevronDownIcon';
+import { IGetMovementsQueryParams } from '@/pages/reports/components/MovementsChart/MovementsChart.types';
+import { IPaginationArgs } from '@/types/graphql/pagination';
+import { TValidsMovementTypes } from '@/types/graphql/resolvers';
 
 import { type TMovementFormInputs } from './MovementForm.types';
 import { movementFormSchema } from './MovementForm.schema';
 import { defaultValues } from './MovementForm.constants';
-import { IGetMovementsQueryParams } from '@/pages/reports/components/MovementsChart/MovementsChart.types';
-import { IPaginationArgs } from '@/types/graphql/pagination';
-import { TValidsMovementTypes } from '@/types/graphql/resolvers';
 
 export function MovementForm() {
   const { t } = useTranslation();
@@ -77,49 +77,61 @@ export function MovementForm() {
           query: ValidYearsQuery,
         },
       ],
-    }
+    },
   );
 
-  const onSubmit = useCallback(async (data: TMovementFormInputs) => {
-    try {
-      const createdMovement = await createMovement({
-        variables: {
-          concept: data.concept,
-          amount: data.amount,
-          date: dayjs(data.date).format('YYYY-MM-DD'),
-        },
-      });
+  const onSubmit = useCallback(
+    async (data: TMovementFormInputs) => {
+      try {
+        const createdMovement = await createMovement({
+          variables: {
+            concept: data.concept,
+            amount: data.amount,
+            date: dayjs(data.date).format('YYYY-MM-DD'),
+          },
+        });
 
-      if (createdMovement.data?.createMovement) {
-        toast({
-          description: t(`responseCodes.${createdMovement.data?.createMovement}`),
-        });
-        methods.reset();
-      } else {
-        toast({
-          description: t('responseCodes.SOMETHING_WENT_WRONG'),
-          variant: 'destructive',
-        });
+        if (createdMovement.data?.createMovement) {
+          toast({
+            description: t(
+              `responseCodes.${createdMovement.data?.createMovement}`,
+            ),
+          });
+          methods.reset();
+        } else {
+          toast({
+            description: t('responseCodes.SOMETHING_WENT_WRONG'),
+            variant: 'destructive',
+          });
+        }
+      } catch (error: unknown) {
+        if (error instanceof ApolloError) {
+          toast({
+            description: t(`responseCodes.${error.message}`),
+            variant: 'destructive',
+          });
+        } else {
+          toast({
+            description: t('responseCodes.SOMETHING_WENT_WRONG'),
+            variant: 'destructive',
+          });
+        }
       }
-    } catch (error: any) {
-      toast({
-        description: t(`responseCodes.${error.message}`),
-        variant: 'destructive',
-      });
-    }
-  }, []);
+    },
+    [createMovement, t, methods],
+  );
 
   return (
     <Form {...methods}>
-      <HookForm className='space-y-8' onSubmit={onSubmit} methods={methods}>
+      <HookForm className="space-y-8" onSubmit={onSubmit} methods={methods}>
         <FormField
           control={methods.control}
-          name='amount'
+          name="amount"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('newMovement.amount')}</FormLabel>
               <FormControl>
-                <Input type='number' placeholder='0' {...field} />
+                <Input type="number" placeholder="0" {...field} />
               </FormControl>
               <FormDescription>
                 {t('newMovement.thisAmountRepresentsValue')}
@@ -130,16 +142,16 @@ export function MovementForm() {
         />
         <FormField
           control={methods.control}
-          name='concept'
+          name="concept"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('newMovement.concept')}</FormLabel>
-              <div className='relative w-max'>
+              <div className="relative w-max">
                 <FormControl>
                   <select
                     className={cn(
                       buttonVariants({ variant: 'outline' }),
-                      'w-[200px] appearance-none font-normal'
+                      'w-[200px] appearance-none font-normal',
                     )}
                     {...field}
                   >
@@ -152,7 +164,7 @@ export function MovementForm() {
                     })}
                   </select>
                 </FormControl>
-                <ChevronDownIcon className='absolute right-3 top-2.5 h-4 w-4 opacity-50' />
+                <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
               </div>
               <FormDescription>
                 {t('newMovement.theConceptIsUsedToCategorizeIt')}
@@ -163,9 +175,9 @@ export function MovementForm() {
         />
         <FormField
           control={methods.control}
-          name='date'
+          name="date"
           render={({ field }) => (
-            <FormItem className='flex flex-col'>
+            <FormItem className="flex flex-col">
               <FormLabel>{t('newMovement.date')}</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
@@ -174,7 +186,7 @@ export function MovementForm() {
                       variant={'outline'}
                       className={cn(
                         'w-[240px] pl-3 text-left font-normal',
-                        !field.value && 'text-foreground'
+                        !field.value && 'text-foreground',
                       )}
                     >
                       {field.value ? (
@@ -182,13 +194,13 @@ export function MovementForm() {
                       ) : (
                         <span>{t('newMovement.pickDate')}</span>
                       )}
-                      <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className='w-auto p-0' align='start'>
+                <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
-                    mode='single'
+                    mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
                     disabled={(date: Date) =>
@@ -205,7 +217,7 @@ export function MovementForm() {
             </FormItem>
           )}
         />
-        <Button type='submit' loading={movementMutationLoading}>
+        <Button type="submit" loading={movementMutationLoading}>
           {t('common.enter')}
         </Button>
       </HookForm>

@@ -9,7 +9,7 @@ import { responseCodes } from '../utils';
 
 export const checkCreateMovement: MiddlewareFn<IGraphQLContext> = async (
   { args },
-  next
+  next,
 ) => {
   try {
     const { amount, date } = args.movement;
@@ -46,7 +46,7 @@ export const checkCreateMovement: MiddlewareFn<IGraphQLContext> = async (
 
 export const checkGetMovements: MiddlewareFn<IGraphQLContext> = async (
   { args },
-  next
+  next,
 ) => {
   try {
     const { filterType, fieldOrder } = args.pagination;

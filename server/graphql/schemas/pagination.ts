@@ -1,8 +1,9 @@
 import { Field, InputType, ObjectType } from 'type-graphql';
+
 import {
-  type IPaginationArgs,
   type IPageMeta,
   type IPageOptionsMeta,
+  type IPaginationArgs,
   type TPageOrder,
 } from '@/types/graphql/pagination';
 import { IGraphQLErrorContext } from '@/types';

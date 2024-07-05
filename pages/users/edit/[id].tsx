@@ -1,21 +1,20 @@
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
-import { loadTranslations } from '@/lib/i18n';
+import { getSession } from 'next-auth/react';
 
+import { loadTranslations } from '@/lib/i18n';
 import DashboardLayout from '@/components/atoms/DashboardLayout';
 import ContentSection from '@/components/atoms/ContentSection';
 import { ContextLayout } from '@/components/custom/layout';
 import { UserNav } from '@/components/atoms/UserNav';
 import { UserForm } from '@/components/atoms/UserForm';
 import { routes } from '@/lib/contants';
-
 import { UsersRepository } from '@/server/dataAccess/users';
-import { type IEditServerSideParams, type IEditUserProps } from './edit.types';
 import { EUserRole, EUserRoleRoleNormalized } from '@/types';
-import { getSession } from 'next-auth/react';
-import { SEO } from '@/lib/utils';
 
-export default function EditUser({ user }: IEditUserProps) {
+import { type IEditServerSideParams, type IEditUserProps } from './edit.types';
+
+const EditUser = ({ user }: IEditUserProps) => {
   const { t } = useTranslation();
 
   const {
@@ -34,7 +33,7 @@ export default function EditUser({ user }: IEditUserProps) {
         }}
       >
         <ContextLayout.Header sticky>
-          <div className='ml-auto flex items-center space-x-4'>
+          <div className="ml-auto flex items-center space-x-4">
             <UserNav />
           </div>
         </ContextLayout.Header>
@@ -52,7 +51,9 @@ export default function EditUser({ user }: IEditUserProps) {
       </DashboardLayout>
     </ContextLayout>
   );
-}
+};
+
+export default EditUser;
 
 export const getServerSideProps: GetServerSideProps<
   IEditUserProps,

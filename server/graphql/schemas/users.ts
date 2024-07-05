@@ -1,9 +1,9 @@
 import { Field, InputType, ObjectType, registerEnumType } from 'type-graphql';
-import { EUserRoleRoleNormalized } from '@/types';
 
+import { EUserRoleRoleNormalized } from '@/types';
 import {
-  type IUpdateUserArgs,
   type IGetUsers,
+  type IUpdateUserArgs,
 } from '@/types/graphql/resolvers';
 import { type IPageOptionsDataMeta } from '@/types/graphql/pagination';
 

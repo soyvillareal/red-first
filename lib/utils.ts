@@ -1,10 +1,10 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { saveAs } from 'file-saver';
-
-import { type IReportsCSV } from '@/pages/reports/reports.types';
 import { type TFunction } from 'next-i18next';
 import { ApolloClient, DocumentNode } from '@apollo/client';
+
+import { type IReportsCSV } from '@/pages/reports/reports.types';
 import {
   type TNoStandardCache,
   type TNoStandardQueryDefinitions,
@@ -43,13 +43,21 @@ export const getNameInitials = (name: string) => {
     .join('');
 };
 
+export const numberWithCurrency = (amount: string | bigint): string => {
+  const amountNumber = BigInt(amount) || 0;
+  return new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: currencySite,
+  }).format(amountNumber);
+};
+
 export const propsToCSV = (data: IReportsCSV, t: TFunction) => {
   let csvContent = '\uFEFF';
 
   if (data.movementsChart) {
     csvContent += `${t('reportCSV.movements')}\n`;
     csvContent += `"${t('reportCSV.name')}";"${t('reportCSV.income')}";"${t(
-      'reportCSV.expense'
+      'reportCSV.expense',
     )}"\n`;
     for (let i = 0; i < data.movementsChart.length; i++) {
       const movementChart = data.movementsChart[i];
@@ -66,7 +74,7 @@ export const propsToCSV = (data: IReportsCSV, t: TFunction) => {
     csvContent += '\r\n';
     csvContent += `${t('reportCSV.recentMovements')}\n`;
     csvContent += `"${t('reportCSV.name')}";"${t('reportCSV.email')}";"${t(
-      'reportCSV.movement'
+      'reportCSV.movement',
     )}"\n`;
     for (let i = 0; i < data.recentMovements.length; i++) {
       const recentMovement = data.recentMovements[i];
@@ -94,14 +102,6 @@ export const propsToCSV = (data: IReportsCSV, t: TFunction) => {
 
 export const fillArray = (length: number) => {
   return Array.from({ length }, (_, i) => i);
-};
-
-export const numberWithCurrency = (amount: string | bigint): string => {
-  const amountNumber = BigInt(amount) || 0;
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: currencySite,
-  }).format(amountNumber);
 };
 
 export const formatNumber = (num: number, precision = 1): string => {
@@ -132,19 +132,19 @@ export const lowercaseFirstLetter = (str: string) => {
 export const findQueryVariables = <T = Record<string, string>>(
   client: ApolloClient<object>,
   queryDocument: DocumentNode,
-  keyTopLevel?: string
+  keyTopLevel?: string,
 ): Partial<T> => {
   const cache = client.cache.extract() as TNoStandardCache;
   const queryName = lowercaseFirstLetter(
-    (queryDocument.definitions[0] as TNoStandardQueryDefinitions)?.name?.value
+    (queryDocument.definitions[0] as TNoStandardQueryDefinitions)?.name?.value,
   );
 
   let queryWithVariables = Object.keys(cache).find((key) =>
-    new RegExp(`^${queryName}\\(.*\\)$`).test(key)
+    new RegExp(`^${queryName}\\(.*\\)$`).test(key),
   );
   if (queryWithVariables === undefined && cache?.ROOT_QUERY !== undefined) {
     queryWithVariables = Object.keys(cache.ROOT_QUERY).find((key) =>
-      new RegExp(`^${queryName}\\(.*\\)$`).test(key)
+      new RegExp(`^${queryName}\\(.*\\)$`).test(key),
     );
   }
 

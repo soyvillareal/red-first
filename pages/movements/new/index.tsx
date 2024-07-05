@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
+import { getSession } from 'next-auth/react';
 
 import DashboardLayout from '@/components/atoms/DashboardLayout';
 import ContentSection from '@/components/atoms/ContentSection';
@@ -8,8 +9,6 @@ import { UserNav } from '@/components/atoms/UserNav';
 import { MovementForm } from '@/components/atoms/MovementForm';
 import { routes } from '@/lib/contants';
 import { loadTranslations } from '@/lib/i18n';
-import { getSession } from 'next-auth/react';
-import { SEO } from '@/lib/utils';
 
 export default function NewMovement() {
   const { t } = useTranslation();
@@ -24,7 +23,7 @@ export default function NewMovement() {
         }}
       >
         <ContextLayout.Header sticky>
-          <div className='ml-auto flex items-center space-x-4'>
+          <div className="ml-auto flex items-center space-x-4">
             <UserNav />
           </div>
         </ContextLayout.Header>

@@ -1,10 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 
 import {
+  IGetAccountDataResult,
+  type IGetUserByIdResult,
   type IGetUsersRepository,
   type IUpdateUserParams,
-  type IGetUserByIdResult,
-  IGetAccountDataResult,
 } from '@/types/dataAccess/users';
 import { type TValidsUserTypes } from '@/types/graphql/resolvers';
 import { type IPaginationParams } from '@/types/graphql/pagination';
@@ -18,7 +18,7 @@ export class UsersRepository {
 
   public updateUser = async (
     userId: string,
-    { name, role }: IUpdateUserParams
+    { name, role }: IUpdateUserParams,
   ): Promise<boolean> => {
     try {
       await this.prisma.user.update({
@@ -40,7 +40,7 @@ export class UsersRepository {
   };
 
   public getUserById = async (
-    userId: string
+    userId: string,
   ): Promise<IGetUserByIdResult | undefined | null> => {
     try {
       const foundUser = await this.prisma.user.findUnique({
@@ -67,7 +67,7 @@ export class UsersRepository {
   };
 
   public getTotalUsers = async (
-    queryValue?: string
+    queryValue?: string,
   ): Promise<number | null> => {
     try {
       const totalUsers = await this.prisma.user.count({
@@ -142,7 +142,7 @@ export class UsersRepository {
   };
 
   public getAccountData = async (
-    userId: string
+    userId: string,
   ): Promise<IGetAccountDataResult | undefined | null> => {
     try {
       const foundUser = await this.prisma.account.findUnique({

@@ -5,8 +5,8 @@ import {
 } from '@prisma/client';
 
 import {
-  type IGetMovementsRepository,
   type ICreateUserRepository,
+  type IGetMovementsRepository,
   type IGetTotalAmountsResult,
 } from '@/types/dataAccess/movements';
 import { type IPaginationParams } from '@/types/graphql/pagination';
@@ -50,7 +50,7 @@ export class MovementsRepository {
       queryValue,
       filterType,
       fieldOrder = 'date',
-    }: IPaginationParams<TValidsMovementTypes>
+    }: IPaginationParams<TValidsMovementTypes>,
   ): Promise<IGetMovementsRepository[] | null> => {
     try {
       const movements = await this.prisma.movements.findMany({
@@ -108,10 +108,9 @@ export class MovementsRepository {
   public getTotalMovements = async (
     userId: string,
     filterType: MovementConcept | null,
-    queryValue?: string
+    queryValue?: string,
   ): Promise<number | null> => {
     try {
-      const numberQueryValue = parseFloat(queryValue || '0');
       const totalMovements = await this.prisma.movements.count({
         where: {
           userId,
@@ -150,7 +149,7 @@ export class MovementsRepository {
       filterType,
       queryValue,
       fieldOrder = 'date',
-    }: IPaginationParams<TValidsMovementTypes>
+    }: IPaginationParams<TValidsMovementTypes>,
   ): Promise<IGetTotalAmountsResult[] | undefined | null> => {
     try {
       const totalAmounts = await this.prisma.movements.findMany({

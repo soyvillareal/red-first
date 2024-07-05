@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useTranslation } from 'next-i18next';
 
 import { Button } from '@/components/custom/Button';
@@ -29,52 +28,45 @@ export function DataTableColumnHeader<TData, TValue>({
     return <div className={cn(className)}>{t(i18nTitle)}</div>;
   }
 
-  const ColumnHeader = useCallback(() => {
-    if (hasDropdown) {
-      return (
-        <div className={cn('flex items-center space-x-2', className)}>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant='ghost'
-                size='sm'
-                className='-ml-3 h-8 data-[state=open]:bg-accent'
-              >
-                <span>{t(i18nTitle)}</span>
-                {column.getIsSorted() === 'desc' ? (
-                  <ArrowDownIcon className='ml-2 h-4 w-4' />
-                ) : column.getIsSorted() === 'asc' ? (
-                  <ArrowUpIcon className='ml-2 h-4 w-4' />
-                ) : (
-                  <CaretSortIcon className='ml-2 h-4 w-4' />
-                )}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='start'>
-              <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-                <ArrowUpIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-                {t('table.asc')}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-                <ArrowDownIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-                {t('table.desc')}
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
-                <EyeNoneIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-                {t('table.hide')}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      );
-    }
-    return (
-      <div className='flex flex-row justify-start items-center h-8'>
-        <span className='font-medium text-xs'>{t(i18nTitle)}</span>
-      </div>
-    );
-  }, [t, i18nTitle, column, className, hasDropdown]);
-
-  return <ColumnHeader />;
+  return hasDropdown ? (
+    <div className={cn('flex items-center space-x-2', className)}>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="-ml-3 h-8 data-[state=open]:bg-accent"
+          >
+            <span>{t(i18nTitle)}</span>
+            {column.getIsSorted() === 'desc' ? (
+              <ArrowDownIcon className="ml-2 h-4 w-4" />
+            ) : column.getIsSorted() === 'asc' ? (
+              <ArrowUpIcon className="ml-2 h-4 w-4" />
+            ) : (
+              <CaretSortIcon className="ml-2 h-4 w-4" />
+            )}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+            <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            {t('table.asc')}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+            <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            {t('table.desc')}
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
+            <EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            {t('table.hide')}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  ) : (
+    <div className="flex flex-row justify-start items-center h-8">
+      <span className="font-medium text-xs">{t(i18nTitle)}</span>
+    </div>
+  );
 }

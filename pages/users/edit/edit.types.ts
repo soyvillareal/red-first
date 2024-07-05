@@ -1,6 +1,7 @@
+import { ParsedUrlQuery } from 'querystring';
+
 import { TUserFormInputs } from '@/components/atoms/UserForm/UserForm.types';
 import { IGetUserByIdResult } from '@/types/dataAccess/users';
-import { ParsedUrlQuery } from 'querystring';
 
 export type TEditUserProps = TUserFormInputs;
 

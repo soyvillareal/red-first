@@ -1,11 +1,11 @@
+import { ManagementClient } from 'auth0';
+import { createLogger, format, transports } from 'winston';
+
 import env from '@/lib/env';
-import { EUserRole } from '@/types';
 import {
   type IPageMetaParameters,
   type IPageOptionsDataMeta,
 } from '@/types/graphql/pagination';
-import { ManagementClient } from 'auth0';
-import { createLogger, format, transports } from 'winston';
 
 export const logger = createLogger({
   level: 'info', // Nivel mínimo para registrar
@@ -15,7 +15,7 @@ export const logger = createLogger({
     }),
     format.errors({ stack: true }), // Para capturar el stack de errores
     format.splat(),
-    format.json()
+    format.json(),
   ),
   // Puedes configurar diferentes transportes según el entorno
   transports: [
@@ -23,7 +23,7 @@ export const logger = createLogger({
     new transports.Console({
       format: format.combine(
         format.colorize(),
-        format.simple() // Formato simple para la consola
+        format.simple(), // Formato simple para la consola
       ),
     }),
     // En producción, podrías querer escribir los logs en un archivo
@@ -34,7 +34,7 @@ export const logger = createLogger({
 
 export const pageMeta = <T>(
   data: T,
-  { pageOptions: { limit = 10, page }, itemCount }: IPageMetaParameters
+  { pageOptions: { limit = 10, page }, itemCount }: IPageMetaParameters,
 ): IPageOptionsDataMeta<T> => {
   const pageCount = Math.ceil(itemCount / limit);
   let newPage = page;
@@ -68,7 +68,7 @@ export const getSkipped = (itemCount: number, page = 1, limit = 10): number => {
 
 export const mockPagination = <T>(
   error: string,
-  dataMock: T
+  dataMock: T,
 ): IPageOptionsDataMeta<T> => {
   return {
     data: dataMock,
@@ -86,7 +86,7 @@ export const mockPagination = <T>(
 
 export const updateUserRoleInProvider = async (
   providerAccountId: string,
-  role: string
+  role: string,
 ): Promise<boolean> => {
   try {
     const auth0 = new ManagementClient({
@@ -112,7 +112,7 @@ export const updateUserRoleInProvider = async (
       { id: providerAccountId },
       {
         roles: rolesProvider.data.map((rol) => rol.id),
-      }
+      },
     );
 
     if (deletedRoleInProvider.status !== 204) {
@@ -123,7 +123,7 @@ export const updateUserRoleInProvider = async (
       { id: providerAccountId },
       {
         roles: [newRole.id],
-      }
+      },
     );
 
     if (createdRoleInProvider.status !== 204) {

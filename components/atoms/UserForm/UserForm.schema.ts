@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { TFunction } from 'next-i18next';
+
 import { EUserRoleRoleNormalized } from '@/types';
 
 export const userFormSchema = (t: TFunction) => {

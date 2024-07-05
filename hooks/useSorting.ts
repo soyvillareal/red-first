@@ -6,7 +6,7 @@ import { TPageOrder } from '@/types/graphql/pagination';
 
 export function useSorting<T extends string>(
   initialField: T,
-  initialOrder: TPageOrder = 'asc'
+  initialOrder: TPageOrder = 'asc',
 ): IUseSorting<T> {
   const [sorting, setSorting] = useState<SortingState>([
     {

@@ -3,6 +3,7 @@ import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
+
 import LoaderIcon from '../../icons/LoaderIcon';
 import { ButtonProps } from './Button.types';
 
@@ -33,7 +34,7 @@ const buttonVariants = cva(
       variant: 'default',
       size: 'default',
     },
-  }
+  },
 );
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -50,7 +51,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       rightSection,
       ...props
     },
-    ref
+    ref,
   ) => {
     const Comp = asChild ? Slot : 'button';
     return (
@@ -62,17 +63,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {((leftSection && loading) ||
           (!leftSection && !rightSection && loading)) && (
-          <LoaderIcon className='mr-2 h-4 w-4 animate-spin' />
+          <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
         )}
-        {!loading && leftSection && <div className='mr-2'>{leftSection}</div>}
+        {!loading && leftSection && <div className="mr-2">{leftSection}</div>}
         {children}
-        {!loading && rightSection && <div className='ml-2'>{rightSection}</div>}
+        {!loading && rightSection && <div className="ml-2">{rightSection}</div>}
         {rightSection && loading && (
-          <LoaderIcon className='ml-2 h-4 w-4 animate-spin' />
+          <LoaderIcon className="ml-2 h-4 w-4 animate-spin" />
         )}
       </Comp>
     );
-  }
+  },
 );
 Button.displayName = 'Button';
 

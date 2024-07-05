@@ -4,7 +4,7 @@ import { appWithTranslation } from 'next-i18next';
 import { SessionProvider } from 'next-auth/react';
 import { ApolloProvider } from '@apollo/client';
 
-import nextI18NextConfig from '@/next-i18next.config.js';
+import nextI18NextConfig from '@/next-i18next.config';
 import apolloClient from '@/lib/apollo';
 
 const App = ({ Component, pageProps }: AppProps) => {

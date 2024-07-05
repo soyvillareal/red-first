@@ -20,11 +20,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import DataTableItemSkeleton from '@/components/skeleton/DataTableItemSkeleton';
 
 import { DataTableToolbar } from './DataTableToolbar';
 import { DataTablePagination } from './DataTablePagination';
 import { DataTableProps } from './Table.types';
-import DataTableItemSkeleton from '@/components/skeleton/DataTableItemSkeleton';
 
 export function DataTable<TData, TValue>({
   columns,
@@ -66,9 +66,9 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className='space-y-4'>
+    <div className="space-y-4">
       <DataTableToolbar table={table} toolbarOptions={toolbarOptions} />
-      <div className='rounded-md border bg-primary-foreground'>
+      <div className="rounded-md border bg-primary-foreground">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -80,7 +80,7 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -101,7 +101,7 @@ export function DataTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -111,7 +111,7 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-24 text-center'
+                  className="h-24 text-center"
                 >
                   {t('common.noResults')}
                 </TableCell>

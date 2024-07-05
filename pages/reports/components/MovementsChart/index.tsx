@@ -18,8 +18,8 @@ import { type IGetMovementsChart } from '@/types/graphql/resolvers';
 import MovementsChartSkeleton from '@/components/skeleton/MovementsChartSkeleton';
 
 import {
-  type IMovementsChartProps,
   type IGetMovementsQueryParams,
+  type IMovementsChartProps,
 } from './MovementsChart.types';
 
 export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
@@ -50,7 +50,7 @@ export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
         callbackState(false);
       }
     })();
-  }, [year]);
+  }, [getMovementsQuery, year]);
 
   const [minValue, maxValue, ticks] = useMemo(() => {
     let maxAbsValue = 0;
@@ -60,7 +60,7 @@ export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
         ...movementQueryData.getMovementsChart.flatMap((item) => [
           Math.abs(Number(item.income)),
           Math.abs(Number(item.expense)),
-        ])
+        ]),
       );
     }
 
@@ -86,7 +86,7 @@ export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
   }, [movementQueryData?.getMovementsChart]);
 
   return (
-    <ResponsiveContainer width='100%' height={400}>
+    <ResponsiveContainer width="100%" height={400}>
       {movementQueryLoading ? (
         <MovementsChartSkeleton />
       ) : (
@@ -99,10 +99,10 @@ export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray='3 3' />
+          <CartesianGrid strokeDasharray="3 3" />
           <XAxis
-            dataKey='name'
-            stroke='#888888'
+            dataKey="name"
+            stroke="#888888"
             fontSize={12}
             tickFormatter={(value: string) => {
               return t(`months.${value}`);
@@ -119,8 +119,8 @@ export function MovementsChart({ callbackState, year }: IMovementsChartProps) {
               return [numberWithCurrency(value), t(`movements.${name}`)];
             }}
           />
-          <Bar dataKey={MovementConcept.income} fill='#82ca9d' />
-          <Bar dataKey={MovementConcept.expense} fill='#ff4040' />
+          <Bar dataKey={MovementConcept.income} fill="#82ca9d" />
+          <Bar dataKey={MovementConcept.expense} fill="#ff4040" />
         </BarChart>
       )}
     </ResponsiveContainer>

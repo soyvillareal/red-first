@@ -1,4 +1,5 @@
 import { useTranslation } from 'next-i18next';
+import { useCallback } from 'react';
 
 import { Button } from '@/components/custom/Button';
 import { Input } from '@/components/ui/input';
@@ -8,7 +9,6 @@ import { types } from '@/pages/movements/movements.constants';
 import { DataTableFacetedFilter } from './DataTableFacetedFilter';
 import { DataTableViewOptions } from './DataTableViewOptions';
 import { DataTableToolbarProps } from './Table.types';
-import { useCallback } from 'react';
 
 export function DataTableToolbar<TData>({
   table,
@@ -24,12 +24,12 @@ export function DataTableToolbar<TData>({
         .getColumn(toolbarOptions.searchKey as string)
         ?.setFilterValue(event.target.value);
     },
-    []
+    [table, toolbarOptions.searchKey],
   );
 
   return (
-    <div className='flex items-center justify-between'>
-      <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
+    <div className="flex items-center justify-between">
+      <div className="flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2">
         <Input
           placeholder={t('table.search')}
           value={
@@ -38,9 +38,9 @@ export function DataTableToolbar<TData>({
               ?.getFilterValue() as string) ?? ''
           }
           onChange={handleChange}
-          className='h-8 w-[150px] lg:w-[250px]'
+          className="h-8 w-[150px] lg:w-[250px]"
         />
-        <div className='flex gap-x-2'>
+        <div className="flex gap-x-2">
           {toolbarOptions.filters?.map((filter, i) => {
             if (table.getColumn(filter as string)) {
               return (
@@ -57,12 +57,12 @@ export function DataTableToolbar<TData>({
         </div>
         {isFiltered && (
           <Button
-            variant='ghost'
+            variant="ghost"
             onClick={() => table.resetColumnFilters()}
-            className='h-8 px-2 lg:px-3'
+            className="h-8 px-2 lg:px-3"
           >
             {t('table.reset')}
-            <CloseIcon className='ml-2 h-4 w-4' />
+            <CloseIcon className="ml-2 h-4 w-4" />
           </Button>
         )}
       </div>

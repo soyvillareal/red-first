@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import { useSession } from 'next-auth/react';
 
 import { ContextLayout } from '@/components/custom/layout';
 import { Button } from '@/components/custom/Button';
@@ -9,12 +10,11 @@ import MenuIcon from '@/components/icons/MenuIcon';
 import CloseIcon from '@/components/icons/CloseIcon';
 import ChevronsLeftIcon from '@/components/icons/ChevronsLeftIcon';
 import LogoIcon from '@/components/icons/LogoIcon';
+import { EUserRole } from '@/types';
+import { routes } from '@/lib/contants';
 
 import { sidelinks } from './Sidebar.constants';
 import { SidebarProps } from './Sidebar.types';
-import { useSession } from 'next-auth/react';
-import { EUserRole } from '@/types';
-import { routes } from '@/lib/contants';
 
 export default function Sidebar({
   className,
@@ -40,7 +40,7 @@ export default function Sidebar({
         `fixed left-0 right-0 top-0 z-50 w-full border-r-2 border-r-muted transition-[width] md:bottom-0 md:right-auto md:h-svh ${
           isCollapsed ? 'md:w-14' : 'md:w-64'
         }`,
-        className
+        className,
       )}
     >
       {/* Overlay in mobile */}
@@ -55,19 +55,19 @@ export default function Sidebar({
         {/* Header */}
         <ContextLayout.Header
           sticky
-          className='z-50 flex justify-between px-4 py-3 shadow-sm md:px-4'
+          className="z-50 flex justify-between px-4 py-3 shadow-sm md:px-4"
         >
           <div className={`flex items-center ${!isCollapsed ? 'gap-2' : ''}`}>
-            <LogoIcon className='sm:w-[220px]' />
+            <LogoIcon className="sm:w-[220px]" />
           </div>
 
           {/* Toggle Button in mobile */}
           <Button
-            variant='ghost'
-            size='icon'
-            className='md:hidden'
-            aria-label='Toggle Navigation'
-            aria-controls='sidebar-menu'
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            aria-label="Toggle Navigation"
+            aria-controls="sidebar-menu"
             aria-expanded={navOpened}
             onClick={() => setNavOpened((prev) => !prev)}
           >
@@ -77,7 +77,7 @@ export default function Sidebar({
 
         {/* Navigation links */}
         <Nav
-          id='sidebar-menu'
+          id="sidebar-menu"
           className={`z-40 h-full flex-1 overflow-auto ${
             navOpened ? 'max-h-screen' : 'max-h-0 py-0 md:max-h-screen md:py-2'
           }`}
@@ -86,16 +86,16 @@ export default function Sidebar({
           links={sidelinks(t).filter(
             (item) =>
               session.data?.user.roles.includes(EUserRole.ADMIN) ||
-              [routes.movements].includes(item.href) === true
+              [routes.movements].includes(item.href) === true,
           )}
         />
 
         {/* Scrollbar width toggle button */}
         <Button
           onClick={() => setIsCollapsed((prev) => !prev)}
-          size='icon'
-          variant='outline'
-          className='absolute -right-5 top-1/2 z-50 hidden rounded-full md:inline-flex'
+          size="icon"
+          variant="outline"
+          className="absolute -right-5 top-1/2 z-50 hidden rounded-full md:inline-flex"
         >
           <ChevronsLeftIcon
             className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`}

@@ -28,13 +28,13 @@ export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          i18nTitle='movements.amount'
+          i18nTitle="movements.amount"
           hasDropdown
         />
       ),
       cell: ({ row }) => {
         return (
-          <div className='flex w-[100px] items-center'>
+          <div className="flex w-[100px] items-center">
             <span>{row.getValue('amount')}</span>
           </div>
         );
@@ -45,13 +45,13 @@ export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          i18nTitle='movements.userName'
+          i18nTitle="movements.userName"
           hasDropdown
         />
       ),
       cell: ({ row }) => {
         return (
-          <div className='flex items-center'>
+          <div className="flex items-center">
             <span>{row.getValue('userName')}</span>
           </div>
         );
@@ -65,13 +65,13 @@ export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          i18nTitle='movements.concept'
+          i18nTitle="movements.concept"
           hasDropdown
         />
       ),
       cell: ({ row }) => {
         const type = types.find(
-          (type) => type.value === row.getValue('concept')
+          (type) => type.value === row.getValue('concept'),
         );
 
         if (type === undefined) {
@@ -79,12 +79,12 @@ export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => {
         }
 
         return (
-          <div className='flex w-[100px] items-center'>
+          <div className="flex w-[100px] items-center">
             {type.icon && (
               <type.icon
                 className={cn(
                   'mr-2 h-4 w-4',
-                  type.value === 'expense' ? 'text-red' : 'text-green'
+                  type.value === 'expense' ? 'text-red' : 'text-green',
                 )}
               />
             )}
@@ -101,13 +101,13 @@ export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          i18nTitle='movements.date'
+          i18nTitle="movements.date"
           hasDropdown
         />
       ),
       cell: ({ row }) => {
         return (
-          <div className='flex items-center'>
+          <div className="flex items-center">
             <span>{row.getValue('date')}</span>
           </div>
         );

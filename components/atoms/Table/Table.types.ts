@@ -31,7 +31,7 @@ export interface DataTableProps<TData, TValue> {
   values: {
     sorting: SortingState;
     pagination: PaginationState;
-    columnFilters: ColumnFiltersState
+    columnFilters: ColumnFiltersState;
   };
   events: {
     onSortingChange: OnChangeFn<SortingState>;

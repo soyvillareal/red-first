@@ -1,11 +1,11 @@
+import { MovementConcept, Prisma, PrismaClient } from '@prisma/client';
+
 import {
-  IGetValidYearsResult,
   type IGetBalanceResult,
   type IGetMovementsChartRepository,
   type IGetRecentMovementsRepository,
+  type IGetValidYearsResult,
 } from '@/types/dataAccess/reports';
-import { MovementConcept, Prisma, PrismaClient } from '@prisma/client';
-import { Sql } from '@prisma/client/runtime/library';
 
 export class ReportsRepository {
   private prisma: PrismaClient;
@@ -16,7 +16,7 @@ export class ReportsRepository {
 
   public findMovementsPerRange = async (
     startDate: Date,
-    endDate: Date
+    endDate: Date,
   ): Promise<number | null> => {
     try {
       const count = await this.prisma.movements.count({
@@ -36,7 +36,7 @@ export class ReportsRepository {
 
   public getChartMovements = async (
     startDate: Date,
-    endDate: Date
+    endDate: Date,
   ): Promise<IGetMovementsChartRepository[] | null> => {
     try {
       const movements = await this.prisma.movements.findMany({
@@ -92,7 +92,7 @@ export class ReportsRepository {
 
   public countMovementByRange = async (
     startDate: Date,
-    endDate: Date
+    endDate: Date,
   ): Promise<number | null> => {
     try {
       const count = await this.prisma.movements.count({
@@ -114,8 +114,8 @@ export class ReportsRepository {
     try {
       const [{ count }] = await this.prisma.$queryRaw<IGetBalanceResult[]>(
         Prisma.raw(
-          `SELECT SUM(CAST(amount AS NUMERIC)) as count FROM movements WHERE concept = '${MovementConcept.income}'`
-        )
+          `SELECT SUM(CAST(amount AS NUMERIC)) as count FROM movements WHERE concept = '${MovementConcept.income}'`,
+        ),
       );
 
       if (count === null) {
@@ -132,8 +132,8 @@ export class ReportsRepository {
     try {
       const [{ count }] = await this.prisma.$queryRaw<IGetBalanceResult[]>(
         Prisma.raw(
-          `SELECT SUM(CAST(amount AS NUMERIC)) as count FROM movements WHERE concept = '${MovementConcept.expense}'`
-        )
+          `SELECT SUM(CAST(amount AS NUMERIC)) as count FROM movements WHERE concept = '${MovementConcept.expense}'`,
+        ),
       );
 
       if (count === null) {
@@ -150,8 +150,8 @@ export class ReportsRepository {
     try {
       const years = await this.prisma.$queryRaw<IGetValidYearsResult[]>(
         Prisma.raw(
-          `SELECT EXTRACT(YEAR FROM date) as year FROM movements GROUP BY year ORDER BY year DESC`
-        )
+          `SELECT EXTRACT(YEAR FROM date) as year FROM movements GROUP BY year ORDER BY year DESC`,
+        ),
       );
 
       return years;

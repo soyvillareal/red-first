@@ -6,7 +6,6 @@ import {
   Resolver,
   UseMiddleware,
 } from 'type-graphql';
-import { ManagementClient } from 'auth0';
 
 import { UsersRepository } from '@/server/dataAccess/users';
 import {
@@ -16,8 +15,8 @@ import {
 } from '@/server/middleware';
 import {
   IGetUsers,
-  TValidsUserTypes,
   type IUpdateUserArgs,
+  TValidsUserTypes,
 } from '@/types/graphql/resolvers';
 import {
   EUserRole,
@@ -33,14 +32,13 @@ import {
 } from '@/server/utils';
 import {
   IPageOptionsDataMeta,
-  IPaginationParams,
   type IPaginationArgs,
+  IPaginationParams,
 } from '@/types/graphql/pagination';
 import { checkGetUsers, checkUpdateUser } from '@/server/middleware/users';
 
 import { PaginatedUsers, UpdateUserArgs } from '../schemas/users';
 import { PaginationArgs } from '../schemas/pagination';
-import env from '@/lib/env';
 
 @Resolver()
 export class UsersResolvers {
@@ -59,14 +57,14 @@ export class UsersResolvers {
   async updateUser(
     @Arg('user', () => UpdateUserArgs)
     { userId: toEditUserId, name, role }: IUpdateUserArgs,
-    @Ctx() context: IGraphQLContext
+    @Ctx() context: IGraphQLContext,
   ) {
     try {
       const userEditorId = context?.session?.user.id as string;
 
       if (userEditorId === toEditUserId) {
         const foundUserEditor = await this.usersRepository.getUserById(
-          userEditorId
+          userEditorId,
         );
 
         if (foundUserEditor === null) {
@@ -86,7 +84,7 @@ export class UsersResolvers {
       }
 
       const foundAccount = await this.usersRepository.getAccountData(
-        toEditUserId
+        toEditUserId,
       );
 
       if (foundAccount === null) {
@@ -99,7 +97,7 @@ export class UsersResolvers {
 
       const updatedRole = await updateUserRoleInProvider(
         foundAccount.providerAccountId,
-        role
+        role,
       );
 
       if (updatedRole === false) {
@@ -111,7 +109,7 @@ export class UsersResolvers {
         {
           name,
           role: this.parsedRoles[role],
-        }
+        },
       );
 
       if (createdMovement === null) {
@@ -134,7 +132,7 @@ export class UsersResolvers {
   @UseMiddleware(checkIsLogged, checkPagination, checkGetUsers, checkIsAdmin)
   async getUsers(
     @Arg('pagination', () => PaginationArgs)
-    paginationArgs: IPaginationArgs<TValidsUserTypes>
+    paginationArgs: IPaginationArgs<TValidsUserTypes>,
   ): Promise<IPageOptionsDataMeta<IGetUsers[]>> {
     try {
       const { page, limit, order, queryValue, fieldOrder } = paginationArgs;
@@ -188,7 +186,7 @@ export class UsersResolvers {
       }
       return mockPagination<IGetUsers[]>(
         responseCodes.ERROR.SOMETHING_WENT_WRONG,
-        []
+        [],
       );
     }
   }

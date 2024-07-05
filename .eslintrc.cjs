@@ -49,7 +49,7 @@ module.exports = {
     'json/*': ['error', 'allowComments'],
     'no-unused-vars': 'off',
     '@typescript-eslint/no-inferrable-types': 'warn',
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_$' }],
     'no-useless-constructor': 'off',
     '@typescript-eslint/no-useless-constructor': 'error',
     'no-use-before-define': 'off',
@@ -94,7 +94,7 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
-    'fp/no-class': 'error',
+    'fp/no-class': 'off',
     'no-nested-ternary': 'off',
     'no-unused-expressions': [
       'error',

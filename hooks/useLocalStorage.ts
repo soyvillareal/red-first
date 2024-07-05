@@ -24,7 +24,7 @@ export default function useLocalStorage<T>({
         }
       }
     }
-  }, [key]);
+  }, [key, parseValue]);
 
   // Efecto para guardar el valor en localStorage cada vez que cambie.
   useEffect(() => {
