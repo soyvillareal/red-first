@@ -178,5 +178,11 @@ module.exports = {
         'arrow-body-style': 'off',
       },
     },
+    {
+      files: ['lib/**/*.{.js,ts}'],
+      rules: {
+        'prefer-destructuring': 'off',
+      },
+    },
   ],
 };

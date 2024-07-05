@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { getSession } from 'next-auth/react';
-
 import { DashboardLayout } from '@/components/atoms/DashboardLayout';
 import { ContentSection } from '@/components/atoms/ContentSection';
 import { ContextLayout } from '@/components/custom/layout';

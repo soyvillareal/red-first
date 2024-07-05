@@ -8,6 +8,7 @@ tailwind.config.ts
 node_modules/**
 
 jest.config.ts
+tsconfig.json
 
 __mocks__
 

@@ -8,7 +8,6 @@ import {
 } from 'type-graphql';
 import dayjs from 'dayjs';
 import { type MovementConcept } from '@prisma/client';
-
 import {
   type IGetMovementsWithTotal,
   type TValidsMovementTypes,
