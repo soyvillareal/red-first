@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { prisma } from '@/tests/setupNODE';
+import { prisma } from '@/tests/setup';
 
 describe('Prisma Client Singleton', () => {
   it('should create a new instance if none exists', () => {

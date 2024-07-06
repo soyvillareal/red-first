@@ -1,4 +1,4 @@
-import { prisma } from '@/tests/setupNODE';
+import { prisma } from '@/tests/setup';
 import {
   IGetAccountDataResult,
   IGetUsersRepository,

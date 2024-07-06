@@ -111,7 +111,12 @@ const Movements = () => {
                   ) : (
                     <span>{movementQueryData?.getMovements.data.total}</span>
                   )}
-                  <Button onClick={handleClick}>{t('common.new')}</Button>
+                  <Button
+                    data-testid="button-new-movement"
+                    onClick={handleClick}
+                  >
+                    {t('common.new')}
+                  </Button>
                 </div>
               }
               pageCount={movementQueryData?.getMovements.meta.pageCount || 0}

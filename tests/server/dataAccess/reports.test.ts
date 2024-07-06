@@ -1,5 +1,5 @@
 import { ReportsRepository } from '@/server/dataAccess/reports';
-import { prisma } from '@/tests/setupNODE';
+import { prisma } from '@/tests/setup';
 
 const repository = new ReportsRepository();
 
