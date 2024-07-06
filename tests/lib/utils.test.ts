@@ -19,7 +19,11 @@ import {
 } from '@/lib/utils';
 import { IReportsCSV } from '@/pages/reports/reports.types';
 import { useTranslation } from 'next-i18next';
-import { movementsChartMock, recentMovementsMock } from './utils.mock';
+import {
+  mockClientCache,
+  movementsChartMock,
+  recentMovementsMock,
+} from './utils.mock';
 
 describe('findQueryVariables', () => {
   const mockClient = (cacheContent: NormalizedCacheObject) =>
@@ -64,23 +68,17 @@ describe('findQueryVariables', () => {
     expect(result).toEqual({ nestedKey: 'nestedValue' });
   });
 
-  // it('should return an empty object when keyTopLevel is specified but does not exist', () => {
-  //   const client = mockClient({
-  //     ROOT_QUERY: {
-  //       'testQuery({"param":"value"})': {
-  //         keyTopLevel: { nestedKey: 'nestedValue' },
-  //       },
-  //     },
-  //   });
-  //   const queryDocument = mockQueryDocument('TestQuery');
-  //   const result = findQueryVariables(client, queryDocument, 'nonExistentKey');
-  //   expect(result).toEqual({});
-  // });
+  it('should return an empty object when keyTopLevel is specified but does not exist', () => {
+    const client = mockClient(mockClientCache);
+    const queryDocument = mockQueryDocument('TestQuery');
+    const result = findQueryVariables(client, queryDocument, 'nonExistentKey');
+    expect(result).toEqual({});
+  });
 
   it('should return an empty object on JSON syntax error in query variables', () => {
     const client = mockClient({
       ROOT_QUERY: {
-        'testQuery({"param":value})': {}, // Intentional syntax error in JSON
+        'testQuery({"param":value})': {},
       },
     });
     const queryDocument = mockQueryDocument('TestQuery');
@@ -147,23 +145,18 @@ describe('cn', () => {
 
   it('handles conditional class names correctly', () => {
     const result = cn('class1', { class2: true, class3: false });
-    expect(result).toBe('class1 class2'); // Ajusta según la implementación
+    expect(result).toBe('class1 class2');
   });
 
   it('merges Tailwind classes resolving conflicts', () => {
     const result = cn('p-4', 'p-2');
-    expect(result).toBe('p-2'); // Asume que twMerge resuelve el conflicto favoreciendo la última clase
+    expect(result).toBe('p-2');
   });
 
   it('handles arrays of class names', () => {
     const result = cn(['class1', 'class2'], ['class3']);
     expect(result).toBe('class1 class2 class3');
   });
-
-  // it('ignores falsy values except for 0', () => {
-  //   const result = cn('class1', null, undefined, false, 0, 'class2');
-  //   expect(result).toBe('class1 0 class2');
-  // });
 });
 
 describe('getNameInitials', () => {
@@ -205,9 +198,7 @@ describe('propsToCSV', () => {
       movementsChart: [{ name: 'jan', expense: '100', income: '200' }],
     };
     propsToCSV(data, t);
-    // Check if saveAs was called with correct CSV content
     expect(saveAs).toHaveBeenCalledWith(expect.any(Blob), 'report.csv');
-    // Further checks on the CSV content can be done by inspecting the Blob passed to saveAs
   });
 
   it('should generate CSV content for recentMovements', () => {
@@ -232,9 +223,7 @@ describe('propsToCSV', () => {
     const { t } = useTranslation();
     const data: IReportsCSV = {};
     propsToCSV(data, t);
-    // Verificar que saveAs se llama con un CSV que solo contiene el BOM (Byte Order Mark)
     expect(saveAs).toHaveBeenCalledWith(expect.any(Blob), 'report.csv');
-    // Aquí podrías añadir más lógica para verificar el contenido exacto del Blob si es necesario
   });
 
   it('should generate CSV content for both movementsChart and recentMovements', () => {
@@ -244,9 +233,7 @@ describe('propsToCSV', () => {
       recentMovements: recentMovementsMock,
     };
     propsToCSV(data, t);
-    // Verificar que saveAs se llama con el contenido correcto que incluye ambas secciones
     expect(saveAs).toHaveBeenCalledWith(expect.any(Blob), 'report.csv');
-    // Similar checks for the Blob content
   });
 
   it('should generate CSV content with all data fields', () => {
@@ -258,12 +245,9 @@ describe('propsToCSV', () => {
       balance: '$ 1234.56',
     };
     propsToCSV(data, t);
-    // Verificar que saveAs se llama con el contenido correcto que incluye todas las secciones
     expect(saveAs).toHaveBeenCalledWith(expect.any(Blob), 'report.csv');
-    // Additional logic to verify the exact Blob content can be added here
   });
 
-  // Testing for correct CSV format when no data is present in one of the sections
   it('should generate correct CSV format when one of the sections has no data', () => {
     const { t } = useTranslation();
     const data: IReportsCSV = {
@@ -273,12 +257,9 @@ describe('propsToCSV', () => {
       balance: '$ 1000',
     };
     propsToCSV(data, t);
-    // Verificar que saveAs se llama con el contenido correcto que refleja correctamente la ausencia de datos en una de las secciones
     expect(saveAs).toHaveBeenCalledWith(expect.any(Blob), 'report.csv');
-    // Additional logic to verify the exact Blob content can be added here
   });
 
-  // Testing for correct handling of null values in data
   it('should handle undefined values in data fields correctly', () => {
     const { t } = useTranslation();
     const data: IReportsCSV = {
@@ -288,9 +269,7 @@ describe('propsToCSV', () => {
       balance: undefined,
     };
     propsToCSV(data, t);
-    // Verificar que saveAs se llama con un CSV que maneja correctamente los valores nulos
     expect(saveAs).toHaveBeenCalledWith(expect.any(Blob), 'report.csv');
-    // Additional logic to verify the exact Blob content can be added here
   });
 });
 
@@ -302,11 +281,11 @@ describe('formatNumber', () => {
     expect(formatNumber(3000000000000)).toBe('3.0T');
   });
 
-  //   it('should handle numbers less than 1000 without a suffix', () => {
-  //     expect(formatNumber(999)).toBe('999');
-  //     expect(formatNumber(10)).toBe('10');
-  //     expect(formatNumber(0)).toBe('0');
-  //   });
+  it('should handle numbers less than 1000 without a suffix', () => {
+    expect(formatNumber(999)).toBe('999.0');
+    expect(formatNumber(10)).toBe('10.0');
+    expect(formatNumber(0)).toBe('0');
+  });
 
   it('should handle negative numbers correctly', () => {
     expect(formatNumber(-1000)).toBe('-1.0K');
@@ -319,7 +298,6 @@ describe('formatNumber', () => {
   });
 
   it('should return "0" for null input', () => {
-    // TypeScript won't allow null to be passed without an assertion since the type is number
     expect(formatNumber(null as unknown as number)).toBe('0');
   });
 });

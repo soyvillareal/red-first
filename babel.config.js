@@ -5,8 +5,8 @@ module.exports = function (api) {
 
   const plugins = [
     'babel-plugin-transform-typescript-metadata',
-    ['@babel/plugin-proposal-decorators', { legacy: true }],
     'babel-plugin-parameter-decorator',
+    ['@babel/plugin-proposal-decorators', { legacy: true }],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     ['@babel/plugin-transform-private-methods', { loose: true }],
     ['@babel/plugin-transform-private-property-in-object', { loose: true }],

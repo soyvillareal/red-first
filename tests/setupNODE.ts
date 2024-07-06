@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 import { IMockPrismaClient } from './tests.types';
 
+jest.mock('@/lib/env');
 jest.mock('@prisma/client', () => {
   const mPrismaClient: IMockPrismaClient = {
     user: {

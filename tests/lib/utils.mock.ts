@@ -92,3 +92,46 @@ export const recentMovementsMock: IGetRecentMovements[] = [
     movement: '750',
   },
 ];
+
+export const mockClientCache = {
+  ROOT_QUERY: {
+    'getMovements({"pagination":{"fieldOrder":"date","filterType":null,"limit":10,"order":"asc","page":1,"queryValue":""}})':
+      {
+        __typename: 'PaginatedMovements',
+        data: {
+          __typename: 'GetMovementsWithTotal',
+          total: '$ 1.161.985,00',
+          movements: [
+            {
+              __ref: 'GetMovements:f39750d5-b85e-47fc-804a-32f6a51ff4a0',
+            },
+            {
+              __ref: 'GetMovements:86b1e942-8cf8-487e-b5f1-4d68826c8072',
+            },
+            {
+              __ref: 'GetMovements:7dfbf47b-7830-4e71-87f2-177341cb89cf',
+            },
+            {
+              __ref: 'GetMovements:e41d2b9c-e252-41e8-b873-bd0b0aac5f76',
+            },
+            {
+              __ref: 'GetMovements:7d92ce98-1215-428b-89cb-3f280dce7f6a',
+            },
+            {
+              __ref: 'GetMovements:692ca175-04e6-440b-b84a-af52469dd50a',
+            },
+          ],
+        },
+        meta: {
+          __typename: 'PageMeta',
+          page: 1,
+          limit: 10,
+          itemCount: 6,
+          pageCount: 1,
+          hasPreviousPage: false,
+          hasNextPage: false,
+          errorMessage: null,
+        },
+      },
+  },
+};

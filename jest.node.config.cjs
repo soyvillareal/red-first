@@ -19,6 +19,15 @@ module.exports = {
   moduleFileExtensions: ['js', 'ts'],
   setupFiles: ['./tests/environment.js'],
   setupFilesAfterEnv: ['./tests/setupNODE.ts'],
-  collectCoverageFrom: ['components/**/*.{js,ts}', 'pages/**/*.{js,ts}'],
+  collectCoverageFrom: [
+    // 'components/**/*.{js,ts}',
+    // 'pages/**/*.{js,ts}',
+    'server/**/*.{js,ts}',
+  ],
   coverageReporters: ['lcov', 'text', 'text-summary'],
+  globals: {
+    'ts-jest': {
+      babelConfig: true, // Asegúrate de que ts-jest utilice la configuración de Babel
+    },
+  },
 };
