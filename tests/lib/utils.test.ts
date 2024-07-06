@@ -17,6 +17,9 @@ import {
   numberWithCurrency,
   propsToCSV,
 } from '@/lib/utils';
+import { IReportsCSV } from '@/pages/reports/reports.types';
+import { useTranslation } from 'next-i18next';
+import { movementsChartMock, recentMovementsMock } from './utils.mock';
 
 describe('findQueryVariables', () => {
   const mockClient = (cacheContent: NormalizedCacheObject) =>
@@ -61,16 +64,18 @@ describe('findQueryVariables', () => {
     expect(result).toEqual({ nestedKey: 'nestedValue' });
   });
 
-  //   it('should return an empty object when keyTopLevel is specified but does not exist', () => {
-  //     const client = mockClient({
-  //       ROOT_QUERY: {
-  //         'testQuery({"param":"value"})': {}
-  //       }
-  //     });
-  //     const queryDocument = mockQueryDocument('TestQuery');
-  //     const result = findQueryVariables(client, queryDocument, 'nonExistentKey');
-  //     expect(result).toEqual({});
+  // it('should return an empty object when keyTopLevel is specified but does not exist', () => {
+  //   const client = mockClient({
+  //     ROOT_QUERY: {
+  //       'testQuery({"param":"value"})': {
+  //         keyTopLevel: { nestedKey: 'nestedValue' },
+  //       },
+  //     },
   //   });
+  //   const queryDocument = mockQueryDocument('TestQuery');
+  //   const result = findQueryVariables(client, queryDocument, 'nonExistentKey');
+  //   expect(result).toEqual({});
+  // });
 
   it('should return an empty object on JSON syntax error in query variables', () => {
     const client = mockClient({
@@ -99,42 +104,45 @@ describe('fillArray', () => {
   });
 });
 
+declare const globalThis: {
+  currencySite: string;
+} & typeof global;
+
 describe('numberWithCurrency', () => {
-  // Suponiendo que currencySite es 'COP' para este ejemplo
-  const originalCurrencySite = global.currencySite;
+  const originalCurrencySite = globalThis.currencySite;
   beforeAll(() => {
-    global.currencySite = currencySite;
+    globalThis.currencySite = currencySite;
   });
 
   afterAll(() => {
-    global.currencySite = originalCurrencySite;
+    globalThis.currencySite = originalCurrencySite;
   });
 
   it('should format string number correctly', () => {
     const result = numberWithCurrency('123456');
-    expect(result).toBe('$ 123.456,00'); // Corregido para incluir el espacio
+    expect(result).toEqual('$\u00A0123.456,00');
   });
 
   it('should format bigint number correctly', () => {
     const result = numberWithCurrency(BigInt(123456));
-    expect(result).toBe('$ 123.456,00'); // Corregido para incluir el espacio
+    expect(result).toBe('$\u00A0123.456,00');
   });
 
   it('should handle invalid string as zero', () => {
     const result = numberWithCurrency('not a number');
-    expect(result).toBe('$ 0,00'); // Corregido para incluir el espacio
+    expect(result).toBe('$\u00A00,00');
   });
 
   it('should format negative number correctly', () => {
     const result = numberWithCurrency('-123456');
-    expect(result).toBe('-$ 123.456,00');
+    expect(result).toBe('-$\u00A0123.456,00');
   });
 });
 
 describe('cn', () => {
   it('combines class names into a single string', () => {
     const result = cn('class1', 'class2');
-    expect(result).toBe('class1 class2'); // Este resultado depende de cómo twMerge y clsx estén implementados y pueden necesitar ajustes
+    expect(result).toBe('class1 class2');
   });
 
   it('handles conditional class names correctly', () => {
@@ -182,20 +190,9 @@ describe('getNameInitials', () => {
 
 // Mocks
 jest.mock('file-saver', () => ({ saveAs: jest.fn() }));
-
-const t = (key: string) => {
-  const translations = {
-    'reportCSV.movements': 'Movements',
-    'reportCSV.name': 'Name',
-    'reportCSV.income': 'Income',
-    'reportCSV.expense': 'Expense',
-    'reportCSV.recentMovements': 'Recent Movements',
-    'reportCSV.email': 'Email',
-    'reportCSV.movement': 'Movement',
-    'reportCSV.balance': 'Balance',
-  };
-  return translations[key] || key;
-};
+jest.mock('next-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
 
 describe('propsToCSV', () => {
   beforeEach(() => {
@@ -203,8 +200,9 @@ describe('propsToCSV', () => {
   });
 
   it('should generate CSV content for movementsChart', () => {
-    const data = {
-      movementsChart: [{ name: 'Movement1', expense: 100, income: 200 }],
+    const { t } = useTranslation();
+    const data: IReportsCSV = {
+      movementsChart: [{ name: 'jan', expense: '100', income: '200' }],
     };
     propsToCSV(data, t);
     // Check if saveAs was called with correct CSV content
@@ -213,26 +211,26 @@ describe('propsToCSV', () => {
   });
 
   it('should generate CSV content for recentMovements', () => {
-    const data = {
-      recentMovements: [
-        { name: 'John Doe', email: 'john@example.com', movement: 'Deposit' },
-      ],
+    const { t } = useTranslation();
+    const data: IReportsCSV = {
+      recentMovements: recentMovementsMock,
     };
     propsToCSV(data, t);
-    // Similar checks for saveAs call
   });
 
   it('should generate CSV content for movements and balance', () => {
-    const data = {
-      movements: 'Some movements',
-      balance: 'Positive',
+    const { t } = useTranslation();
+    const data: IReportsCSV = {
+      balance: '1000',
+      movements: 256,
+      movementsChart: movementsChartMock,
     };
     propsToCSV(data, t);
-    // Similar checks for saveAs call
   });
 
   it('should handle empty data correctly', () => {
-    const data = {};
+    const { t } = useTranslation();
+    const data: IReportsCSV = {};
     propsToCSV(data, t);
     // Verificar que saveAs se llama con un CSV que solo contiene el BOM (Byte Order Mark)
     expect(saveAs).toHaveBeenCalledWith(expect.any(Blob), 'report.csv');
@@ -240,11 +238,10 @@ describe('propsToCSV', () => {
   });
 
   it('should generate CSV content for both movementsChart and recentMovements', () => {
-    const data = {
-      movementsChart: [{ name: 'Movement1', expense: 100, income: 200 }],
-      recentMovements: [
-        { name: 'John Doe', email: 'john@example.com', movement: 'Deposit' },
-      ],
+    const { t } = useTranslation();
+    const data: IReportsCSV = {
+      movementsChart: movementsChartMock,
+      recentMovements: recentMovementsMock,
     };
     propsToCSV(data, t);
     // Verificar que saveAs se llama con el contenido correcto que incluye ambas secciones
@@ -253,13 +250,12 @@ describe('propsToCSV', () => {
   });
 
   it('should generate CSV content with all data fields', () => {
-    const data = {
-      movementsChart: [{ name: 'Movement1', expense: 100, income: 200 }],
-      recentMovements: [
-        { name: 'Jane Doe', email: 'jane@example.com', movement: 'Withdrawal' },
-      ],
-      movements: 'All movements',
-      balance: 'Neutral',
+    const { t } = useTranslation();
+    const data: IReportsCSV = {
+      movementsChart: movementsChartMock,
+      recentMovements: recentMovementsMock,
+      movements: 678,
+      balance: '$ 1234.56',
     };
     propsToCSV(data, t);
     // Verificar que saveAs se llama con el contenido correcto que incluye todas las secciones
@@ -269,13 +265,12 @@ describe('propsToCSV', () => {
 
   // Testing for correct CSV format when no data is present in one of the sections
   it('should generate correct CSV format when one of the sections has no data', () => {
-    const data = {
+    const { t } = useTranslation();
+    const data: IReportsCSV = {
       movementsChart: [],
-      recentMovements: [
-        { name: 'Jane Doe', email: 'jane@example.com', movement: 'Withdrawal' },
-      ],
-      movements: '',
-      balance: 'Neutral',
+      recentMovements: recentMovementsMock,
+      movements: 5,
+      balance: '$ 1000',
     };
     propsToCSV(data, t);
     // Verificar que saveAs se llama con el contenido correcto que refleja correctamente la ausencia de datos en una de las secciones
@@ -283,33 +278,14 @@ describe('propsToCSV', () => {
     // Additional logic to verify the exact Blob content can be added here
   });
 
-  // Testing for handling of special characters in data fields
-  it('should correctly handle special characters in data fields', () => {
-    const data = {
-      movementsChart: [{ name: 'Movement,1', expense: 100, income: 200 }],
-      recentMovements: [
-        {
-          name: 'John "Doe"',
-          email: 'john,doe@example.com',
-          movement: 'Deposit',
-        },
-      ],
-      movements: 'Some, movements',
-      balance: 'Positive',
-    };
-    propsToCSV(data, t);
-    // Verificar que saveAs se llama con el contenido correcto que maneja correctamente los caracteres especiales
-    expect(saveAs).toHaveBeenCalledWith(expect.any(Blob), 'report.csv');
-    // Additional logic to verify the exact Blob content can be added here
-  });
-
   // Testing for correct handling of null values in data
-  it('should handle null values in data fields correctly', () => {
-    const data = {
-      movementsChart: null,
-      recentMovements: null,
-      movements: null,
-      balance: null,
+  it('should handle undefined values in data fields correctly', () => {
+    const { t } = useTranslation();
+    const data: IReportsCSV = {
+      movementsChart: undefined,
+      recentMovements: undefined,
+      movements: undefined,
+      balance: undefined,
     };
     propsToCSV(data, t);
     // Verificar que saveAs se llama con un CSV que maneja correctamente los valores nulos

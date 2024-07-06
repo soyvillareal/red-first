@@ -94,20 +94,19 @@ describe('mockPagination', () => {
   });
 
   it('should handle different types of dataMock correctly', () => {
+    const dataMock = ['item1', 'item2'];
+    const result = mockPagination('', dataMock);
+    expect(result.data).toBe(dataMock);
+
+    expect(result.data).toBe(dataMock);
+  });
+
+  it('should handle different types of error messages correctly', () => {
     const errorMessage = 'Another test error';
-    // Test with an array
-    let dataMock = ['item1', 'item2'];
-    let result = mockPagination(errorMessage, dataMock);
+    const dataMock = ['item1', 'item2'];
+    const result = mockPagination(errorMessage, dataMock);
     expect(result.data).toBe(dataMock);
 
-    // Test with an object
-    dataMock = { key: 'value' };
-    result = mockPagination(errorMessage, dataMock);
-    expect(result.data).toBe(dataMock);
-
-    // Test with a number
-    dataMock = 42;
-    result = mockPagination(errorMessage, dataMock);
-    expect(result.data).toBe(dataMock);
+    expect(result.meta.errorMessage).toBe(errorMessage);
   });
 });

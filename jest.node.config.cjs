@@ -18,9 +18,7 @@ module.exports = {
   rootDir: './',
   moduleFileExtensions: ['js', 'ts'],
   setupFiles: ['./tests/environment.js'],
-  // setupFilesAfterEnv: [
-  //   "./tests/setup.js"
-  // ],
+  setupFilesAfterEnv: ['./tests/setupNODE.ts'],
   collectCoverageFrom: ['components/**/*.{js,ts}', 'pages/**/*.{js,ts}'],
   coverageReporters: ['lcov', 'text', 'text-summary'],
 };

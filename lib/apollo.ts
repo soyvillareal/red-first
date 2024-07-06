@@ -8,8 +8,10 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { getSession } from 'next-auth/react';
 
+import { env } from './env';
+
 const httpLink = new HttpLink({
-  uri: '/api/graphql',
+  uri: env.GRAPHQL_SUFFIX,
 });
 
 const authLink = setContext(async (_, { headers }) => {

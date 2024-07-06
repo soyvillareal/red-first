@@ -1,8 +1,6 @@
+import jest, { afterEach } from 'jest';
+
 import '@testing-library/jest-dom/extend-expect';
-
-import initFontAwesome from './initFontAwesome';
-
-initFontAwesome();
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -10,18 +8,18 @@ afterEach(() => {
 });
 
 jest.mock('next/navigation', () => ({
-  usePathname: () => ''
+  usePathname: () => '',
 }));
 
 jest.mock('@auth0/nextjs-auth0', () => {
   return {
     getSession: () => ({
       user: {
-        sub: 'bob'
-      }
+        sub: 'bob',
+      },
     }),
     getAccessToken: () => 'access_token',
-    withApiAuthRequired: handler => handler,
-    withPageAuthRequired: page => () => page()
+    withApiAuthRequired: (handler) => handler,
+    withPageAuthRequired: (page) => () => page(),
   };
 });
