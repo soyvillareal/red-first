@@ -24,7 +24,7 @@ jest.mock('next-auth/providers/auth0', () => {
         },
       },
     })),
-    __esModule: true, // Esta línea sigue siendo importante para simular correctamente los módulos ES6
+    __esModule: true,
   };
 });
 jest.mock('@next-auth/prisma-adapter', () => ({
@@ -36,7 +36,7 @@ jest.mock('@/lib/db', () => ({
   default: jest.fn(),
 }));
 
-describe('authOptions', () => {
+describe('logo and providers', () => {
   it('should have the a logo in the theme', () => {
     expect(authOptions?.theme?.logo).toBeDefined();
   });
@@ -62,8 +62,6 @@ describe('authOptions', () => {
       }),
     );
   });
-
-  // Añade más pruebas según sea necesario para cubrir la configuración de authOptions
 });
 
 describe('callbacks', () => {

@@ -2,6 +2,7 @@ import { MiddlewareFn } from 'type-graphql';
 
 import { EUserRole, IGraphQLContext } from '@/types';
 import { responseCodes } from '@/server/utils';
+import { pageSizes } from '@/lib/contants';
 
 export const checkIsLogged: MiddlewareFn<IGraphQLContext> = async (
   { context },
@@ -30,7 +31,10 @@ export const checkIsAdmin: MiddlewareFn<IGraphQLContext> = async (
       throw new Error(responseCodes.ERROR.USER_NOT_LOGGED_IN);
     }
 
-    if (context.session.user.roles.includes(EUserRole.ADMIN) === false) {
+    if (
+      context.session.user?.roles === undefined ||
+      context.session.user?.roles.includes(EUserRole.ADMIN) === false
+    ) {
       throw new Error(responseCodes.UNAUTHORIZED.NOT_AUTHORIZED);
     }
 
@@ -80,9 +84,7 @@ export const checkPagination: MiddlewareFn = async ({ args }, next) => {
       throw new Error(responseCodes.PAGINATION.PAGE_MUST_BE_NUMBER);
     }
 
-    const validPagination: number[] = [10, 20, 30, 40, 50];
-
-    if (validPagination.includes(limit) === false) {
+    if (pageSizes.includes(limit) === false) {
       throw new Error(responseCodes.PAGINATION.LIMIT_INVALID);
     }
 
