@@ -35,7 +35,7 @@ import { toast } from '@/components/ui/use-toast';
 import { CalendarIcon } from '@/components/icons/CalendarIcon';
 import { HookForm } from '@/components/atoms/HookForm';
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon';
-import { IGetMovementsQueryParams } from '@/pages/reports/components/MovementsChart/MovementsChart.types';
+import { IGetMovementsQueryParams } from '@/components/pages/reports/components/MovementsChart/MovementsChart.types';
 import { IPaginationArgs } from '@/types/graphql/pagination';
 import { TValidsMovementTypes } from '@/types/graphql/resolvers';
 

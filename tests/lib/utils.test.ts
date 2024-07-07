@@ -17,7 +17,7 @@ import {
   numberWithCurrency,
   propsToCSV,
 } from '@/lib/utils';
-import { IReportsCSV } from '@/pages/reports/reports.types';
+import { IReportsCSV } from '@/components/pages/reports/reports.types';
 import { useTranslation } from 'next-i18next';
 import {
   mockClientCache,

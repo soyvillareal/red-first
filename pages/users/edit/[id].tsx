@@ -12,7 +12,10 @@ import { routes } from '@/lib/contants';
 import { UsersRepository } from '@/server/dataAccess/users';
 import { EUserRole, EUserRoleRoleNormalized } from '@/types';
 
-import { type IEditServerSideParams, type IEditUserProps } from './edit.types';
+import {
+  type IEditServerSideParams,
+  type IEditUserProps,
+} from '@/components/pages/users/edit/edit.types';
 
 const EditUser = ({ user }: IEditUserProps) => {
   const { t } = useTranslation();

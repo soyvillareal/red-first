@@ -27,7 +27,7 @@ import { useSorting } from '@/hooks/useSorting';
 import { useDebounce } from '@/hooks/useDebounce';
 import { DataTableFooterSkeleton } from '@/components/skeleton/DataTableFooterSkeleton';
 
-import { columnsFn } from './movements.constants';
+import { columnsFn } from '@/components/pages/movements/movements.constants';
 
 const Movements = () => {
   const { t } = useTranslation();

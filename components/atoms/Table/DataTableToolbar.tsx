@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { Button } from '@/components/custom/Button';
 import { Input } from '@/components/ui/input';
 import { CloseIcon } from '@/components/icons/CloseIcon';
-import { types } from '@/pages/movements/movements.constants';
+import { types } from '@/components/pages/movements/movements.constants';
 
 import { DataTableFacetedFilter } from './DataTableFacetedFilter';
 import { DataTableViewOptions } from './DataTableViewOptions';

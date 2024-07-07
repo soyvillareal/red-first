@@ -4,7 +4,7 @@ import { saveAs } from 'file-saver';
 import { type TFunction } from 'next-i18next';
 import { ApolloClient, DocumentNode } from '@apollo/client';
 
-import { type IReportsCSV } from '@/pages/reports/reports.types';
+import { type IReportsCSV } from '@/components/pages/reports/reports.types';
 import {
   type TNoStandardCache,
   type TNoStandardQueryDefinitions,

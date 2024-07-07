@@ -27,10 +27,10 @@ import { ReportBalanceSkeleton } from '@/components/skeleton/ReportBalanceSkelet
 import { ReportMovementsSkeleton } from '@/components/skeleton/ReportMovementsSkeleton';
 import { EUserRole } from '@/types';
 
-import RecentMovements from './components/RecentMovements';
-import MovementsChart from './components/MovementsChart';
-import { IReportsCSV } from './reports.types';
-import SelectorYear from './components/SelectorYear';
+import RecentMovements from '@/components/pages/reports/components/RecentMovements';
+import MovementsChart from '@/components/pages/reports/components/MovementsChart';
+import { IReportsCSV } from '@/components/pages/reports/reports.types';
+import SelectorYear from '@/components/pages/reports/components/SelectorYear';
 
 export const Dashboard = () => {
   const { t } = useTranslation();

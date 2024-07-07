@@ -21,7 +21,7 @@ import { UsersQuery } from '@/lib/apollo';
 import { EUserRole } from '@/types';
 import { IGetUsers, TValidsUserTypes } from '@/types/graphql/resolvers';
 
-import columns from './users.constants';
+import columns from '@/components/pages/users/users.constants';
 
 const Users = () => {
   const { t } = useTranslation();
