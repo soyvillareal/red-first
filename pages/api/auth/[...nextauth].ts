@@ -5,9 +5,12 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { env } from '@/lib/env';
 import { EUserRole, TProfileWithRoles } from '@/types';
 import prisma from '@/lib/db';
+import { UsersRepository } from '@/server/dataAccess/users';
 
 const COOKIES_LIFE_TIME = 24 * 60 * 60; // 24 hours
 const COOKIE_PREFIX = env.NODE_ENV === 'production' ? '__Secure-' : '';
+
+const usersRepository = new UsersRepository();
 
 export const authOptions: AuthOptions = {
   theme: {
@@ -101,9 +104,30 @@ export const authOptions: AuthOptions = {
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
-    signIn({ profile }) {
+    async signIn({ profile }) {
       if (profile === undefined || profile === null) {
         return false;
+      }
+
+      const rolesIdentifier =
+        env.AUTH0_ROLES_IDENTIFIER as keyof TProfileWithRoles;
+      const profileWithRoles = profile as TProfileWithRoles;
+      const userRoles = profileWithRoles[rolesIdentifier];
+
+      if (userRoles && userRoles.length > 0) {
+        const accountProviderId = profileWithRoles.sub;
+        if (accountProviderId && profileWithRoles.name) {
+          const accountData = await usersRepository.getAccountDataByProviderId(
+            accountProviderId,
+          );
+
+          if (accountData) {
+            await usersRepository.updateUser(accountData.userId, {
+              name: profileWithRoles.name,
+              role: userRoles[0] as EUserRole,
+            });
+          }
+        }
       }
 
       return true;
@@ -119,8 +143,10 @@ export const authOptions: AuthOptions = {
         token.id = user.id;
       }
       if (profile !== undefined && profile !== null) {
+        const rolesIdentifier =
+          env.AUTH0_ROLES_IDENTIFIER as keyof TProfileWithRoles;
         const profileWithRoles = profile as TProfileWithRoles;
-        const userRoles = profileWithRoles[env.AUTH0_ROLES_IDENTIFIER];
+        const userRoles = profileWithRoles[rolesIdentifier];
 
         if (userRoles !== undefined && userRoles !== null) {
           token.userRoles = userRoles;

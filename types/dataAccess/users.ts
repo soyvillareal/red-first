@@ -27,3 +27,8 @@ export interface IGetAccountDataResult {
   type: string;
   scope: string | null;
 }
+
+export interface IGetAccountDataByProviderIdResult {
+  id: string;
+  userId: string;
+}

@@ -1,5 +1,6 @@
 import { prisma } from '@/tests/setup';
 import {
+  IGetAccountDataByProviderIdResult,
   IGetAccountDataResult,
   IGetUsersRepository,
   IUpdateUserParams,
@@ -290,9 +291,10 @@ describe('UsersRepository', () => {
 
   describe('getAccountData', () => {
     it('should return user account data', async () => {
-      const userId = '123c4567-89ab-cdef-1234-567890123456';
+      const accountId = '123c4567-89ab-cdef-1234-567890123456';
+      const userId = '123c4567-89ab-cdef-1234-567890123457';
       const mockUser: IGetAccountDataResult = {
-        id: userId,
+        id: accountId,
         access_token: 'access-token',
         providerAccountId: 'provider-account-id',
         scope: 'scope',
@@ -323,6 +325,41 @@ describe('UsersRepository', () => {
       prisma.account.findUnique.mockRejectedValue(null);
 
       const result = await repository.getAccountData(userId);
+
+      expect(result).toBe(null);
+    });
+  });
+
+  describe('getAccountDataByProviderId', () => {
+    it('should return user account data', async () => {
+      const providerId = '123c4567-89ab-cdef-1234-567890123456';
+      const userId = '123c4567-89ab-cdef-1234-567890123457';
+      const mockUser: IGetAccountDataByProviderIdResult = {
+        id: '123c4567-89ab-cdef-1234-567890123458',
+        userId,
+      };
+
+      prisma.account.findUnique.mockResolvedValue(mockUser);
+
+      const result = await repository.getAccountDataByProviderId(providerId);
+
+      expect(result).toEqual(mockUser);
+      expect(prisma.account.findUnique).toHaveBeenCalledWith({
+        select: {
+          id: true,
+          userId: true,
+        },
+        where: {
+          providerAccountId: providerId,
+        },
+      });
+    });
+    it('should return null if there is an error', async () => {
+      const providerId = '123c4567-89ab-cdef-1234-567890123456';
+
+      prisma.account.findUnique.mockRejectedValue(null);
+
+      const result = await repository.getAccountDataByProviderId(providerId);
 
       expect(result).toBe(null);
     });

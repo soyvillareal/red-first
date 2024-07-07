@@ -12,7 +12,7 @@ export enum EUserRole {
   USER = 'user',
 }
 
-export type TProfileWithRoles = Record<string, string> & Profile;
+export type TProfileWithRoles = Record<string, string | string[]> & Profile;
 
 export interface LocalStorageProps<T> {
   key: string;

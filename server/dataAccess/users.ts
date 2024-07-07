@@ -1,7 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 
 import {
-  IGetAccountDataResult,
+  type IGetAccountDataByProviderIdResult,
+  type IGetAccountDataResult,
   type IGetUserByIdResult,
   type IGetUsersRepository,
   type IUpdateUserParams,
@@ -155,6 +156,30 @@ export class UsersRepository {
         },
         where: {
           userId,
+        },
+      });
+
+      if (foundUser === null) {
+        return undefined;
+      }
+
+      return foundUser;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  public getAccountDataByProviderId = async (
+    providerId: string,
+  ): Promise<IGetAccountDataByProviderIdResult | undefined | null> => {
+    try {
+      const foundUser = await this.prisma.account.findUnique({
+        select: {
+          id: true,
+          userId: true,
+        },
+        where: {
+          providerAccountId: providerId,
         },
       });
 

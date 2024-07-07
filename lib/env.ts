@@ -2,7 +2,6 @@ const AUTH0_BASE_URL = process.env.AUTH0_BASE_URL || 'http://localhost:3000';
 
 export const env = {
   NODE_ENV: process.env.NODE_ENV || 'development',
-  API_PORT: process.env.API_PORT || 3000,
   GRAPHQL_SUFFIX: '/api/graphql',
   AUTH0_BASE_URL: AUTH0_BASE_URL,
   AUTH0_CALLBACK: `${AUTH0_BASE_URL}/api/auth/callback/auth0`,

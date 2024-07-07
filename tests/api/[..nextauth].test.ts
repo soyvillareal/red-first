@@ -1,7 +1,15 @@
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { EUserRole } from '@/types';
+import { EUserRole, TProfileWithRoles } from '@/types';
 import { AuthOptions, CallbacksOptions } from 'next-auth';
 import Auth0Provider from 'next-auth/providers/auth0';
+import { env } from '@/lib/env';
+
+jest.mock('@/server/dataAccess/users', () => ({
+  UsersRepository: jest.fn().mockImplementation(() => ({
+    updateUser: jest.fn(),
+    getAccountDataByProviderId: jest.fn(),
+  })),
+}));
 
 jest.mock('next-auth/providers/auth0', () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -75,7 +83,7 @@ describe('callbacks', () => {
 
     it('should allow sign in if profile is not null', () => {
       const signInCallback = authOptionsRequired?.callbacks
-        ?.signIn as CallbacksOptions['signIn'];
+        ?.signIn as CallbacksOptions<TProfileWithRoles>['signIn'];
 
       expect(
         signInCallback({
@@ -97,7 +105,8 @@ describe('callbacks', () => {
             email: 'john.doe@gmail.com',
             name: 'John Doe',
             image: 'https://example.com/john-doe.jpg',
-            sub: '12345',
+            sub: 'auth0|12345',
+            [env.AUTH0_ROLES_IDENTIFIER]: [EUserRole.USER],
           },
           user: {
             id: '12345',
@@ -110,12 +119,13 @@ describe('callbacks', () => {
       ).toBeTruthy();
     });
 
-    it('should deny sign in if profile is null', () => {
+    it('should deny sign in if profile is null', async () => {
       const signInCallback = authOptionsRequired?.callbacks
         ?.signIn as CallbacksOptions['signIn'] & {
-        (props: { profile: null | undefined }): boolean;
+        (props: { profile: null | undefined }): Promise<boolean>;
       };
-      expect(signInCallback({ profile: null })).toBeFalsy();
+      const result = await signInCallback({ profile: null });
+      expect(result).toBeFalsy();
     });
   });
 
