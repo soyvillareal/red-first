@@ -49,8 +49,18 @@
         "save": "Save",
         "enter": "Enter",
         "new": "New",
-        "errorOccurred": "An error occurred.",
-        "noData": "No data."
+        "errorOccurred": "Some errors occurred.",
+        "noData": "No data.",
+        "goBack": "Go back",
+        "backToHome": "Back to Home"
+    },
+    "notFound": {
+        "title": "Oops! Page Not Found!",
+        "description": "It seems like the page you're looking for does not exist or might have been removed."
+    },
+    "internalError": {
+        "title": "Oops! Something went wrong :')",
+        "description": "We apologize for the inconvenience. Please try again later."
     },
     "languages": {
         "title": "Language ({{lang}})",

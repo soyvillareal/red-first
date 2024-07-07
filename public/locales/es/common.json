@@ -49,8 +49,18 @@
         "save": "Guardar",
         "enter": "Ingresar",
         "new": "Nuevo",
-        "errorOccurred": "An error occurred.",
-        "noData": "Sin datos."
+        "errorOccurred": "Some errors occurred.",
+        "noData": "Sin datos.",
+        "goBack": "Regresar",
+        "backToHome": "Volver a inicio"
+    },
+    "notFound": {
+        "title": "¡Ups! ¡Página no encontrada!",
+        "description": "Parece que la página que buscas no existe o podría haber sido eliminada."
+    },
+    "internalError": {
+        "title": "¡Ups! ¡Error interno!",
+        "description": "Parece que algo salió mal en el servidor. Por favor, inténtelo de nuevo más tarde."
     },
     "languages": {
         "title": "Idioma ({{lang}})",

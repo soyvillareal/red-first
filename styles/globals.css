@@ -25,7 +25,7 @@
     --accent: hsl(12, 88%, 69%); /* brightRedLight */
     --accent-foreground: hsl(233, 12%, 13%); /* veryDarkBlue */
 
-    --destructive: hsl(12, 88%, 95%); /* brightRedSupLight */
+    --destructive: hsl(355, 61%, 50%); /* brightRedSupLight */
     --destructive-foreground: hsl(0, 0%, 98%); /* veryLightGray */
 
     --border: hsl(227, 12%, 61%); /* darkGrayishBlue */
