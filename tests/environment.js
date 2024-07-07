@@ -6,6 +6,5 @@ process.env.AUTH0_CLIENT_SECRET = 'client_secret';
 process.env.AUTH0_ROLES_IDENTIFIER = 'https://roles.acme.auth0.local/roles';
 process.env.AUTH0_SCOPE = 'openid profile email phone read:shows';
 process.env.JWT_SECRET = 'jwtSecret';
-process.env.LOGO_URL = 'https://authjs.dev/img/logo-sm.png';
 process.env.DATABASE_URL =
   'postgresql://postgres:123456@localhost:5432/redfirst?schema=public';
