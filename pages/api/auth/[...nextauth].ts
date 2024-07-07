@@ -107,7 +107,7 @@ export const authOptions: AuthOptions = {
     async signIn({ profile }) {
       const rolesIdentifier =
         env.AUTH0_ROLES_IDENTIFIER as keyof TProfileWithRoles;
-      const profileWithRoles = profile as TProfileWithRoles;
+      const profileWithRoles = (profile as TProfileWithRoles) ?? {};
       const userRoles = profileWithRoles[rolesIdentifier];
 
       if (profile === undefined || profile === null) {

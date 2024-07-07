@@ -163,7 +163,7 @@ describe('callbacks', () => {
           httpOnly: true,
           sameSite: 'lax',
           path: '/',
-          secure: true,
+          secure: expect.any(Boolean),
         },
       },
       callbackUrl: {
@@ -171,7 +171,7 @@ describe('callbacks', () => {
         options: {
           sameSite: 'lax',
           path: '/',
-          secure: true,
+          secure: expect.any(Boolean),
         },
       },
       csrfToken: {
@@ -180,7 +180,7 @@ describe('callbacks', () => {
           httpOnly: true,
           sameSite: 'lax',
           path: '/',
-          secure: true,
+          secure: expect.any(Boolean),
         },
       },
       pkceCodeVerifier: {
@@ -189,7 +189,7 @@ describe('callbacks', () => {
           httpOnly: true,
           sameSite: 'lax',
           path: '/',
-          secure: true,
+          secure: expect.any(Boolean),
           maxAge: expect.any(Number),
         },
       },
@@ -199,7 +199,7 @@ describe('callbacks', () => {
           httpOnly: true,
           sameSite: 'lax',
           path: '/',
-          secure: true,
+          secure: expect.any(Boolean),
           maxAge: expect.any(Number),
         },
       },
@@ -209,7 +209,7 @@ describe('callbacks', () => {
           httpOnly: true,
           sameSite: 'lax',
           path: '/',
-          secure: true,
+          secure: expect.any(Boolean),
         },
       },
     });

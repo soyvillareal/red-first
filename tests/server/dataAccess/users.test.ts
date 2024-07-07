@@ -2,6 +2,8 @@ import { prisma } from '@/tests/setup';
 import {
   IGetAccountDataByProviderIdResult,
   IGetAccountDataResult,
+  IGetUsersMovementByIds,
+  IGetUsersReportByIds,
   IGetUsersRepository,
   IUpdateUserParams,
 } from '@/types/dataAccess/users';
@@ -360,6 +362,88 @@ describe('UsersRepository', () => {
       prisma.account.findUnique.mockRejectedValue(null);
 
       const result = await repository.getAccountDataByProviderId(providerId);
+
+      expect(result).toBe(null);
+    });
+  });
+
+  describe('getUsersReportByIds', () => {
+    it('should return users report', async () => {
+      const userIds = ['123c4567-89ab-cdef-1234-567890123456'];
+      const mockUsers: IGetUsersReportByIds[] = [
+        {
+          id: '123c4567-89ab-cdef-1234-567890123456',
+          name: 'John Doe',
+          email: 'john.doe@gmail.com',
+          image: 'https://example.com/john-doe.jpg',
+        },
+      ];
+
+      prisma.user.findMany.mockResolvedValue(mockUsers);
+
+      const result = await repository.getUsersReportByIds(userIds);
+
+      expect(result).toEqual(mockUsers);
+      expect(prisma.user.findMany).toHaveBeenCalledWith({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          image: true,
+        },
+        where: {
+          id: {
+            in: userIds,
+          },
+        },
+      });
+    });
+
+    it('should return null if there is an error', async () => {
+      const userIds = ['123c4567-89ab-cdef-1234-567890123456'];
+
+      prisma.user.findMany.mockRejectedValue(null);
+
+      const result = await repository.getUsersReportByIds(userIds);
+
+      expect(result).toBe(null);
+    });
+  });
+
+  describe('getUsersMovementByIds', () => {
+    it('should return users report', async () => {
+      const userIds = ['123c4567-89ab-cdef-1234-567890123456'];
+      const mockUsers: IGetUsersMovementByIds[] = [
+        {
+          id: '123c4567-89ab-cdef-1234-567890123456',
+          name: 'John Doe',
+        },
+      ];
+
+      prisma.user.findMany.mockResolvedValue(mockUsers);
+
+      const result = await repository.getUsersMovementByIds(userIds);
+
+      expect(result).toEqual(mockUsers);
+      expect(prisma.user.findMany).toHaveBeenCalledWith({
+        select: {
+          id: true,
+          name: true,
+        },
+        where: {
+          id: {
+            in: userIds,
+          },
+        },
+      });
+    });
+
+    it('should return null if there is an error', async () => {
+      const userIds = ['123c4567-89ab-cdef-1234-567890123456'];
+
+      prisma.user.findMany.mockRejectedValue(null);
+
+      const result = await repository.getUsersMovementByIds(userIds);
 
       expect(result).toBe(null);
     });

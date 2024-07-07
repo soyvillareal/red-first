@@ -1,5 +1,6 @@
 import { ReportsRepository } from '@/server/dataAccess/reports';
 import { prisma } from '@/tests/setup';
+import { IGetRecentMovementsRepository } from '@/types/dataAccess/reports';
 
 const repository = new ReportsRepository();
 
@@ -51,18 +52,12 @@ describe('ReportsRepository', () => {
   });
 
   it('should return recent movements', async () => {
-    const mockMovements = [
+    const mockMovements: IGetRecentMovementsRepository[] = [
       {
-        id: 1,
-        user: {
-          id: 1,
-          name: 'John Doe',
-          email: 'john@example.com',
-          image: 'image-url',
-        },
-        amount: 100,
+        id: expect.any(String),
+        userId: expect.any(String),
+        amount: expect.any(String),
         concept: 'income',
-        createdAt: new Date('2023-01-01'),
       },
     ];
     prisma.movements.findMany.mockResolvedValue(mockMovements);
@@ -72,17 +67,9 @@ describe('ReportsRepository', () => {
     expect(prisma.movements.findMany).toHaveBeenCalledWith({
       select: {
         id: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
-        },
+        userId: true,
         amount: true,
         concept: true,
-        createdAt: true,
       },
       orderBy: {
         createdAt: 'desc',
