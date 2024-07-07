@@ -1,11 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { ApolloError, useApolloClient, useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
 
 import { EUserRoleRoleNormalized } from '@/types';
-import { cn, findQueryVariables } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/custom/Button';
 import {
   Form,
@@ -20,19 +20,16 @@ import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import { HookForm } from '@/components/atoms/HookForm';
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon';
-import { UserMutation, UsersQuery } from '@/lib/apollo';
-import {
-  type IUpdateUserArgs,
-  TValidsUserTypes,
-} from '@/types/graphql/resolvers';
-import { IPaginationArgs } from '@/types/graphql/pagination';
+import { UserMutation } from '@/lib/apollo';
+import { type IUpdateUserArgs } from '@/types/graphql/resolvers';
 
 import { type IUserFormProps, type TUserFormInputs } from './UserForm.types';
 import { userFormSchema } from './UserForm.schema';
+import { ShowErrors } from '@/components/custom/ShowErrors';
 
 export const UserForm = ({ userId, userData }: IUserFormProps) => {
   const { t } = useTranslation();
-  const client = useApolloClient();
+  const [errors, setErrors] = useState<ApolloError>();
   const methods = useForm<TUserFormInputs>({
     resolver: zodResolver(userFormSchema(t)),
     defaultValues: {
@@ -41,23 +38,12 @@ export const UserForm = ({ userId, userData }: IUserFormProps) => {
     },
   });
 
-  const usersLastVariables = findQueryVariables<
-    IPaginationArgs<TValidsUserTypes>
-  >(client, UsersQuery, 'pagination');
-
   const [updateUser, { loading: userMutationLoading }] = useMutation<
     {
       updateUser: string;
     },
     IUpdateUserArgs
-  >(UserMutation, {
-    refetchQueries: [
-      {
-        query: UsersQuery,
-        variables: usersLastVariables,
-      },
-    ],
-  });
+  >(UserMutation);
 
   const onSubmit = useCallback(
     async (data: TUserFormInputs) => {
@@ -74,18 +60,10 @@ export const UserForm = ({ userId, userData }: IUserFormProps) => {
           toast({
             description: t(`responseCodes.${updatedUser.data?.updateUser}`),
           });
-        } else {
-          toast({
-            description: t('responseCodes.SOMETHING_WENT_WRONG'),
-            variant: 'destructive',
-          });
         }
       } catch (error: unknown) {
         if (error instanceof ApolloError) {
-          toast({
-            description: t(`responseCodes.${error.message}`),
-            variant: 'destructive',
-          });
+          setErrors(error);
         } else {
           toast({
             description: t('responseCodes.SOMETHING_WENT_WRONG'),
@@ -151,6 +129,7 @@ export const UserForm = ({ userId, userData }: IUserFormProps) => {
           {t('common.save')}
         </Button>
       </HookForm>
+      <ShowErrors error={errors} />
     </Form>
   );
 };

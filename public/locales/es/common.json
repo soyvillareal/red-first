@@ -48,7 +48,9 @@
         "avatar": "Avatar",
         "save": "Guardar",
         "enter": "Ingresar",
-        "new": "Nuevo"
+        "new": "Nuevo",
+        "errorOccurred": "An error occurred.",
+        "noData": "Sin datos."
     },
     "languages": {
         "title": "Idioma ({{lang}})",
@@ -184,7 +186,7 @@
         "PAGE_MUST_BE_NUMBER": "Algo no salió bien, por favor intente nuevamente.",
         "LIMIT_INVALID": "Algo no salió bien, por favor intente nuevamente.",
         "ORDER_INVALID": "Algo no salió bien, por favor intente nuevamente.",
-        "NOT_FOUND": "No se encontrarón movimientos :(",
+        "MOVEMENTS_NOT_FOUND": "No se encontrarón movimientos :(",
         "AMOUNT_ZERO": "Por favor ingrese un monto superior a cero.",
         "AMOUNT_NEGATIVE": "El monto no puede ser negativo.",
         "AMOUNT_TOO_HIGH": "El monto es demasiado alto.",

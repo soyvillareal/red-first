@@ -8,7 +8,7 @@ import {
   type IParsedMovementsChart,
   type TValidMonthsKeys,
 } from '@/types/graphql/resolvers';
-import { numberWithCurrency } from '@/lib/utils';
+import { indexBy, numberWithCurrency } from '@/lib/utils';
 import { responseCodes } from '@/server/utils';
 import { ReportsRepository } from '@/server/dataAccess/reports';
 import { fillArray } from '@/lib/utils';
@@ -18,13 +18,17 @@ import {
   GetAditionalMovements,
   MovementsChart,
 } from '@/server/graphql/schemas/reports';
+import { UsersRepository } from '@/server/dataAccess/users';
+import { IGetUsersReportByIds } from '@/types/dataAccess/users';
 
 @Resolver()
 export class ReportsResolvers {
   protected reportsRepository: ReportsRepository;
+  protected usersRepository: UsersRepository;
 
   constructor() {
     this.reportsRepository = new ReportsRepository();
+    this.usersRepository = new UsersRepository();
   }
 
   @Query(() => [MovementsChart], {
@@ -101,6 +105,16 @@ export class ReportsResolvers {
         throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }
 
+      const users = await this.usersRepository.getUsersReportByIds(
+        recentMovements.map((movement) => movement.userId),
+      );
+
+      if (users === null) {
+        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
+      }
+
+      const indexedUsers = indexBy<IGetUsersReportByIds>(users, 'id');
+
       const recentMovementsParsed: IGetRecentMovements[] = recentMovements.map(
         (movement) => {
           let newAmount = numberWithCurrency(movement.amount);
@@ -108,11 +122,14 @@ export class ReportsResolvers {
           if (movement.concept === 'expense') {
             newAmount = `-${newAmount}`;
           }
+
+          const userInfo = indexedUsers[movement.userId];
+
           return {
             id: movement.id,
-            name: movement.user.name ?? '',
-            email: movement.user.email ?? '',
-            image: movement.user.image ?? '',
+            name: userInfo.name ?? '',
+            email: userInfo.email ?? '',
+            image: userInfo.image ?? '',
             movement: newAmount,
             concept: movement.concept,
           };

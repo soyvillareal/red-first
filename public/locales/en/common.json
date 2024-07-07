@@ -48,7 +48,9 @@
         "avatar": "Avatar",
         "save": "Save",
         "enter": "Enter",
-        "new": "New"
+        "new": "New",
+        "errorOccurred": "An error occurred.",
+        "noData": "No data."
     },
     "languages": {
         "title": "Language ({{lang}})",
@@ -183,7 +185,7 @@
         "PAGE_MUST_BE_NUMBER": "Something went wrong, please try again.",
         "LIMIT_INVALID": "Something went wrong, please try again.",
         "ORDER_INVALID": "Something went wrong, please try again.",
-        "NOT_FOUND": "No movements found :(",
+        "MOVEMENTS_NOT_FOUND": "No movements found :(",
         "AMOUNT_ZERO": "Please enter an amount greater than zero.",
         "AMOUNT_NEGATIVE": "The amount cannot be negative.",
         "AMOUNT_TOO_HIGH": "The amount is too high.",

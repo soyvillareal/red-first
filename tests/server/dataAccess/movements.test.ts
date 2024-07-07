@@ -32,12 +32,12 @@ describe('MovementsRepository', () => {
 
       prisma.movements.create.mockResolvedValue(createdMovement);
 
-      const result = await repository.createUser(mockMovement);
+      const result = await repository.createMovement(mockMovement);
 
       expect(result).toEqual(createdMovement);
       expect(prisma.movements.create).toHaveBeenCalledWith({
         data: {
-          user: { connect: { id: mockMovement.userId } },
+          userId: mockMovement.userId,
           amount: mockMovement.amount,
           concept: mockMovement.concept,
           date: new Date(mockMovement.date),
@@ -57,7 +57,7 @@ describe('MovementsRepository', () => {
         new Error('Error creating movement'),
       );
 
-      const result = await repository.createUser(mockMovement);
+      const result = await repository.createMovement(mockMovement);
 
       expect(result).toBeNull();
     });

@@ -58,12 +58,7 @@ export const checkGetMovements: MiddlewareFn<IGraphQLContext> = async (
       }
     }
 
-    const fieldsValids: TValidsMovementTypes[] = [
-      'amount',
-      'userName',
-      'concept',
-      'date',
-    ];
+    const fieldsValids: TValidsMovementTypes[] = ['amount', 'concept', 'date'];
 
     if (fieldsValids.includes(fieldOrder) === false) {
       throw new Error(responseCodes.ERROR.INVALID_FIELD_ORDER);

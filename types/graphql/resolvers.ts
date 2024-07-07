@@ -30,7 +30,7 @@ export interface IGetMovementsWithTotal {
   total: string;
 }
 
-export type TValidsMovementTypes = keyof Omit<IGetMovements, 'id'>;
+export type TValidsMovementTypes = keyof Omit<IGetMovements, 'id' | 'userName'>;
 
 export type TValidMonthsKeys =
   | 'jan'

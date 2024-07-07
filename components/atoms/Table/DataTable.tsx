@@ -119,7 +119,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       {footerChildren}
-      <DataTablePagination table={table} />
+      <DataTablePagination loading={loading} table={table} />
     </div>
   );
 }

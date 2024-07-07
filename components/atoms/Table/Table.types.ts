@@ -10,6 +10,7 @@ import {
 import { ComponentType } from 'react';
 
 export interface DataTablePaginationProps<TData> {
+  loading: boolean;
   table: Table<TData>;
 }
 

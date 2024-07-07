@@ -1,19 +1,13 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ApolloError, useApolloClient, useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { MovementConcept } from '@prisma/client';
 
-import { cn, findQueryVariables } from '@/lib/utils';
-import {
-  AdditionalMovementsChartQuery,
-  MovementMutation,
-  MovementsChartQuery,
-  MovementsQuery,
-  ValidYearsQuery,
-} from '@/lib/apollo';
+import { cn } from '@/lib/utils';
+import { MovementMutation } from '@/lib/apollo';
 import { Button, buttonVariants } from '@/components/custom/Button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -35,50 +29,22 @@ import { toast } from '@/components/ui/use-toast';
 import { CalendarIcon } from '@/components/icons/CalendarIcon';
 import { HookForm } from '@/components/atoms/HookForm';
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon';
-import { IGetMovementsQueryParams } from '@/components/pages/reports/components/MovementsChart/MovementsChart.types';
-import { IPaginationArgs } from '@/types/graphql/pagination';
-import { TValidsMovementTypes } from '@/types/graphql/resolvers';
 
 import { type TMovementFormInputs } from './MovementForm.types';
 import { movementFormSchema } from './MovementForm.schema';
 import { defaultValues } from './MovementForm.constants';
+import { ShowErrors } from '@/components/custom/ShowErrors';
 
 export const MovementForm = () => {
   const { t } = useTranslation();
-  const client = useApolloClient();
-
+  const [errors, setErrors] = useState<ApolloError>();
   const methods = useForm<TMovementFormInputs>({
     resolver: zodResolver(movementFormSchema(t)),
     defaultValues,
   });
 
-  const movementsCharLastVariables =
-    findQueryVariables<IGetMovementsQueryParams>(client, MovementsChartQuery);
-  const movementsLastVariables = findQueryVariables<
-    IPaginationArgs<TValidsMovementTypes>
-  >(client, MovementsQuery, 'pagination');
-
-  const [createMovement, { loading: movementMutationLoading }] = useMutation(
-    MovementMutation,
-    {
-      refetchQueries: [
-        {
-          query: MovementsChartQuery,
-          variables: movementsCharLastVariables,
-        },
-        {
-          query: AdditionalMovementsChartQuery,
-        },
-        {
-          query: MovementsQuery,
-          variables: movementsLastVariables,
-        },
-        {
-          query: ValidYearsQuery,
-        },
-      ],
-    },
-  );
+  const [createMovement, { loading: movementMutationLoading }] =
+    useMutation(MovementMutation);
 
   const onSubmit = useCallback(
     async (data: TMovementFormInputs) => {
@@ -98,18 +64,10 @@ export const MovementForm = () => {
             ),
           });
           methods.reset();
-        } else {
-          toast({
-            description: t('responseCodes.SOMETHING_WENT_WRONG'),
-            variant: 'destructive',
-          });
         }
       } catch (error: unknown) {
         if (error instanceof ApolloError) {
-          toast({
-            description: t(`responseCodes.${error.message}`),
-            variant: 'destructive',
-          });
+          setErrors(error);
         } else {
           toast({
             description: t('responseCodes.SOMETHING_WENT_WRONG'),
@@ -219,6 +177,7 @@ export const MovementForm = () => {
           {t('common.enter')}
         </Button>
       </HookForm>
+      <ShowErrors error={errors} />
     </Form>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import {
   Bar,
@@ -27,7 +27,11 @@ const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
 
   const [
     getMovementsQuery,
-    { data: movementQueryData, loading: movementQueryLoading },
+    {
+      data: movementQueryData,
+      loading: movementQueryLoading,
+      error: movementQueryError,
+    },
   ] = useLazyQuery<
     {
       getMovementsChart: IGetMovementsChart[];
@@ -85,42 +89,59 @@ const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
     return [minValue, maxValue, ticks];
   }, [movementQueryData?.getMovementsChart]);
 
+  const MovementChartData = useCallback(() => {
+    return movementQueryLoading ? (
+      <MovementsChartSkeleton />
+    ) : (
+      <BarChart
+        data={movementQueryData?.getMovementsChart}
+        margin={{
+          top: 20,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis
+          dataKey="name"
+          stroke="#888888"
+          fontSize={12}
+          tickFormatter={(value: string) => t(`months.${value}`)}
+        />
+        <YAxis
+          ticks={ticks}
+          fontSize={12}
+          tickFormatter={(value) => formatNumber(value)}
+          domain={[minValue, maxValue]}
+        />
+        <Tooltip
+          formatter={(value: string, name: string) => [
+            numberWithCurrency(value),
+            t(`movements.${name}`),
+          ]}
+        />
+        <Bar dataKey={MovementConcept.income} fill="#82ca9d" />
+        <Bar dataKey={MovementConcept.expense} fill="#ff4040" />
+      </BarChart>
+    );
+  }, [
+    maxValue,
+    minValue,
+    movementQueryData?.getMovementsChart,
+    movementQueryLoading,
+    t,
+    ticks,
+  ]);
+
   return (
     <ResponsiveContainer width="100%" height={400}>
-      {movementQueryLoading ? (
-        <MovementsChartSkeleton />
+      {movementQueryError ? (
+        <p className="flex items-center justify-center h-full text-gray-500">
+          {t('common.noData')}
+        </p>
       ) : (
-        <BarChart
-          data={movementQueryData?.getMovementsChart}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="name"
-            stroke="#888888"
-            fontSize={12}
-            tickFormatter={(value: string) => t(`months.${value}`)}
-          />
-          <YAxis
-            ticks={ticks}
-            fontSize={12}
-            tickFormatter={(value) => formatNumber(value)}
-            domain={[minValue, maxValue]}
-          />
-          <Tooltip
-            formatter={(value: string, name: string) => [
-              numberWithCurrency(value),
-              t(`movements.${name}`),
-            ]}
-          />
-          <Bar dataKey={MovementConcept.income} fill="#82ca9d" />
-          <Bar dataKey={MovementConcept.expense} fill="#ff4040" />
-        </BarChart>
+        <MovementChartData />
       )}
     </ResponsiveContainer>
   );

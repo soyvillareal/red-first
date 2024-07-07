@@ -4,6 +4,8 @@ import {
   type IGetAccountDataByProviderIdResult,
   type IGetAccountDataResult,
   type IGetUserByIdResult,
+  type IGetUsersMovementByIds,
+  type IGetUsersReportByIds,
   type IGetUsersRepository,
   type IUpdateUserParams,
 } from '@/types/dataAccess/users';
@@ -188,6 +190,52 @@ export class UsersRepository {
       }
 
       return foundUser;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  public getUsersReportByIds = async (
+    userIds: string[],
+  ): Promise<IGetUsersReportByIds[] | null> => {
+    try {
+      const users = await this.prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          image: true,
+        },
+        where: {
+          id: {
+            in: userIds,
+          },
+        },
+      });
+
+      return users;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  public getUsersMovementByIds = async (
+    userIds: string[],
+  ): Promise<IGetUsersMovementByIds[] | null> => {
+    try {
+      const users = await this.prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+        },
+        where: {
+          id: {
+            in: userIds,
+          },
+        },
+      });
+
+      return users;
     } catch (error) {
       return null;
     }

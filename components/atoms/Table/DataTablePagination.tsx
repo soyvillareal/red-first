@@ -17,6 +17,7 @@ import { pageSizes } from '@/lib/contants';
 import { DataTablePaginationProps } from './Table.types';
 
 export function DataTablePagination<TData>({
+  loading,
   table,
 }: DataTablePaginationProps<TData>) {
   const { t } = useTranslation();
@@ -41,6 +42,7 @@ export function DataTablePagination<TData>({
             onValueChange={(value) => {
               table.setPageSize(Number(value));
             }}
+            disabled={loading}
           >
             <SelectTrigger className="h-8 w-[70px]">
               <SelectValue placeholder={table.getState().pagination.pageSize} />

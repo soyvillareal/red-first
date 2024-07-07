@@ -7,10 +7,10 @@ import {
 import {
   type ICreateUserRepository,
   type IGetMovementsRepository,
-  type IGetTotalAmountsResult,
 } from '@/types/dataAccess/movements';
 import { type IPaginationParams } from '@/types/graphql/pagination';
 import { TValidsMovementTypes } from '@/types/graphql/resolvers';
+import dayjs from 'dayjs';
 
 export class MovementsRepository {
   private prisma: PrismaClient;
@@ -19,7 +19,7 @@ export class MovementsRepository {
     this.prisma = new PrismaClient();
   }
 
-  public createUser = async ({
+  public createMovement = async ({
     userId,
     amount,
     concept,
@@ -28,10 +28,10 @@ export class MovementsRepository {
     try {
       const createdMovement = await this.prisma.movements.create({
         data: {
-          user: { connect: { id: userId } },
+          userId,
           amount,
           concept,
-          date: new Date(date),
+          date: dayjs(date).toDate(),
         },
       });
 
@@ -53,50 +53,33 @@ export class MovementsRepository {
     }: IPaginationParams<TValidsMovementTypes>,
   ): Promise<IGetMovementsRepository[] | null> => {
     try {
+      let whereQuery: Record<string, unknown> = {};
+      if (queryValue !== undefined && queryValue !== '') {
+        whereQuery = {
+          amount: {
+            contains: queryValue,
+            mode: 'insensitive',
+          },
+        };
+      }
       const movements = await this.prisma.movements.findMany({
         select: {
           id: true,
+          userId: true,
           amount: true,
           concept: true,
           date: true,
-          user: {
-            select: {
-              name: true,
-            },
-          },
         },
         where: {
           userId,
           concept: filterType || undefined,
-          OR: [
-            {
-              amount: {
-                contains: queryValue,
-                mode: 'insensitive',
-              },
-            },
-            {
-              user: {
-                name: {
-                  contains: queryValue,
-                  mode: 'insensitive',
-                },
-              },
-            },
-          ],
+          ...whereQuery,
         },
         skip,
         take: limit,
-        orderBy:
-          fieldOrder === 'userName'
-            ? {
-                user: {
-                  name: order,
-                },
-              }
-            : {
-                [fieldOrder]: order,
-              },
+        orderBy: {
+          [fieldOrder]: order,
+        },
       });
 
       return movements;
@@ -111,90 +94,24 @@ export class MovementsRepository {
     queryValue?: string,
   ): Promise<number | null> => {
     try {
+      let whereQuery: Record<string, unknown> = {};
+      if (queryValue !== undefined && queryValue !== '') {
+        whereQuery = {
+          amount: {
+            contains: queryValue,
+            mode: 'insensitive',
+          },
+        };
+      }
       const totalMovements = await this.prisma.movements.count({
         where: {
           userId,
           concept: filterType || undefined,
-          OR: [
-            {
-              amount: {
-                contains: queryValue,
-                mode: 'insensitive',
-              },
-            },
-            {
-              user: {
-                name: {
-                  contains: queryValue,
-                  mode: 'insensitive',
-                },
-              },
-            },
-          ],
+          ...whereQuery,
         },
       });
 
       return totalMovements;
-    } catch (error) {
-      return null;
-    }
-  };
-
-  public getTotalAmounts = async (
-    userId: string,
-    {
-      limit,
-      skip,
-      order,
-      filterType,
-      queryValue,
-      fieldOrder = 'date',
-    }: IPaginationParams<TValidsMovementTypes>,
-  ): Promise<IGetTotalAmountsResult[] | undefined | null> => {
-    try {
-      const totalAmounts = await this.prisma.movements.findMany({
-        select: {
-          amount: true,
-        },
-        where: {
-          userId,
-          concept: filterType || undefined,
-          OR: [
-            {
-              amount: {
-                contains: queryValue,
-                mode: 'insensitive',
-              },
-            },
-            {
-              user: {
-                name: {
-                  contains: queryValue,
-                  mode: 'insensitive',
-                },
-              },
-            },
-          ],
-        },
-        skip,
-        take: limit,
-        orderBy:
-          fieldOrder === 'userName'
-            ? {
-                user: {
-                  name: order,
-                },
-              }
-            : {
-                [fieldOrder]: order,
-              },
-      });
-
-      if (totalAmounts === null) {
-        return undefined;
-      }
-
-      return totalAmounts;
     } catch (error) {
       return null;
     }

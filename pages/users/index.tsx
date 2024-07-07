@@ -22,6 +22,7 @@ import { EUserRole } from '@/types';
 import { IGetUsers, TValidsUserTypes } from '@/types/graphql/resolvers';
 
 import columns from '@/components/pages/users/users.constants';
+import { ShowErrors } from '@/components/custom/ShowErrors';
 
 const Users = () => {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ const Users = () => {
 
   const [
     getMovementsQuery,
-    { data: userQueryData, loading: userQueryLoading },
+    { data: userQueryData, loading: userQueryLoading, error: userQueryError },
   ] = useLazyQuery<
     {
       getUsers: IPageOptionsDataMeta<IGetUsers[]>;
@@ -102,6 +103,7 @@ const Users = () => {
           </div>
         </ContextLayout.Body>
       </DashboardLayout>
+      <ShowErrors error={userQueryError} />
     </ContextLayout>
   );
 };

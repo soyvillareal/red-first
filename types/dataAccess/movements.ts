@@ -1,4 +1,4 @@
-import { MovementConcept } from '@prisma/client';
+import { type MovementConcept } from '@prisma/client';
 
 export interface ICreateUserRepository {
   userId: string;
@@ -9,14 +9,8 @@ export interface ICreateUserRepository {
 
 export interface IGetMovementsRepository {
   id: string;
+  userId: string;
   amount: string;
   concept: MovementConcept;
   date: Date;
-  user: {
-    name: string | null;
-  };
-}
-
-export interface IGetTotalAmountsResult {
-  amount: string;
 }

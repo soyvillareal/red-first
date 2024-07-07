@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { saveAs } from 'file-saver';
 import { type TFunction } from 'next-i18next';
-import { ApolloClient, DocumentNode } from '@apollo/client';
+import { ApolloClient, ApolloError, DocumentNode } from '@apollo/client';
 
 import { type IReportsCSV } from '@/components/pages/reports/reports.types';
 import {
@@ -169,4 +169,16 @@ export const findQueryVariables = <T = Record<string, string>>(
   }
 
   return {} as T;
+};
+
+export const indexBy = <T>(arr: T[], key: keyof T) =>
+  arr.reduce((acc, curr) => {
+    const currKey = curr[key] as unknown as string;
+    acc[currKey] = curr;
+    return acc;
+  }, {} as Record<string, T>);
+
+export const findGraphQLErrors = (error: ApolloError): string[] => {
+  const errors = error.graphQLErrors.map((err) => err.message);
+  return errors;
 };

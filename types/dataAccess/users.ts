@@ -32,3 +32,15 @@ export interface IGetAccountDataByProviderIdResult {
   id: string;
   userId: string;
 }
+
+export interface IGetUsersReportByIds {
+  id: string;
+  name: string | null;
+  email: string | null;
+  image: string | null;
+}
+
+export interface IGetUsersMovementByIds {
+  id: string;
+  name: string | null;
+}

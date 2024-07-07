@@ -8,15 +8,9 @@ export interface IGetMovementsChartRepository {
 
 export interface IGetRecentMovementsRepository {
   id: string;
+  userId: string;
   amount: string;
   concept: MovementConcept;
-  createdAt: Date;
-  user: {
-    id: string;
-    name: string | null;
-    email: string | null;
-    image: string | null;
-  };
 }
 
 export interface IGetBalanceResult {

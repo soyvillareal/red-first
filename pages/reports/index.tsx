@@ -31,6 +31,7 @@ import RecentMovements from '@/components/pages/reports/components/RecentMovemen
 import MovementsChart from '@/components/pages/reports/components/MovementsChart';
 import { IReportsCSV } from '@/components/pages/reports/reports.types';
 import SelectorYear from '@/components/pages/reports/components/SelectorYear';
+import { ShowErrors } from '@/components/custom/ShowErrors';
 
 export const Dashboard = () => {
   const { t } = useTranslation();
@@ -44,6 +45,7 @@ export const Dashboard = () => {
     {
       data: additionalMovementQueryData,
       loading: additionalMovementQueryLoading,
+      error: additionalMovementQueryError,
     },
   ] = useLazyQuery<{
     getAdditionalMovements: IGetAdditionalMovements;
@@ -63,7 +65,7 @@ export const Dashboard = () => {
         }));
       }
     })();
-  }, [getAdditionalMovements]);
+  }, [t, getAdditionalMovements]);
 
   const handleClickDownload = useCallback(() => {
     if (reportData !== null) {
@@ -147,7 +149,7 @@ export const Dashboard = () => {
                   />
                 </CardContent>
               </Card>
-              <div>
+              <div className="flex flex-col h-full">
                 <Card className="border-b-0">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-secondary-foreground text-sm font-medium">
@@ -169,15 +171,13 @@ export const Dashboard = () => {
                             : 'text-green',
                         )}
                       >
-                        {
-                          additionalMovementQueryData?.getAdditionalMovements
-                            .balance
-                        }
+                        {additionalMovementQueryData?.getAdditionalMovements
+                          .balance ?? '$ 0.00'}
                       </div>
                     )}
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="flex flex-col h-full">
                   <CardHeader>
                     <CardTitle className="text-secondary-foreground">
                       {t('dashboard.recentMovements')}
@@ -190,19 +190,20 @@ export const Dashboard = () => {
                           replace: {
                             movements:
                               additionalMovementQueryData
-                                ?.getAdditionalMovements.movements,
+                                ?.getAdditionalMovements.movements ?? '$ 0.00',
                           },
                         })}
                       </CardDescription>
                     )}
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="h-full">
                     <RecentMovements
                       isLoading={additionalMovementQueryLoading}
                       movements={
                         additionalMovementQueryData?.getAdditionalMovements
                           .recentMovements
                       }
+                      error={additionalMovementQueryError}
                     />
                   </CardContent>
                 </Card>
@@ -210,6 +211,7 @@ export const Dashboard = () => {
             </div>
           </div>
         </ContextLayout.Body>
+        <ShowErrors error={additionalMovementQueryError} />
       </DashboardLayout>
     </ContextLayout>
   );

@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { MovementConcept } from '@prisma/client';
 
 import {
+  IGetMovements,
   type IGetMovementsWithTotal,
   type TValidsMovementTypes,
 } from '@/types/graphql/resolvers';
@@ -18,7 +19,7 @@ import {
   type IPaginationArgs,
   type IPaginationParams,
 } from '@/types/graphql/pagination';
-import { numberWithCurrency } from '@/lib/utils';
+import { indexBy, numberWithCurrency } from '@/lib/utils';
 import {
   checkCreateMovement,
   checkGetMovements,
@@ -38,13 +39,17 @@ import {
   pageMeta,
   responseCodes,
 } from '@/server/utils';
+import { UsersRepository } from '@/server/dataAccess/users';
+import { IGetUsersMovementByIds } from '@/types/dataAccess/users';
 
 @Resolver()
 export class MovementsResolvers {
   protected movementsRepository: MovementsRepository;
+  protected usersRepository: UsersRepository;
 
   constructor() {
     this.movementsRepository = new MovementsRepository();
+    this.usersRepository = new UsersRepository();
   }
 
   @Mutation(() => String, {
@@ -65,7 +70,7 @@ export class MovementsResolvers {
         throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }
 
-      const createdMovement = await this.movementsRepository.createUser({
+      const createdMovement = await this.movementsRepository.createMovement({
         userId,
         amount,
         concept,
@@ -129,24 +134,6 @@ export class MovementsResolvers {
         fieldOrder,
       };
 
-      const totalAmounts = await this.movementsRepository.getTotalAmounts(
-        userId,
-        pageFilterOptions,
-      );
-
-      if (totalAmounts === null) {
-        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-      }
-
-      if (totalAmounts === undefined) {
-        throw new Error(responseCodes.MOVEMENTS.NOT_FOUND);
-      }
-
-      const sumMovements = totalAmounts.reduce((acc, current) => {
-        const currentAmount = BigInt(current.amount);
-        return acc + currentAmount;
-      }, BigInt(0));
-
       const movements = await this.movementsRepository.getMovements(
         userId,
         pageFilterOptions,
@@ -156,25 +143,33 @@ export class MovementsResolvers {
         throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }
 
-      const parsedMovements = movements.map((movement) => {
-        let userName = '';
-        if (
-          movement.user !== null &&
-          movement.user !== undefined &&
-          movement.user.name !== null &&
-          movement.user.name !== undefined
-        ) {
-          userName = movement.user.name;
-        }
+      const users = await this.usersRepository.getUsersReportByIds(
+        movements.map((movement) => movement.userId),
+      );
 
-        return {
+      if (users === null) {
+        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
+      }
+
+      const indexedUsers = indexBy<IGetUsersMovementByIds>(users, 'id');
+
+      let sumMovements = BigInt(0);
+      const parsedMovements: IGetMovements[] = [];
+      for (let i = 0; i < movements.length; i++) {
+        const movement = movements[i];
+        const currentAmount = BigInt(movement.amount);
+
+        const userInfo = indexedUsers[movement.userId];
+
+        parsedMovements.push({
           id: movement.id,
-          userName,
+          userName: userInfo.name ?? '',
           amount: numberWithCurrency(movement.amount),
           concept: movement.concept,
           date: dayjs(movement.date).format('YYYY-MM-DD'),
-        };
-      });
+        });
+        sumMovements += currentAmount;
+      }
 
       const entities = pageMeta<IGetMovementsWithTotal>(
         {

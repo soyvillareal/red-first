@@ -28,6 +28,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { DataTableFooterSkeleton } from '@/components/skeleton/DataTableFooterSkeleton';
 
 import { columnsFn } from '@/components/pages/movements/movements.constants';
+import { ShowErrors } from '@/components/custom/ShowErrors';
 
 const Movements = () => {
   const { t } = useTranslation();
@@ -43,7 +44,11 @@ const Movements = () => {
 
   const [
     getMovementsQuery,
-    { data: movementQueryData, loading: movementQueryLoading },
+    {
+      data: movementQueryData,
+      loading: movementQueryLoading,
+      error: movementQueryError,
+    },
   ] = useLazyQuery<
     {
       getMovements: IPageOptionsDataMeta<IGetMovementsWithTotal>;
@@ -134,6 +139,7 @@ const Movements = () => {
           </div>
         </ContextLayout.Body>
       </DashboardLayout>
+      <ShowErrors error={movementQueryError} />
     </ContextLayout>
   );
 };

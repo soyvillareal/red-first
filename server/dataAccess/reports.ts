@@ -66,17 +66,9 @@ export class ReportsRepository {
       const movements = await this.prisma.movements.findMany({
         select: {
           id: true,
-          user: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              image: true,
-            },
-          },
+          userId: true,
           amount: true,
           concept: true,
-          createdAt: true,
         },
         orderBy: {
           createdAt: 'desc',
