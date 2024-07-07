@@ -43,7 +43,7 @@ export const authOptions: AuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: true,
+        secure: env.NODE_ENV === 'production',
       },
     },
     callbackUrl: {
@@ -51,7 +51,7 @@ export const authOptions: AuthOptions = {
       options: {
         sameSite: 'lax',
         path: '/',
-        secure: true,
+        secure: env.NODE_ENV === 'production',
       },
     },
     csrfToken: {
@@ -60,7 +60,7 @@ export const authOptions: AuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: true,
+        secure: env.NODE_ENV === 'production',
       },
     },
     pkceCodeVerifier: {
@@ -69,7 +69,7 @@ export const authOptions: AuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: true,
+        secure: env.NODE_ENV === 'production',
         maxAge: COOKIES_LIFE_TIME,
       },
     },
@@ -79,7 +79,7 @@ export const authOptions: AuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: true,
+        secure: env.NODE_ENV === 'production',
         maxAge: COOKIES_LIFE_TIME,
       },
     },
@@ -89,7 +89,7 @@ export const authOptions: AuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: true,
+        secure: env.NODE_ENV === 'production',
       },
     },
   },
@@ -105,14 +105,14 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async signIn({ profile }) {
-      if (profile === undefined || profile === null) {
-        return false;
-      }
-
       const rolesIdentifier =
         env.AUTH0_ROLES_IDENTIFIER as keyof TProfileWithRoles;
       const profileWithRoles = profile as TProfileWithRoles;
       const userRoles = profileWithRoles[rolesIdentifier];
+
+      if (profile === undefined || profile === null) {
+        return false;
+      }
 
       if (userRoles && userRoles.length > 0) {
         const accountProviderId = profileWithRoles.sub;

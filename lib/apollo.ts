@@ -29,13 +29,12 @@ const authLink = setContext(async (_, { headers }) => {
 export const apolloClient = new ApolloClient({
   link: from([authLink, httpLink]),
   cache: new InMemoryCache(),
+  credentials: 'same-origin',
 });
 
 export const MovementMutation = gql`
   mutation ($concept: EMovementConcept!, $amount: String!, $date: String!) {
-    createMovement(
-      movement: { concept: $concept, amount: $amount, date: $date }
-    )
+    createMovement(concept: $concept, amount: $amount, date: $date)
   }
 `;
 
@@ -83,7 +82,7 @@ export const MovementsQuery = gql`
 
 export const UserMutation = gql`
   mutation ($userId: String!, $name: String!, $role: EUserRole!) {
-    updateUser(user: { userId: $userId, name: $name, role: $role })
+    updateUser(userId: $userId, name: $name, role: $role)
   }
 `;
 

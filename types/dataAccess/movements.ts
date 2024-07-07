@@ -1,4 +1,4 @@
-import { type MovementConcept } from '@prisma/client';
+import { MovementConcept } from '@prisma/client';
 
 export interface ICreateUserRepository {
   userId: string;

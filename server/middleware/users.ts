@@ -9,7 +9,7 @@ export const checkUpdateUser: MiddlewareFn<IGraphQLContext> = async (
   next,
 ) => {
   try {
-    const { name } = args.user;
+    const { name } = args;
 
     if (name === '') {
       throw new Error(responseCodes.USERS.NAME_EMPTY);

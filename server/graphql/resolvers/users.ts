@@ -13,11 +13,7 @@ import {
   checkIsLogged,
   checkPagination,
 } from '@/server/middleware';
-import {
-  IGetUsers,
-  type IUpdateUserArgs,
-  TValidsUserTypes,
-} from '@/types/graphql/resolvers';
+import { IGetUsers, TValidsUserTypes } from '@/types/graphql/resolvers';
 import {
   EUserRole,
   EUserRoleRoleNormalized,
@@ -36,7 +32,7 @@ import {
   IPaginationParams,
 } from '@/types/graphql/pagination';
 import { checkGetUsers, checkUpdateUser } from '@/server/middleware/users';
-import { PaginatedUsers, UpdateUserArgs } from '@/server/graphql/schemas/users';
+import { PaginatedUsers } from '@/server/graphql/schemas/users';
 import { PaginationArgs } from '@/server/graphql/schemas/pagination';
 
 @Resolver()
@@ -51,17 +47,21 @@ export class UsersResolvers {
     this.usersRepository = new UsersRepository();
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String, {
+    name: 'updateUser',
+    description: 'Update user',
+  })
   @UseMiddleware(checkIsLogged, checkUpdateUser, checkIsAdmin)
   async updateUser(
-    @Arg('user', () => UpdateUserArgs)
-    { userId: toEditUserId, name, role }: IUpdateUserArgs,
+    @Arg('userId', () => String, { nullable: false }) userId: string,
+    @Arg('name', () => String) name: string,
+    @Arg('role', () => EUserRoleRoleNormalized) role: EUserRoleRoleNormalized,
     @Ctx() context: IGraphQLContext,
   ) {
     try {
       const userEditorId = context?.session?.user.id as string;
 
-      if (userEditorId === toEditUserId) {
+      if (userEditorId === userId) {
         const foundUserEditor = await this.usersRepository.getUserById(
           userEditorId,
         );
@@ -82,9 +82,7 @@ export class UsersResolvers {
         }
       }
 
-      const foundAccount = await this.usersRepository.getAccountData(
-        toEditUserId,
-      );
+      const foundAccount = await this.usersRepository.getAccountData(userId);
 
       if (foundAccount === null) {
         throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
@@ -103,13 +101,10 @@ export class UsersResolvers {
         throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
       }
 
-      const createdMovement = await this.usersRepository.updateUser(
-        toEditUserId,
-        {
-          name,
-          role: this.parsedRoles[role],
-        },
-      );
+      const createdMovement = await this.usersRepository.updateUser(userId, {
+        name,
+        role: this.parsedRoles[role],
+      });
 
       if (createdMovement === null) {
         throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);

@@ -40,3 +40,4 @@ next-env.d.ts
 *-lock.json
 
 .env
+certificates

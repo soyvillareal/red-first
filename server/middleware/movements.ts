@@ -11,7 +11,7 @@ export const checkCreateMovement: MiddlewareFn<IGraphQLContext> = async (
   next,
 ) => {
   try {
-    const { amount, date } = args.movement;
+    const { amount, date } = args;
 
     const amountNumber = BigInt(amount);
     // Validating the maximun and minimum value for BigInt in Postgres

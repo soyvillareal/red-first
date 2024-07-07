@@ -7,7 +7,7 @@ import {
   UseMiddleware,
 } from 'type-graphql';
 import dayjs from 'dayjs';
-import { type MovementConcept } from '@prisma/client';
+import { MovementConcept } from '@prisma/client';
 
 import {
   type IGetMovementsWithTotal,
@@ -30,10 +30,7 @@ import {
 } from '@/server/middleware';
 import { type IGraphQLContext } from '@/types';
 import { MovementsRepository } from '@/server/dataAccess/movements';
-import {
-  CreateMovementArgs,
-  PaginatedMovements,
-} from '@/server/graphql/schemas/movements';
+import { PaginatedMovements } from '@/server/graphql/schemas/movements';
 import { PaginationArgs } from '@/server/graphql/schemas/pagination';
 import {
   getSkipped,
@@ -50,11 +47,15 @@ export class MovementsResolvers {
     this.movementsRepository = new MovementsRepository();
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String, {
+    name: 'createMovement',
+    description: 'Create movement',
+  })
   @UseMiddleware(checkIsLogged, checkCreateMovement, checkIsUser)
   async createMovement(
-    @Arg('movement', () => CreateMovementArgs)
-    { amount, concept, date }: CreateMovementArgs,
+    @Arg('amount', () => String) amount: string,
+    @Arg('date', () => String) date: string,
+    @Arg('concept', () => MovementConcept) concept: MovementConcept,
     @Ctx() context: IGraphQLContext,
   ) {
     try {
