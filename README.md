@@ -63,10 +63,12 @@ DATABASE_URL=postgresql://username:password@hostname:5432/red_first?schema=publi
      };
      ```
 
+     Si decides no modificar `https://auth0.roles.redfirst.com/` entonces este debe ser el valor de tu variable de entorno `AUTH0_ROLES_IDENTIFIER`
+
   5. Una vez escrito esto, haz clic en **Deploy**
 
 - La variable de entorno `GA_TRACKING_ID` la puedes obtener creando una aplicación de [Google Analytics](https://support.google.com/analytics/answer/9304153?hl=en).
-- La variable de entorno `DATABASE_URL` es una url de conexión a postgresql y está relacionada con la configuración de las variables de entorno en el servicio **db** en el archivo `docker-compose.yml`. Esta variable de entorno se compone de:
+- La variable de entorno `DATABASE_URL` es una url de conexión a postgresql y está relacionada con la configuración de las variables de entorno en el servicio **db** en el archivo `docker-compose.yml` (Solo aplica para la inicialización con Docker). Esta variable de entorno se compone de:
   - Hostname: db
   - Puerto: 5432
   - Usuario: postgres
