@@ -52,6 +52,7 @@ export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => [
       </div>
     ),
     filterFn: (row, id, value) => value.includes(row.getValue(id)),
+    enableSorting: false,
   },
   {
     accessorKey: 'concept',
