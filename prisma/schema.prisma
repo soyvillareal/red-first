@@ -26,7 +26,7 @@ enum UserRole {
 model Movements {
   id        String          @unique @default(uuid())
   userId    String
-  amount    String
+  amount    Decimal
   concept   MovementConcept
   date      DateTime        @default(now()) @map(name: "date")
   updatedAt DateTime        @default(now()) @map(name: "updated_at")
