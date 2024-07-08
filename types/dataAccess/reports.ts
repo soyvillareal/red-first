@@ -1,7 +1,8 @@
-import { MovementConcept } from '@prisma/client';
+import { type MovementConcept } from '@prisma/client';
+import { type Decimal } from '@prisma/client/runtime/library';
 
 export interface IGetMovementsChartRepository {
-  amount: string;
+  amount: Decimal;
   concept: MovementConcept;
   date: Date;
 }
@@ -9,7 +10,7 @@ export interface IGetMovementsChartRepository {
 export interface IGetRecentMovementsRepository {
   id: string;
   userId: string;
-  amount: string;
+  amount: Decimal;
   concept: MovementConcept;
 }
 

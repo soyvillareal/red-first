@@ -71,10 +71,13 @@ export class ReportsResolvers {
         const movementDate = dayjs(movement.date);
         if (movementDate.year() === parsedYear.year()) {
           const monthIndex = movementDate.month();
+          const decimalValueAsString = movement.amount.toString();
           if (movement.concept === 'income') {
-            parsedMovementsChart[monthIndex].income += BigInt(movement.amount);
+            parsedMovementsChart[monthIndex].income +=
+              BigInt(decimalValueAsString);
           } else if (movement.concept === 'expense') {
-            parsedMovementsChart[monthIndex].expense += BigInt(movement.amount);
+            parsedMovementsChart[monthIndex].expense +=
+              BigInt(decimalValueAsString);
           }
         }
       });
@@ -117,7 +120,7 @@ export class ReportsResolvers {
 
       const recentMovementsParsed: IGetRecentMovements[] = recentMovements.map(
         (movement) => {
-          let newAmount = numberWithCurrency(movement.amount);
+          let newAmount = numberWithCurrency(movement.amount.toString());
 
           if (movement.concept === 'expense') {
             newAmount = `-${newAmount}`;

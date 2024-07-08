@@ -157,14 +157,15 @@ export class MovementsResolvers {
       const parsedMovements: IGetMovements[] = [];
       for (let i = 0; i < movements.length; i++) {
         const movement = movements[i];
-        const currentAmount = BigInt(movement.amount);
+        const decimalValueAsString = movement.amount.toString();
+        const currentAmount = BigInt(decimalValueAsString);
 
         const userInfo = indexedUsers[movement.userId];
 
         parsedMovements.push({
           id: movement.id,
           userName: userInfo.name ?? '',
-          amount: numberWithCurrency(movement.amount),
+          amount: numberWithCurrency(decimalValueAsString),
           concept: movement.concept,
           date: dayjs(movement.date).format('YYYY-MM-DD'),
         });
