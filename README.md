@@ -1,10 +1,25 @@
 ## Prueba Técnica para Desarrollador Fullstack Senior
 
-### Intrucciones para ejecutar el proyecto localmente con o sin Docker
+## Table of contents:
+
+- [Variables de entorno](#variables-de-entorno)
+- [Instrucciones para iniciar con Docker](#instrucciones-para-iniciar-con-docker)
+- [Instrucciones para iniciar sin Docker](#instrucciones-para-iniciar-sin-docker)
+- [Despliegue en Vercel](#despliegue-en-vercel)
+- [Obersvaciones](#observaciones)
+- [Vistas previas del proyecto](#vistas-previas-del-proyecto)
+  - [1. Inicio](#1-inicio)
+  - [2. Reportes](#2-reportes)
+  - [3. Movimientos](#3-movimientos)
+  - [4. Nuevo movimiento](#4-nuevo-movimiento)
+  - [5. Usuarios](#5-usuarios)
+  - [6. Editar usuario](#6-editar-usuario)
+
+## Variables de entorno
 
 Primero debes modificar las variables de entorno, ten en cuenta que, para que el contenedor docker se ejcute sin problemas, debes crear un archivo llamado ".env.local" y dentro colocaras las variables de entorno que reposan en ".env.example". Aquí tienes que agregar los valores correspondientes de las variables de entorno y que hace cada una.
 
-```
+```bash
 # This is the base URL of the application
 NEXTAUTH_URL=http://localhost:3000
 # The domain of the Auth0 tenant
@@ -25,39 +40,43 @@ GA_TRACKING_ID=G-XXXXXXXXXX
 DATABASE_URL=postgresql://username:password@hostname:5432/red_first?schema=public
 ```
 
-### Nota: 
+### Nota:
 
 - Las siguientes variables se obtenienen al crear una aplicación de [Auth0](https://auth0.com/): `AUTH0_DOMAIN`, `AUTH0_CLIENT_ID` y `AUTH0_CLIENT_SECRET`. Puedes apoyarte en la [documentación oficial de Auth0](https://next-auth.js.org/providers/auth0).
 - La variable `AUTH0_ROLES_IDENTIFIER` tambien se obtiene de la configuración de Auth0, pero para esta, hay una configuración adicional.
-    1. Primero necesitaras configurar un flujo de Auth0, para esto tienes que dirijirte a **Actions** > **Flows** > **Login**
-    2. Una vez dentro de **Login** debes dar clic en el botón con simbolo "Más" (**+**), esta vista se encuentra úbicada en el lado derecho en la sección **Add Action**.
-    3. Te aparecerán varias opciones, debes seleccionar la que dice "Build from scratch". Una vez aquí, llena los campos y haz clic en **Create**.
-    4. Al dar clic en crear, esto te llevará a otra vista donde puedes escribir código, aquí vas a escribir lo siguiente:
-        ```
-        exports.onExecutePostLogin = async (event, api) => {
-            const namespace = 'https://auth0.roles.redfirst.com/';
-            const roles = event.authorization.roles;
-            
-            // Añadir roles al token de acceso
-            api.accessToken.setCustomClaim(`${namespace}roles`, roles);
-            
-            // Añadir roles al token de ID (opcional)
-            api.idToken.setCustomClaim(`${namespace}roles`, roles);
-        };
-        ```
-    5. Una vez escrito esto, haz clic en **Deploy**
+
+  1. Primero necesitaras configurar un flujo de Auth0, para esto tienes que dirijirte a **Actions** > **Flows** > **Login**
+  2. Una vez dentro de **Login** debes dar clic en el botón con simbolo "Más" (**+**), esta vista se encuentra úbicada en el lado derecho en la sección **Add Action**.
+  3. Te aparecerán varias opciones, debes seleccionar la que dice "Build from scratch". Una vez aquí, llena los campos y haz clic en **Create**.
+  4. Al dar clic en crear, esto te llevará a otra vista donde puedes escribir código, aquí vas a escribir lo siguiente:
+
+     ```bash
+     exports.onExecutePostLogin = async (event, api) => {
+         const namespace = 'https://auth0.roles.redfirst.com/';
+         const roles = event.authorization.roles;
+
+         // Añadir roles al token de acceso
+         api.accessToken.setCustomClaim(`${namespace}roles`, roles);
+
+         // Añadir roles al token de ID (opcional)
+         api.idToken.setCustomClaim(`${namespace}roles`, roles);
+     };
+     ```
+
+  5. Una vez escrito esto, haz clic en **Deploy**
+
 - La variable de entorno `GA_TRACKING_ID` la puedes obtener creando una aplicación de [Google Analytics](https://support.google.com/analytics/answer/9304153?hl=en).
 - La variable de entorno `DATABASE_URL` es una url de conexión a postgresql y está relacionada con la configuración de las variables de entorno en el servicio **db** en el archivo `docker-compose.yml`. Esta variable de entorno se compone de:
-    - Hostname: db
-    - Puerto: 5432
-    - Usuario: postgres
-    - Contraseña: 123456
-    - Base de datos: redfirst
-        - Esta base de datos debe ser creada una vez se levante el contenedor de Docker mediante [pgadmin](http://localhost:5050) o por consola.
+  - Hostname: db
+  - Puerto: 5432
+  - Usuario: postgres
+  - Contraseña: 123456
+  - Base de datos: redfirst
+    - Esta base de datos debe ser creada una vez se levante el contenedor de Docker mediante [pgadmin](http://localhost:5050) o por consola.
 
-### Comandos con Docker
+## Instrucciones para iniciar con Docker
 
-```
+```bash
 docker compose up -d
 
 # Antes de ejecutar esto, asegurate de haber creado una base de datos mediante pgadmin o la consola.
@@ -67,12 +86,7 @@ npm i -g dotenv-cli
 dotenv -e .env.local npx prisma migrate deploy
 ```
 
-## En caso de querer iniciar el proyecto localmente sin Docker, necesitaras lo siguiente
-
-- NodeJS >= v18.19.1
-- Postgresql 16.3
-
-### Comandos sin Docker
+## Instrucciones para iniciar sin Docker
 
 ```
 npm install
@@ -82,3 +96,82 @@ npm i -g dotenv-cli
 npm run dev
 ```
 
+### Nota:
+
+En caso de querer iniciar el proyecto localmente sin Docker, necesitaras lo siguiente
+
+- NodeJS >= v18.19.1
+- Postgresql 16.3
+
+## Despliegue en Vercel
+
+1. Para esto necesitaras tener una cuenta en [vercel.com](https://vercel.com).
+2. Una vez que hayas ingresado a tu cuenta de Vercel, tienes que enlazar tu cuenta de GitHub con Vercel (en caso de no estar enlazada).
+3. Tienes que importar tu repositorio, esto lo puedes hacer dirijiendote a **Overview** > **Add New** > **Project**. Una vez aquí, puedes buscar el repositorio e importalo desde GitHub.
+2. Configura las variables de entorno en Vercel, para esto debes dirijirte a **Settings** > **Environment Variables**.
+3. Una vez dentro de la pestaña para crear las variables de entorno, asegurate de crear las siguientes variables como secretas.
+    - `DATABASE_URL`
+    - `JWT_SECRET`
+    - `AUTH0_CLIENT_SECRET`
+    - `AUTH0_CLIENT_ID`
+4. Tambien debes crear las demas variables de entorno, sin embargo, estas pueder ser o no secretas.
+    - `GA_TRACKING_ID`
+    - `NEXTAUTH_URL`
+    - `AUTH0_SCOPE`
+    - `AUTH0_ROLES_IDENTIFIER`
+    - `AUTH0_DOMAIN`
+5. Luego de esto, puedes hacer push en tu repositorio de GitHub, esto automaticamente causará un despliegue en Vercel.
+
+Tambien puede desplegar su proyecto en vercel utilizando [Vercel CLI](https://vercel.com/docs/deployments/overview#vercel-cli).
+
+Puede encontrar el proyecto [desplegado en vercel](https://red-first.vercel.app/)
+
+## Observaciones
+
+#### El proyecto se realizó teniendo en cuenta aspectos de seguridad como:
+- Implementación efectiva de control de acceso basado en roles (RBAC).
+- Protección adecuada de los datos sensibles.
+- Limitaciones de throttling para la API de GraphQL.
+- Herramienta de monitoreo de logs
+
+#### Se deben tener en cuenta las siguientes consieraciones:
+- Se desactivó el uso de la cache con Apollo Client debido a problemas con la experiencia de usuario al realizar mutaciones y dirigirse a vistas que consumen queries de GraphQL.
+
+<span style="color: red;font-size:1.2rem;font-weight:bold">Importante: </span> se que desativar la cache para forzar las peticiones no es la mejor practica, sin embargo, es la solución mas rapida. Pero esto, no tiene porque permanecer así en el futuro.
+
+#### Caracteristas implementadas que no estaban contempladas en el alcance:
+- Internacionalziación (next-i18next)
+- **Pagina de inicio**: Me tomé libertades en cuanto a la pagina de inicio he intenté hacer algo diferente.
+- **Diseño responsivo**: sé que en las notas que componen las indicaciones de la prueba tecnica, dice que *El aplicativo no debe contener diseño responsivo*, sin embargo, quise ir un poco mas allá y agregarle un diseño responsivo para que fuera mas amigable para los usuarios ya que esto en terminos de experiencia de usuario es muy favorable.
+- En lugar de 3 pruebas unitarias, me concentré en realizar todas las pruebas que me eran posibles, en total realicé 105 pruebas unitarias enfocado en los puntos criticos de la aplicación (mas enfocado en el backend) como lo son:
+    - Middlewares
+    - Cliente de Prisma
+    - Repositorios
+    - Utilidades (Cliente y servidor)
+    - Autenticación
+
+## Vistas previas del proyecto
+
+### 1. Inicio
+
+![home](https://red-first.vercel.app/docs/home.png)
+
+### 2. Reportes
+
+![home](https://red-first.vercel.app/docs/reports.png)
+
+### 3. Movimientos
+
+![home](https://red-first.vercel.app/docs/movements.png)
+
+### 4. Nuevo movimiento
+
+![home](https://red-first.vercel.app/docs/new-movement.png)
+
+### 5. Usuarios
+
+![home](https://red-first.vercel.app/docs/users.png)
+
+### 6. Editar usuario
+
+![home](https://red-first.vercel.app/docs/edit-user.png)
