@@ -49,3 +49,10 @@ export type TNoStandardQueryDefinitions = {
     value: string;
   };
 } & DocumentNode['definitions'][0];
+
+export interface IGAEvent {
+  action: string;
+  category: string;
+  label: string;
+  value: number;
+}

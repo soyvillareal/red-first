@@ -89,7 +89,7 @@ const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
     return [minValue, maxValue, ticks];
   }, [movementQueryData?.getMovementsChart]);
 
-  const MovementChartData = useCallback(() => {
+  const renderChartData = useCallback(() => {
     return movementQueryLoading ? (
       <MovementsChartSkeleton />
     ) : (
@@ -126,12 +126,12 @@ const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
       </BarChart>
     );
   }, [
+    t,
+    ticks,
     maxValue,
     minValue,
     movementQueryData?.getMovementsChart,
     movementQueryLoading,
-    t,
-    ticks,
   ]);
 
   return (
@@ -141,7 +141,7 @@ const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
           {t('common.noData')}
         </p>
       ) : (
-        <MovementChartData />
+        renderChartData()
       )}
     </ResponsiveContainer>
   );

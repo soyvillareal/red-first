@@ -13,6 +13,7 @@ export const env = {
   AUTH0_ROLES_IDENTIFIER: process.env.AUTH0_ROLES_IDENTIFIER || '',
   AUTH0_SCOPE: process.env.AUTH0_SCOPE || 'openid profile email read:shows',
   JWT_SECRET: process.env.JWT_SECRET || '',
+  GA_TRACKING_ID: process.env.GA_TRACKING_ID || '',
   LOGO_URL: `${AUTH0_BASE_URL}/images/logo.png` || '',
   DATABASE_URL: process.env.DATABASE_URL || '',
 };

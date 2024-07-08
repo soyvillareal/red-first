@@ -14,7 +14,7 @@ const RecentMovements = ({
 }: IRecentMovementsProps) => {
   const { t } = useTranslation();
 
-  const RecentMovementsData = useCallback(() => {
+  const renderData = useCallback(() => {
     return isLoading ? (
       <RecentMovementsSkeleton />
     ) : (
@@ -52,7 +52,7 @@ const RecentMovements = ({
           {t('responseCodes.MOVEMENTS_NOT_FOUND')}
         </p>
       ) : (
-        <RecentMovementsData />
+        renderData()
       )}
     </div>
   );

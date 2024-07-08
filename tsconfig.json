@@ -28,10 +28,12 @@
     }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/auth/**/*"
+    "@types/gtag.js",
+    "next-env.d.ts",
+    "pages/api/auth/**/*",
+    "types/next-auth.d.ts"
   ],
   "exclude": [
     "node_modules"
