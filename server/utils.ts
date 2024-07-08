@@ -84,7 +84,6 @@ export const mockPagination = <T>(
 
 export const updateUserRoleInProvider = async (
   providerAccountId: string,
-  name: string,
   role: string,
 ): Promise<boolean> => {
   try {
@@ -94,17 +93,6 @@ export const updateUserRoleInProvider = async (
       clientId: env.AUTH0_CLIENT_ID,
       clientSecret: env.AUTH0_CLIENT_SECRET,
     });
-
-    const updatedUser = await auth0.users.update(
-      { id: providerAccountId },
-      {
-        name,
-      },
-    );
-
-    if (updatedUser.status !== 200) {
-      return false;
-    }
 
     const rolesProvider = await auth0.roles.getAll();
 

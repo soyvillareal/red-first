@@ -94,7 +94,6 @@ export class UsersResolvers {
 
       const updatedRole = await updateUserRoleInProvider(
         foundAccount.providerAccountId,
-        name,
         role,
       );
 
