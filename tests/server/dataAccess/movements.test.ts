@@ -4,10 +4,13 @@ import {
   ICreateUserRepository,
   IGetMovementsRepository,
 } from '@/types/dataAccess/movements';
-import { IPaginationParams } from '@/types/graphql/pagination';
-import { TValidsMovementTypes } from '@/types/graphql/resolvers';
+import {
+  IPaginationMovementsParams,
+  TValidsMovementTypes,
+} from '@/types/graphql/resolvers';
 import { MovementsRepository } from '@/server/dataAccess/movements';
 import dayjs from 'dayjs';
+import { Decimal } from '@prisma/client/runtime/library';
 
 const repository = new MovementsRepository();
 
@@ -65,20 +68,20 @@ describe('MovementsRepository', () => {
 
   describe('getMovements', () => {
     it('should return movements for a user with pagination', async () => {
-      const userId = '1';
-      const paginationParams: IPaginationParams<TValidsMovementTypes> = {
-        limit: 10,
-        skip: 0,
-        order: 'asc',
-        queryValue: '',
-        filterType: null,
-        fieldOrder: 'date',
-      };
+      const paginationParams: IPaginationMovementsParams<TValidsMovementTypes> =
+        {
+          limit: 10,
+          skip: 0,
+          order: 'asc',
+          userId: null,
+          filterType: null,
+          fieldOrder: 'date',
+        };
 
       const mockMovements: IGetMovementsRepository[] = [
         {
           id: '1',
-          amount: '9999',
+          amount: new Decimal('9999'),
           concept: 'income',
           date: new Date('2023-01-01'),
           userId: '12ccr-1234-1234-1234',
@@ -87,7 +90,7 @@ describe('MovementsRepository', () => {
 
       prisma.movements.findMany.mockResolvedValue(mockMovements);
 
-      const result = await repository.getMovements(userId, paginationParams);
+      const result = await repository.getMovements(paginationParams);
 
       expect(result).toEqual(mockMovements);
       expect(prisma.movements.findMany).toHaveBeenCalledWith({
@@ -99,8 +102,8 @@ describe('MovementsRepository', () => {
           date: true,
         },
         where: {
-          userId,
           concept: paginationParams.filterType || undefined,
+          userId: paginationParams.userId || undefined,
         },
         skip: paginationParams.skip,
         take: paginationParams.limit,
@@ -111,21 +114,21 @@ describe('MovementsRepository', () => {
     });
 
     it('should return null if there is an error', async () => {
-      const userId = '1';
-      const paginationParams: IPaginationParams<TValidsMovementTypes> = {
-        limit: 10,
-        skip: 0,
-        order: 'asc',
-        queryValue: '',
-        filterType: null,
-        fieldOrder: 'date',
-      };
+      const paginationParams: IPaginationMovementsParams<TValidsMovementTypes> =
+        {
+          limit: 10,
+          skip: 0,
+          order: 'asc',
+          userId: null,
+          filterType: null,
+          fieldOrder: 'date',
+        };
 
       prisma.movements.findMany.mockRejectedValue(
         new Error('Error fetching movements'),
       );
 
-      const result = await repository.getMovements(userId, paginationParams);
+      const result = await repository.getMovements(paginationParams);
 
       expect(result).toBeNull();
     });
@@ -133,45 +136,31 @@ describe('MovementsRepository', () => {
 
   describe('getTotalMovements', () => {
     it('should return the total number of movements for a user', async () => {
-      const userId = '1';
+      const userId = '1fh3d-1234-1234-1234';
       const filterType = 'income';
-      const queryValue = '100';
 
       prisma.movements.count.mockResolvedValue(5);
 
-      const result = await repository.getTotalMovements(
-        userId,
-        filterType,
-        queryValue,
-      );
+      const result = await repository.getTotalMovements(filterType, userId);
 
       expect(result).toBe(5);
       expect(prisma.movements.count).toHaveBeenCalledWith({
         where: {
-          userId,
           concept: filterType || undefined,
-          amount: {
-            contains: queryValue,
-            mode: 'insensitive',
-          },
+          userId: userId || undefined,
         },
       });
     });
 
     it('should return null if there is an error', async () => {
-      const userId = '1';
+      const userId = '1c32x-1234-1234-1234';
       const filterType = 'income';
-      const queryValue = '100';
 
       prisma.movements.count.mockRejectedValue(
         new Error('Error fetching total movements'),
       );
 
-      const result = await repository.getTotalMovements(
-        userId,
-        filterType,
-        queryValue,
-      );
+      const result = await repository.getTotalMovements(filterType, userId);
 
       expect(result).toBeNull();
     });
