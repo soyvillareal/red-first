@@ -23,7 +23,7 @@ export function DataTablePagination<TData>({
   const { t } = useTranslation();
 
   return (
-    <div className="flex items-center justify-between overflow-auto px-2">
+    <div className="flex items-center justify-center md:justify-between overflow-auto px-2">
       <div className="hidden flex-1 text-sm text-foreground sm:block">
         {t('table.rowSelected', {
           replace: {

@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next';
 import { useLazyQuery } from '@apollo/client';
 import { getSession } from 'next-auth/react';
 
-import { ContextLayout } from '@/components/custom/layout';
 import { Button } from '@/components/custom/Button';
 import {
   Card,
@@ -13,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { UserNav } from '@/components/atoms/UserNav';
 import { DashboardLayout } from '@/components/atoms/DashboardLayout';
 import { Dollar2Icon } from '@/components/icons/Dollar2Icon';
 import { loadTranslations } from '@/lib/i18n';
@@ -93,127 +91,118 @@ export const Dashboard = () => {
   );
 
   return (
-    <ContextLayout>
-      <DashboardLayout
-        seo={{
-          title: t('SEO.REPORTS.title'),
-          description: t('SEO.REPORTS.description'),
-          keywords: t('SEO.REPORTS.keywords'),
-        }}
-      >
-        <ContextLayout.Header>
-          <div className="ml-auto flex items-center space-x-4">
-            <UserNav />
-          </div>
-        </ContextLayout.Header>
-        <ContextLayout.Body>
-          <div className="mb-2 flex items-center justify-between space-y-2">
-            <h1 className="text-2xl font-bold tracking-tight">
-              {t('dashboard.title')}
-            </h1>
-            <div className="flex items-center space-x-2">
-              <Button
-                onClick={handleClickDownload}
-                disabled={
-                  reportData === null ||
-                  movementsChartLoading === true ||
-                  additionalMovementQueryLoading === true
-                }
-              >
-                {t('common.download')}
-              </Button>
-            </div>
-          </div>
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-              <Card className="flex flex-col justify-between">
-                <CardHeader className="flex-row justify-between items-center">
-                  <CardTitle className="text-secondary-foreground">
-                    {t('dashboard.movements', {
+    <DashboardLayout
+      seo={{
+        title: t('SEO.REPORTS.title'),
+        description: t('SEO.REPORTS.description'),
+        keywords: t('SEO.REPORTS.keywords'),
+      }}
+    >
+      <div className="mb-2 flex items-center justify-between space-y-2">
+        <h1 className="text-2xl font-bold tracking-tight">
+          {t('dashboard.title')}
+        </h1>
+        <div className="flex items-center space-x-2">
+          <Button
+            onClick={handleClickDownload}
+            disabled={
+              reportData === null ||
+              movementsChartLoading === true ||
+              additionalMovementQueryLoading === true
+            }
+          >
+            {t('common.download')}
+          </Button>
+        </div>
+      </div>
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+          <Card className="flex flex-col justify-between">
+            <CardHeader className="flex-row justify-between items-center">
+              <CardTitle className="text-secondary-foreground">
+                {t('dashboard.movements', {
+                  replace: {
+                    currency: currencySite,
+                  },
+                })}
+              </CardTitle>
+              <SelectorYear
+                value={selectedYear}
+                onValueChange={(value) => {
+                  setSelectedYear(value);
+                }}
+              />
+            </CardHeader>
+            <CardContent className="pl-6 pb-10">
+              <MovementsChart
+                callbackState={handleCallback}
+                year={selectedYear}
+              />
+            </CardContent>
+          </Card>
+          <div className="flex flex-col h-full">
+            <Card className="border-b-0">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-secondary-foreground text-sm font-medium">
+                  {t('dashboard.balance')}
+                </CardTitle>
+                <Dollar2Icon className="h-4 w-4 text-secondary-foreground" />
+              </CardHeader>
+              <CardContent>
+                {additionalMovementQueryLoading ? (
+                  <ReportBalanceSkeleton />
+                ) : (
+                  <div
+                    className={cn(
+                      'text-secondary-foreground text-2xl font-bold',
+                      additionalMovementQueryData?.getAdditionalMovements.balance.includes(
+                        '-',
+                      )
+                        ? 'text-red'
+                        : 'text-green',
+                    )}
+                  >
+                    {additionalMovementQueryData?.getAdditionalMovements
+                      .balance ?? '$ 0.00'}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+            <Card className="flex flex-col h-full">
+              <CardHeader>
+                <CardTitle className="text-secondary-foreground">
+                  {t('dashboard.recentMovements')}
+                </CardTitle>
+                {additionalMovementQueryLoading ? (
+                  <ReportMovementsSkeleton />
+                ) : (
+                  <CardDescription className="text-secondary-foreground">
+                    {t('dashboard.youMadeMovementsMonth', {
                       replace: {
-                        currency: currencySite,
+                        movements:
+                          additionalMovementQueryData?.getAdditionalMovements
+                            .movements ?? '$ 0.00',
                       },
                     })}
-                  </CardTitle>
-                  <SelectorYear
-                    value={selectedYear}
-                    onValueChange={(value) => {
-                      setSelectedYear(value);
-                    }}
-                  />
-                </CardHeader>
-                <CardContent className="pl-6 pb-10">
-                  <MovementsChart
-                    callbackState={handleCallback}
-                    year={selectedYear}
-                  />
-                </CardContent>
-              </Card>
-              <div className="flex flex-col h-full">
-                <Card className="border-b-0">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-secondary-foreground text-sm font-medium">
-                      {t('dashboard.balance')}
-                    </CardTitle>
-                    <Dollar2Icon className="h-4 w-4 text-secondary-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    {additionalMovementQueryLoading ? (
-                      <ReportBalanceSkeleton />
-                    ) : (
-                      <div
-                        className={cn(
-                          'text-secondary-foreground text-2xl font-bold',
-                          additionalMovementQueryData?.getAdditionalMovements.balance.includes(
-                            '-',
-                          )
-                            ? 'text-red'
-                            : 'text-green',
-                        )}
-                      >
-                        {additionalMovementQueryData?.getAdditionalMovements
-                          .balance ?? '$ 0.00'}
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-                <Card className="flex flex-col h-full">
-                  <CardHeader>
-                    <CardTitle className="text-secondary-foreground">
-                      {t('dashboard.recentMovements')}
-                    </CardTitle>
-                    {additionalMovementQueryLoading ? (
-                      <ReportMovementsSkeleton />
-                    ) : (
-                      <CardDescription className="text-secondary-foreground">
-                        {t('dashboard.youMadeMovementsMonth', {
-                          replace: {
-                            movements:
-                              additionalMovementQueryData
-                                ?.getAdditionalMovements.movements ?? '$ 0.00',
-                          },
-                        })}
-                      </CardDescription>
-                    )}
-                  </CardHeader>
-                  <CardContent className="h-full">
-                    <RecentMovements
-                      isLoading={additionalMovementQueryLoading}
-                      movements={
-                        additionalMovementQueryData?.getAdditionalMovements
-                          .recentMovements
-                      }
-                      error={additionalMovementQueryError}
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
+                  </CardDescription>
+                )}
+              </CardHeader>
+              <CardContent className="h-full">
+                <RecentMovements
+                  isLoading={additionalMovementQueryLoading}
+                  movements={
+                    additionalMovementQueryData?.getAdditionalMovements
+                      .recentMovements
+                  }
+                  error={additionalMovementQueryError}
+                />
+              </CardContent>
+            </Card>
           </div>
-        </ContextLayout.Body>
-        <ShowErrors error={additionalMovementQueryError} />
-      </DashboardLayout>
-    </ContextLayout>
+        </div>
+      </div>
+      <ShowErrors error={additionalMovementQueryError} />
+    </DashboardLayout>
   );
 };
 

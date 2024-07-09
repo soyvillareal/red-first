@@ -7,38 +7,41 @@
     --background: hsl(360, 100%, 100%);
     --foreground: hsl(0, 0%, 0%);
 
-    --card: hsl(180, 2%, 90%); /* darkBlue */
-    --card-foreground: hsl(0, 0%, 98%); /* veryLightGray */
+    --card: hsl(180, 2%, 90%);
+    --card-foreground: hsl(0, 0%, 98%);
 
-    --popover: hsl(12, 88%, 69%); /* darkBlue */
-    --popover-foreground: hsl(0, 0%, 98%); /* veryLightGray */
+    --popover: hsl(12, 88%, 69%);
+    --popover-foreground: hsl(0, 0%, 98%);
 
-    --primary: hsl(12, 88%, 59%); /* brightRed */
-    --primary-foreground: hsl(0, 0%, 98%); /* veryLightGray */
+    --primary: hsl(12, 88%, 59%);
+    --primary-80: hsl(12, 88%, 59%, 0.8);
+    --primary-foreground: hsl(0, 0%, 98%);
 
-    --secondary: hsl(13, 100%, 96%); /* veryPaleRed */
-    --secondary-foreground: hsl(233, 12%, 13%); /* veryDarkBlue */
+    --secondary: hsl(13, 100%, 96%);
+    --secondary-80: hsl(13, 100%, 96%, 0.8);
+    --secondary-foreground: hsl(233, 12%, 13%);
 
-    --muted: hsl(227, 12%, 61%); /* darkGrayishBlue */
-    --muted-foreground: hsl(0, 0%, 0%); /* veryLightGray */
+    --muted: hsl(227, 12%, 61%);
+    --muted-foreground: hsl(0, 0%, 0%);
 
-    --accent: hsl(12, 88%, 69%); /* brightRedLight */
-    --accent-foreground: hsl(233, 12%, 13%); /* veryDarkBlue */
+    --accent: hsl(12, 88%, 69%);
+    --accent-foreground: hsl(233, 12%, 13%);
 
-    --destructive: hsl(355, 61%, 50%); /* brightRedSupLight */
-    --destructive-foreground: hsl(0, 0%, 98%); /* veryLightGray */
+    --destructive: hsl(355, 61%, 50%);
+    --destructive-90: hsl(355, 61%, 50%, 0.9);
+    --destructive-foreground: hsl(0, 0%, 98%);
 
-    --border: hsl(227, 12%, 61%); /* darkGrayishBlue */
-    --input: hsl(227, 12%, 61%); /* darkGrayishBlue */
-    --ring: hsl(12, 88%, 59%); /* brightRed */
+    --border: hsl(227, 12%, 61%);
+    --input: hsl(227, 12%, 61%);
+    --ring: hsl(12, 88%, 59%);
 
     --green: hsl(146, 66%, 41%);
     --red: hsl(0, 66%, 49%);
   }
 
   .dark {
-    --background: hsl(12, 88%, 59%); /* brightRed */
-    --foreground: hsl(13, 100%, 96%); /* veryPaleRed */
+    --background: hsl(12, 88%, 59%);
+    --foreground: hsl(13, 100%, 96%);
 
     --card: hsl(222.2 84% 4.9%);
     --card-foreground: hsl(210 40% 98%);

@@ -5,10 +5,8 @@ import { useLazyQuery } from '@apollo/client';
 import { ColumnFiltersState } from '@tanstack/react-table';
 import { getSession } from 'next-auth/react';
 
-import { ContextLayout } from '@/components/custom/layout';
 import { DataTable } from '@/components/atoms/Table/DataTable';
 import { DashboardLayout } from '@/components/atoms/DashboardLayout';
-import { UserNav } from '@/components/atoms/UserNav';
 import { loadTranslations } from '@/lib/i18n';
 import { useDebounce } from '@/hooks/useDebounce';
 import { usePagination } from '@/hooks/usePagination';
@@ -61,51 +59,42 @@ const Users = () => {
   }, [getMovementsQuery, page, field, limit, order, debouncedValue]);
 
   return (
-    <ContextLayout>
-      <DashboardLayout
-        seo={{
-          title: t('SEO.USERS.title'),
-          description: t('SEO.USERS.description'),
-          keywords: t('SEO.USERS.keywords'),
-        }}
-      >
-        <ContextLayout.Header sticky>
-          <div className="ml-auto flex items-center space-x-4">
-            <UserNav />
-          </div>
-        </ContextLayout.Header>
-        <ContextLayout.Body>
-          <div className="mb-4 flex items-center justify-between space-y-2">
-            <h2 className="text-2xl font-bold tracking-tight">
-              {t('users.title')}
-            </h2>
-          </div>
-          <div className="-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0">
-            <DataTable
-              data={userQueryData?.getUsers.data || []}
-              columns={columns}
-              toolbarOptions={{
-                searchKey: 'name',
-              }}
-              loading={userQueryLoading || debouncedLoading}
-              pageCount={userQueryData?.getUsers.meta.pageCount || 0}
-              values={{
-                sorting,
-                pagination,
-                columnFilters,
-              }}
-              events={{
-                onSortingChange,
-                onPaginationChange,
-                onColumnFiltersChange: setColumnFilters,
-              }}
-              hasSearchInput
-            />
-          </div>
-        </ContextLayout.Body>
-      </DashboardLayout>
+    <DashboardLayout
+      seo={{
+        title: t('SEO.USERS.title'),
+        description: t('SEO.USERS.description'),
+        keywords: t('SEO.USERS.keywords'),
+      }}
+    >
+      <div className="mb-4 flex items-center justify-between space-y-2">
+        <h2 className="text-2xl font-bold tracking-tight">
+          {t('users.title')}
+        </h2>
+      </div>
+      <div className="-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0">
+        <DataTable
+          data={userQueryData?.getUsers.data || []}
+          columns={columns}
+          toolbarOptions={{
+            searchKey: 'name',
+          }}
+          loading={userQueryLoading || debouncedLoading}
+          pageCount={userQueryData?.getUsers.meta.pageCount || 0}
+          values={{
+            sorting,
+            pagination,
+            columnFilters,
+          }}
+          events={{
+            onSortingChange,
+            onPaginationChange,
+            onColumnFiltersChange: setColumnFilters,
+          }}
+          hasSearchInput
+        />
+      </div>
       <ShowErrors error={userQueryError} />
-    </ContextLayout>
+    </DashboardLayout>
   );
 };
 

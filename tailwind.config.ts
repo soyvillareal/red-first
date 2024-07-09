@@ -29,14 +29,17 @@ const config = {
         primary: {
           DEFAULT: 'var(--primary)',
           foreground: 'var(--primary-foreground)',
+          80: 'var(--primary-80)',
         },
         secondary: {
           DEFAULT: 'var(--secondary)',
           foreground: 'var(--secondary-foreground)',
+          80: 'var(--secondary-80)',
         },
         destructive: {
           DEFAULT: 'var(--destructive)',
           foreground: 'var(--destructive-foreground)',
+          90: 'var(--destructive-90)',
         },
         muted: {
           DEFAULT: 'var(--muted)',

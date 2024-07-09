@@ -9,7 +9,7 @@ export const LogoIcon = ({
     className={className}
     width={width}
     height={height}
-    viewBox="0 0 170 32"
+    viewBox="0 0 170 33"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >

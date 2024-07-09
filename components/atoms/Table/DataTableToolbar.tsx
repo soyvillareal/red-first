@@ -60,12 +60,10 @@ export function DataTableToolbar<TData>({
             }
             return null;
           })}
-        </div>
-        {hasUserFilter && (
-          <div className="flex gap-x-2">
+          {hasUserFilter && (
             <SearchUserPopover column={table.getColumn('userName')} />
-          </div>
-        )}
+          )}
+        </div>
         {isFiltered && (
           <Button
             variant="ghost"

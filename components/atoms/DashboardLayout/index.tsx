@@ -3,9 +3,11 @@
 import Head from 'next/head';
 import React, { PropsWithChildren } from 'react';
 
+import { ContextLayout } from '@/components/custom/layout';
 import { Sidebar } from '@/components/atoms/Sidebar';
 import { useIsCollapsed } from '@/hooks/useIsCollapsed';
 import { Toaster } from '@/components/ui/toaster';
+import { UserNav } from '@/components/atoms/UserNav';
 
 import { IDashboardLayoutProps } from './DashboardLayout.types';
 
@@ -29,7 +31,14 @@ export const DashboardLayout = ({
           isCollapsed ? 'md:ml-14' : 'md:ml-64'
         } h-full`}
       >
-        {children}
+        <ContextLayout>
+          <ContextLayout.Header>
+            <div className="hidden md:flex ml-auto flex items-center space-x-4">
+              <UserNav />
+            </div>
+          </ContextLayout.Header>
+          <ContextLayout.Body>{children}</ContextLayout.Body>
+        </ContextLayout>
       </main>
       <Toaster />
     </div>

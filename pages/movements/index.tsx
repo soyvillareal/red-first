@@ -6,10 +6,8 @@ import { useLazyQuery } from '@apollo/client';
 import { ColumnFiltersState } from '@tanstack/react-table';
 import { getSession, useSession } from 'next-auth/react';
 
-import { ContextLayout } from '@/components/custom/layout';
 import { DashboardLayout } from '@/components/atoms/DashboardLayout';
 import { DataTable } from '@/components/atoms/Table/DataTable';
-import { UserNav } from '@/components/atoms/UserNav';
 import { routes } from '@/lib/contants';
 import { loadTranslations } from '@/lib/i18n';
 import { MovementsQuery } from '@/lib/apollo';
@@ -82,70 +80,55 @@ const Movements = () => {
   }, [router]);
 
   return (
-    <ContextLayout>
-      <DashboardLayout
-        seo={{
-          title: t('SEO.MOVEMENTS.title'),
-          description: t('SEO.MOVEMENTS.description'),
-          keywords: t('SEO.MOVEMENTS.keywords'),
-        }}
-      >
-        <ContextLayout.Header sticky>
-          <div className="ml-auto flex items-center space-x-4">
-            <UserNav />
-          </div>
-        </ContextLayout.Header>
-        <ContextLayout.Body>
-          <div className="mb-4 flex items-center justify-between space-y-2">
-            <h2 className="text-2xl font-bold tracking-tight">
-              {t('movements.title')}
-            </h2>
-          </div>
-          <div className="-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0">
-            <DataTable
-              data={movementQueryData?.getMovements.data.movements || []}
-              columns={columnsFn(t)}
-              toolbarOptions={{
-                searchKey: 'userName',
-                filters: ['concept'],
-              }}
-              loading={movementQueryLoading || debouncedLoading}
-              footerChildren={
-                <div className="mt-5 border rounded-md flex justify-between items-center p-4">
-                  {movementQueryLoading || debouncedLoading ? (
-                    <DataTableFooterSkeleton />
-                  ) : (
-                    <span>{movementQueryData?.getMovements.data.total}</span>
-                  )}
-                  {sessionData?.user.roles.includes(EUserRole.ADMIN) ===
-                    true && (
-                    <Button
-                      data-testid="button-new-movement"
-                      onClick={handleClick}
-                    >
-                      {t('common.new')}
-                    </Button>
-                  )}
-                </div>
-              }
-              pageCount={movementQueryData?.getMovements.meta.pageCount || 0}
-              values={{
-                sorting,
-                pagination,
-                columnFilters,
-              }}
-              events={{
-                onSortingChange,
-                onPaginationChange,
-                onColumnFiltersChange: setColumnFilters,
-              }}
-              hasUserFilter
-            />
-          </div>
-        </ContextLayout.Body>
-      </DashboardLayout>
+    <DashboardLayout
+      seo={{
+        title: t('SEO.MOVEMENTS.title'),
+        description: t('SEO.MOVEMENTS.description'),
+        keywords: t('SEO.MOVEMENTS.keywords'),
+      }}
+    >
+      <div className="mb-4 flex items-center justify-between space-y-2">
+        <h2 className="text-2xl font-bold tracking-tight">
+          {t('movements.title')}
+        </h2>
+      </div>
+      <div className="-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0">
+        <DataTable
+          data={movementQueryData?.getMovements.data.movements || []}
+          columns={columnsFn(t)}
+          toolbarOptions={{
+            searchKey: 'userName',
+            filters: ['concept'],
+          }}
+          loading={movementQueryLoading || debouncedLoading}
+          footerChildren={
+            <div className="mt-5 border rounded-md flex justify-between items-center p-4">
+              {movementQueryLoading || debouncedLoading ? (
+                <DataTableFooterSkeleton />
+              ) : (
+                <span>{movementQueryData?.getMovements.data.total}</span>
+              )}
+              {sessionData?.user.roles.includes(EUserRole.ADMIN) === true && (
+                <Button onClick={handleClick}>{t('common.new')}</Button>
+              )}
+            </div>
+          }
+          pageCount={movementQueryData?.getMovements.meta.pageCount || 0}
+          values={{
+            sorting,
+            pagination,
+            columnFilters,
+          }}
+          events={{
+            onSortingChange,
+            onPaginationChange,
+            onColumnFiltersChange: setColumnFilters,
+          }}
+          hasUserFilter
+        />
+      </div>
       <ShowErrors error={movementQueryError} />
-    </ContextLayout>
+    </DashboardLayout>
   );
 };
 

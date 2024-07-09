@@ -12,6 +12,7 @@ import { ChevronsLeftIcon } from '@/components/icons/ChevronsLeftIcon';
 import { LogoIcon } from '@/components/icons/LogoIcon';
 import { EUserRole } from '@/types';
 import { routes } from '@/lib/contants';
+import UserDropdown from '@/components/atoms/UserDropdown';
 
 import { sidelinks } from './Sidebar.constants';
 import { SidebarProps } from './Sidebar.types';
@@ -25,7 +26,6 @@ export const Sidebar = ({
   const { t } = useTranslation();
   const [navOpened, setNavOpened] = useState(false);
 
-  /* Make body not scrollable when navBar is opened */
   useEffect(() => {
     if (navOpened) {
       document.body.classList.add('overflow-hidden');
@@ -43,7 +43,6 @@ export const Sidebar = ({
         className,
       )}
     >
-      {/* Overlay in mobile */}
       <div
         onClick={() => setNavOpened(false)}
         className={`absolute inset-0 transition-[opacity] delay-100 duration-700 ${
@@ -52,30 +51,31 @@ export const Sidebar = ({
       />
 
       <ContextLayout fixed className={navOpened ? 'h-svh' : ''}>
-        {/* Header */}
         <ContextLayout.Header
           sticky
           className="z-50 flex justify-between px-4 py-3 shadow-sm md:px-4"
         >
-          <div className={`flex items-center ${!isCollapsed ? 'gap-2' : ''}`}>
-            <LogoIcon className="sm:w-[220px]" />
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              aria-label="Toggle Navigation"
+              aria-controls="sidebar-menu"
+              aria-expanded={navOpened}
+              onClick={() => setNavOpened((prev) => !prev)}
+            >
+              {navOpened ? <CloseIcon /> : <MenuIcon />}
+            </Button>
+            <div className={`flex items-center ${!isCollapsed ? 'gap-2' : ''}`}>
+              <LogoIcon className="w-[160px] sm:w-[190px]" />
+            </div>
           </div>
-
-          {/* Toggle Button in mobile */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            aria-label="Toggle Navigation"
-            aria-controls="sidebar-menu"
-            aria-expanded={navOpened}
-            onClick={() => setNavOpened((prev) => !prev)}
-          >
-            {navOpened ? <CloseIcon /> : <MenuIcon />}
-          </Button>
+          <div className="flex md:hidden">
+            <UserDropdown />
+          </div>
         </ContextLayout.Header>
 
-        {/* Navigation links */}
         <Nav
           id="sidebar-menu"
           className={`z-40 h-full flex-1 overflow-auto ${
@@ -90,7 +90,6 @@ export const Sidebar = ({
           )}
         />
 
-        {/* Scrollbar width toggle button */}
         <Button
           onClick={() => setIsCollapsed((prev) => !prev)}
           size="icon"
