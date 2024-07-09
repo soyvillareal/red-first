@@ -10,10 +10,13 @@ import { types } from '@/components/pages/movements/movements.constants';
 import { DataTableFacetedFilter } from './DataTableFacetedFilter';
 import { DataTableViewOptions } from './DataTableViewOptions';
 import { DataTableToolbarProps } from './Table.types';
+import { SearchUserPopover } from './SearchUserPopover';
 
 export function DataTableToolbar<TData>({
   table,
   toolbarOptions,
+  hasUserFilter = false,
+  hasSearchInput = false,
 }: DataTableToolbarProps<TData>) {
   const { t } = useTranslation();
 
@@ -31,16 +34,18 @@ export function DataTableToolbar<TData>({
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2">
-        <Input
-          placeholder={t('table.search')}
-          value={
-            (table
-              .getColumn(toolbarOptions.searchKey as string)
-              ?.getFilterValue() as string) ?? ''
-          }
-          onChange={handleChange}
-          className="h-8 w-[150px] lg:w-[250px]"
-        />
+        {hasSearchInput && (
+          <Input
+            placeholder={t('table.search')}
+            value={
+              (table
+                .getColumn(toolbarOptions.searchKey as string)
+                ?.getFilterValue() as string) ?? ''
+            }
+            onChange={handleChange}
+            className="h-8 w-[150px] lg:w-[250px]"
+          />
+        )}
         <div className="flex gap-x-2">
           {toolbarOptions.filters?.map((filter) => {
             if (table.getColumn(filter as string)) {
@@ -56,6 +61,11 @@ export function DataTableToolbar<TData>({
             return null;
           })}
         </div>
+        {hasUserFilter && (
+          <div className="flex gap-x-2">
+            <SearchUserPopover column={table.getColumn('userName')} />
+          </div>
+        )}
         {isFiltered && (
           <Button
             variant="ghost"

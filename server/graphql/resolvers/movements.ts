@@ -10,29 +10,30 @@ import dayjs from 'dayjs';
 import { MovementConcept } from '@prisma/client';
 
 import {
-  IGetMovements,
+  type IGetMovements,
   type IGetMovementsWithTotal,
+  type IPaginationMovementsArgs,
+  type IPaginationMovementsParams,
   type TValidsMovementTypes,
 } from '@/types/graphql/resolvers';
-import {
-  type IPageOptionsDataMeta,
-  type IPaginationArgs,
-  type IPaginationParams,
-} from '@/types/graphql/pagination';
+import { type IPageOptionsDataMeta } from '@/types/graphql/pagination';
 import { indexBy, numberWithCurrency } from '@/lib/utils';
 import {
   checkCreateMovement,
   checkGetMovements,
 } from '@/server/middleware/movements';
 import {
+  checkIsAdmin,
   checkIsLogged,
   checkIsUser,
   checkPagination,
 } from '@/server/middleware';
 import { type IGraphQLContext } from '@/types';
 import { MovementsRepository } from '@/server/dataAccess/movements';
-import { PaginatedMovements } from '@/server/graphql/schemas/movements';
-import { PaginationArgs } from '@/server/graphql/schemas/pagination';
+import {
+  PaginatedMovements,
+  PaginationMovementsArgs,
+} from '@/server/graphql/schemas/movements';
 import {
   getSkipped,
   mockPagination,
@@ -56,7 +57,7 @@ export class MovementsResolvers {
     name: 'createMovement',
     description: 'Create movement',
   })
-  @UseMiddleware(checkIsLogged, checkCreateMovement, checkIsUser)
+  @UseMiddleware(checkIsLogged, checkCreateMovement, checkIsAdmin)
   async createMovement(
     @Arg('amount', () => String) amount: string,
     @Arg('date', () => String) date: string,
@@ -96,25 +97,18 @@ export class MovementsResolvers {
   })
   @UseMiddleware(checkIsLogged, checkPagination, checkGetMovements, checkIsUser)
   async getMovements(
-    @Arg('pagination', () => PaginationArgs)
-    paginationArgs: IPaginationArgs<TValidsMovementTypes>,
-    @Ctx() context: IGraphQLContext,
+    @Arg('pagination', () => PaginationMovementsArgs)
+    paginationArgs: IPaginationMovementsArgs<TValidsMovementTypes>,
   ): Promise<IPageOptionsDataMeta<IGetMovementsWithTotal>> {
     try {
-      const { page, limit, order, filterType, queryValue, fieldOrder } =
+      const { page, limit, order, filterType, userId, fieldOrder } =
         paginationArgs;
-      const userId = context?.session?.user.id;
-
-      if (userId === undefined) {
-        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-      }
 
       const filterConcept = filterType as MovementConcept | null;
 
       const totalMovements = await this.movementsRepository.getTotalMovements(
-        userId,
         filterConcept,
-        queryValue,
+        userId,
       );
 
       if (totalMovements === null) {
@@ -125,17 +119,17 @@ export class MovementsResolvers {
         throw new Error(responseCodes.MOVEMENTS.NOT_FOUND);
       }
 
-      const pageFilterOptions: IPaginationParams<TValidsMovementTypes> = {
-        limit,
-        skip: getSkipped(totalMovements, page, limit),
-        order,
-        filterType: filterConcept,
-        queryValue,
-        fieldOrder,
-      };
+      const pageFilterOptions: IPaginationMovementsParams<TValidsMovementTypes> =
+        {
+          limit,
+          skip: getSkipped(totalMovements, page, limit),
+          order,
+          filterType: filterConcept,
+          userId,
+          fieldOrder,
+        };
 
       const movements = await this.movementsRepository.getMovements(
-        userId,
         pageFilterOptions,
       );
 

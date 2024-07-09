@@ -44,3 +44,8 @@ export interface IGetUsersMovementByIds {
   id: string;
   name: string | null;
 }
+
+export interface IFindByNameOrEmail {
+  id: string;
+  name: string;
+}

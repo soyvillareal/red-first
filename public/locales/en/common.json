@@ -52,7 +52,8 @@
         "errorOccurred": "Some errors occurred.",
         "noData": "No data.",
         "goBack": "Go back",
-        "backToHome": "Back to Home"
+        "backToHome": "Back to Home",
+        "writeSomething": "Write something..."
     },
     "notFound": {
         "title": "Oops! Page Not Found!",
@@ -117,7 +118,8 @@
         "toggleColumns": "Toggle columns",
         "action": "Action",
         "openMenu": "Open menu",
-        "edit": "Edit"
+        "edit": "Edit",
+        "users": "Users"
     },
     "movements": {
         "title": "Income and expenses",
@@ -208,6 +210,7 @@
         "NAME_TOO_SHORT": "Name must be at least 2 characters.",
         "NAME_TOO_LONG": "Name must not be longer than 30 characters.",
         "USER_UPDATED_SUCCESSFULLY": "User updated successfully!",
-        "NOT_AUTHORIZED_TO_THIS_ACTION": "You are not authorized to perform this action."
+        "NOT_AUTHORIZED_TO_THIS_ACTION": "You are not authorized to perform this action.",
+        "NOT_AUTHORIZED": "You are not authorized to perform this action."
     }
 }

@@ -99,6 +99,7 @@ const Users = () => {
                 onPaginationChange,
                 onColumnFiltersChange: setColumnFilters,
               }}
+              hasSearchInput
             />
           </div>
         </ContextLayout.Body>

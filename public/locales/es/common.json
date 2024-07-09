@@ -52,7 +52,8 @@
         "errorOccurred": "Ocurrieron algunos errores.",
         "noData": "Sin datos.",
         "goBack": "Regresar",
-        "backToHome": "Volver a inicio"
+        "backToHome": "Volver a inicio",
+        "writeSomething": "Escribe algo..."
     },
     "notFound": {
         "title": "¡Ups! ¡Página no encontrada!",
@@ -117,7 +118,8 @@
         "toggleColumns": "Alternar columnas",
         "action": "Acción",
         "openMenu": "Open menu",
-        "edit": "Editar"
+        "edit": "Editar",
+        "users": "Users"
     },
     "movements": {
         "title": "Ingresos y egresos",
@@ -209,6 +211,7 @@
         "NAME_TOO_SHORT": "El nombre debe tener al menos 2 caracteres.",
         "NAME_TOO_LONG": "El nombre no debe tener más de 30 caracteres.",
         "USER_UPDATED_SUCCESSFULLY": "¡Usuario actualizado exitosamente!",
-        "NOT_AUTHORIZED_TO_THIS_ACTION": "No estás autorizado para realizar esta acción."
+        "NOT_AUTHORIZED_TO_THIS_ACTION": "No estás autorizado para realizar esta acción.",
+        "NOT_AUTHORIZED": "No estás autorizado para realizar esta acción."
     }
 }

@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 import {
+  IFindByNameOrEmail,
   type IGetAccountDataByProviderIdResult,
   type IGetAccountDataResult,
   type IGetUserByIdResult,
@@ -236,6 +237,43 @@ export class UsersRepository {
       });
 
       return users;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  public findUserByNameOrEmail = async (
+    queryValue: string,
+  ): Promise<IFindByNameOrEmail[] | null> => {
+    try {
+      const user = await this.prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+        },
+        where: {
+          name: {
+            not: null,
+          },
+          OR: [
+            {
+              name: {
+                contains: queryValue,
+                mode: 'insensitive',
+              },
+            },
+            {
+              email: {
+                contains: queryValue,
+                mode: 'insensitive',
+              },
+            },
+          ],
+        },
+        take: 5,
+      });
+
+      return user as IFindByNameOrEmail[];
     } catch (error) {
       return null;
     }

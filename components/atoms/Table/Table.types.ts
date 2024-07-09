@@ -9,6 +9,10 @@ import {
 } from '@tanstack/react-table';
 import { ComponentType } from 'react';
 
+export interface IDataTableFilterUsersProps<TData> {
+  table: Table<TData>;
+}
+
 export interface DataTablePaginationProps<TData> {
   loading: boolean;
   table: Table<TData>;
@@ -22,6 +26,8 @@ export interface DataTableToolbarOptions<TData> {
 export interface DataTableToolbarProps<TData> {
   table: Table<TData>;
   toolbarOptions: DataTableToolbarOptions<TData>;
+  hasUserFilter?: boolean;
+  hasSearchInput?: boolean;
 }
 
 export interface DataTableProps<TData, TValue> {
@@ -40,6 +46,8 @@ export interface DataTableProps<TData, TValue> {
     onColumnFiltersChange: OnChangeFn<ColumnFiltersState>;
   };
   toolbarOptions: DataTableToolbarOptions<TData>;
+  hasUserFilter?: boolean;
+  hasSearchInput?: boolean;
   footerChildren?: React.ReactNode;
 }
 

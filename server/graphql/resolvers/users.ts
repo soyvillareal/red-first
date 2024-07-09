@@ -32,7 +32,10 @@ import {
   IPaginationParams,
 } from '@/types/graphql/pagination';
 import { checkGetUsers, checkUpdateUser } from '@/server/middleware/users';
-import { PaginatedUsers } from '@/server/graphql/schemas/users';
+import {
+  FindUserByNameOrEmail,
+  PaginatedUsers,
+} from '@/server/graphql/schemas/users';
 import { PaginationArgs } from '@/server/graphql/schemas/pagination';
 
 @Resolver()
@@ -182,6 +185,35 @@ export class UsersResolvers {
         responseCodes.ERROR.SOMETHING_WENT_WRONG,
         [],
       );
+    }
+  }
+
+  @Query(() => [FindUserByNameOrEmail], {
+    name: 'findUserByNameOrEmail',
+    description: 'Find user by name or email',
+  })
+  async findUserByNameOrEmail(
+    @Arg('queryValue', () => String) queryValue: string,
+  ): Promise<FindUserByNameOrEmail[]> {
+    try {
+      const users = await this.usersRepository.findUserByNameOrEmail(
+        queryValue,
+      );
+
+      if (users === null) {
+        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
+      }
+
+      if (users.length === 0) {
+        throw new Error(responseCodes.USERS.NOT_FOUND);
+      }
+
+      return users;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
     }
   }
 }

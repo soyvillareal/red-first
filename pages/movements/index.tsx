@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useLazyQuery } from '@apollo/client';
 import { ColumnFiltersState } from '@tanstack/react-table';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 
 import { ContextLayout } from '@/components/custom/layout';
 import { DashboardLayout } from '@/components/atoms/DashboardLayout';
@@ -14,12 +14,10 @@ import { routes } from '@/lib/contants';
 import { loadTranslations } from '@/lib/i18n';
 import { MovementsQuery } from '@/lib/apollo';
 import { Button } from '@/components/custom/Button';
-import {
-  IPageOptionsDataMeta,
-  IPaginationArgs,
-} from '@/types/graphql/pagination';
+import { type IPageOptionsDataMeta } from '@/types/graphql/pagination';
 import {
   type IGetMovementsWithTotal,
+  IPaginationMovementsArgs,
   TValidsMovementTypes,
 } from '@/types/graphql/resolvers';
 import { usePagination } from '@/hooks/usePagination';
@@ -29,9 +27,11 @@ import { DataTableFooterSkeleton } from '@/components/skeleton/DataTableFooterSk
 
 import { columnsFn } from '@/components/pages/movements/movements.constants';
 import { ShowErrors } from '@/components/custom/ShowErrors';
+import { EUserRole } from '@/types';
 
 const Movements = () => {
   const { t } = useTranslation();
+  const { data: sessionData } = useSession();
   const router = useRouter();
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -53,7 +53,7 @@ const Movements = () => {
     {
       getMovements: IPageOptionsDataMeta<IGetMovementsWithTotal>;
     },
-    IPaginationArgs<TValidsMovementTypes>
+    IPaginationMovementsArgs<TValidsMovementTypes>
   >(MovementsQuery);
 
   useEffect(() => {
@@ -61,8 +61,9 @@ const Movements = () => {
       (filter) => filter.id === 'concept',
     )?.value as string[];
 
-    const queryValue = debouncedValue.find((filter) => filter.id === 'userName')
-      ?.value as string;
+    const filterUsername = debouncedValue.find(
+      (filter) => filter.id === 'userName',
+    )?.value as string[];
 
     getMovementsQuery({
       variables: {
@@ -70,7 +71,7 @@ const Movements = () => {
         limit,
         order,
         filterType: filterConcept ? filterConcept[0] : null,
-        queryValue: queryValue || '',
+        userId: filterUsername ? filterUsername[0] : null,
         fieldOrder: field,
       },
     });
@@ -116,12 +117,15 @@ const Movements = () => {
                   ) : (
                     <span>{movementQueryData?.getMovements.data.total}</span>
                   )}
-                  <Button
-                    data-testid="button-new-movement"
-                    onClick={handleClick}
-                  >
-                    {t('common.new')}
-                  </Button>
+                  {sessionData?.user.roles.includes(EUserRole.ADMIN) ===
+                    true && (
+                    <Button
+                      data-testid="button-new-movement"
+                      onClick={handleClick}
+                    >
+                      {t('common.new')}
+                    </Button>
+                  )}
                 </div>
               }
               pageCount={movementQueryData?.getMovements.meta.pageCount || 0}
@@ -135,6 +139,7 @@ const Movements = () => {
                 onPaginationChange,
                 onColumnFiltersChange: setColumnFilters,
               }}
+              hasUserFilter
             />
           </div>
         </ContextLayout.Body>

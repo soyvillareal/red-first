@@ -53,7 +53,7 @@ export const MovementsQuery = gql`
     $limit: Float!
     $order: String!
     $filterType: String
-    $queryValue: String
+    $userId: String
     $fieldOrder: String!
   ) {
     getMovements(
@@ -62,7 +62,7 @@ export const MovementsQuery = gql`
         limit: $limit
         order: $order
         filterType: $filterType
-        queryValue: $queryValue
+        userId: $userId
         fieldOrder: $fieldOrder
       }
     ) {
@@ -163,5 +163,14 @@ export const AdditionalMovementsChartQuery = gql`
 export const ValidYearsQuery = gql`
   query GetValidYears {
     getValidYears
+  }
+`;
+
+export const FindUserByNameOrEmail = gql`
+  query FindUserByNameOrEmail($queryValue: String!) {
+    findUserByNameOrEmail(queryValue: $queryValue) {
+      id
+      name
+    }
   }
 `;

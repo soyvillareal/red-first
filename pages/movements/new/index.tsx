@@ -9,6 +9,7 @@ import { UserNav } from '@/components/atoms/UserNav';
 import { MovementForm } from '@/components/atoms/MovementForm';
 import { routes } from '@/lib/contants';
 import { loadTranslations } from '@/lib/i18n';
+import { EUserRole } from '@/types';
 
 const NewMovement = () => {
   const { t } = useTranslation();
@@ -51,6 +52,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       redirect: {
         destination: '/api/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  if (session.user.roles.includes(EUserRole.ADMIN) === false) {
+    return {
+      props: {
+        ...translations.props,
+      },
+      redirect: {
+        destination: '/404',
         permanent: false,
       },
     };

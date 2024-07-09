@@ -1,7 +1,10 @@
 import { Field, ObjectType, registerEnumType } from 'type-graphql';
 
 import { EUserRoleRoleNormalized } from '@/types';
-import { type IGetUsers } from '@/types/graphql/resolvers';
+import {
+  IFindUserByNameOrEmail,
+  type IGetUsers,
+} from '@/types/graphql/resolvers';
 import { type IPageOptionsDataMeta } from '@/types/graphql/pagination';
 
 import { PageOptionsMeta } from './pagination';
@@ -37,4 +40,13 @@ export class PaginatedUsers
 {
   @Field(() => [GetUsers], { nullable: true })
   data: IGetUsers[];
+}
+
+@ObjectType()
+export class FindUserByNameOrEmail implements IFindUserByNameOrEmail {
+  @Field(() => String)
+  id: string;
+
+  @Field(() => String)
+  name: string;
 }

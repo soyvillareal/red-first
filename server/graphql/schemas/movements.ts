@@ -1,11 +1,15 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, InputType, ObjectType } from 'type-graphql';
 import { MovementConcept } from '@prisma/client';
 
 import {
   type IGetMovements,
   type IGetMovementsWithTotal,
+  type IPaginationMovementsArgs,
 } from '@/types/graphql/resolvers';
-import { type IPageOptionsDataMeta } from '@/types/graphql/pagination';
+import {
+  type IPageOptionsDataMeta,
+  type TPageOrder,
+} from '@/types/graphql/pagination';
 
 import { PageOptionsMeta } from './pagination';
 
@@ -43,4 +47,25 @@ export class PaginatedMovements
 {
   @Field(() => GetMovementsWithTotal, { nullable: true })
   data: IGetMovementsWithTotal;
+}
+
+@InputType()
+export class PaginationMovementsArgs implements IPaginationMovementsArgs {
+  @Field(() => Number)
+  page: number;
+
+  @Field(() => Number, { defaultValue: 10 })
+  limit: number;
+
+  @Field(() => String, { defaultValue: 'asc' })
+  order: TPageOrder;
+
+  @Field(() => String, { nullable: true })
+  filterType: string | null;
+
+  @Field(() => String, { nullable: true })
+  userId: string | null;
+
+  @Field(() => String)
+  fieldOrder: string;
 }

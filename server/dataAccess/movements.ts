@@ -8,8 +8,10 @@ import {
   type ICreateUserRepository,
   type IGetMovementsRepository,
 } from '@/types/dataAccess/movements';
-import { type IPaginationParams } from '@/types/graphql/pagination';
-import { TValidsMovementTypes } from '@/types/graphql/resolvers';
+import {
+  type IPaginationMovementsParams,
+  type TValidsMovementTypes,
+} from '@/types/graphql/resolvers';
 import dayjs from 'dayjs';
 
 export class MovementsRepository {
@@ -41,27 +43,17 @@ export class MovementsRepository {
     }
   };
 
-  public getMovements = async (
-    userId: string,
-    {
-      limit,
-      skip,
-      order,
-      queryValue,
-      filterType,
-      fieldOrder = 'date',
-    }: IPaginationParams<TValidsMovementTypes>,
-  ): Promise<IGetMovementsRepository[] | null> => {
+  public getMovements = async ({
+    limit,
+    skip,
+    order,
+    userId,
+    filterType,
+    fieldOrder = 'date',
+  }: IPaginationMovementsParams<TValidsMovementTypes>): Promise<
+    IGetMovementsRepository[] | null
+  > => {
     try {
-      let whereQuery: Record<string, unknown> = {};
-      if (queryValue !== undefined && queryValue !== '') {
-        whereQuery = {
-          amount: {
-            contains: queryValue,
-            mode: 'insensitive',
-          },
-        };
-      }
       const movements = await this.prisma.movements.findMany({
         select: {
           id: true,
@@ -71,9 +63,8 @@ export class MovementsRepository {
           date: true,
         },
         where: {
-          userId,
           concept: filterType || undefined,
-          ...whereQuery,
+          userId: userId || undefined,
         },
         skip,
         take: limit,
@@ -89,25 +80,14 @@ export class MovementsRepository {
   };
 
   public getTotalMovements = async (
-    userId: string,
     filterType: MovementConcept | null,
-    queryValue?: string,
+    userId: string | null,
   ): Promise<number | null> => {
     try {
-      let whereQuery: Record<string, unknown> = {};
-      if (queryValue !== undefined && queryValue !== '') {
-        whereQuery = {
-          amount: {
-            contains: queryValue,
-            mode: 'insensitive',
-          },
-        };
-      }
       const totalMovements = await this.prisma.movements.count({
         where: {
-          userId,
           concept: filterType || undefined,
-          ...whereQuery,
+          userId: userId || undefined,
         },
       });
 

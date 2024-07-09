@@ -30,6 +30,8 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   toolbarOptions,
+  hasUserFilter,
+  hasSearchInput,
   footerChildren,
   pageCount,
   loading = false,
@@ -67,7 +69,12 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} toolbarOptions={toolbarOptions} />
+      <DataTableToolbar
+        table={table}
+        toolbarOptions={toolbarOptions}
+        hasUserFilter={hasUserFilter}
+        hasSearchInput={hasSearchInput}
+      />
       <div className="rounded-md border bg-primary-foreground">
         <Table>
           <TableHeader>
