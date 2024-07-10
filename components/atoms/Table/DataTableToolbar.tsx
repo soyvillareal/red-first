@@ -88,10 +88,12 @@ export function DataTableToolbar<TData>({
       </div>
       {refetchData && (
         <Button
-          className="h-8 mr-1"
+          className="w-12 mr-1"
           onClick={handleClick}
           loading={isLoading}
+          hasMargin={false}
           variant="outline"
+          size="sm"
         >
           {isLoading === false && <RefreshCcw size={16} />}
         </Button>

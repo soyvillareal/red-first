@@ -47,6 +47,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       disabled,
       loading = false,
+      hasMargin = true,
       leftSection,
       rightSection,
       ...props
@@ -63,7 +64,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {((leftSection && loading) ||
           (!leftSection && !rightSection && loading)) && (
-          <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+          <LoaderIcon
+            className={cn('h-4 w-4 animate-spin', hasMargin ? 'mr-2' : '')}
+          />
         )}
         {!loading && leftSection && <div className="mr-2">{leftSection}</div>}
         {children}
