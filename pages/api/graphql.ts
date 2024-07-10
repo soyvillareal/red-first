@@ -5,6 +5,7 @@ import { buildSchema, registerEnumType } from 'type-graphql';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import { MovementConcept } from '@prisma/client';
+import rateLimit from 'express-rate-limit';
 
 import { IGraphQLContext } from '@/types';
 import { MovementsResolvers } from '@/server/graphql/resolvers/movements';
@@ -12,6 +13,8 @@ import { UsersResolvers } from '@/server/graphql/resolvers/users';
 import { ReportsResolvers } from '@/server/graphql/resolvers/reports';
 
 import { authOptions } from './auth/[...nextauth]';
+import { adaptNextRequest } from '@/server/adapters/graphql';
+import { env } from '@/lib/env';
 
 export const initializeApolloServer = async () => {
   registerEnumType(MovementConcept, {
@@ -45,10 +48,21 @@ export const initializeApolloServer = async () => {
   });
 };
 
+const rateLimiter = rateLimit({
+  windowMs: parseInt(env.TIME_TO_WAIT_LIMIT) * 60 * 1000,
+  max: parseInt(env.MAX_REQUESTS_LIMIT),
+  handler: (req, res) => {
+    res.status(429).json('Too many requests, please try again later.');
+  },
+});
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const handle = await initializeApolloServer();
-  return handle(req, res);
+  const { req: adaptedReq, res: adaptedRes } = adaptNextRequest(req, res);
+  rateLimiter(adaptedReq, adaptedRes, async () => {
+    const handle = await initializeApolloServer();
+    return handle(req, res);
+  });
 }
