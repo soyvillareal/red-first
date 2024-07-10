@@ -8,7 +8,7 @@ import {
   type TValidMonthsKeys,
 } from '@/types/graphql/resolvers';
 
-@ObjectType()
+@ObjectType('MovementsChart')
 export class MovementsChart implements IGetMovementsChart {
   @Field(() => String)
   name: TValidMonthsKeys;
@@ -20,7 +20,7 @@ export class MovementsChart implements IGetMovementsChart {
   expense: string;
 }
 
-@ObjectType()
+@ObjectType('GetRecentMovements')
 export class GetRecentMovements implements IGetRecentMovements {
   @Field(() => String)
   id: string;
@@ -41,7 +41,7 @@ export class GetRecentMovements implements IGetRecentMovements {
   concept: MovementConcept;
 }
 
-@ObjectType()
+@ObjectType('GetAditionalMovements')
 export class GetAditionalMovements implements IGetAdditionalMovements {
   @Field(() => String)
   balance: string;

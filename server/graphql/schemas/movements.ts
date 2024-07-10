@@ -13,7 +13,7 @@ import {
 
 import { PageOptionsMeta } from './pagination';
 
-@ObjectType()
+@ObjectType('GetMovements')
 export class GetMovements implements IGetMovements {
   @Field(() => String)
   id: string;
@@ -31,7 +31,7 @@ export class GetMovements implements IGetMovements {
   date: string;
 }
 
-@ObjectType()
+@ObjectType('GetMovementsWithTotal')
 export class GetMovementsWithTotal implements IGetMovementsWithTotal {
   @Field(() => [GetMovements])
   movements: GetMovements[];
@@ -40,7 +40,7 @@ export class GetMovementsWithTotal implements IGetMovementsWithTotal {
   total: string;
 }
 
-@ObjectType()
+@ObjectType('PaginatedMovements')
 export class PaginatedMovements
   extends PageOptionsMeta
   implements IPageOptionsDataMeta<IGetMovementsWithTotal>
@@ -49,7 +49,7 @@ export class PaginatedMovements
   data: IGetMovementsWithTotal;
 }
 
-@InputType()
+@InputType('PaginationMovementsArgs')
 export class PaginationMovementsArgs implements IPaginationMovementsArgs {
   @Field(() => Number)
   page: number;
