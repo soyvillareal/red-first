@@ -20,23 +20,27 @@
 Primero debes modificar las variables de entorno, ten en cuenta que, para que el contenedor docker se ejcute sin problemas, debes crear un archivo llamado ".env.local" y dentro colocaras las variables de entorno que reposan en ".env.example". Aquí tienes que agregar los valores correspondientes de las variables de entorno y que hace cada una.
 
 ```bash
-# This is the base URL of the application
+# Esta es la URL base de la aplicación.
 NEXTAUTH_URL=http://localhost:3000
-# The domain of the Auth0 tenant
+# El dominio de la Auth0 tenant
 AUTH0_DOMAIN=tenantName.us.auth0.com
-# The Client ID of the application
+# El ID de cliente de la aplicación.
 AUTH0_CLIENT_ID=clientId
-# The Client Secret of the application
+# El secreto del cliente de la aplicación.
 AUTH0_CLIENT_SECRET=clientSecret
-# The URL of the roles API Identifier
+# La URL del identificador de API de roles.
 AUTH0_ROLES_IDENTIFIER=rolesIdentifier
-# The scope of the application
+# El alcance de la aplicación.
 AUTH0_SCOPE='openid profile email phone read:shows'
-# The secret used to encrypt the JWTs
+# El número máximo de solicitudes que se pueden realizar a la API.
+MAX_REQUESTS_LIMIT=100
+# El tiempo que se debe esperar antes de realizar otra solicitud a la API después de alcanzar el límite
+TIME_TO_WAIT_LIMIT=30
+# El secreto utilizado para cifrar los JWT
 JWT_SECRET=jwtSecret
-# The Google Analytics Tracking ID
+# El ID de seguimiento de Google Analytics
 GA_TRACKING_ID=G-XXXXXXXXXX
-# The URL of the database
+# La URL de la base de datos.
 DATABASE_URL=postgresql://username:password@hostname:5432/red_first?schema=public
 ```
 
@@ -66,7 +70,11 @@ DATABASE_URL=postgresql://username:password@hostname:5432/red_first?schema=publi
      Si decides no modificar `https://auth0.roles.redfirst.com/` entonces este debe ser el valor de tu variable de entorno `AUTH0_ROLES_IDENTIFIER`
 
   5. Una vez escrito esto, haz clic en **Deploy**
-
+- La variable de entorno `AUTH0_SCOPE` dependerá de los permisos que usted le configuré a su api **Auth0 Management API**, esto puede hacerlo dirigiendose a **Applications** > **Machine To Machine Applications**, una vez aquí dentro, podrá observar sus aplicaciones, deberá activar el *Switch* de la aplicación correspondiente. Una vez realiazado lo anterior, solo hace falta agregar los permisos, para esto puede dar clic sobre el icono a la derecha y agregar los siguientes permisos:
+  - `read:users`
+  - `update:users`
+  - `read:roles`
+  - `create:role_members`
 - La variable de entorno `GA_TRACKING_ID` la puedes obtener creando una aplicación de [Google Analytics](https://support.google.com/analytics/answer/9304153?hl=en).
 - La variable de entorno `DATABASE_URL` es una url de conexión a postgresql y está relacionada con la configuración de las variables de entorno en el servicio **db** en el archivo `docker-compose.yml` (Solo aplica para la inicialización con Docker). Esta variable de entorno se compone de:
   - Hostname: db
@@ -110,19 +118,21 @@ En caso de querer iniciar el proyecto localmente sin Docker, necesitaras lo sigu
 1. Para esto necesitaras tener una cuenta en [vercel.com](https://vercel.com).
 2. Una vez que hayas ingresado a tu cuenta de Vercel, tienes que enlazar tu cuenta de GitHub con Vercel (en caso de no estar enlazada).
 3. Tienes que importar tu repositorio, esto lo puedes hacer dirijiendote a **Overview** > **Add New** > **Project**. Una vez aquí, puedes buscar el repositorio e importalo desde GitHub.
-2. Configura las variables de entorno en Vercel, para esto debes dirijirte a **Settings** > **Environment Variables**.
-3. Una vez dentro de la pestaña para crear las variables de entorno, asegurate de crear las siguientes variables como secretas.
-    - `DATABASE_URL`
-    - `JWT_SECRET`
-    - `AUTH0_CLIENT_SECRET`
-    - `AUTH0_CLIENT_ID`
-4. Tambien debes crear las demas variables de entorno, sin embargo, estas pueder ser o no secretas.
-    - `GA_TRACKING_ID`
-    - `NEXTAUTH_URL`
-    - `AUTH0_SCOPE`
-    - `AUTH0_ROLES_IDENTIFIER`
-    - `AUTH0_DOMAIN`
-5. Luego de esto, puedes hacer push en tu repositorio de GitHub, esto automaticamente causará un despliegue en Vercel.
+4. Configura las variables de entorno en Vercel, para esto debes dirijirte a **Settings** > **Environment Variables**.
+5. Una vez dentro de la pestaña para crear las variables de entorno, asegurate de crear las siguientes variables como secretas.
+   - `DATABASE_URL`
+   - `JWT_SECRET`
+   - `AUTH0_CLIENT_SECRET`
+   - `AUTH0_CLIENT_ID`
+6. Tambien debes crear las demas variables de entorno, sin embargo, estas pueder ser o no secretas.
+   - `GA_TRACKING_ID`
+   - `NEXTAUTH_URL`
+   - `AUTH0_SCOPE`
+   - `AUTH0_ROLES_IDENTIFIER`
+   - `AUTH0_DOMAIN`
+   - `MAX_REQUESTS_LIMIT`
+   - `TIME_TO_WAIT_LIMIT`
+7. Luego de esto, puedes hacer push en tu repositorio de GitHub, esto automaticamente causará un despliegue en Vercel.
 
 Tambien puede desplegar su proyecto en vercel utilizando [Vercel CLI](https://vercel.com/docs/deployments/overview#vercel-cli).
 
@@ -131,26 +141,29 @@ Puede encontrar el proyecto [desplegado en vercel](https://red-first.vercel.app/
 ## Observaciones
 
 #### El proyecto se realizó teniendo en cuenta aspectos de seguridad como:
+
 - Implementación efectiva de control de acceso basado en roles (RBAC).
 - Protección adecuada de los datos sensibles.
 - Limitaciones de throttling para la API de GraphQL.
 - Herramienta de monitoreo de logs
 
 #### Se deben tener en cuenta las siguientes consieraciones:
+
 - Se desactivó el uso de la cache con Apollo Client debido a problemas con la experiencia de usuario al realizar mutaciones y dirigirse a vistas que consumen queries de GraphQL.
 
 <span style="color: red;font-size:1.2rem;font-weight:bold">Importante: </span> se que desativar la cache para forzar las peticiones no es la mejor practica, sin embargo, es la solución mas rapida. Pero esto, no tiene porque permanecer así en el futuro.
 
 #### Caracteristas implementadas que no estaban contempladas en el alcance:
+
 - Internacionalziación (next-i18next)
 - **Pagina de inicio**: Me tomé libertades en cuanto a la pagina de inicio he intenté hacer algo diferente.
-- **Diseño responsivo**: sé que en las notas que componen las indicaciones de la prueba tecnica, dice que *El aplicativo no debe contener diseño responsivo*, sin embargo, quise ir un poco mas allá y agregarle un diseño responsivo para que fuera mas amigable para los usuarios ya que esto en terminos de experiencia de usuario es muy favorable.
+- **Diseño responsivo**: sé que en las notas que componen las indicaciones de la prueba tecnica, dice que _El aplicativo no debe contener diseño responsivo_, sin embargo, quise ir un poco mas allá y agregarle un diseño responsivo para que fuera mas amigable para los usuarios ya que esto en terminos de experiencia de usuario es muy favorable.
 - En lugar de 3 pruebas unitarias, me concentré en realizar todas las pruebas que me eran posibles, en total realicé 105 pruebas unitarias enfocado en los puntos criticos de la aplicación (mas enfocado en el backend) como lo son:
-    - Middlewares
-    - Cliente de Prisma
-    - Repositorios
-    - Utilidades (Cliente y servidor)
-    - Autenticación
+  - Middlewares
+  - Cliente de Prisma
+  - Repositorios
+  - Utilidades (Cliente y servidor)
+  - Autenticación
 
 ## Vistas previas del proyecto
 
