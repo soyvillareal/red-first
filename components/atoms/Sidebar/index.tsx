@@ -38,7 +38,7 @@ export const Sidebar = ({
     <aside
       className={cn(
         `fixed left-0 right-0 top-0 z-50 w-full border-r-2 border-r-muted transition-[width] md:bottom-0 md:right-auto md:h-svh ${
-          isCollapsed ? 'md:w-14' : 'md:w-64'
+          isCollapsed ? 'md:w-[64px]' : 'md:w-64'
         }`,
         className,
       )}

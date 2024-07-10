@@ -14,7 +14,7 @@ export const Testimonial = () => {
 
   return (
     <section id="testimonials">
-      <div className="max-w-6xl px-5 mx-auto mt-32 text-center">
+      <div className="max-w-6xl px-5 mx-auto mt-16 text-center">
         <h2 className="text-4xl font-bold text-center">
           {t('landing.whatsDifferentAbout')}
         </h2>
@@ -72,7 +72,7 @@ export const Testimonial = () => {
               href={routes.signUp}
               className="p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent"
             >
-              {t('common.signUp')}
+              {t('landing.joinUs')}
             </Link>
           )}
         </div>

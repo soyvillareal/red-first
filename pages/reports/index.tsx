@@ -141,7 +141,7 @@ export const Dashboard = () => {
             </CardContent>
           </Card>
           <div className="flex flex-col h-full">
-            <Card className="border-b-0">
+            <Card className="mb-2">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-secondary-foreground text-sm font-medium">
                   {t('dashboard.balance')}

@@ -4,8 +4,6 @@ import { getSession } from 'next-auth/react';
 
 import { DashboardLayout } from '@/components/atoms/DashboardLayout';
 import { ContentSection } from '@/components/atoms/ContentSection';
-import { ContextLayout } from '@/components/custom/layout';
-import { UserNav } from '@/components/atoms/UserNav';
 import { MovementForm } from '@/components/atoms/MovementForm';
 import { routes } from '@/lib/contants';
 import { loadTranslations } from '@/lib/i18n';
@@ -15,30 +13,20 @@ const NewMovement = () => {
   const { t } = useTranslation();
 
   return (
-    <ContextLayout>
-      <DashboardLayout
-        seo={{
-          title: t('SEO.NEW_MOVEMENT.title'),
-          description: t('SEO.NEW_MOVEMENT.description'),
-          keywords: t('SEO.NEW_MOVEMENT.keywords'),
-        }}
+    <DashboardLayout
+      seo={{
+        title: t('SEO.NEW_MOVEMENT.title'),
+        description: t('SEO.NEW_MOVEMENT.description'),
+        keywords: t('SEO.NEW_MOVEMENT.keywords'),
+      }}
+    >
+      <ContentSection
+        title={t('newMovement.title')}
+        goBackUrl={routes.movements}
       >
-        <ContextLayout.Header sticky>
-          <div className="ml-auto flex items-center space-x-4">
-            <UserNav />
-          </div>
-        </ContextLayout.Header>
-
-        <ContextLayout.Body>
-          <ContentSection
-            title={t('newMovement.title')}
-            goBackUrl={routes.movements}
-          >
-            <MovementForm />
-          </ContentSection>
-        </ContextLayout.Body>
-      </DashboardLayout>
-    </ContextLayout>
+        <MovementForm />
+      </ContentSection>
+    </DashboardLayout>
   );
 };
 

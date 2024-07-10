@@ -5,9 +5,7 @@ export const Features = () => {
 
   return (
     <section id="features">
-      {/* Flex Container */}
       <div className="container flex flex-col px-4 mx-auto mt-10 space-y-12 md:space-y-0 md:flex-row">
-        {/* What's Different */}
         <div className="flex flex-col space-y-12 md:w-1/2">
           <h2 className="max-w-md text-4xl font-bold text-center md:text-left">
             {t('landing.whatsDifferentAbout')}
@@ -16,12 +14,8 @@ export const Features = () => {
             {t('landing.manageProvidesAllTheFunctionality')}
           </p>
         </div>
-
-        {/* Numbered List */}
         <div className="flex flex-col space-y-8 md:w-1/2">
-          {/* List Item 1 */}
           <div className="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
-            {/* Heading */}
             <div className="rounded-l-full bg-destructive md:bg-transparent">
               <div className="flex items-center space-x-2">
                 <div className="px-4 py-2 text-white rounded-full md:py-1 bg-primary">
@@ -42,10 +36,7 @@ export const Features = () => {
               </p>
             </div>
           </div>
-
-          {/* List Item 2 */}
           <div className="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
-            {/* Heading */}
             <div className="rounded-l-full bg-destructive md:bg-transparent">
               <div className="flex items-center space-x-2">
                 <div className="px-4 py-2 text-white rounded-full md:py-1 bg-primary">
@@ -56,7 +47,6 @@ export const Features = () => {
                 </h3>
               </div>
             </div>
-
             <div>
               <h3 className="hidden mb-4 text-lg font-bold md:block">
                 {t('landing.advancedBuiltInReports')}
@@ -66,10 +56,7 @@ export const Features = () => {
               </p>
             </div>
           </div>
-
-          {/* List Item 3 */}
           <div className="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
-            {/* Heading */}
             <div className="rounded-l-full bg-destructive md:bg-transparent">
               <div className="flex items-center space-x-2">
                 <div className="px-4 py-2 text-white rounded-full md:py-1 bg-primary">
@@ -80,7 +67,6 @@ export const Features = () => {
                 </h3>
               </div>
             </div>
-
             <div>
               <h3 className="hidden mb-4 text-lg font-bold md:block">
                 {t('landing.everythingYouNeedOnePlace')}

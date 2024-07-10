@@ -22,9 +22,11 @@
     --secondary-foreground: hsl(233, 12%, 13%);
 
     --muted: hsl(227, 12%, 61%);
+    --muted-50: hsl(227, 12%, 61%, 0.5);
     --muted-foreground: hsl(0, 0%, 0%);
 
     --accent: hsl(12, 88%, 69%);
+    --accent-50: hsl(12, 88%, 69%, 0.5);
     --accent-foreground: hsl(233, 12%, 13%);
 
     --destructive: hsl(355, 61%, 50%);
@@ -37,6 +39,8 @@
 
     --green: hsl(146, 66%, 41%);
     --red: hsl(0, 66%, 49%);
+
+    --radius: 0.5rem;
   }
 
   .dark {

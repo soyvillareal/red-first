@@ -186,7 +186,8 @@
         "trackTheProgressOfAll": "Seguimiento del progreso de todas tus cuentas",
         "seeHowYourDailyAccountsFitInto": "Vea cómo sus cuentas diarias encajan en una visión más amplia. Vaya desde el seguimiento del progreso a nivel de hito hasta el más mínimo detalle. No vuelvas a perder de vista el panorama general.",
         "manageProvidesAllTheFunctionality": "Manage proporciona toda la funcionalidad que su equipo necesita, sin la complejidad. Nuestro software está hecho a medida para los equipos de productos digitales modernos.",
-        "description": "Descripción"
+        "description": "Descripción",
+        "joinUs": "Únete a nosotros"
     },
     "responseCodes": {
         "SOMETHING_WENT_WRONG": "Upss lo sentimos, algo salió mal :(",

@@ -120,9 +120,19 @@ const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
             numberWithCurrency(value),
             t(`movements.${name}`),
           ]}
+          labelClassName="text-gray-500"
+          wrapperClassName="bg-white border border-gray-200 shadow-md rounded-lg p-2"
         />
-        <Bar dataKey={MovementConcept.income} fill="#82ca9d" />
-        <Bar dataKey={MovementConcept.expense} fill="#ff4040" />
+        <Bar
+          dataKey={MovementConcept.income}
+          fill="var(--green)"
+          radius={[4, 4, 0, 0]}
+        />
+        <Bar
+          dataKey={MovementConcept.expense}
+          fill="var(--red)"
+          radius={[4, 4, 0, 0]}
+        />
       </BarChart>
     );
   }, [

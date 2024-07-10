@@ -5,6 +5,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { Button } from '@/components/custom/Button';
 import { UserNavSkeleton } from '@/components/skeleton/UserNavSkeleton';
 import UserDropdown from '@/components/atoms/UserDropdown';
+import SignInIcon from '@/components/icons/SignInIcon';
 
 export const UserNav = () => {
   const { t } = useTranslation();
@@ -34,9 +35,12 @@ export const UserNav = () => {
       <Button
         variant="link"
         onClick={handleClickSignUp}
-        className="hidden p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent md:block pb-2"
+        className="block p-3 p-3 md:px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent pb-2"
       >
-        {t('common.signUp')}
+        <span className="block sm:hidden text-white">
+          <SignInIcon />
+        </span>
+        <span className="hidden sm:block">{t('common.signUp')}</span>
       </Button>
     </div>
   );

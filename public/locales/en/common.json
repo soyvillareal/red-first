@@ -185,7 +185,8 @@
         "trackTheProgressOfAll": "Track the progress of all your accounts",
         "seeHowYourDailyAccountsFitInto": "See how your daily accounts fit into a bigger picture. Go from tracking progress at the milestone level to the smallest detail. Don't lose sight of the big picture again.",
         "manageProvidesAllTheFunctionality": "Manage provides all the functionality your team needs, without the complexity. Our software is tailor-made for modern digital product teams.",
-        "description": "Description"
+        "description": "Description",
+        "joinUs": "Join us"
     },
     "responseCodes": {
         "SOMETHING_WENT_WRONG": "Oops, we're sorry, something went wrong :(",

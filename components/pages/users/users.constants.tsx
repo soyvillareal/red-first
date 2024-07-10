@@ -1,11 +1,9 @@
-import Link from 'next/link';
 import { ColumnDef } from '@tanstack/react-table';
 
 import { DataTableColumnHeader } from '@/components/atoms/Table/DataTableColumnHeader';
-import { EditIcon } from '@/components/icons/EditIcon';
-import { routes } from '@/lib/contants';
 
 import { UserSchema, usersSchema } from './users.schema';
+import EditUserButton from './components/EditUserButton';
 
 const columns: ColumnDef<UserSchema>[] = [
   {
@@ -61,13 +59,9 @@ const columns: ColumnDef<UserSchema>[] = [
       <DataTableColumnHeader column={column} i18nTitle="table.action" />
     ),
     cell: ({ row }) => {
-      const task = usersSchema.parse(row.original);
+      const user = usersSchema.parse(row.original);
 
-      return (
-        <Link href={`${routes.editUser}/${task.id}`}>
-          <EditIcon />
-        </Link>
-      );
+      return <EditUserButton userId={user.id} />;
     },
   },
 ];
