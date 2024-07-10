@@ -1,25 +1,13 @@
-import dayjs from 'dayjs';
 import { Arg, Query, Resolver, UseMiddleware } from 'type-graphql';
 
-import {
-  type IGetAdditionalMovements,
-  type IGetMovementsChart,
-  type IGetRecentMovements,
-  type IParsedMovementsChart,
-  type TValidMonthsKeys,
-} from '@/types/graphql/resolvers';
-import { indexBy, numberWithCurrency } from '@/lib/utils';
+import { type IGetMovementsChart } from '@/types/graphql/resolvers';
 import { responseCodes } from '@/server/utils';
 import { ReportsRepository } from '@/server/dataAccess/reports';
-import { fillArray } from '@/lib/utils';
 import { checkIsAdmin, checkIsLogged } from '@/server/middleware';
 import { checkGetMovementsChart } from '@/server/middleware/reports';
-import {
-  GetAditionalMovements,
-  MovementsChart,
-} from '@/server/graphql/schemas/reports';
+import { MovementsChart } from '@/server/graphql/schemas/reports';
 import { UsersRepository } from '@/server/dataAccess/users';
-import { IGetUsersReportByIds } from '@/types/dataAccess/users';
+import { movementsChartSSR } from '@/server/ssr/reports';
 
 @Resolver()
 export class ReportsResolvers {
@@ -43,152 +31,9 @@ export class ReportsResolvers {
     year?: string,
   ): Promise<IGetMovementsChart[]> {
     try {
-      const parsedYear = year ? dayjs(year, 'YYYY') : dayjs();
-      const startDate = parsedYear.startOf('year').toDate();
-      const endDate = parsedYear.endOf('year').toDate();
+      const movementsChart = await movementsChartSSR(year);
 
-      const movements = await this.reportsRepository.getChartMovements(
-        startDate,
-        endDate,
-      );
-
-      if (movements === null) {
-        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-      }
-
-      const parsedMovementsChart: IParsedMovementsChart[] = fillArray(12).map(
-        (_, index) => {
-          const month = dayjs().month(index).startOf('month');
-          return {
-            name: month.format('MMM').toLowerCase() as TValidMonthsKeys,
-            income: BigInt(0),
-            expense: BigInt(0),
-          };
-        },
-      );
-
-      movements.forEach((movement) => {
-        const movementDate = dayjs(movement.date);
-        if (movementDate.year() === parsedYear.year()) {
-          const monthIndex = movementDate.month();
-          const decimalValueAsString = movement.amount.toString();
-          if (movement.concept === 'income') {
-            parsedMovementsChart[monthIndex].income +=
-              BigInt(decimalValueAsString);
-          } else if (movement.concept === 'expense') {
-            parsedMovementsChart[monthIndex].expense +=
-              BigInt(decimalValueAsString);
-          }
-        }
-      });
-
-      return parsedMovementsChart.map((movement) => ({
-        name: movement.name,
-        income: movement.income.toString(),
-        expense: (-movement.expense).toString(),
-      }));
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-    }
-  }
-
-  @Query(() => GetAditionalMovements, {
-    name: 'getAdditionalMovements',
-    description: 'Get additional movements report.',
-  })
-  @UseMiddleware(checkIsLogged, checkIsAdmin)
-  async getAdditionalMovements(): Promise<IGetAdditionalMovements> {
-    try {
-      const recentMovements = await this.reportsRepository.getRecentMovements();
-
-      if (recentMovements === null) {
-        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-      }
-
-      const users = await this.usersRepository.getUsersReportByIds(
-        recentMovements.map((movement) => movement.userId),
-      );
-
-      if (users === null) {
-        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-      }
-
-      const indexedUsers = indexBy<IGetUsersReportByIds>(users, 'id');
-
-      const recentMovementsParsed: IGetRecentMovements[] = recentMovements.map(
-        (movement) => {
-          let newAmount = numberWithCurrency(movement.amount.toString());
-
-          if (movement.concept === 'expense') {
-            newAmount = `-${newAmount}`;
-          }
-
-          const userInfo = indexedUsers[movement.userId];
-
-          return {
-            id: movement.id,
-            name: userInfo.name ?? '',
-            email: userInfo.email ?? '',
-            image: userInfo.image ?? '',
-            movement: newAmount,
-            concept: movement.concept,
-          };
-        },
-      );
-
-      const startOfMonth = dayjs().startOf('month').toDate();
-      const endOfMonth = dayjs().endOf('month').toDate();
-
-      const countMovements = await this.reportsRepository.countMovementByRange(
-        startOfMonth,
-        endOfMonth,
-      );
-
-      if (countMovements === null) {
-        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-      }
-
-      const totalIncome = await this.reportsRepository.getIncome();
-
-      if (totalIncome === null) {
-        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-      }
-
-      const totalExpenses = await this.reportsRepository.getExpenses();
-
-      if (totalExpenses === null) {
-        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-      }
-
-      const balance = BigInt(totalIncome ?? 0) - BigInt(totalExpenses ?? 0);
-
-      return {
-        balance: numberWithCurrency(balance ?? '0'),
-        movements: countMovements,
-        recentMovements: recentMovementsParsed,
-      };
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-    }
-  }
-  @Query(() => [String], {
-    name: 'getValidYears',
-    description: 'Get valid years for movements report.',
-  })
-  @UseMiddleware(checkIsLogged, checkIsAdmin)
-  async getValidYears(): Promise<string[]> {
-    try {
-      const years = await this.reportsRepository.getValidYears();
-      if (years === null) {
-        throw new Error(responseCodes.ERROR.SOMETHING_WENT_WRONG);
-      }
-      return years.map((year) => year.year);
+      return movementsChart;
     } catch (error) {
       if (error instanceof Error) {
         throw error;

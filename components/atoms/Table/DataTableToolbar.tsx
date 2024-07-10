@@ -1,5 +1,6 @@
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
-import { useCallback } from 'react';
+import { RefreshCcw } from 'lucide-react';
 import { v4 as uuid } from 'uuid';
 
 import { Button } from '@/components/custom/Button';
@@ -17,8 +18,10 @@ export function DataTableToolbar<TData>({
   toolbarOptions,
   hasUserFilter = false,
   hasSearchInput = false,
+  refetchData,
 }: DataTableToolbarProps<TData>) {
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -30,6 +33,14 @@ export function DataTableToolbar<TData>({
     },
     [table, toolbarOptions.searchKey],
   );
+
+  const handleClick = useCallback(async () => {
+    if (refetchData) {
+      setIsLoading(true);
+      await refetchData();
+      setIsLoading(false);
+    }
+  }, [refetchData]);
 
   return (
     <div className="flex items-center justify-between">
@@ -75,6 +86,16 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
+      {refetchData && (
+        <Button
+          className="h-8 mr-1"
+          onClick={handleClick}
+          loading={isLoading}
+          variant="outline"
+        >
+          {isLoading === false && <RefreshCcw size={16} />}
+        </Button>
+      )}
       <DataTableViewOptions table={table} />
     </div>
   );

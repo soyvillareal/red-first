@@ -46,6 +46,7 @@ const Movements = () => {
       data: movementQueryData,
       loading: movementQueryLoading,
       error: movementQueryError,
+      refetch: refetchMovements,
     },
   ] = useLazyQuery<
     {
@@ -124,6 +125,7 @@ const Movements = () => {
             onPaginationChange,
             onColumnFiltersChange: setColumnFilters,
           }}
+          refetchData={refetchMovements}
           hasUserFilter
         />
       </div>

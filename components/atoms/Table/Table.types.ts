@@ -1,3 +1,4 @@
+import { ApolloQueryResult } from '@apollo/client';
 import {
   Column,
   ColumnDef,
@@ -28,6 +29,7 @@ export interface DataTableToolbarProps<TData> {
   toolbarOptions: DataTableToolbarOptions<TData>;
   hasUserFilter?: boolean;
   hasSearchInput?: boolean;
+  refetchData?: () => Promise<ApolloQueryResult<unknown>>;
 }
 
 export interface DataTableProps<TData, TValue> {
@@ -49,6 +51,7 @@ export interface DataTableProps<TData, TValue> {
   hasUserFilter?: boolean;
   hasSearchInput?: boolean;
   footerChildren?: React.ReactNode;
+  refetchData?: () => Promise<ApolloQueryResult<unknown>>;
 }
 
 export interface DataTableColumnHeaderProps<TData, TValue>

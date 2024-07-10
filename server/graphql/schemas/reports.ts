@@ -2,7 +2,6 @@ import { MovementConcept } from '@prisma/client';
 import { Field, ObjectType } from 'type-graphql';
 
 import {
-  type IGetAdditionalMovements,
   type IGetMovementsChart,
   type IGetRecentMovements,
   type TValidMonthsKeys,
@@ -39,16 +38,4 @@ export class GetRecentMovements implements IGetRecentMovements {
 
   @Field(() => MovementConcept)
   concept: MovementConcept;
-}
-
-@ObjectType('GetAditionalMovements')
-export class GetAditionalMovements implements IGetAdditionalMovements {
-  @Field(() => String)
-  balance: string;
-
-  @Field(() => Number)
-  movements: number;
-
-  @Field(() => [GetRecentMovements])
-  recentMovements: IGetRecentMovements[];
 }

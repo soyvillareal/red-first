@@ -34,7 +34,12 @@ const Users = () => {
 
   const [
     getMovementsQuery,
-    { data: userQueryData, loading: userQueryLoading, error: userQueryError },
+    {
+      data: userQueryData,
+      loading: userQueryLoading,
+      error: userQueryError,
+      refetch: refetchUsers,
+    },
   ] = useLazyQuery<
     {
       getUsers: IPageOptionsDataMeta<IGetUsers[]>;
@@ -90,6 +95,7 @@ const Users = () => {
             onPaginationChange,
             onColumnFiltersChange: setColumnFilters,
           }}
+          refetchData={refetchUsers}
           hasSearchInput
         />
       </div>

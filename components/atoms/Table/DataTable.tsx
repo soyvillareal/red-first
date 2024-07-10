@@ -35,6 +35,7 @@ export function DataTable<TData, TValue>({
   footerChildren,
   pageCount,
   loading = false,
+  refetchData,
   values: { sorting, pagination, columnFilters },
   events: { onSortingChange, onPaginationChange, onColumnFiltersChange },
 }: DataTableProps<TData, TValue>) {
@@ -74,6 +75,7 @@ export function DataTable<TData, TValue>({
         toolbarOptions={toolbarOptions}
         hasUserFilter={hasUserFilter}
         hasSearchInput={hasSearchInput}
+        refetchData={refetchData}
       />
       <div className="rounded-md border bg-primary-foreground">
         <Table>
