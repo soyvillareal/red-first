@@ -105,12 +105,13 @@ const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="name"
-          stroke="#888888"
+          stroke="var(--border)"
           fontSize={12}
           tickFormatter={(value: string) => t(`months.${value}`)}
         />
         <YAxis
           ticks={ticks}
+          stroke="var(--border)"
           fontSize={12}
           tickFormatter={(value) => formatNumber(value)}
           domain={[minValue, maxValue]}
