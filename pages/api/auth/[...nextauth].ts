@@ -3,7 +3,7 @@ import Auth0Provider from 'next-auth/providers/auth0';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 import { env } from '@/lib/env';
-import { EUserRole, TProfileWithRoles } from '@/types';
+import { EUserRole, TProfileWithRoles, TSessionWithRoles } from '@/types';
 import prisma from '@/lib/db';
 import { UsersRepository } from '@/server/dataAccess/users';
 
@@ -96,7 +96,7 @@ export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: env.JWT_SECRET,
   session: {
-    strategy: 'jwt',
+    strategy: 'database',
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   jwt: {
@@ -135,46 +135,17 @@ export const authOptions: AuthOptions = {
     redirect({ url, baseUrl }) {
       return url.startsWith(baseUrl) ? `${baseUrl}/` : baseUrl;
     },
-    async jwt({ token, user, account, profile }) {
-      if (account) {
-        token.accessToken = account.access_token;
-      }
-      if (user) {
-        token.id = user.id;
-      }
-      if (profile !== undefined && profile !== null) {
-        const rolesIdentifier =
-          env.AUTH0_ROLES_IDENTIFIER as keyof TProfileWithRoles;
-        const profileWithRoles = profile as TProfileWithRoles;
-        const userRoles = profileWithRoles[rolesIdentifier];
+    async session({ session, user }) {
+      const userWithRoles = user as TSessionWithRoles;
 
-        if (userRoles !== undefined && userRoles !== null) {
-          token.userRoles = userRoles;
-        }
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (typeof token.id === 'string') {
-        session.user.id = token.id;
-      } else {
-        throw new Error('User id is not valid!');
-      }
-      if (typeof token.accessToken === 'string') {
-        session.accessToken = token.accessToken;
-      } else {
-        throw new Error('Access token id is not valid!');
-      }
-
-      session.user.roles = [EUserRole.USER];
-      if (
-        typeof token.userRoles === 'object' &&
-        Array.isArray(token.userRoles) === true &&
-        token.userRoles.length > 0
-      ) {
-        session.user.roles = token.userRoles as EUserRole[];
-      }
-      return session;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: userWithRoles.id,
+          roles: userWithRoles.roles,
+        },
+      };
     },
   },
 };

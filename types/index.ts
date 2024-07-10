@@ -1,6 +1,7 @@
 import { DocumentNode } from '@apollo/client';
 import { IncomingHttpHeaders } from 'http';
 import { type DefaultSession, type Profile } from 'next-auth';
+import { type AdapterUser } from 'next-auth/adapters';
 
 export enum EUserRoleRoleNormalized {
   admin = 'admin',
@@ -13,6 +14,7 @@ export enum EUserRole {
 }
 
 export type TProfileWithRoles = Record<string, string | string[]> & Profile;
+export type TSessionWithRoles = Record<string, string | string[]> & AdapterUser;
 
 export interface LocalStorageProps<T> {
   key: string;
