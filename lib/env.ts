@@ -16,4 +16,6 @@ export const env = {
   GA_TRACKING_ID: process.env.GA_TRACKING_ID || '',
   LOGO_URL: `${NEXTAUTH_URL}/images/logo.png` || '',
   DATABASE_URL: process.env.DATABASE_URL || '',
+  MAX_REQUESTS_LIMIT: process.env.MAX_REQUESTS_LIMIT || '100',
+  TIME_TO_WAIT_LIMIT: process.env.TIME_TO_WAIT_LIMIT || '15',
 };
