@@ -7,7 +7,7 @@ import { getServerSession } from 'next-auth';
 import { MovementConcept } from '@prisma/client';
 import rateLimit from 'express-rate-limit';
 
-import { IGraphQLContext } from '@/types';
+import { EUserRoleRoleNormalized, IGraphQLContext } from '@/types';
 import { MovementsResolvers } from '@/server/graphql/resolvers/movements';
 import { UsersResolvers } from '@/server/graphql/resolvers/users';
 import { ReportsResolvers } from '@/server/graphql/resolvers/reports';
@@ -23,6 +23,15 @@ export const initializeApolloServer = async () => {
     valuesConfig: {
       expense: { description: 'Expense' },
       income: { description: 'Income' },
+    },
+  });
+
+  registerEnumType(EUserRoleRoleNormalized, {
+    name: 'EUserRole',
+    description: 'User roles',
+    valuesConfig: {
+      admin: { description: 'Administrator' },
+      user: { description: 'User' },
     },
   });
 
