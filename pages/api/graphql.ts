@@ -5,7 +5,7 @@ import { buildSchema, registerEnumType } from 'type-graphql';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import { MovementConcept } from '@prisma/client';
-import rateLimit from 'express-rate-limit';
+import * as expressRateLimit from 'express-rate-limit';
 
 import { EUserRoleRoleNormalized, IGraphQLContext } from '@/types';
 import { MovementsResolvers } from '@/server/graphql/resolvers/movements';
@@ -57,7 +57,7 @@ export const initializeApolloServer = async () => {
   });
 };
 
-const rateLimiter = rateLimit({
+const rateLimiter = expressRateLimit.rateLimit({
   windowMs: parseInt(env.TIME_TO_WAIT_LIMIT) * 60 * 1000,
   max: parseInt(env.MAX_REQUESTS_LIMIT),
   handler: (req, res) => {
