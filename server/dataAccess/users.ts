@@ -1,5 +1,3 @@
-import { PrismaClient } from '@prisma/client';
-
 import {
   IFindByNameOrEmail,
   type IGetAccountDataByProviderIdResult,
@@ -12,13 +10,10 @@ import {
 } from '@/types/dataAccess/users';
 import { type TValidsUserTypes } from '@/types/graphql/resolvers';
 import { type IPaginationParams } from '@/types/graphql/pagination';
+import prisma from '@/lib/db';
 
 export class UsersRepository {
-  private prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
+  protected prisma = prisma;
 
   public updateUser = async (
     userId: string,
