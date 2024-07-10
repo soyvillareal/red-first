@@ -1,8 +1,4 @@
-import {
-  type MovementConcept,
-  type Movements,
-  PrismaClient,
-} from '@prisma/client';
+import { type MovementConcept, type Movements } from '@prisma/client';
 
 import {
   type ICreateUserRepository,
@@ -13,14 +9,10 @@ import {
   type TValidsMovementTypes,
 } from '@/types/graphql/resolvers';
 import dayjs from 'dayjs';
+import prisma from '@/lib/db';
 
 export class MovementsRepository {
-  private prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
-
+  protected prisma = prisma;
   public createMovement = async ({
     userId,
     amount,

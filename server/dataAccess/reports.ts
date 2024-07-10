@@ -1,4 +1,4 @@
-import { MovementConcept, Prisma, PrismaClient } from '@prisma/client';
+import { MovementConcept, Prisma } from '@prisma/client';
 
 import {
   type IGetBalanceResult,
@@ -6,13 +6,10 @@ import {
   type IGetRecentMovementsRepository,
   type IGetValidYearsResult,
 } from '@/types/dataAccess/reports';
+import prisma from '@/lib/db';
 
 export class ReportsRepository {
-  private prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
+  protected prisma = prisma;
 
   public findMovementsPerRange = async (
     startDate: Date,
