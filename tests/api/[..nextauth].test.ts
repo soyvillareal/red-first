@@ -134,11 +134,6 @@ describe('callbacks', () => {
     expect(redirectCallback).toBeTruthy();
   });
 
-  it('should define a jwt callback', () => {
-    const jwtCallback = authOptions?.callbacks?.jwt;
-    expect(jwtCallback).toBeTruthy();
-  });
-
   it('should define a session callback', () => {
     const sessionCallback = authOptions?.callbacks?.session;
     expect(sessionCallback).toBeTruthy();
@@ -150,7 +145,7 @@ describe('callbacks', () => {
 
   it('should define session property in authOptions', () => {
     expect(authOptions.session).toMatchObject({
-      strategy: 'jwt',
+      strategy: 'database',
       maxAge: 30 * 24 * 60 * 60,
     });
   });
