@@ -119,11 +119,11 @@ Para realizar esto necesitará acceder a su panel de Auth0 y ubicarse en el men�
 
 ## Configuraciones adicionales para Auth0
 
-Asegúrate de colocar la URL desde donde vas a redirigir a los usuarios para autenticarse en:
-
-- `Allowed Callback URLs`
-- `Allowed Web Origins`
-- `Allowed Logout URLs`
+- Asegúrate de colocar la URL desde donde vas a redirigir a los usuarios para autenticarse en:
+  - `Allowed Callback URLs`
+  - `Allowed Web Origins`
+  - `Allowed Logout URLs`
+- Asegúrate de tener configurada la aplicación para el entorno de trabajo esperado, es decir, si vas a utilizar Auth0 en producción, asegúrate de no tener _Keys_ por defecto en defecto de Auth0 en los métodos de _Social connections_ en el menú lateral izquierdo en la opción “Authentication”. Esto último puede solucionarse creando una aplicación en Google Developer Console y colocar las llaves de OAuth en Auth0 en la opción “Authentication” > “Social”.
 
 <span style="color: red;font-size:1.2rem;font-weight:bold">Importante: </span> asegúrate de que las URL coincidan exactamente, ya que de lo contrario esto causaría problemas con la redirección de Auth0.
 
