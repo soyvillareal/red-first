@@ -22,13 +22,13 @@ import { Separator } from '@/components/ui/separator';
 import { CheckIcon } from '@/components/icons/CheckIcon';
 import { PlusCircledIcon } from '@/components/icons/PlusCircledIcon';
 
-import { DataTableFacetedFilterProps } from './Table.types';
+import { IDataTableFacetedFilterProps } from './Table.types';
 
 export function DataTableFacetedFilter<TData, TValue>({
   column,
   title,
   options,
-}: DataTableFacetedFilterProps<TData, TValue>) {
+}: IDataTableFacetedFilterProps<TData, TValue>) {
   const { t } = useTranslation();
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = useMemo(

@@ -1,6 +1,6 @@
 import { Column } from '@tanstack/react-table';
 
-export interface DataTableFacetedFilterProps<TData, TValue> {
+export interface IDataTableSearchUserPopoverProps<TData, TValue> {
   column?: Column<TData, TValue>;
 }
 

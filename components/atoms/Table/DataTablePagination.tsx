@@ -14,12 +14,12 @@ import { ChevronsLeftIcon } from '@/components/icons/ChevronsLeftIcon';
 import { ChevronsRightIcon } from '@/components/icons/ChevronsRightIcon';
 import { pageSizes } from '@/lib/contants';
 
-import { DataTablePaginationProps } from './Table.types';
+import { IDataTablePaginationProps } from './Table.types';
 
 export function DataTablePagination<TData>({
   loading,
   table,
-}: DataTablePaginationProps<TData>) {
+}: IDataTablePaginationProps<TData>) {
   const { t } = useTranslation();
 
   return (

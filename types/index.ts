@@ -1,3 +1,4 @@
+import { TFunction } from 'next-i18next';
 import { DocumentNode } from '@apollo/client';
 import { IncomingHttpHeaders } from 'http';
 import { type DefaultSession, type Profile } from 'next-auth';
@@ -57,4 +58,11 @@ export interface IGAEvent {
   category: string;
   label: string;
   value: number;
+}
+
+export interface ITableToCSV<T> {
+  columns: string[];
+  rows: T[];
+  total?: string;
+  t: TFunction;
 }

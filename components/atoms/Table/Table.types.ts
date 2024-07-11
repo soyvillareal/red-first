@@ -14,26 +14,31 @@ export interface IDataTableFilterUsersProps<TData> {
   table: Table<TData>;
 }
 
-export interface DataTablePaginationProps<TData> {
+export interface IDataTablePaginationProps<TData> {
   loading: boolean;
   table: Table<TData>;
 }
 
-export interface DataTableToolbarOptions<TData> {
+export interface IDataTableToolbarOptions<TData> {
   searchKey: keyof TData;
+  totalValues?: string;
   filters?: (keyof TData)[];
 }
 
-export interface DataTableToolbarProps<TData> {
+export interface IDataTableToolbarProps<TData> {
   table: Table<TData>;
-  toolbarOptions: DataTableToolbarOptions<TData>;
+  toolbarOptions: IDataTableToolbarOptions<TData>;
   hasUserFilter?: boolean;
   hasSearchInput?: boolean;
   refetchData?: () => Promise<ApolloQueryResult<unknown>>;
 }
 
-export interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+export type TColumnsWithKeys<TData, TValue> = ColumnDef<TData, TValue> & {
+  accessorKey: string;
+};
+
+export interface IDataTableProps<TData, TValue> {
+  columns: TColumnsWithKeys<TData, TValue>[];
   data: TData[];
   pageCount: number;
   loading?: boolean;
@@ -47,34 +52,34 @@ export interface DataTableProps<TData, TValue> {
     onPaginationChange: OnChangeFn<PaginationState>;
     onColumnFiltersChange: OnChangeFn<ColumnFiltersState>;
   };
-  toolbarOptions: DataTableToolbarOptions<TData>;
+  toolbarOptions: IDataTableToolbarOptions<TData>;
   hasUserFilter?: boolean;
   hasSearchInput?: boolean;
   footerChildren?: React.ReactNode;
   refetchData?: () => Promise<ApolloQueryResult<unknown>>;
 }
 
-export interface DataTableColumnHeaderProps<TData, TValue>
+export interface IDataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>;
   i18nTitle: string;
   hasDropdown?: boolean;
 }
 
-export interface DataTableComponentType {
+export interface IDataTableComponentType {
   className?: string;
 }
 
-export interface DataTableFacetedFilterOptions {
+export interface IDataTableFacetedFilterOptions {
   label: string;
   value: string;
-  icon?: ComponentType<DataTableComponentType>;
+  icon?: ComponentType<IDataTableComponentType>;
 }
 
-export interface DataTableFacetedFilterProps<TData, TValue> {
+export interface IDataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
   title?: string;
-  options: DataTableFacetedFilterOptions[];
+  options: IDataTableFacetedFilterOptions[];
 }
 
 export interface DataTableViewOptionsProps<TData> {

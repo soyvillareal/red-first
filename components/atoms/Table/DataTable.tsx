@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import {
+  OnChangeFn,
   VisibilityState,
   flexRender,
   getCoreRowModel,
@@ -24,7 +25,7 @@ import { DataTableItemSkeleton } from '@/components/skeleton/DataTableItemSkelet
 
 import { DataTableToolbar } from './DataTableToolbar';
 import { DataTablePagination } from './DataTablePagination';
-import { DataTableProps } from './Table.types';
+import { IDataTableProps } from './Table.types';
 
 export function DataTable<TData, TValue>({
   columns,
@@ -38,10 +39,29 @@ export function DataTable<TData, TValue>({
   refetchData,
   values: { sorting, pagination, columnFilters },
   events: { onSortingChange, onPaginationChange, onColumnFiltersChange },
-}: DataTableProps<TData, TValue>) {
+}: IDataTableProps<TData, TValue>) {
   const { t } = useTranslation();
 
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
+  const handleColumnVisibilityChange: OnChangeFn<VisibilityState> = (
+    updaterOrValue,
+  ) => {
+    const columnKeys = columns.map((column) => column.accessorKey);
+    const newVisibility =
+      typeof updaterOrValue === 'function'
+        ? updaterOrValue(columnVisibility)
+        : updaterOrValue;
+
+    const visibleColumnsCount = Object.keys(newVisibility).filter(
+      (column) =>
+        columnKeys.includes(column) === true && newVisibility[column] === false,
+    ).length;
+
+    if (visibleColumnsCount < columnKeys.length) {
+      setColumnVisibility(newVisibility);
+    }
+  };
 
   const table = useReactTable({
     data,
@@ -59,7 +79,7 @@ export function DataTable<TData, TValue>({
     onSortingChange: onSortingChange,
     onPaginationChange: onPaginationChange,
     onColumnFiltersChange: onColumnFiltersChange,
-    onColumnVisibilityChange: setColumnVisibility,
+    onColumnVisibilityChange: handleColumnVisibilityChange,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

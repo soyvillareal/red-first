@@ -100,6 +100,7 @@ const Movements = () => {
           toolbarOptions={{
             searchKey: 'userName',
             filters: ['concept'],
+            totalValues: movementQueryData?.getMovements.data.total,
           }}
           loading={movementQueryLoading || debouncedLoading}
           footerChildren={

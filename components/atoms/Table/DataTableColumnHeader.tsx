@@ -14,14 +14,14 @@ import { CaretSortIcon } from '@/components/icons/CaretSortIcon';
 import { EyeNoneIcon } from '@/components/icons/EyeNoneIcon';
 import { cn } from '@/lib/utils';
 
-import { DataTableColumnHeaderProps } from './Table.types';
+import { IDataTableColumnHeaderProps } from './Table.types';
 
 export function DataTableColumnHeader<TData, TValue>({
   i18nTitle,
   className,
   column,
   hasDropdown = false,
-}: DataTableColumnHeaderProps<TData, TValue>) {
+}: IDataTableColumnHeaderProps<TData, TValue>) {
   const { t } = useTranslation();
 
   if (!column.getCanSort()) {

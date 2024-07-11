@@ -133,10 +133,7 @@
     "title": "Income and expenses",
     "income": "Income",
     "expense": "Expense",
-    "concept": "Concept",
-    "amount": "Amount",
-    "date": "Date",
-    "userName": "User name"
+    "total": "Total"
   },
   "newMovement": {
     "title": "New movement",

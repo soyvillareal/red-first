@@ -21,24 +21,24 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { CheckIcon } from '@/components/icons/CheckIcon';
 import { PlusCircledIcon } from '@/components/icons/PlusCircledIcon';
-import { DataTableFacetedFilterOptions } from '@/components/atoms/Table/Table.types';
+import { IDataTableFacetedFilterOptions } from '@/components/atoms/Table/Table.types';
 
 import {
-  DataTableFacetedFilterProps,
-  IFindUserByNameOrEmailParams,
+  type IDataTableSearchUserPopoverProps,
+  type IFindUserByNameOrEmailParams,
 } from './SearchUserPopover.types';
 import { useLazyQuery } from '@apollo/client';
 import { FindUserByNameOrEmail } from '@/lib/apollo';
-import { IFindUserByNameOrEmail } from '@/types/graphql/resolvers';
+import { type IFindUserByNameOrEmail } from '@/types/graphql/resolvers';
 import { useDebounce } from '@/hooks/useDebounce';
 import CommandListSkeleton from '@/components/skeleton/CommandListSkeleton';
 
 export function SearchUserPopover<TData, TValue>({
   column,
-}: DataTableFacetedFilterProps<TData, TValue>) {
+}: IDataTableSearchUserPopoverProps<TData, TValue>) {
   const { t } = useTranslation();
   const [queryValue, setQueryValue] = useState<string | null>(null);
-  const [users, setUsers] = useState<DataTableFacetedFilterOptions[]>([]);
+  const [users, setUsers] = useState<IDataTableFacetedFilterOptions[]>([]);
 
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = useMemo(
@@ -87,7 +87,7 @@ export function SearchUserPopover<TData, TValue>({
         if (response.data) {
           setUsers(
             response.data.findUserByNameOrEmail.map(
-              (item): DataTableFacetedFilterOptions => {
+              (item): IDataTableFacetedFilterOptions => {
                 return {
                   value: item.id,
                   label: item.name,

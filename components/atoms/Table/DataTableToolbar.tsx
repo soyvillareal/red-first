@@ -10,7 +10,7 @@ import { types } from '@/components/pages/movements/movements.constants';
 
 import { DataTableFacetedFilter } from './DataTableFacetedFilter';
 import { DataTableViewOptions } from './DataTableViewOptions';
-import { DataTableToolbarProps } from './Table.types';
+import { IDataTableToolbarProps } from './Table.types';
 import { SearchUserPopover } from './SearchUserPopover';
 import ExcelIcon from '@/components/icons/ExcelIcon';
 import { tableToCSV } from '@/lib/utils';
@@ -21,7 +21,7 @@ export function DataTableToolbar<TData>({
   hasUserFilter = false,
   hasSearchInput = false,
   refetchData,
-}: DataTableToolbarProps<TData>) {
+}: IDataTableToolbarProps<TData>) {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,11 +37,16 @@ export function DataTableToolbar<TData>({
   );
 
   const handleClickExcel = useCallback(() => {
-    const columns = table.getAllColumns().map((column) => column.id);
+    const columns = table.getVisibleFlatColumns().map((column) => column.id);
     const rows = table.getRowModel().rows.map((row) => row.original);
 
-    tableToCSV<TData>(columns, rows, t);
-  }, [t, table]);
+    tableToCSV<TData>({
+      t,
+      rows,
+      columns,
+      total: toolbarOptions.totalValues,
+    });
+  }, [t, table, toolbarOptions.totalValues]);
 
   const handleClickRefetch = useCallback(async () => {
     if (refetchData) {

@@ -131,7 +131,8 @@
   "movements": {
     "title": "Ingresos y egresos",
     "income": "Ingresos",
-    "expense": "Egresos"
+    "expense": "Egresos",
+    "total": "Total"
   },
   "newMovement": {
     "title": "Nuevo movimiento",

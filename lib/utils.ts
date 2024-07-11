@@ -6,6 +6,7 @@ import { ApolloClient, ApolloError, DocumentNode } from '@apollo/client';
 
 import { type IReportsCSV } from '@/components/pages/reports/reports.types';
 import {
+  ITableToCSV,
   type TNoStandardCache,
   type TNoStandardQueryDefinitions,
 } from '@/types';
@@ -102,7 +103,7 @@ export const propsToCSV = (data: IReportsCSV, t: TFunction) => {
   saveAs(blob, 'report.csv');
 };
 
-export const tableToCSV = <T>(columns: string[], rows: T[], t: TFunction) => {
+export const tableToCSV = <T>({ columns, rows, total, t }: ITableToCSV<T>) => {
   let csvContent = '\uFEFF';
 
   csvContent += `${columns
@@ -126,6 +127,12 @@ export const tableToCSV = <T>(columns: string[], rows: T[], t: TFunction) => {
       }
     }
     csvContent += `${rowContent.join(';')}\r\n`;
+  }
+
+  if (total !== undefined) {
+    csvContent += '\r\n';
+    csvContent += `${t('movements.total')}\r\n`;
+    csvContent += `${total}\r\n`;
   }
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
