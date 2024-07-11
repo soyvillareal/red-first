@@ -1,5 +1,6 @@
 import { ManagementClient } from 'auth0';
 import { createLogger, format, transports } from 'winston';
+import * as Transport from 'winston-transport';
 
 import { env } from '@/lib/env';
 import {
@@ -8,30 +9,27 @@ import {
 } from '@/types/graphql/pagination';
 import { defaultLimit } from '@/lib/contants';
 
-export const logger = createLogger({
-  level: 'info', // Nivel mínimo para registrar
-  format: format.combine(
-    format.timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss',
-    }),
-    format.errors({ stack: true }), // Para capturar el stack de errores
-    format.splat(),
-    format.json(),
-  ),
-  // Puedes configurar diferentes transportes según el entorno
-  transports: [
-    // En desarrollo, escribe todos los logs en la consola
-    new transports.Console({
-      format: format.combine(
-        format.colorize(),
-        format.simple(), // Formato simple para la consola
-      ),
-    }),
-    // En producción, podrías querer escribir los logs en un archivo
-    // new transports.File({ filename: 'error.log', level: 'error' }),
-    // new transports.File({ filename: 'combined.log' }),
-  ],
-});
+export const logger = () => {
+  const transportsArray: Transport | Transport[] = [
+    new transports.File({ filename: 'logs/error.log', level: 'error' }),
+    new transports.File({ filename: 'logs/combined.log' }),
+  ];
+
+  const logger = createLogger({
+    level: 'info',
+    format: format.combine(
+      format.timestamp({
+        format: 'YYYY-MM-DD HH:mm:ss',
+      }),
+      format.errors({ stack: true }),
+      format.splat(),
+      format.json(),
+    ),
+    transports: transportsArray,
+  });
+
+  return logger;
+};
 
 export const pageMeta = <T>(
   data: T,

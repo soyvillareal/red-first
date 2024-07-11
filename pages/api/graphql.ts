@@ -1,5 +1,12 @@
 import 'reflect-metadata';
-import { ApolloServer } from '@apollo/server';
+import {
+  ApolloServer,
+  BaseContext,
+  GraphQLRequestContext,
+  GraphQLRequestContextDidEncounterErrors,
+  GraphQLRequestContextWillSendResponse,
+  GraphQLRequestListener,
+} from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { buildSchema, registerEnumType } from 'type-graphql';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -15,6 +22,7 @@ import { ReportsResolvers } from '@/server/graphql/resolvers/reports';
 import { authOptions } from './auth/[...nextauth]';
 import { adaptNextRequest } from '@/server/adapters/graphql';
 import { env } from '@/lib/env';
+import { logger as loggerFn } from '@/server/utils';
 
 export const initializeApolloServer = async () => {
   registerEnumType(MovementConcept, {
@@ -39,7 +47,43 @@ export const initializeApolloServer = async () => {
     resolvers: [MovementsResolvers, UsersResolvers, ReportsResolvers],
   });
 
-  const server = new ApolloServer({ schema });
+  const logger = loggerFn();
+
+  const server = new ApolloServer({
+    schema,
+    plugins: [
+      {
+        requestDidStart(
+          requestContext: GraphQLRequestContext<BaseContext>,
+        ): Promise<void | GraphQLRequestListener<BaseContext>> {
+          logger.info('Request started', {
+            query: requestContext.request.query,
+          });
+
+          return new Promise((resolve) => {
+            resolve({
+              didEncounterErrors(
+                requestContext: GraphQLRequestContextDidEncounterErrors<BaseContext>,
+              ) {
+                logger.error('An error occurred', {
+                  errors: requestContext.errors,
+                });
+
+                return Promise.resolve();
+              },
+              willSendResponse(
+                requestContext: GraphQLRequestContextWillSendResponse<BaseContext>,
+              ): Promise<void> {
+                logger.info('Response', { response: requestContext.response });
+
+                return Promise.resolve();
+              },
+            });
+          });
+        },
+      },
+    ],
+  });
   return startServerAndCreateNextHandler(server, {
     context: async (
       req: NextApiRequest,

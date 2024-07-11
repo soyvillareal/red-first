@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { IAdaptNextRequest, NextRequest, NextResponse } from './adapters.types';
 
+// This is necesary to adapt the request and response from Next.js to the request and response from Express.js for the package `express-rate-limit`
 export const adaptNextRequest = (
   req: NextApiRequest,
   res: NextApiResponse,
