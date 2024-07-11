@@ -1,12 +1,12 @@
 import { TFunction } from 'next-i18next';
-import { ColumnDef } from '@tanstack/react-table';
 import { MovementConcept } from '@prisma/client';
 
 import { CircleIcon } from '@/components/icons/CircleIcon';
 import { DataTableColumnHeader } from '@/components/atoms/Table/DataTableColumnHeader';
+import { TColumnsWithKeys } from '@/components/atoms/Table/Table.types';
 import { cn } from '@/lib/utils';
 
-import { movementSchema } from './movements.schema';
+import { MovementSchema } from './movements.schema';
 
 export const types = [
   {
@@ -21,7 +21,7 @@ export const types = [
   },
 ];
 
-export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => [
+export const columnsFn = (t: TFunction): TColumnsWithKeys<MovementSchema>[] => [
   {
     accessorKey: 'amount',
     header: ({ column }) => (

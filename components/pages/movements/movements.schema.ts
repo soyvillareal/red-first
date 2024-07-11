@@ -10,4 +10,4 @@ export const movementSchema = z.object({
   userName: z.string(),
 });
 
-export type movementSchema = z.infer<typeof movementSchema>;
+export type MovementSchema = z.infer<typeof movementSchema>;

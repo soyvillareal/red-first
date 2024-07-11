@@ -33,7 +33,10 @@ export interface IDataTableToolbarProps<TData> {
   refetchData?: () => Promise<ApolloQueryResult<unknown>>;
 }
 
-export type TColumnsWithKeys<TData, TValue> = ColumnDef<TData, TValue> & {
+export type TColumnsWithKeys<TData, TValue = unknown> = ColumnDef<
+  TData,
+  TValue
+> & {
   accessorKey: string;
 };
 
