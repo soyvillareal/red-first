@@ -205,11 +205,11 @@ Puede encontrar el proyecto [desplegado en vercel](https://red-first.vercel.app/
 - Internacionalización (next-i18next)
 - **Página de inicio**: Me tomé libertades en cuanto a la página de inicio e intenté hacer algo diferente.
 - **Diseño responsivo**: sé que en las notas que componen las indicaciones de la prueba técnica, dice que _El aplicativo no debe contener diseño responsivo_, sin embargo, quise ir un poco más allá y agregarle un diseño responsivo para que fuera más amigable para los usuarios, ya que esto en términos de experiencia de usuario es muy favorable.
-- En lugar de 3 pruebas unitarias, me concentré en realizar todas las pruebas que me eran posibles, en total realicé 105 pruebas unitarias enfocadas en los puntos críticos de la aplicación (más enfocado en el back-end) como lo son:
+- En lugar de 3 pruebas unitarias, me concentré en realizar todas las pruebas que me eran posibles, en total realicé 104 pruebas unitarias enfocadas en los puntos críticos de la aplicación (más enfocado en el back-end) como lo son:
   - Middlewares
   - Cliente de Prisma
   - Repositorios
-  - Utilidades (Cliente y servidor)
+  - Utilidades (cliente y servidor)
   - Autenticación
 
 ## Vistas previas del proyecto
