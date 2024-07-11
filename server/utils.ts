@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { ManagementClient } from 'auth0';
 import { createLogger, format, transports } from 'winston';
 import * as Transport from 'winston-transport';
@@ -10,9 +11,14 @@ import {
 import { defaultLimit } from '@/lib/contants';
 
 export const logger = () => {
+  const logDir = 'logs';
+  if (fs.existsSync(logDir) === false) {
+    fs.mkdirSync(logDir);
+  }
+
   const transportsArray: Transport | Transport[] = [
-    new transports.File({ filename: 'logs/error.log', level: 'error' }),
-    new transports.File({ filename: 'logs/combined.log' }),
+    new transports.File({ filename: `${logDir}/error.log`, level: 'error' }),
+    new transports.File({ filename: `${logDir}/combined.log` }),
   ];
 
   const logger = createLogger({
