@@ -12,6 +12,8 @@ import { DataTableFacetedFilter } from './DataTableFacetedFilter';
 import { DataTableViewOptions } from './DataTableViewOptions';
 import { DataTableToolbarProps } from './Table.types';
 import { SearchUserPopover } from './SearchUserPopover';
+import ExcelIcon from '@/components/icons/ExcelIcon';
+import { tableToCSV } from '@/lib/utils';
 
 export function DataTableToolbar<TData>({
   table,
@@ -34,7 +36,14 @@ export function DataTableToolbar<TData>({
     [table, toolbarOptions.searchKey],
   );
 
-  const handleClick = useCallback(async () => {
+  const handleClickExcel = useCallback(() => {
+    const columns = table.getAllColumns().map((column) => column.id);
+    const rows = table.getRowModel().rows.map((row) => row.original);
+
+    tableToCSV<TData>(columns, rows, t);
+  }, [t, table]);
+
+  const handleClickRefetch = useCallback(async () => {
     if (refetchData) {
       setIsLoading(true);
       await refetchData();
@@ -86,10 +95,19 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
+      <Button
+        className="w-12 px-1 mr-1"
+        onClick={handleClickExcel}
+        variant="outline"
+        size="sm"
+        disabled={table.getRowModel().rows.length === 0 && isLoading === false}
+      >
+        <ExcelIcon />
+      </Button>
       {refetchData && (
         <Button
           className="w-12 mr-1"
-          onClick={handleClick}
+          onClick={handleClickRefetch}
           loading={isLoading}
           hasMargin={false}
           variant="outline"

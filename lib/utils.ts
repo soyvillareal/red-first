@@ -102,6 +102,36 @@ export const propsToCSV = (data: IReportsCSV, t: TFunction) => {
   saveAs(blob, 'report.csv');
 };
 
+export const tableToCSV = <T>(columns: string[], rows: T[], t: TFunction) => {
+  let csvContent = '\uFEFF';
+
+  csvContent += `${columns
+    .filter((column) => column !== 'actions')
+    .map((column) => t(`table.${column}`))
+    .join(';')}\r\n`;
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i] as Record<string, string | number>;
+
+    const rowContent = [];
+
+    for (let j = 0; j < columns.length; j++) {
+      const column = columns[j];
+      if (column !== 'actions') {
+        if (column === 'concept') {
+          rowContent.push(t(`movements.${row[column]}`));
+        } else {
+          rowContent.push(row[column]);
+        }
+      }
+    }
+    csvContent += `${rowContent.join(';')}\r\n`;
+  }
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  saveAs(blob, 'report.csv');
+};
+
 export const fillArray = (length: number) =>
   Array.from({ length }, (_, i) => i);
 

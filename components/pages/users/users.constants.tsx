@@ -11,7 +11,7 @@ const columns: ColumnDef<UserSchema>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        i18nTitle="users.name"
+        i18nTitle="table.name"
         hasDropdown
       />
     ),
@@ -27,7 +27,7 @@ const columns: ColumnDef<UserSchema>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        i18nTitle="users.email"
+        i18nTitle="table.email"
         hasDropdown
       />
     ),
@@ -42,7 +42,7 @@ const columns: ColumnDef<UserSchema>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        i18nTitle="users.phone"
+        i18nTitle="table.phone"
         hasDropdown
       />
     ),

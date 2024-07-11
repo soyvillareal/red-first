@@ -27,7 +27,7 @@ export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        i18nTitle="movements.amount"
+        i18nTitle="table.amount"
         hasDropdown
       />
     ),
@@ -42,7 +42,7 @@ export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        i18nTitle="movements.userName"
+        i18nTitle="table.userName"
         hasDropdown
       />
     ),
@@ -59,7 +59,7 @@ export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        i18nTitle="movements.concept"
+        i18nTitle="table.concept"
         hasDropdown
       />
     ),
@@ -91,7 +91,7 @@ export const columnsFn = (t: TFunction): ColumnDef<movementSchema>[] => [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        i18nTitle="movements.date"
+        i18nTitle="table.date"
         hasDropdown
       />
     ),
