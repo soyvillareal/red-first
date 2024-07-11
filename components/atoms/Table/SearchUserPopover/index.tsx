@@ -151,7 +151,9 @@ export function SearchUserPopover<TData, TValue>({
             placeholder={t('common.writeSomething')}
           />
           <CommandList>
-            <CommandEmpty>{t('common.noResultsFound')}</CommandEmpty>
+            <CommandEmpty className="px-6 py-3 text-center">
+              {t('common.noResultsFound')}
+            </CommandEmpty>
             {findUserByNameOrEmailLoading || debouncedLoading ? (
               <CommandListSkeleton />
             ) : (
