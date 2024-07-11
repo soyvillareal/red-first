@@ -7,6 +7,7 @@ import {
   type TPageOrder,
 } from '@/types/graphql/pagination';
 import { IGraphQLErrorContext } from '@/types';
+import { defaultLimit } from '@/lib/contants';
 
 @ObjectType('GraphQLErrorContext')
 export class GraphQLErrorContext implements IGraphQLErrorContext {
@@ -46,7 +47,7 @@ export class PaginationArgs implements IPaginationArgs {
   @Field(() => Number)
   page: number;
 
-  @Field(() => Number, { defaultValue: 10 })
+  @Field(() => Number, { defaultValue: defaultLimit })
   limit: number;
 
   @Field(() => String, { defaultValue: 'asc' })

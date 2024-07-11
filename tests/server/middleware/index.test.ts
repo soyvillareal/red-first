@@ -7,6 +7,7 @@ import { responseCodes } from '@/server/utils';
 import { EUserRole, IGraphQLContext, INextAuthUserSession } from '@/types';
 import { ResolverData } from 'type-graphql';
 import { mockResolver } from './middleware.mock';
+import { defaultLimit } from '@/lib/contants';
 
 describe('checkIsLogged Middleware', () => {
   it('should throw USER_NOT_LOGGED_IN if user is not in session', async () => {
@@ -113,7 +114,7 @@ describe('checkPagination Middleware', () => {
     const resolverPagination: ResolverData<IGraphQLContext> = {
       ...mockResolver,
       args: {
-        pagination: { limit: 10, order: 'asc' },
+        pagination: { limit: defaultLimit, order: 'asc' },
       },
     };
 
@@ -127,7 +128,7 @@ describe('checkPagination Middleware', () => {
     const resolverPagination: ResolverData<IGraphQLContext> = {
       ...mockResolver,
       args: {
-        pagination: { page: '1', limit: 10, order: 'asc' },
+        pagination: { page: '1', limit: defaultLimit, order: 'asc' },
       },
     };
 
@@ -155,7 +156,7 @@ describe('checkPagination Middleware', () => {
     const resolverPagination: ResolverData<IGraphQLContext> = {
       ...mockResolver,
       args: {
-        pagination: { limit: 10, page: 1, order: 'invalid' },
+        pagination: { limit: defaultLimit, page: 1, order: 'invalid' },
       },
     };
 
@@ -169,7 +170,7 @@ describe('checkPagination Middleware', () => {
     const resolverPagination: ResolverData<IGraphQLContext> = {
       ...mockResolver,
       args: {
-        pagination: { limit: 10, page: 1, order: 'asc' },
+        pagination: { limit: defaultLimit, page: 1, order: 'asc' },
       },
     };
 

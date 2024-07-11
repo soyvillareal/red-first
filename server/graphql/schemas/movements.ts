@@ -10,6 +10,7 @@ import {
   type IPageOptionsDataMeta,
   type TPageOrder,
 } from '@/types/graphql/pagination';
+import { defaultLimit } from '@/lib/contants';
 
 import { PageOptionsMeta } from './pagination';
 
@@ -54,7 +55,7 @@ export class PaginationMovementsArgs implements IPaginationMovementsArgs {
   @Field(() => Number)
   page: number;
 
-  @Field(() => Number, { defaultValue: 10 })
+  @Field(() => Number, { defaultValue: defaultLimit })
   limit: number;
 
   @Field(() => String, { defaultValue: 'asc' })

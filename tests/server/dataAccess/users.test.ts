@@ -11,6 +11,7 @@ import { EUserRole } from '@/types';
 import { UsersRepository } from '@/server/dataAccess/users';
 import { IPaginationParams } from '@/types/graphql/pagination';
 import { TValidsUserTypes } from '@/types/graphql/resolvers';
+import { defaultLimit } from '@/lib/contants';
 
 const repository = new UsersRepository();
 
@@ -203,7 +204,7 @@ describe('UsersRepository', () => {
   describe('getUsers', () => {
     it('should return users', async () => {
       const paginationParams: IPaginationParams<TValidsUserTypes> = {
-        limit: 10,
+        limit: defaultLimit,
         skip: 0,
         order: 'asc',
         queryValue: '',
@@ -267,7 +268,7 @@ describe('UsersRepository', () => {
           ],
         },
         skip: 0,
-        take: 10,
+        take: defaultLimit,
         orderBy: {
           name: 'asc',
         },
@@ -275,7 +276,7 @@ describe('UsersRepository', () => {
     });
     it('should return null if there is an error', async () => {
       const paginationParams: IPaginationParams<TValidsUserTypes> = {
-        limit: 10,
+        limit: defaultLimit,
         skip: 0,
         order: 'asc',
         queryValue: '',
