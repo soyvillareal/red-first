@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 
 import { routes } from '@/lib/contants';
+import ButtonSignIn from '@/components/atoms/ButtonSignIn';
 
 export const Hero = () => {
   const { t } = useTranslation();
@@ -28,12 +29,10 @@ export const Hero = () => {
                 {t('dashboard.title')}
               </Link>
             ) : (
-              <Link
-                href={routes.signUp}
-                className="p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent"
-              >
-                {t('landing.joinUs')}
-              </Link>
+              <ButtonSignIn
+                className="!no-underline"
+                textButton={t('landing.joinUs')}
+              />
             )}
           </div>
         </div>
