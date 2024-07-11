@@ -1,24 +1,14 @@
-import { Field, ObjectType, registerEnumType } from 'type-graphql';
+import { Field, ObjectType } from 'type-graphql';
 
-import { EUserRoleRoleNormalized } from '@/types';
 import {
-  IFindUserByNameOrEmail,
+  type IFindUserByNameOrEmail,
   type IGetUsers,
 } from '@/types/graphql/resolvers';
 import { type IPageOptionsDataMeta } from '@/types/graphql/pagination';
 
 import { PageOptionsMeta } from './pagination';
 
-registerEnumType(EUserRoleRoleNormalized, {
-  name: 'EUserRole',
-  description: 'User roles',
-  valuesConfig: {
-    admin: { description: 'Administrator' },
-    user: { description: 'User' },
-  },
-});
-
-@ObjectType()
+@ObjectType('GetUsers')
 export class GetUsers implements IGetUsers {
   @Field(() => String)
   id: string;
@@ -33,7 +23,7 @@ export class GetUsers implements IGetUsers {
   phone: string;
 }
 
-@ObjectType()
+@ObjectType('PaginatedUsers')
 export class PaginatedUsers
   extends PageOptionsMeta
   implements IPageOptionsDataMeta<IGetUsers[]>
@@ -42,7 +32,7 @@ export class PaginatedUsers
   data: IGetUsers[];
 }
 
-@ObjectType()
+@ObjectType('FindUserByNameOrEmail')
 export class FindUserByNameOrEmail implements IFindUserByNameOrEmail {
   @Field(() => String)
   id: string;

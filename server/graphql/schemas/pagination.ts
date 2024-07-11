@@ -7,14 +7,15 @@ import {
   type TPageOrder,
 } from '@/types/graphql/pagination';
 import { IGraphQLErrorContext } from '@/types';
+import { defaultLimit } from '@/lib/contants';
 
-@ObjectType()
+@ObjectType('GraphQLErrorContext')
 export class GraphQLErrorContext implements IGraphQLErrorContext {
   @Field(() => String, { nullable: true })
   errorMessage?: string | undefined;
 }
 
-@ObjectType()
+@ObjectType('PageMeta')
 export class PageMeta extends GraphQLErrorContext implements IPageMeta {
   @Field(() => Number)
   page: number;
@@ -35,18 +36,18 @@ export class PageMeta extends GraphQLErrorContext implements IPageMeta {
   hasNextPage: boolean;
 }
 
-@ObjectType()
+@ObjectType('PageOptionsMeta')
 export class PageOptionsMeta implements IPageOptionsMeta {
   @Field(() => PageMeta)
   meta: IPageMeta;
 }
 
-@InputType()
+@InputType('PaginationArgs')
 export class PaginationArgs implements IPaginationArgs {
   @Field(() => Number)
   page: number;
 
-  @Field(() => Number, { defaultValue: 10 })
+  @Field(() => Number, { defaultValue: defaultLimit })
   limit: number;
 
   @Field(() => String, { defaultValue: 'asc' })

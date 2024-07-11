@@ -1,6 +1,7 @@
+import { defaultLimit } from '@/lib/contants';
 import {
-  IGetMovementsChart,
-  IGetRecentMovements,
+  type IGetMovementsChart,
+  type IGetRecentMovements,
 } from '@/types/graphql/resolvers';
 
 export const movementsChartMock: IGetMovementsChart[] = [
@@ -125,7 +126,7 @@ export const mockClientCache = {
         meta: {
           __typename: 'PageMeta',
           page: 1,
-          limit: 10,
+          limit: defaultLimit,
           itemCount: 6,
           pageCount: 1,
           hasPreviousPage: false,

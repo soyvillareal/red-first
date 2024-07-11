@@ -1,69 +1,78 @@
 import { useCallback, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
 import { useLazyQuery } from '@apollo/client';
+import { useTranslation } from 'next-i18next';
 import { getSession } from 'next-auth/react';
+import dayjs from 'dayjs';
 
 import { Button } from '@/components/custom/Button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DashboardLayout } from '@/components/atoms/DashboardLayout';
-import { Dollar2Icon } from '@/components/icons/Dollar2Icon';
 import { loadTranslations } from '@/lib/i18n';
-import { cn, currencySite, propsToCSV } from '@/lib/utils';
-import { AdditionalMovementsChartQuery } from '@/lib/apollo';
-import {
-  IGetAdditionalMovements,
-  IGetMovementsChart,
-} from '@/types/graphql/resolvers';
-import { ReportBalanceSkeleton } from '@/components/skeleton/ReportBalanceSkeleton';
-import { ReportMovementsSkeleton } from '@/components/skeleton/ReportMovementsSkeleton';
+import { currencySite, propsToCSV } from '@/lib/utils';
+import { IGetMovementsChart } from '@/types/graphql/resolvers';
 import { EUserRole } from '@/types';
-
-import RecentMovements from '@/components/pages/reports/components/RecentMovements';
 import MovementsChart from '@/components/pages/reports/components/MovementsChart';
-import { IReportsCSV } from '@/components/pages/reports/reports.types';
+import {
+  IDashboardProps,
+  IReportsCSV,
+} from '@/components/pages/reports/reports.types';
 import SelectorYear from '@/components/pages/reports/components/SelectorYear';
 import { ShowErrors } from '@/components/custom/ShowErrors';
+import AdditionalMovements from '@/components/pages/reports/components/AdditionalMovements';
+import {
+  additionalMovementsSSR,
+  movementsChartSSR,
+  yearsSSR,
+} from '@/server/ssr/reports';
+import { MovementsChartQuery } from '@/lib/apollo';
+import { IGetMovementsQueryParams } from '@/components/pages/reports/components/MovementsChart/MovementsChart.types';
 
-export const Dashboard = () => {
+export const Dashboard = ({
+  yearsData,
+  movementsChartData,
+  additionalMovementsData,
+}: IDashboardProps) => {
   const { t } = useTranslation();
-  const [selectedYear, setSelectedYear] = useState('2024');
-  const [movementsChartLoading, setMovementsChartLoading] =
-    useState<boolean>(false);
+  const [selectedYear, setSelectedYear] = useState<string>(
+    yearsData ? yearsData[0] : dayjs().format('YYYY'),
+  );
   const [reportData, setReportData] = useState<IReportsCSV | null>(null);
 
   const [
-    getAdditionalMovements,
+    getMovementsQuery,
     {
-      data: additionalMovementQueryData,
-      loading: additionalMovementQueryLoading,
-      error: additionalMovementQueryError,
+      data: movementQueryData,
+      loading: movementQueryLoading,
+      error: movementQueryError,
     },
-  ] = useLazyQuery<{
-    getAdditionalMovements: IGetAdditionalMovements;
-  }>(AdditionalMovementsChartQuery);
+  ] = useLazyQuery<
+    {
+      getMovementsChart: IGetMovementsChart[];
+    },
+    IGetMovementsQueryParams
+  >(MovementsChartQuery);
 
-  useEffect(() => {
-    (async () => {
-      const additionalMovements = await getAdditionalMovements();
+  const handleClickYears = useCallback(
+    (year: string) => {
+      (async () => {
+        setSelectedYear(year);
+        const movements = await getMovementsQuery({
+          variables: {
+            year,
+          },
+        });
 
-      if (additionalMovements.data) {
-        setReportData((prev) => ({
-          ...prev,
-          balance: additionalMovements.data?.getAdditionalMovements.balance,
-          movements: additionalMovements.data?.getAdditionalMovements.movements,
-          recentMovements:
-            additionalMovements.data?.getAdditionalMovements.recentMovements,
-        }));
-      }
-    })();
-  }, [t, getAdditionalMovements]);
+        if (movements?.data?.getMovementsChart) {
+          setReportData((prev) => ({
+            ...prev,
+            movementsChart: movements.data?.getMovementsChart,
+          }));
+        }
+      })();
+    },
+    [getMovementsQuery],
+  );
 
   const handleClickDownload = useCallback(() => {
     if (reportData !== null) {
@@ -79,16 +88,14 @@ export const Dashboard = () => {
     }
   }, [t, reportData]);
 
-  const handleCallback = useCallback(
-    (loading: boolean, data?: IGetMovementsChart[]) => {
-      setMovementsChartLoading(loading);
-      setReportData((prev) => ({
-        ...prev,
-        movementsChart: data,
-      }));
-    },
-    [],
-  );
+  useEffect(() => {
+    setReportData({
+      movementsChart: movementsChartData,
+      movements: additionalMovementsData?.movements,
+      balance: additionalMovementsData?.balance,
+      recentMovements: additionalMovementsData?.recentMovements,
+    });
+  }, [movementsChartData, additionalMovementsData]);
 
   return (
     <DashboardLayout
@@ -105,11 +112,7 @@ export const Dashboard = () => {
         <div className="flex items-center space-x-2">
           <Button
             onClick={handleClickDownload}
-            disabled={
-              reportData === null ||
-              movementsChartLoading === true ||
-              additionalMovementQueryLoading === true
-            }
+            disabled={reportData === null || movementQueryLoading === true}
           >
             {t('common.download')}
           </Button>
@@ -127,81 +130,24 @@ export const Dashboard = () => {
                 })}
               </CardTitle>
               <SelectorYear
+                yearsData={yearsData}
                 value={selectedYear}
-                onValueChange={(value) => {
-                  setSelectedYear(value);
-                }}
+                onValueChange={handleClickYears}
               />
             </CardHeader>
             <CardContent className="pl-6 pb-10">
               <MovementsChart
-                callbackState={handleCallback}
-                year={selectedYear}
+                data={
+                  movementQueryData?.getMovementsChart || movementsChartData
+                }
+                loading={movementQueryLoading}
               />
             </CardContent>
           </Card>
-          <div className="flex flex-col h-full">
-            <Card className="mb-2">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-secondary-foreground text-sm font-medium">
-                  {t('dashboard.balance')}
-                </CardTitle>
-                <Dollar2Icon className="h-4 w-4 text-secondary-foreground" />
-              </CardHeader>
-              <CardContent>
-                {additionalMovementQueryLoading ? (
-                  <ReportBalanceSkeleton />
-                ) : (
-                  <div
-                    className={cn(
-                      'text-secondary-foreground text-2xl font-bold',
-                      additionalMovementQueryData?.getAdditionalMovements.balance.includes(
-                        '-',
-                      )
-                        ? 'text-red'
-                        : 'text-green',
-                    )}
-                  >
-                    {additionalMovementQueryData?.getAdditionalMovements
-                      .balance ?? '$ 0.00'}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-            <Card className="flex flex-col h-full">
-              <CardHeader>
-                <CardTitle className="text-secondary-foreground">
-                  {t('dashboard.recentMovements')}
-                </CardTitle>
-                {additionalMovementQueryLoading ? (
-                  <ReportMovementsSkeleton />
-                ) : (
-                  <CardDescription className="text-secondary-foreground">
-                    {t('dashboard.youMadeMovementsMonth', {
-                      replace: {
-                        movements:
-                          additionalMovementQueryData?.getAdditionalMovements
-                            .movements ?? '$ 0.00',
-                      },
-                    })}
-                  </CardDescription>
-                )}
-              </CardHeader>
-              <CardContent className="h-full">
-                <RecentMovements
-                  isLoading={additionalMovementQueryLoading}
-                  movements={
-                    additionalMovementQueryData?.getAdditionalMovements
-                      .recentMovements
-                  }
-                  error={additionalMovementQueryError}
-                />
-              </CardContent>
-            </Card>
-          </div>
+          <AdditionalMovements data={additionalMovementsData} />
         </div>
       </div>
-      <ShowErrors error={additionalMovementQueryError} />
+      <ShowErrors error={movementQueryError} />
     </DashboardLayout>
   );
 };
@@ -233,9 +179,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
+  const years = await yearsSSR();
+  const movementsChart = await movementsChartSSR();
+  const additionalMovements = await additionalMovementsSSR();
+
   return {
     props: {
       ...translations.props,
+      yearsData: JSON.parse(JSON.stringify(years)),
+      movementsChartData: movementsChart,
+      additionalMovementsData: additionalMovements,
     },
   };
 };

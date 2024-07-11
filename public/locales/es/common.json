@@ -1,218 +1,217 @@
 {
-    "SEO": {
-        "title": "Red First - Simplifica tu cuentas, simplifica tu vida",
-        "description": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio.",
-        "keywords": "Red First, gestión de finanzas,control de gastos,seguimiento de ingresos,reportes financieros,análisis de gastos,herramientas de presupuesto,visualización de datos financieros,gráficos de ingresos,software de finanzas personales,planificación financiera",
-        "openGraph": {
-            "siteName": "Red First",
-            "title": "Red First - Simplifica tu cuentas, simplifica tu vida",
-            "description": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio."
-        },
-        "twitter": {
-            "title": "Red First - Simplifica tu cuentas, simplifica tu vida",
-            "description": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio."
-        },
-        "REPORTS": {
-            "title": "Reportes - Red First",
-            "description": "Visualiza tus reportes financieros con Red First.",
-            "keywords": "reportes,reportes financieros,reportes de ingresos,reportes de egresos,reportes de red first"
-        },
-        "MOVEMENTS": {
-            "title": "Movimientos - Red First",
-            "description": "Gestiona tus movimientos financieros con Red First.",
-            "keywords": "movimientos,gestión de movimientos,ingresos,egresos,movimientos de red first"
-        },
-        "USERS": {
-            "title": "Usuarios - Red First",
-            "description": "Gestiona tus movimientos financieros con Red First.",
-            "keywords": "usuarios,gestión de usuarios,roles de usuario,permisos de usuario,usuarios de red first"
-        },
-        "NEW_MOVEMENT": {
-            "title": "Nuevo movimiento - Red First",
-            "description": "Crea un nuevo movimiento financiero con Red First.",
-            "keywords": "nuevo movimiento,crear movimiento,ingresar movimiento,nuevo movimiento de red first"
-        },
-        "EDIT_USER": {
-            "title": "Editar usuario - Red First",
-            "description": "Edita un usuario de Red First.",
-            "keywords": "editar usuario,modificar usuario,usuario de red first"
-        }
+  "SEO": {
+    "title": "Red First - Simplifica tu cuentas, simplifica tu vida",
+    "description": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio.",
+    "keywords": "Red First, gestión de finanzas,control de gastos,seguimiento de ingresos,reportes financieros,análisis de gastos,herramientas de presupuesto,visualización de datos financieros,gráficos de ingresos,software de finanzas personales,planificación financiera",
+    "openGraph": {
+      "siteName": "Red First",
+      "title": "Red First - Simplifica tu cuentas, simplifica tu vida",
+      "description": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio."
     },
-    "common": {
-        "signIn": "Iniciar sesión",
-        "signUp": "Registrate",
-        "logOut": "Cerrar sesión",
-        "noResults": "Sin resultados.",
-        "noResultsFound": "No se encontraron resultados.",
-        "download": "Descargar",
-        "avatar": "Avatar",
-        "save": "Guardar",
-        "enter": "Ingresar",
-        "new": "Nuevo",
-        "errorOccurred": "Ocurrieron algunos errores.",
-        "noData": "Sin datos.",
-        "goBack": "Regresar",
-        "backToHome": "Volver a inicio",
-        "writeSomething": "Escribe algo..."
+    "twitter": {
+      "title": "Red First - Simplifica tu cuentas, simplifica tu vida",
+      "description": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio."
     },
-    "notFound": {
-        "title": "¡Ups! ¡Página no encontrada!",
-        "description": "Parece que la página que buscas no existe o podría haber sido eliminada."
+    "REPORTS": {
+      "title": "Reportes - Red First",
+      "description": "Visualiza tus reportes financieros con Red First.",
+      "keywords": "reportes,reportes financieros,reportes de ingresos,reportes de egresos,reportes de red first"
     },
-    "internalError": {
-        "title": "¡Ups! ¡Error interno!",
-        "description": "Parece que algo salió mal en el servidor. Por favor, inténtelo de nuevo más tarde."
+    "MOVEMENTS": {
+      "title": "Movimientos - Red First",
+      "description": "Gestiona tus movimientos financieros con Red First.",
+      "keywords": "movimientos,gestión de movimientos,ingresos,egresos,movimientos de red first"
     },
-    "languages": {
-        "title": "Idioma ({{lang}})",
-        "es": "Español",
-        "en": "Inglés"
+    "USERS": {
+      "title": "Usuarios - Red First",
+      "description": "Gestiona tus movimientos financieros con Red First.",
+      "keywords": "usuarios,gestión de usuarios,roles de usuario,permisos de usuario,usuarios de red first"
     },
-    "roles": {
-        "admin": "Administrador",
-        "user": "Usuario"
+    "NEW_MOVEMENT": {
+      "title": "Nuevo movimiento - Red First",
+      "description": "Crea un nuevo movimiento financiero con Red First.",
+      "keywords": "nuevo movimiento,crear movimiento,ingresar movimiento,nuevo movimiento de red first"
     },
-    "months": {
-        "jan": "Ene",
-        "feb": "Feb",
-        "mar": "Mar",
-        "apr": "Abr",
-        "may": "May",
-        "jun": "Jun",
-        "jul": "Jul",
-        "aug": "Ago",
-        "sep": "Sep",
-        "oct": "Oct",
-        "nov": "Nov",
-        "dec": "Dic"
-    },
-    "sidebar": {
-        "reports": "Reportes",
-        "incomeAndExpenses": "Ingresos y egresos",
-        "users": "Usuarios"
-    },
-    "dashboard": {
-        "title": "Panel de control",
-        "recentMovements": "Movimientos recientes",
-        "movements": "Movimientos ({{currency}})",
-        "balance": "Saldo",
-        "youMadeMovementsMonth": "Realizaste {{movements}} movimientos este mes."
-    },
-    "table": {
-        "asc": "ASC",
-        "desc": "DESC",
-        "hide": "Ocultar",
-        "types": "Tipos",
-        "clearFilters": "Limpiar filtros",
-        "selected": "{{size}} Seleccionado",
-        "rowSelected": "{{selected}} de {{total}} fila(s) seleccionadas",
-        "rowsPerPage": "Filas por página",
-        "pageOf": "Página {{page}} de {{pages}}",
-        "goToFirstPage": "Ir a la primera página",
-        "goToPreviusPage": "Ir a la página anterior",
-        "goToNextPage": "Ir a la página siguiente",
-        "goToLastPage": "Ir a la última página",
-        "reset": "Restablecer",
-        "search": "Buscar...",
-        "view": "Ver",
-        "toggleColumns": "Alternar columnas",
-        "action": "Acción",
-        "openMenu": "Open menu",
-        "edit": "Editar",
-        "users": "Users"
-    },
-    "movements": {
-        "title": "Ingresos y egresos",
-        "income": "Ingresos",
-        "expense": "Egresos",
-        "concept": "Concepto",
-        "amount": "Monto",
-        "date": "Fecha",
-        "userName": "Usuario"
-    },
-    "newMovement": {
-        "title": "Nuevo movimiento",
-        "concept": "Concepto",
-        "amount": "Monto",
-        "date": "Fecha",
-        "type": "Tipo",
-        "pickDate": "Selecciona una fecha",
-        "income": "Ingresos",
-        "expense": "Egresos",
-        "thisAmountRepresentsValue": "Este monto representa el valor del movimiento.",
-        "theConceptIsUsedToCategorizeIt": "El concepto se utiliza para categorizar el movimiento.",
-        "dateOfMovementUsedToTrack": "La fecha del movimiento se utiliza para rastrear cuándo ocurrió."
-    },
-    "users": {
-        "title": "Usuarios",
-        "name": "Nombre",
-        "email": "Correo",
-        "date": "Fecha",
-        "phone": "Telefono"
-    },
-    "editUser": {
-        "title": "Editar usuario",
-        "name": "Nombre",
-        "role": "Rol",
-        "nameOfTheUserToEdentifyIt": "El nombre del usuario se utiliza para identificarlo.",
-        "roleOfTheUser": "El rol se utiliza para otorgar permisos al usuario, debes tener cuidado con esta opción.",
-        "writeName": "Escribe el nombre...",
-        "nameMusBeLeast": "El nombre debe tener al menos 2 caracteres.",
-        "nameMustBeLonger": "El nombre no debe tener más de 30 caracteres.",
-        "enterValidRole": "Por favor seleccione un role válido."
-    },
-    "reportCSV": {
-        "movements": "Movimientos",
-        "name": "Nombre",
-        "income": "Ingresos",
-        "expense": "Egresos",
-        "recentMovements": "Movimientos recientes",
-        "email": "Correo",
-        "movement": "Movimiento",
-        "balance": "Saldo"
-    },
-    "landing": {
-        "simplify_your_accounts": "Simplifica tu cuentas, simplifica tu vida",
-        "your_best_friend": "Su mejor amigo para tener las cuentas claras",
-        "makes_it_easy": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio.",
-        "whatsDifferentAbout": "¿Que tiene de diferente Red First?",
-        "hasBoostedWorkflowAbility": "Red First ha potenciado mi flujo de trabajo. La capacidad de mantener la visibilidad de los hitos más importantes en todo momento mantiene motivada.",
-        "weHaveBeenAbleCancel": "Hemos podido cancelar muchas suscripciones desde que usamos Red First. Ya no hay confusión entre mis cuentas y todos está mucho mas claro.",
-        "hasBoostedMyAccountsAbility": "Red First ha potenciado mis cuentas. La capacidad de mantener la visibilidad de los hitos más importantes en todo momento me mantiene motivado.",
-        "advancedBuiltInReports": "Informes integrados avanzados",
-        "setEstimatesForYourAccounts": "Establezca estimaciones de sus cuentas y realice un seguimiento del progreso hacia sus objetivos. Nuestro panel personalizable lo ayuda a crear los informes que necesita.",
-        "everythingYouNeedOnePlace": "Todo lo que necesitas en un solo lugar",
-        "stopJumpingFromOneService": "Deja de saltar de un servicio a otro para cuidar tu dinero, sacar cuentas, realizar un seguimiento y llevar con claridad tus gastos. Red First ofrece una solución de productividad.",
-        "trackTheProgressOfAll": "Seguimiento del progreso de todas tus cuentas",
-        "seeHowYourDailyAccountsFitInto": "Vea cómo sus cuentas diarias encajan en una visión más amplia. Vaya desde el seguimiento del progreso a nivel de hito hasta el más mínimo detalle. No vuelvas a perder de vista el panorama general.",
-        "manageProvidesAllTheFunctionality": "Manage proporciona toda la funcionalidad que su equipo necesita, sin la complejidad. Nuestro software está hecho a medida para los equipos de productos digitales modernos.",
-        "description": "Descripción",
-        "joinUs": "Únete a nosotros"
-    },
-    "responseCodes": {
-        "SOMETHING_WENT_WRONG": "Upss lo sentimos, algo salió mal :(",
-        "USER_NOT_LOGGED_IN": "El usuario no ha iniciado sesión.",
-        "INVALID_DATE_FORMAT": "Formato de fecha inválido.",
-        "INVALID_FILTER_TYPE": "Tipo de filtro inválido.",
-        "INVALID_FIELD_ORDER": "Orden de campo inválido.",
-        "PAGE_UNDEFINED": "Algo no salió bien, por favor intente nuevamente.",
-        "PAGE_MUST_BE_NUMBER": "Algo no salió bien, por favor intente nuevamente.",
-        "LIMIT_INVALID": "Algo no salió bien, por favor intente nuevamente.",
-        "ORDER_INVALID": "Algo no salió bien, por favor intente nuevamente.",
-        "MOVEMENTS_NOT_FOUND": "No se encontrarón movimientos :(",
-        "AMOUNT_ZERO": "Por favor ingrese un monto superior a cero.",
-        "AMOUNT_NEGATIVE": "El monto no puede ser negativo.",
-        "AMOUNT_TOO_HIGH": "El monto es demasiado alto.",
-        "MOVEMENT_CREATED_SUCCESSFULLY": "¡Movimiento creado exitosamente!",
-        "ENTER_VALID_CONCEPT": "Por favor ingrese un concepto válido.",
-        "ENTER_VALID_DATE": "Por favor ingrese una fecha válida.",
-        "ENTER_VALID_AMOUNT": "Por favor ingrese un monto válido.",
-        "USERS_NOT_FOUND": "No se encontraron usuarios :(",
-        "NAME_EMPTY": "El nombre no puede estar vacío.",
-        "NAME_TOO_SHORT": "El nombre debe tener al menos 2 caracteres.",
-        "NAME_TOO_LONG": "El nombre no debe tener más de 30 caracteres.",
-        "USER_UPDATED_SUCCESSFULLY": "¡Usuario actualizado exitosamente!",
-        "NOT_AUTHORIZED_TO_THIS_ACTION": "No estás autorizado para realizar esta acción.",
-        "NOT_AUTHORIZED": "No estás autorizado para realizar esta acción."
+    "EDIT_USER": {
+      "title": "Editar usuario - Red First",
+      "description": "Edita un usuario de Red First.",
+      "keywords": "editar usuario,modificar usuario,usuario de red first"
     }
+  },
+  "common": {
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrate",
+    "logOut": "Cerrar sesión",
+    "noResults": "Sin resultados.",
+    "noResultsFound": "No se encontraron resultados.",
+    "download": "Descargar",
+    "avatar": "Avatar",
+    "save": "Guardar",
+    "enter": "Ingresar",
+    "new": "Nuevo",
+    "errorOccurred": "Ocurrieron algunos errores.",
+    "noData": "Sin datos.",
+    "goBack": "Regresar",
+    "backToHome": "Volver a inicio",
+    "writeSomething": "Escribe algo..."
+  },
+  "notFound": {
+    "title": "¡Ups! ¡Página no encontrada!",
+    "description": "Parece que la página que buscas no existe o podría haber sido eliminada."
+  },
+  "internalError": {
+    "title": "¡Ups! ¡Error interno!",
+    "description": "Parece que algo salió mal en el servidor. Por favor, inténtelo de nuevo más tarde."
+  },
+  "languages": {
+    "title": "Idioma ({{lang}})",
+    "es": "Español",
+    "en": "Inglés"
+  },
+  "roles": {
+    "admin": "Administrador",
+    "user": "Usuario"
+  },
+  "months": {
+    "jan": "Ene",
+    "feb": "Feb",
+    "mar": "Mar",
+    "apr": "Abr",
+    "may": "May",
+    "jun": "Jun",
+    "jul": "Jul",
+    "aug": "Ago",
+    "sep": "Sep",
+    "oct": "Oct",
+    "nov": "Nov",
+    "dec": "Dic"
+  },
+  "sidebar": {
+    "reports": "Reportes",
+    "incomeAndExpenses": "Ingresos y egresos",
+    "users": "Usuarios"
+  },
+  "dashboard": {
+    "title": "Panel de control",
+    "recentMovements": "Movimientos recientes",
+    "movements": "Movimientos ({{currency}})",
+    "balance": "Saldo",
+    "youMadeMovementsMonth": "Realizaste {{movements}} movimientos este mes."
+  },
+  "table": {
+    "asc": "ASC",
+    "desc": "DESC",
+    "hide": "Ocultar",
+    "types": "Tipos",
+    "clearFilters": "Limpiar filtros",
+    "selected": "{{size}} Seleccionado",
+    "rowSelected": "{{selected}} de {{total}} fila(s) seleccionadas",
+    "rowsPerPage": "Filas por página",
+    "pageOf": "Página {{page}} de {{pages}}",
+    "goToFirstPage": "Ir a la primera página",
+    "goToPreviusPage": "Ir a la página anterior",
+    "goToNextPage": "Ir a la página siguiente",
+    "goToLastPage": "Ir a la última página",
+    "reset": "Restablecer",
+    "search": "Buscar...",
+    "view": "Ver",
+    "toggleColumns": "Alternar columnas",
+    "action": "Acción",
+    "openMenu": "Open menu",
+    "edit": "Editar",
+    "users": "Users",
+    "concept": "Concepto",
+    "amount": "Monto",
+    "userName": "Usuario",
+    "name": "Nombre",
+    "email": "Correo",
+    "phone": "Telefono",
+    "date": "Fecha"
+  },
+  "movements": {
+    "title": "Ingresos y egresos",
+    "income": "Ingresos",
+    "expense": "Egresos"
+  },
+  "newMovement": {
+    "title": "Nuevo movimiento",
+    "concept": "Concepto",
+    "amount": "Monto",
+    "date": "Fecha",
+    "type": "Tipo",
+    "pickDate": "Selecciona una fecha",
+    "income": "Ingresos",
+    "expense": "Egresos",
+    "thisAmountRepresentsValue": "Este monto representa el valor del movimiento.",
+    "theConceptIsUsedToCategorizeIt": "El concepto se utiliza para categorizar el movimiento.",
+    "dateOfMovementUsedToTrack": "La fecha del movimiento se utiliza para rastrear cuándo ocurrió."
+  },
+  "users": {
+    "title": "Usuarios"
+  },
+  "editUser": {
+    "title": "Editar usuario",
+    "name": "Nombre",
+    "role": "Rol",
+    "nameOfTheUserToEdentifyIt": "El nombre del usuario se utiliza para identificarlo.",
+    "roleOfTheUser": "El rol se utiliza para otorgar permisos al usuario, debes tener cuidado con esta opción.",
+    "writeName": "Escribe el nombre...",
+    "nameMusBeLeast": "El nombre debe tener al menos 2 caracteres.",
+    "nameMustBeLonger": "El nombre no debe tener más de 30 caracteres.",
+    "enterValidRole": "Por favor seleccione un role válido."
+  },
+  "reportCSV": {
+    "movements": "Movimientos",
+    "name": "Nombre",
+    "income": "Ingresos",
+    "expense": "Egresos",
+    "recentMovements": "Movimientos recientes",
+    "email": "Correo",
+    "movement": "Movimiento",
+    "balance": "Saldo"
+  },
+  "landing": {
+    "simplify_your_accounts": "Simplifica tu cuentas, simplifica tu vida",
+    "your_best_friend": "Su mejor amigo para tener las cuentas claras",
+    "makes_it_easy": "Red First facilita que las personas planifiquen sus cuentas diarias mientras mantienen a la vista objetivos más amplio.",
+    "whatsDifferentAbout": "¿Que tiene de diferente Red First?",
+    "hasBoostedWorkflowAbility": "Red First ha potenciado mi flujo de trabajo. La capacidad de mantener la visibilidad de los hitos más importantes en todo momento mantiene motivada.",
+    "weHaveBeenAbleCancel": "Hemos podido cancelar muchas suscripciones desde que usamos Red First. Ya no hay confusión entre mis cuentas y todos está mucho mas claro.",
+    "hasBoostedMyAccountsAbility": "Red First ha potenciado mis cuentas. La capacidad de mantener la visibilidad de los hitos más importantes en todo momento me mantiene motivado.",
+    "advancedBuiltInReports": "Informes integrados avanzados",
+    "setEstimatesForYourAccounts": "Establezca estimaciones de sus cuentas y realice un seguimiento del progreso hacia sus objetivos. Nuestro panel personalizable lo ayuda a crear los informes que necesita.",
+    "everythingYouNeedOnePlace": "Todo lo que necesitas en un solo lugar",
+    "stopJumpingFromOneService": "Deja de saltar de un servicio a otro para cuidar tu dinero, sacar cuentas, realizar un seguimiento y llevar con claridad tus gastos. Red First ofrece una solución de productividad.",
+    "trackTheProgressOfAll": "Seguimiento del progreso de todas tus cuentas",
+    "seeHowYourDailyAccountsFitInto": "Vea cómo sus cuentas diarias encajan en una visión más amplia. Vaya desde el seguimiento del progreso a nivel de hito hasta el más mínimo detalle. No vuelvas a perder de vista el panorama general.",
+    "manageProvidesAllTheFunctionality": "Manage proporciona toda la funcionalidad que su equipo necesita, sin la complejidad. Nuestro software está hecho a medida para los equipos de productos digitales modernos.",
+    "description": "Descripción",
+    "joinUs": "Únete a nosotros"
+  },
+  "responseCodes": {
+    "SOMETHING_WENT_WRONG": "Upss lo sentimos, algo salió mal :(",
+    "USER_NOT_LOGGED_IN": "El usuario no ha iniciado sesión.",
+    "INVALID_DATE_FORMAT": "Formato de fecha inválido.",
+    "INVALID_FILTER_TYPE": "Tipo de filtro inválido.",
+    "INVALID_FIELD_ORDER": "Orden de campo inválido.",
+    "PAGE_UNDEFINED": "Algo no salió bien, por favor intente nuevamente.",
+    "PAGE_MUST_BE_NUMBER": "Algo no salió bien, por favor intente nuevamente.",
+    "LIMIT_INVALID": "Algo no salió bien, por favor intente nuevamente.",
+    "ORDER_INVALID": "Algo no salió bien, por favor intente nuevamente.",
+    "MOVEMENTS_NOT_FOUND": "No se encontrarón movimientos :(",
+    "AMOUNT_ZERO": "Por favor ingrese un monto superior a cero.",
+    "AMOUNT_NEGATIVE": "El monto no puede ser negativo.",
+    "AMOUNT_TOO_HIGH": "El monto es demasiado alto.",
+    "MOVEMENT_CREATED_SUCCESSFULLY": "¡Movimiento creado exitosamente!",
+    "ENTER_VALID_CONCEPT": "Por favor ingrese un concepto válido.",
+    "ENTER_VALID_DATE": "Por favor ingrese una fecha válida.",
+    "ENTER_VALID_AMOUNT": "Por favor ingrese un monto válido.",
+    "USERS_NOT_FOUND": "No se encontraron usuarios :(",
+    "NAME_EMPTY": "El nombre no puede estar vacío.",
+    "NAME_TOO_SHORT": "El nombre debe tener al menos 2 caracteres.",
+    "NAME_TOO_LONG": "El nombre no debe tener más de 30 caracteres.",
+    "USER_UPDATED_SUCCESSFULLY": "¡Usuario actualizado exitosamente!",
+    "NOT_AUTHORIZED_TO_THIS_ACTION": "No estás autorizado para realizar esta acción.",
+    "NOT_AUTHORIZED": "No estás autorizado para realizar esta acción."
+  }
 }

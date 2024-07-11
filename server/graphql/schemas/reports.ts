@@ -2,13 +2,12 @@ import { MovementConcept } from '@prisma/client';
 import { Field, ObjectType } from 'type-graphql';
 
 import {
-  type IGetAdditionalMovements,
   type IGetMovementsChart,
   type IGetRecentMovements,
   type TValidMonthsKeys,
 } from '@/types/graphql/resolvers';
 
-@ObjectType()
+@ObjectType('MovementsChart')
 export class MovementsChart implements IGetMovementsChart {
   @Field(() => String)
   name: TValidMonthsKeys;
@@ -20,7 +19,7 @@ export class MovementsChart implements IGetMovementsChart {
   expense: string;
 }
 
-@ObjectType()
+@ObjectType('GetRecentMovements')
 export class GetRecentMovements implements IGetRecentMovements {
   @Field(() => String)
   id: string;
@@ -39,16 +38,4 @@ export class GetRecentMovements implements IGetRecentMovements {
 
   @Field(() => MovementConcept)
   concept: MovementConcept;
-}
-
-@ObjectType()
-export class GetAditionalMovements implements IGetAdditionalMovements {
-  @Field(() => String)
-  balance: string;
-
-  @Field(() => Number)
-  movements: number;
-
-  @Field(() => [GetRecentMovements])
-  recentMovements: IGetRecentMovements[];
 }

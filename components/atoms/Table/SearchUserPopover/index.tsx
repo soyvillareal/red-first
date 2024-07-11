@@ -151,7 +151,9 @@ export function SearchUserPopover<TData, TValue>({
             placeholder={t('common.writeSomething')}
           />
           <CommandList>
-            <CommandEmpty>{t('common.noResultsFound')}</CommandEmpty>
+            <CommandEmpty className="px-6 py-3 text-center">
+              {t('common.noResultsFound')}
+            </CommandEmpty>
             {findUserByNameOrEmailLoading || debouncedLoading ? (
               <CommandListSkeleton />
             ) : (
@@ -184,7 +186,7 @@ export function SearchUserPopover<TData, TValue>({
                           )}
                         />
                       )}
-                      <span>{t(option.label)}</span>
+                      <span className="text-secondary">{t(option.label)}</span>
                       {facets?.get(option.value) && (
                         <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
                           {facets.get(option.value)}

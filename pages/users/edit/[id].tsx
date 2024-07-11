@@ -64,19 +64,11 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
 
-  if (session.user.roles.includes(EUserRole.ADMIN) === false) {
-    return {
-      props: {
-        ...translations.props,
-      },
-      redirect: {
-        destination: '/404',
-        permanent: false,
-      },
-    };
-  }
-
-  if (userId === null || userId === undefined) {
+  if (
+    userId === null ||
+    userId === undefined ||
+    session.user.roles.includes(EUserRole.ADMIN) === false
+  ) {
     return {
       props: {
         ...translations.props,
@@ -96,7 +88,7 @@ export const getServerSideProps: GetServerSideProps<
     if (foundUser === null || foundUser === undefined) {
       return {
         redirect: {
-          destination: '/404', // Cambia esto por tu ruta deseada
+          destination: '/404',
           permanent: false,
         },
       };

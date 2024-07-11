@@ -1,5 +1,7 @@
 import { getSkipped, mockPagination, pageMeta } from '@/server/utils';
 
+import { defaultLimit } from '@/lib/contants';
+
 describe('getSkipped', () => {
   it('returns 0 for the first page', () => {
     expect(getSkipped(100)).toBe(0);
@@ -83,7 +85,7 @@ describe('mockPagination', () => {
       data: dataMock,
       meta: {
         page: 1,
-        limit: 10,
+        limit: defaultLimit,
         itemCount: 0,
         pageCount: 0,
         hasPreviousPage: false,

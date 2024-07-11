@@ -89,7 +89,7 @@ export const MovementForm = () => {
             <FormItem>
               <FormLabel>{t('newMovement.amount')}</FormLabel>
               <FormControl>
-                <Input type="number" placeholder="0" {...field} />
+                <Input type="number" min={0} placeholder="0" {...field} />
               </FormControl>
               <FormDescription>
                 {t('newMovement.thisAmountRepresentsValue')}

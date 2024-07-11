@@ -5,9 +5,9 @@ import { buildSchema, registerEnumType } from 'type-graphql';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import { MovementConcept } from '@prisma/client';
-import rateLimit from 'express-rate-limit';
+import * as expressRateLimit from 'express-rate-limit';
 
-import { IGraphQLContext } from '@/types';
+import { EUserRoleRoleNormalized, IGraphQLContext } from '@/types';
 import { MovementsResolvers } from '@/server/graphql/resolvers/movements';
 import { UsersResolvers } from '@/server/graphql/resolvers/users';
 import { ReportsResolvers } from '@/server/graphql/resolvers/reports';
@@ -23,6 +23,15 @@ export const initializeApolloServer = async () => {
     valuesConfig: {
       expense: { description: 'Expense' },
       income: { description: 'Income' },
+    },
+  });
+
+  registerEnumType(EUserRoleRoleNormalized, {
+    name: 'EUserRole',
+    description: 'User roles',
+    valuesConfig: {
+      admin: { description: 'Administrator' },
+      user: { description: 'User' },
     },
   });
 
@@ -48,7 +57,7 @@ export const initializeApolloServer = async () => {
   });
 };
 
-const rateLimiter = rateLimit({
+const rateLimiter = expressRateLimit.rateLimit({
   windowMs: parseInt(env.TIME_TO_WAIT_LIMIT) * 60 * 1000,
   max: parseInt(env.MAX_REQUESTS_LIMIT),
   handler: (req, res) => {

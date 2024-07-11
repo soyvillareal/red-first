@@ -1,5 +1,6 @@
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
-import { useCallback } from 'react';
+import { RefreshCcw } from 'lucide-react';
 import { v4 as uuid } from 'uuid';
 
 import { Button } from '@/components/custom/Button';
@@ -11,14 +12,18 @@ import { DataTableFacetedFilter } from './DataTableFacetedFilter';
 import { DataTableViewOptions } from './DataTableViewOptions';
 import { DataTableToolbarProps } from './Table.types';
 import { SearchUserPopover } from './SearchUserPopover';
+import ExcelIcon from '@/components/icons/ExcelIcon';
+import { tableToCSV } from '@/lib/utils';
 
 export function DataTableToolbar<TData>({
   table,
   toolbarOptions,
   hasUserFilter = false,
   hasSearchInput = false,
+  refetchData,
 }: DataTableToolbarProps<TData>) {
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -30,6 +35,21 @@ export function DataTableToolbar<TData>({
     },
     [table, toolbarOptions.searchKey],
   );
+
+  const handleClickExcel = useCallback(() => {
+    const columns = table.getAllColumns().map((column) => column.id);
+    const rows = table.getRowModel().rows.map((row) => row.original);
+
+    tableToCSV<TData>(columns, rows, t);
+  }, [t, table]);
+
+  const handleClickRefetch = useCallback(async () => {
+    if (refetchData) {
+      setIsLoading(true);
+      await refetchData();
+      setIsLoading(false);
+    }
+  }, [refetchData]);
 
   return (
     <div className="flex items-center justify-between">
@@ -75,6 +95,27 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
+      <Button
+        className="w-12 px-1 mr-1"
+        onClick={handleClickExcel}
+        variant="outline"
+        size="sm"
+        disabled={table.getRowModel().rows.length === 0 && isLoading === false}
+      >
+        <ExcelIcon />
+      </Button>
+      {refetchData && (
+        <Button
+          className="w-12 mr-1"
+          onClick={handleClickRefetch}
+          loading={isLoading}
+          hasMargin={false}
+          variant="outline"
+          size="sm"
+        >
+          {isLoading === false && <RefreshCcw size={16} />}
+        </Button>
+      )}
       <DataTableViewOptions table={table} />
     </div>
   );

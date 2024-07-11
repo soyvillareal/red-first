@@ -1,217 +1,222 @@
 {
-    "SEO": {
-        "title": "Red First - Simplify your accounts, simplify your life",
-        "description": "Red First makes it easy for people to plan their daily accounts while keeping broader goals in sight.",
-        "keywords": "Red First, finance management, expense control, income tracking, financial reports, expense analysis, budgeting tools, financial data visualization, income charts, personal finance software, financial planning",
-        "openGraph": {
-            "siteName": "Red First",
-            "title": "Red First - Simplify your accounts, simplify your life",
-            "description": "Red First makes it easy for people to plan their daily accounts while keeping broader goals in sight."
-        },
-        "twitter": {
-            "title": "Red First - Simplify your accounts, simplify your life",
-            "description": "Red First makes it easy for people to plan their daily accounts while keeping broader goals in sight."
-        },
-        "REPORTS": {
-            "title": "Reports - Red First",
-            "description": "View your financial reports with Red First.",
-            "keywords": "reports, financial reports, income reports, expense reports, red first reports"
-        },
-        "MOVEMENTS": {
-            "title": "Movements - Red First",
-            "description": "Manage your financial movements with Red First.",
-            "keywords": "movements, movement management, income, expenses, red first movements"
-        },
-        "USERS": {
-            "title": "Users - Red First",
-            "description": "Manage your financial movements with Red First.",
-            "keywords": "users, user management, user roles, user permissions, red first users"
-        },
-        "NEW_MOVEMENT": {
-            "title": "New movement - Red First",
-            "description": "Create a new financial movement with Red First.",
-            "keywords": "new movement, create movement, enter movement, red first new movement"
-        },
-        "EDIT_USER": {
-            "title": "Edit user - Red First",
-            "description": "Edit a Red First user.",
-            "keywords": "edit user, modify user, red first user"
-        }
+  "SEO": {
+    "title": "Red First - Simplify your accounts, simplify your life",
+    "description": "Red First makes it easy for people to plan their daily accounts while keeping broader goals in sight.",
+    "keywords": "Red First, finance management, expense control, income tracking, financial reports, expense analysis, budgeting tools, financial data visualization, income charts, personal finance software, financial planning",
+    "openGraph": {
+      "siteName": "Red First",
+      "title": "Red First - Simplify your accounts, simplify your life",
+      "description": "Red First makes it easy for people to plan their daily accounts while keeping broader goals in sight."
     },
-    "common": {
-        "signIn": "Sign in",
-        "signUp": "Sign up",
-        "logOut": "Log out",
-        "noResults": "No results.",
-        "noResultsFound": "No results found.",
-        "download": "Descargar",
-        "avatar": "Avatar",
-        "save": "Save",
-        "enter": "Enter",
-        "new": "New",
-        "errorOccurred": "Some errors occurred.",
-        "noData": "No data.",
-        "goBack": "Go back",
-        "backToHome": "Back to Home",
-        "writeSomething": "Write something..."
+    "twitter": {
+      "title": "Red First - Simplify your accounts, simplify your life",
+      "description": "Red First makes it easy for people to plan their daily accounts while keeping broader goals in sight."
     },
-    "notFound": {
-        "title": "Oops! Page Not Found!",
-        "description": "It seems like the page you're looking for does not exist or might have been removed."
+    "REPORTS": {
+      "title": "Reports - Red First",
+      "description": "View your financial reports with Red First.",
+      "keywords": "reports, financial reports, income reports, expense reports, red first reports"
     },
-    "internalError": {
-        "title": "Oops! Something went wrong :')",
-        "description": "We apologize for the inconvenience. Please try again later."
+    "MOVEMENTS": {
+      "title": "Movements - Red First",
+      "description": "Manage your financial movements with Red First.",
+      "keywords": "movements, movement management, income, expenses, red first movements"
     },
-    "languages": {
-        "title": "Language ({{lang}})",
-        "es": "Spanish",
-        "en": "English"
+    "USERS": {
+      "title": "Users - Red First",
+      "description": "Manage your financial movements with Red First.",
+      "keywords": "users, user management, user roles, user permissions, red first users"
     },
-    "roles": {
-        "admin": "Administrator",
-        "user": "User"
+    "NEW_MOVEMENT": {
+      "title": "New movement - Red First",
+      "description": "Create a new financial movement with Red First.",
+      "keywords": "new movement, create movement, enter movement, red first new movement"
     },
-    "months": {
-        "jan": "Jan",
-        "feb": "Feb",
-        "mar": "Mar",
-        "apr": "Apr",
-        "may": "May",
-        "jun": "Jun",
-        "jul": "Jul",
-        "aug": "Aug",
-        "sep": "Sep",
-        "oct": "Oct",
-        "nov": "Nov",
-        "dec": "Dec"
-    },
-    "sidebar": {
-        "reports": "Reports",
-        "incomeAndExpenses": "Income and expenses",
-        "users": "Users"
-    },
-    "dashboard": {
-        "title": "Dashboard",
-        "recentMovements": "Recent movements",
-        "movements": "Movements ({{currency}})",
-        "balance": "Balance",
-        "youMadeMovementsMonth": "You made {{movements}} movements this month."
-    },
-    "table": {
-        "asc": "ASC",
-        "desc": "DESC",
-        "hide": "Hide",
-        "types": "Types",
-        "clearFilters": "Clear filters",
-        "selected": "{{size}} Selected",
-        "rowSelected": "{{selected}} of {{total}} row(s) selected",
-        "rowsPerPage": "Rows per page",
-        "pageOf": "Page {{page}} of {{pages}}",
-        "goToFirstPage": "Go to first page",
-        "goToPreviusPage": "Go to previous page",
-        "goToNextPage": "Go to next page",
-        "goToLastPage": "Go to last page",
-        "reset": "Reset",
-        "search": "Search...",
-        "view": "View",
-        "toggleColumns": "Toggle columns",
-        "action": "Action",
-        "openMenu": "Open menu",
-        "edit": "Edit",
-        "users": "Users"
-    },
-    "movements": {
-        "title": "Income and expenses",
-        "income": "Income",
-        "expense": "Expense",
-        "concept": "Concept",
-        "amount": "Amount",
-        "date": "Date",
-        "userName": "User name"
-    },
-    "newMovement": {
-        "title": "New movement",
-        "concept": "Concept",
-        "amount": "Amount",
-        "date": "Date",
-        "type": "Type",
-        "pickDate": "Pick a date",
-        "income": "Income",
-        "expense": "Expense",
-        "thisAmountRepresentsValue": "This amount represents the value of the movement.",
-        "theConceptIsUsedToCategorizeIt": "The concept is used to categorize movement.",
-        "dateOfMovementUsedToTrack": "The date of movement is used to track when it happened."
-    },
-    "users": {
-        "title": "Users",
-        "name": "Name",
-        "email": "Email",
-        "phone": "Phone"
-    },
-    "editUser": {
-        "title": "Edit user",
-        "name": "Name",
-        "role": "Role",
-        "nameOfTheUserToEdentifyIt": "The name of the user is used to identify it.",
-        "roleOfTheUser": "The role is used to grant permissions to the user, you should be careful with this option.",
-        "writeName": "Write the name...",
-        "nameMusBeLeast": "Name must be at least 2 characters.",
-        "nameMustBeLonger": "Name must not be longer than 30 characters.",
-        "enterValidRole": "Please select a valid role."
-    },
-    "reportCSV": {
-        "movements": "Movements",
-        "name": "Name",
-        "income": "Income",
-        "expense": "Expense",
-        "recentMovements": "Recent movements",
-        "email": "Email",
-        "movement": "Movement",
-        "balance": "Balance"
-    },
-    "landing": {
-        "simplify_your_accounts": "Simplify your accounts, simplify your life",
-        "your_best_friend": "Your best friend to keep your accounts clear",
-        "makes_it_easy": "Red First makes it easy for people to plan their daily accounts while keeping larger goals in sight.",
-        "whatsDifferentAbout": "What's Different About Red First?",
-        "hasBoostedWorkflowAbility": "Red First has boosted my workflow. The ability to maintain visibility of the most important milestones at all times keeps you motivated.",
-        "weHaveBeenAbleCancel": "We have been able to cancel many subscriptions since using Red First. There is no longer confusion between my accounts and everyone is much clearer.",
-        "hasBoostedMyAccountsAbility": "Red First has boosted my accounts. The ability to maintain visibility of the most important milestones at all times keeps me motivated.",
-        "advancedBuiltInReports": "Advanced built-in reports",
-        "setEstimatesForYourAccounts": "Set estimates for your accounts and track progress toward your goals. Our customizable dashboard helps you create the reports you need.",
-        "everythingYouNeedOnePlace": "Everything you need in one place",
-        "stopJumpingFromOneService": "Stop jumping from one service to another to take care of your money, do accounts, track and clearly keep track of your expenses. Red First offers a productivity solution.",
-        "trackTheProgressOfAll": "Track the progress of all your accounts",
-        "seeHowYourDailyAccountsFitInto": "See how your daily accounts fit into a bigger picture. Go from tracking progress at the milestone level to the smallest detail. Don't lose sight of the big picture again.",
-        "manageProvidesAllTheFunctionality": "Manage provides all the functionality your team needs, without the complexity. Our software is tailor-made for modern digital product teams.",
-        "description": "Description",
-        "joinUs": "Join us"
-    },
-    "responseCodes": {
-        "SOMETHING_WENT_WRONG": "Oops, we're sorry, something went wrong :(",
-        "USER_NOT_LOGGED_IN": "The user is not logged in.",
-        "INVALID_DATE_FORMAT": "Invalid date format.",
-        "INVALID_FILTER_TYPE": "Invalid filter type.",
-        "INVALID_FIELD_ORDER": "Invalid field order.",
-        "PAGE_UNDEFINED": "Something went wrong, please try again.",
-        "PAGE_MUST_BE_NUMBER": "Something went wrong, please try again.",
-        "LIMIT_INVALID": "Something went wrong, please try again.",
-        "ORDER_INVALID": "Something went wrong, please try again.",
-        "MOVEMENTS_NOT_FOUND": "No movements found :(",
-        "AMOUNT_ZERO": "Please enter an amount greater than zero.",
-        "AMOUNT_NEGATIVE": "The amount cannot be negative.",
-        "AMOUNT_TOO_HIGH": "The amount is too high.",
-        "MOVEMENT_CREATED_SUCCESSFULLY": "Movement created successfully!",
-        "ENTER_VALID_CONCEPT": "Please enter a valid concept.",
-        "ENTER_VALID_DATE": "Please enter a valid date.",
-        "ENTER_VALID_AMOUNT": "Please enter a valid amount.",
-        "USERS_NOT_FOUND": "No users found :(",
-        "NAME_EMPTY": "Name cannot be empty.",
-        "NAME_TOO_SHORT": "Name must be at least 2 characters.",
-        "NAME_TOO_LONG": "Name must not be longer than 30 characters.",
-        "USER_UPDATED_SUCCESSFULLY": "User updated successfully!",
-        "NOT_AUTHORIZED_TO_THIS_ACTION": "You are not authorized to perform this action.",
-        "NOT_AUTHORIZED": "You are not authorized to perform this action."
+    "EDIT_USER": {
+      "title": "Edit user - Red First",
+      "description": "Edit a Red First user.",
+      "keywords": "edit user, modify user, red first user"
     }
+  },
+  "common": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "logOut": "Log out",
+    "noResults": "No results.",
+    "noResultsFound": "No results found.",
+    "download": "Descargar",
+    "avatar": "Avatar",
+    "save": "Save",
+    "enter": "Enter",
+    "new": "New",
+    "errorOccurred": "Some errors occurred.",
+    "noData": "No data.",
+    "goBack": "Go back",
+    "backToHome": "Back to Home",
+    "writeSomething": "Write something..."
+  },
+  "notFound": {
+    "title": "Oops! Page Not Found!",
+    "description": "It seems like the page you're looking for does not exist or might have been removed."
+  },
+  "internalError": {
+    "title": "Oops! Something went wrong :')",
+    "description": "We apologize for the inconvenience. Please try again later."
+  },
+  "languages": {
+    "title": "Language ({{lang}})",
+    "es": "Spanish",
+    "en": "English"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "user": "User"
+  },
+  "months": {
+    "jan": "Jan",
+    "feb": "Feb",
+    "mar": "Mar",
+    "apr": "Apr",
+    "may": "May",
+    "jun": "Jun",
+    "jul": "Jul",
+    "aug": "Aug",
+    "sep": "Sep",
+    "oct": "Oct",
+    "nov": "Nov",
+    "dec": "Dec"
+  },
+  "sidebar": {
+    "reports": "Reports",
+    "incomeAndExpenses": "Income and expenses",
+    "users": "Users"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "recentMovements": "Recent movements",
+    "movements": "Movements ({{currency}})",
+    "balance": "Balance",
+    "youMadeMovementsMonth": "You made {{movements}} movements this month."
+  },
+  "table": {
+    "asc": "ASC",
+    "desc": "DESC",
+    "hide": "Hide",
+    "types": "Types",
+    "clearFilters": "Clear filters",
+    "selected": "{{size}} Selected",
+    "rowSelected": "{{selected}} of {{total}} row(s) selected",
+    "rowsPerPage": "Rows per page",
+    "pageOf": "Page {{page}} of {{pages}}",
+    "goToFirstPage": "Go to first page",
+    "goToPreviusPage": "Go to previous page",
+    "goToNextPage": "Go to next page",
+    "goToLastPage": "Go to last page",
+    "reset": "Reset",
+    "search": "Search...",
+    "view": "View",
+    "toggleColumns": "Toggle columns",
+    "action": "Action",
+    "openMenu": "Open menu",
+    "edit": "Edit",
+    "users": "Users",
+    "concept": "Concept",
+    "amount": "Amount",
+    "date": "Date",
+    "userName": "User name",
+    "title": "Users",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "movements": {
+    "title": "Income and expenses",
+    "income": "Income",
+    "expense": "Expense",
+    "concept": "Concept",
+    "amount": "Amount",
+    "date": "Date",
+    "userName": "User name"
+  },
+  "newMovement": {
+    "title": "New movement",
+    "concept": "Concept",
+    "amount": "Amount",
+    "date": "Date",
+    "type": "Type",
+    "pickDate": "Pick a date",
+    "income": "Income",
+    "expense": "Expense",
+    "thisAmountRepresentsValue": "This amount represents the value of the movement.",
+    "theConceptIsUsedToCategorizeIt": "The concept is used to categorize movement.",
+    "dateOfMovementUsedToTrack": "The date of movement is used to track when it happened."
+  },
+  "users": {
+    "title": "Users"
+  },
+  "editUser": {
+    "title": "Edit user",
+    "name": "Name",
+    "role": "Role",
+    "nameOfTheUserToEdentifyIt": "The name of the user is used to identify it.",
+    "roleOfTheUser": "The role is used to grant permissions to the user, you should be careful with this option.",
+    "writeName": "Write the name...",
+    "nameMusBeLeast": "Name must be at least 2 characters.",
+    "nameMustBeLonger": "Name must not be longer than 30 characters.",
+    "enterValidRole": "Please select a valid role."
+  },
+  "reportCSV": {
+    "movements": "Movements",
+    "name": "Name",
+    "income": "Income",
+    "expense": "Expense",
+    "recentMovements": "Recent movements",
+    "email": "Email",
+    "movement": "Movement",
+    "balance": "Balance"
+  },
+  "landing": {
+    "simplify_your_accounts": "Simplify your accounts, simplify your life",
+    "your_best_friend": "Your best friend to keep your accounts clear",
+    "makes_it_easy": "Red First makes it easy for people to plan their daily accounts while keeping larger goals in sight.",
+    "whatsDifferentAbout": "What's Different About Red First?",
+    "hasBoostedWorkflowAbility": "Red First has boosted my workflow. The ability to maintain visibility of the most important milestones at all times keeps you motivated.",
+    "weHaveBeenAbleCancel": "We have been able to cancel many subscriptions since using Red First. There is no longer confusion between my accounts and everyone is much clearer.",
+    "hasBoostedMyAccountsAbility": "Red First has boosted my accounts. The ability to maintain visibility of the most important milestones at all times keeps me motivated.",
+    "advancedBuiltInReports": "Advanced built-in reports",
+    "setEstimatesForYourAccounts": "Set estimates for your accounts and track progress toward your goals. Our customizable dashboard helps you create the reports you need.",
+    "everythingYouNeedOnePlace": "Everything you need in one place",
+    "stopJumpingFromOneService": "Stop jumping from one service to another to take care of your money, do accounts, track and clearly keep track of your expenses. Red First offers a productivity solution.",
+    "trackTheProgressOfAll": "Track the progress of all your accounts",
+    "seeHowYourDailyAccountsFitInto": "See how your daily accounts fit into a bigger picture. Go from tracking progress at the milestone level to the smallest detail. Don't lose sight of the big picture again.",
+    "manageProvidesAllTheFunctionality": "Manage provides all the functionality your team needs, without the complexity. Our software is tailor-made for modern digital product teams.",
+    "description": "Description",
+    "joinUs": "Join us"
+  },
+  "responseCodes": {
+    "SOMETHING_WENT_WRONG": "Oops, we're sorry, something went wrong :(",
+    "USER_NOT_LOGGED_IN": "The user is not logged in.",
+    "INVALID_DATE_FORMAT": "Invalid date format.",
+    "INVALID_FILTER_TYPE": "Invalid filter type.",
+    "INVALID_FIELD_ORDER": "Invalid field order.",
+    "PAGE_UNDEFINED": "Something went wrong, please try again.",
+    "PAGE_MUST_BE_NUMBER": "Something went wrong, please try again.",
+    "LIMIT_INVALID": "Something went wrong, please try again.",
+    "ORDER_INVALID": "Something went wrong, please try again.",
+    "MOVEMENTS_NOT_FOUND": "No movements found :(",
+    "AMOUNT_ZERO": "Please enter an amount greater than zero.",
+    "AMOUNT_NEGATIVE": "The amount cannot be negative.",
+    "AMOUNT_TOO_HIGH": "The amount is too high.",
+    "MOVEMENT_CREATED_SUCCESSFULLY": "Movement created successfully!",
+    "ENTER_VALID_CONCEPT": "Please enter a valid concept.",
+    "ENTER_VALID_DATE": "Please enter a valid date.",
+    "ENTER_VALID_AMOUNT": "Please enter a valid amount.",
+    "USERS_NOT_FOUND": "No users found :(",
+    "NAME_EMPTY": "Name cannot be empty.",
+    "NAME_TOO_SHORT": "Name must be at least 2 characters.",
+    "NAME_TOO_LONG": "Name must not be longer than 30 characters.",
+    "USER_UPDATED_SUCCESSFULLY": "User updated successfully!",
+    "NOT_AUTHORIZED_TO_THIS_ACTION": "You are not authorized to perform this action.",
+    "NOT_AUTHORIZED": "You are not authorized to perform this action."
+  }
 }

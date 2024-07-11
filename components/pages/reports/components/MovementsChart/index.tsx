@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import {
   Bar,
@@ -10,58 +10,24 @@ import {
   YAxis,
 } from 'recharts';
 import { MovementConcept } from '@prisma/client';
-import { useLazyQuery } from '@apollo/client';
 
 import { fillArray, formatNumber, numberWithCurrency } from '@/lib/utils';
-import { MovementsChartQuery } from '@/lib/apollo';
-import { type IGetMovementsChart } from '@/types/graphql/resolvers';
 import { MovementsChartSkeleton } from '@/components/skeleton/MovementsChartSkeleton';
 
-import {
-  type IGetMovementsQueryParams,
-  type IMovementsChartProps,
-} from './MovementsChart.types';
+import { type IMovementsChartProps } from './MovementsChart.types';
 
-const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
+const MovementsChart = ({
+  loading,
+  data: movementData,
+}: IMovementsChartProps) => {
   const { t } = useTranslation();
-
-  const [
-    getMovementsQuery,
-    {
-      data: movementQueryData,
-      loading: movementQueryLoading,
-      error: movementQueryError,
-    },
-  ] = useLazyQuery<
-    {
-      getMovementsChart: IGetMovementsChart[];
-    },
-    IGetMovementsQueryParams
-  >(MovementsChartQuery);
-
-  useEffect(() => {
-    (async () => {
-      callbackState(true);
-      const movements = await getMovementsQuery({
-        variables: {
-          year: year,
-        },
-      });
-
-      if (movements.data) {
-        callbackState(false, movements.data.getMovementsChart);
-      } else {
-        callbackState(false);
-      }
-    })();
-  }, [getMovementsQuery, callbackState, year]);
 
   const [minValue, maxValue, ticks] = useMemo(() => {
     let maxAbsValue = 0;
-    if (movementQueryData?.getMovementsChart) {
+    if (movementData) {
       // Find the largest absolute value among all income and expenses
       maxAbsValue = Math.max(
-        ...movementQueryData.getMovementsChart.flatMap((item) => [
+        ...movementData.flatMap((item) => [
           Math.abs(Number(item.income)),
           Math.abs(Number(item.expense)),
         ]),
@@ -87,14 +53,14 @@ const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
     // The minimum value is the negative of the largest absolute value
     // This ensures that the Y axis range is symmetric around 0
     return [minValue, maxValue, ticks];
-  }, [movementQueryData?.getMovementsChart]);
+  }, [movementData]);
 
   const renderChartData = useCallback(() => {
-    return movementQueryLoading ? (
+    return loading ? (
       <MovementsChartSkeleton />
     ) : (
       <BarChart
-        data={movementQueryData?.getMovementsChart}
+        data={movementData}
         margin={{
           top: 20,
           right: 30,
@@ -136,18 +102,11 @@ const MovementsChart = ({ callbackState, year }: IMovementsChartProps) => {
         />
       </BarChart>
     );
-  }, [
-    t,
-    ticks,
-    maxValue,
-    minValue,
-    movementQueryData?.getMovementsChart,
-    movementQueryLoading,
-  ]);
+  }, [t, ticks, maxValue, minValue, movementData, loading]);
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      {movementQueryError ? (
+      {movementData === undefined ? (
         <p className="flex items-center justify-center h-full text-gray-500">
           {t('common.noData')}
         </p>

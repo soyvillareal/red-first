@@ -6,6 +6,7 @@ import {
   type IPageMetaParameters,
   type IPageOptionsDataMeta,
 } from '@/types/graphql/pagination';
+import { defaultLimit } from '@/lib/contants';
 
 export const logger = createLogger({
   level: 'info', // Nivel mínimo para registrar
@@ -34,7 +35,10 @@ export const logger = createLogger({
 
 export const pageMeta = <T>(
   data: T,
-  { pageOptions: { limit = 10, page }, itemCount }: IPageMetaParameters,
+  {
+    pageOptions: { limit = defaultLimit, page },
+    itemCount,
+  }: IPageMetaParameters,
 ): IPageOptionsDataMeta<T> => {
   const pageCount = Math.ceil(itemCount / limit);
   let newPage = page;
@@ -57,7 +61,11 @@ export const pageMeta = <T>(
   return objectData;
 };
 
-export const getSkipped = (itemCount: number, page = 1, limit = 10): number => {
+export const getSkipped = (
+  itemCount: number,
+  page = 1,
+  limit = defaultLimit,
+): number => {
   const pageCount = Math.ceil(itemCount / limit);
   if (page < 1 || page > pageCount) {
     throw new Error('Page number not found!');
@@ -73,7 +81,7 @@ export const mockPagination = <T>(
   data: dataMock,
   meta: {
     page: 1,
-    limit: 10,
+    limit: defaultLimit,
     itemCount: 0,
     pageCount: 0,
     hasPreviousPage: false,

@@ -35,6 +35,7 @@ export function DataTable<TData, TValue>({
   footerChildren,
   pageCount,
   loading = false,
+  refetchData,
   values: { sorting, pagination, columnFilters },
   events: { onSortingChange, onPaginationChange, onColumnFiltersChange },
 }: DataTableProps<TData, TValue>) {
@@ -74,6 +75,7 @@ export function DataTable<TData, TValue>({
         toolbarOptions={toolbarOptions}
         hasUserFilter={hasUserFilter}
         hasSearchInput={hasSearchInput}
+        refetchData={refetchData}
       />
       <div className="rounded-md border bg-primary-foreground">
         <Table>
@@ -107,10 +109,7 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      className="min-w-[120px] text-center"
-                      key={cell.id}
-                    >
+                    <TableCell className="min-w-[120px]" key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

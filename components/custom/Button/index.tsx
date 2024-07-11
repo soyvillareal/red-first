@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef, useCallback } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 
@@ -37,7 +37,7 @@ const buttonVariants = cva(
   },
 );
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
@@ -47,6 +47,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       disabled,
       loading = false,
+      hasMargin = true,
       leftSection,
       rightSection,
       ...props
@@ -54,6 +55,28 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const Comp = asChild ? Slot : 'button';
+
+    const renderLeftLoading = useCallback(() => {
+      if (
+        (leftSection && loading) ||
+        (leftSection === undefined && rightSection === undefined && loading)
+      ) {
+        return (
+          <LoaderIcon
+            className={cn('h-4 w-4 animate-spin', hasMargin ? 'mr-2' : '')}
+          />
+        );
+      }
+      return null;
+    }, [leftSection, loading, rightSection, hasMargin]);
+
+    const renderRighttLoading = useCallback(() => {
+      if (rightSection && loading) {
+        return <LoaderIcon className="ml-2 h-4 w-4 animate-spin" />;
+      }
+      return null;
+    }, [rightSection, loading]);
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
@@ -61,21 +84,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {((leftSection && loading) ||
-          (!leftSection && !rightSection && loading)) && (
-          <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+        {renderLeftLoading()}
+        {loading === false && leftSection && (
+          <div className="mr-2">{leftSection}</div>
         )}
-        {!loading && leftSection && <div className="mr-2">{leftSection}</div>}
         {children}
-        {!loading && rightSection && <div className="ml-2">{rightSection}</div>}
-        {rightSection && loading && (
-          <LoaderIcon className="ml-2 h-4 w-4 animate-spin" />
+        {loading === false && rightSection && (
+          <div className="ml-2">{rightSection}</div>
         )}
+        {renderRighttLoading()}
       </Comp>
     );
   },
 );
 Button.displayName = 'Button';
 
-// eslint-disable-next-line react-refresh/only-export-components
 export { Button, buttonVariants };

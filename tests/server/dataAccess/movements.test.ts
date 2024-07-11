@@ -1,5 +1,7 @@
-import { prisma } from '@/tests/setup';
+import dayjs from 'dayjs';
+import { Decimal } from '@prisma/client/runtime/library';
 
+import { prisma } from '@/tests/setup';
 import {
   ICreateUserRepository,
   IGetMovementsRepository,
@@ -9,8 +11,7 @@ import {
   TValidsMovementTypes,
 } from '@/types/graphql/resolvers';
 import { MovementsRepository } from '@/server/dataAccess/movements';
-import dayjs from 'dayjs';
-import { Decimal } from '@prisma/client/runtime/library';
+import { defaultLimit } from '@/lib/contants';
 
 const repository = new MovementsRepository();
 
@@ -70,7 +71,7 @@ describe('MovementsRepository', () => {
     it('should return movements for a user with pagination', async () => {
       const paginationParams: IPaginationMovementsParams<TValidsMovementTypes> =
         {
-          limit: 10,
+          limit: defaultLimit,
           skip: 0,
           order: 'asc',
           userId: null,
@@ -116,7 +117,7 @@ describe('MovementsRepository', () => {
     it('should return null if there is an error', async () => {
       const paginationParams: IPaginationMovementsParams<TValidsMovementTypes> =
         {
-          limit: 10,
+          limit: defaultLimit,
           skip: 0,
           order: 'asc',
           userId: null,

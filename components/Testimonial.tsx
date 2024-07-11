@@ -8,6 +8,8 @@ import avatarAnisha from '@/public/images/avatar-anisha.png';
 import avatarAli from '@/public/images/avatar-ali.png';
 import avatarRichard from '@/public/images/avatar-richard.png';
 
+import ButtonSignIn from './atoms/ButtonSignIn';
+
 export const Testimonial = () => {
   const { t } = useTranslation();
   const session = useSession();
@@ -68,12 +70,12 @@ export const Testimonial = () => {
               {t('dashboard.title')}
             </Link>
           ) : (
-            <Link
-              href={routes.signUp}
-              className="p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent"
-            >
-              {t('landing.joinUs')}
-            </Link>
+            <div className="flex flex-row items-center justify-center p-3 px-6 pt-2 baseline">
+              <ButtonSignIn
+                className="!no-underline"
+                textButton={t('landing.joinUs')}
+              />
+            </div>
           )}
         </div>
       </div>

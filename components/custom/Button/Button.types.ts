@@ -7,6 +7,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   loading?: boolean;
+  hasMargin?: boolean;
   leftSection?: JSX.Element;
   rightSection?: JSX.Element;
 }

@@ -30,15 +30,6 @@ export const apolloClient = new ApolloClient({
   link: from([authLink, httpLink]),
   cache: new InMemoryCache(),
   credentials: 'same-origin',
-  defaultOptions: {
-    // There are best practices, without a doubt, however, this is a quick solution to my problem. I'm sorry :(
-    watchQuery: {
-      fetchPolicy: 'network-only',
-    },
-    query: {
-      fetchPolicy: 'network-only',
-    },
-  },
 });
 
 export const MovementMutation = gql`
@@ -140,29 +131,6 @@ export const MovementsChartQuery = gql`
       income
       expense
     }
-  }
-`;
-
-export const AdditionalMovementsChartQuery = gql`
-  query GetAdditionalMovements {
-    getAdditionalMovements {
-      balance
-      movements
-      recentMovements {
-        id
-        name
-        email
-        image
-        movement
-        concept
-      }
-    }
-  }
-`;
-
-export const ValidYearsQuery = gql`
-  query GetValidYears {
-    getValidYears
   }
 `;
 

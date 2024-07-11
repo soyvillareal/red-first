@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { PaginationState } from '@tanstack/react-table';
 
-export const usePagination = (initialSize = 10) => {
+import { defaultLimit } from '@/lib/contants';
+
+export const usePagination = (initialSize = defaultLimit) => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageSize: initialSize,
     pageIndex: 0,
