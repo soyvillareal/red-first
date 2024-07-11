@@ -7,5 +7,20 @@
                 "buildCommand": "npm run build && prisma generate"
             }
         }
-    ]
+    ],
+    "github": {
+        "enabled": true,
+        "deployments": {
+            "production": {
+                "branches": [
+                    "main"
+                ]
+            },
+            "preview": {
+                "branches": [
+                    "dev"
+                ]
+            }
+        }
+    }
 }
