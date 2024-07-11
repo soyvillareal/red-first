@@ -3,6 +3,7 @@
 ## Table of contents:
 
 - [Variables de entorno](#variables-de-entorno)
+- [Configuración del proveedor de correos](#configuración-del-proveedor-de-correos)
 - [Instrucciones para iniciar con Docker](#instrucciones-para-iniciar-con-docker)
 - [Instrucciones para iniciar sin Docker](#instrucciones-para-iniciar-sin-docker)
 - [Despliegue en Vercel](#despliegue-en-vercel)
@@ -70,7 +71,8 @@ DATABASE_URL=postgresql://username:password@hostname:5432/red_first?schema=publi
      Si decides no modificar `https://auth0.roles.redfirst.com/` entonces este debe ser el valor de tu variable de entorno `AUTH0_ROLES_IDENTIFIER`
 
   5. Una vez escrito esto, haz clic en **Deploy**
-- La variable de entorno `AUTH0_SCOPE` dependerá de los permisos que usted le configuré a su api **Auth0 Management API**, esto puede hacerlo dirigiendose a **Applications** > **Machine To Machine Applications**, una vez aquí dentro, podrá observar sus aplicaciones, deberá activar el *Switch* de la aplicación correspondiente. Una vez realiazado lo anterior, solo hace falta agregar los permisos, para esto puede dar clic sobre el icono a la derecha y agregar los siguientes permisos:
+
+- La variable de entorno `AUTH0_SCOPE` dependerá de los permisos que usted le configuré a su api **Auth0 Management API**, esto puede hacerlo dirigiendose a **Applications** > **Machine To Machine Applications**, una vez aquí dentro, podrá observar sus aplicaciones, deberá activar el _Switch_ de la aplicación correspondiente. Una vez realizado lo anterior, solo hace falta agregar los permisos, para esto puede dar clic sobre el icono a la derecha y agregar los siguientes permisos:
   - `read:users`
   - `update:users`
   - `read:roles`
@@ -83,6 +85,47 @@ DATABASE_URL=postgresql://username:password@hostname:5432/red_first?schema=publi
   - Contraseña: 123456
   - Base de datos: redfirst
     - Esta base de datos debe ser creada una vez se levante el contenedor de Docker mediante [pgadmin](http://localhost:5050) o por consola.
+
+## Configuración del proveedor de correos
+
+Para realizar esto necesitará acceder a su panel de Auth0 y ubicarse en el menú latereal entrar en la opción "Branding" > "Email Provider". Luego de esto puede seguir estos pasos:
+
+- Activa el checkbox ubicado en el panel que tiene por titulo "Use my own email provider".
+- En el panel que tiene por titulo "Email Provider" selecciona "SMTP Provider".
+- Llena los campos:
+
+  - `From`: desde donde se enviarán los correos
+  - `Host`: este es el host de tu proveedor de correos
+  - `Port`: este es el puerto donde se apuntará
+  - `Username`: usuario para autorizar el envio de correos
+  - `Password`: contraseña para autorizar el envio de correos
+
+  Luego de llenar todos los campos, puedes darle en `Send Test Email` y cersiotate de que todo esté funcionando bien.
+
+- Una vez configurado el proveedor de correos debes dirigirte al menú lateral en la opción "Branding" > "Email templates", una vez aquí deberás seleccionar la plantilla a modificar, activarla y llenar completar los campos que allí aparecen. Necesitarás configurar la plantillas:
+
+  - Verification Email (using Link)
+  - Verification Email (using Code)
+  - Welcome Email
+  - Change Password
+
+- Por último, dirigete a "Authentication" > "Database" > "Attributes". Una vez aquí, da clic en "Activate" y configura los atributos de "Email", necesitarás lo siguiente:
+  - `Use Email as Identifier`: necesitarás activar esto
+  - `Allow Signup with Email`: necesitarás colocar esto como `Required`
+  - `Verify email on sign up`: necesitarás checar esta opción
+  - `Require email on user profile`: necesitarás checar esta opción
+
+### Nota: puedes configurar cualquier otro proveedor de correos, no necesariamente tiene que ser uno personalizado.
+
+## Configuraciónes adicionales para Auth0
+
+Asegurate de colocar la url desde donde redigiras a los usuarios para autenticarse en:
+
+- `Allowed Callback URLs`
+- `Allowed Web Origins`
+- `Allowed Logout URLs`
+
+<span style="color: red;font-size:1.2rem;font-weight:bold">Importante: </span> asegurate de que las url coincidan exactamente, ya que de lo contrario esto causaria problemas con la redirección de auth0.
 
 ## Instrucciones para iniciar con Docker
 
@@ -102,6 +145,8 @@ dotenv -e .env.local npx prisma migrate deploy
 npm install
 
 npm i -g dotenv-cli
+
+dotenv -e .env.local npx prisma migrate deploy
 
 npm run dev
 ```
@@ -147,15 +192,9 @@ Puede encontrar el proyecto [desplegado en vercel](https://red-first.vercel.app/
 - Limitaciones de throttling para la API de GraphQL.
 - Herramienta de monitoreo de logs
 
-#### Se deben tener en cuenta las siguientes consieraciones:
-
-- Se desactivó el uso de la cache con Apollo Client debido a problemas con la experiencia de usuario al realizar mutaciones y dirigirse a vistas que consumen queries de GraphQL.
-
-<span style="color: red;font-size:1.2rem;font-weight:bold">Importante: </span> se que desativar la cache para forzar las peticiones no es la mejor practica, sin embargo, es la solución mas rapida. Pero esto, no tiene porque permanecer así en el futuro.
-
 #### Caracteristas implementadas que no estaban contempladas en el alcance:
 
-- Internacionalziación (next-i18next)
+- Internacionalzación (next-i18next)
 - **Pagina de inicio**: Me tomé libertades en cuanto a la pagina de inicio he intenté hacer algo diferente.
 - **Diseño responsivo**: sé que en las notas que componen las indicaciones de la prueba tecnica, dice que _El aplicativo no debe contener diseño responsivo_, sin embargo, quise ir un poco mas allá y agregarle un diseño responsivo para que fuera mas amigable para los usuarios ya que esto en terminos de experiencia de usuario es muy favorable.
 - En lugar de 3 pruebas unitarias, me concentré en realizar todas las pruebas que me eran posibles, en total realicé 105 pruebas unitarias enfocado en los puntos criticos de la aplicación (mas enfocado en el backend) como lo son:
