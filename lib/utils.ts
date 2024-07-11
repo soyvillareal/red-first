@@ -65,7 +65,7 @@ export const propsToCSV = (data: IReportsCSV, t: TFunction) => {
       const movementChart = data.movementsChart[i];
 
       csvContent += `${[
-        `"${movementChart.name}"`,
+        `"${t(`months.${movementChart.name}`)}"`,
         `"${numberWithCurrency(movementChart.expense)}"`,
         `"${numberWithCurrency(movementChart.income)}"`,
       ].join(';')}\r\n`;
