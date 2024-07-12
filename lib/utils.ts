@@ -16,13 +16,13 @@ import { env } from './env';
 export const currencySite = 'COP';
 
 export const SEO = {
-  url: env.NEXTAUTH_URL,
+  url: env.BASE_URL,
   openGraph: {
     type: 'website',
     locale: 'en_IE',
-    url: env.NEXTAUTH_URL,
+    url: env.BASE_URL,
     image: {
-      url: `${env.NEXTAUTH_URL}/images/home.png`,
+      url: `${env.BASE_URL}/images/home.png`,
       width: '1200',
       height: '630',
     },
@@ -31,7 +31,7 @@ export const SEO = {
     card: 'summary',
     site: '@redfirst',
     creator: '@redfirst',
-    image: `${env.NEXTAUTH_URL}/images/home.png`,
+    image: `${env.BASE_URL}/images/home.png`,
   },
 };
 

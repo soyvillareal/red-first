@@ -22,6 +22,8 @@ Primero debes modificar las variables de entorno, ten en cuenta que, para que el
 
 ```bash
 # Esta es la URL base de la aplicación.
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+# Esta es la URL de la API NextAuth.js
 NEXTAUTH_URL=http://localhost:3000
 # El dominio de la Auth0 tenant
 AUTH0_DOMAIN=tenantName.us.auth0.com
@@ -179,6 +181,7 @@ En caso de querer iniciar el proyecto localmente sin Docker, necesitarás lo sig
    - `AUTH0_CLIENT_ID`
 6. También debes crear las demás variables de entorno, sin embargo, estas pueden ser o no secretas.
    - `GA_TRACKING_ID`
+   - `NEXT_PUBLIC_BASE_URL`
    - `NEXTAUTH_URL`
    - `AUTH0_SCOPE`
    - `AUTH0_ROLES_IDENTIFIER`

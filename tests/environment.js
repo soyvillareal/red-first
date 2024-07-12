@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.NEXT_PUBLIC_BASE_URL = 'http://localhost:3000';
 process.env.NEXTAUTH_URL = 'http://localhost:3000';
 process.env.AUTH0_DOMAIN = 'acme.auth0.local';
 process.env.AUTH0_CLIENT_ID = 'client_id';

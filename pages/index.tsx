@@ -29,13 +29,13 @@ const Home = () => {
         <meta property="og:type" content={SEO.openGraph.type} />
         <meta property="og:locale" content={SEO.openGraph.locale} />
         <meta property="og:url" content={SEO.openGraph.url} />
-        <meta property="og:site_name" content={t('SEO.openGraph.site_name')} />
+        <meta property="og:site_name" content={t('SEO.openGraph.siteName')} />
         <meta property="og:title" content={t('SEO.openGraph.title')} />
         <meta
           property="og:description"
           content={t('SEO.openGraph.description')}
         />
-        <meta property="og:site_name" content={t('SEO.openGraph.site_name')} />
+        <meta property="og:site_name" content={t('SEO.openGraph.siteName')} />
         <meta property="og:url" content={SEO.openGraph.url} />
         <meta property="og:image" content={SEO.openGraph.image.url} />
         <meta property="og:image:width" content={SEO.openGraph.image.width} />
