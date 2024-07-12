@@ -5,10 +5,11 @@ import { useSession } from 'next-auth/react';
 
 import { routes } from '@/lib/contants';
 import ButtonSignIn from '@/components/atoms/ButtonSignIn';
+import { EUserRole } from '@/types';
 
 export const Hero = () => {
   const { t } = useTranslation();
-  const session = useSession();
+  const { data: sessionData, status } = useSession();
 
   return (
     <section id="hero">
@@ -21,9 +22,13 @@ export const Hero = () => {
             {t('landing.makes_it_easy')}
           </p>
           <div className="flex justify-center md:justify-start">
-            {session.status === 'authenticated' ? (
+            {status === 'authenticated' ? (
               <Link
-                href={routes.reports}
+                href={
+                  sessionData?.user.roles.includes(EUserRole.ADMIN)
+                    ? routes.reports
+                    : routes.movements
+                }
                 className="p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent"
               >
                 {t('dashboard.title')}

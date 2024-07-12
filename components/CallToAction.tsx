@@ -2,12 +2,13 @@ import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useSession } from 'next-auth/react';
 
+import { EUserRole } from '@/types';
 import { routes } from '@/lib/contants';
 import ButtonSignIn from '@/components/atoms/ButtonSignIn';
 
 export const CallToAction = () => {
   const { t } = useTranslation();
-  const session = useSession();
+  const { data: sessionData, status } = useSession();
 
   return (
     <section id="cta" className="bg-primary">
@@ -16,9 +17,13 @@ export const CallToAction = () => {
           {t('landing.simplify_your_accounts')}
         </h2>
         <div>
-          {session.status === 'authenticated' ? (
+          {status === 'authenticated' ? (
             <Link
-              href={routes.reports}
+              href={
+                sessionData?.user.roles.includes(EUserRole.ADMIN)
+                  ? routes.reports
+                  : routes.movements
+              }
               className="p-3 px-6 pt-2 text-primary bg-white rounded-full shadow-2xl baseline hover:bg-gray-900"
             >
               {t('dashboard.title')}

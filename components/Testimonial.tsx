@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 
+import { EUserRole } from '@/types';
 import { routes } from '@/lib/contants';
 import avatarAnisha from '@/public/images/avatar-anisha.png';
 import avatarAli from '@/public/images/avatar-ali.png';
@@ -12,7 +13,7 @@ import ButtonSignIn from './atoms/ButtonSignIn';
 
 export const Testimonial = () => {
   const { t } = useTranslation();
-  const session = useSession();
+  const { data: sessionData, status } = useSession();
 
   return (
     <section id="testimonials">
@@ -62,9 +63,13 @@ export const Testimonial = () => {
           </div>
         </div>
         <div className="my-16">
-          {session.status === 'authenticated' ? (
+          {status === 'authenticated' ? (
             <Link
-              href={routes.reports}
+              href={
+                sessionData?.user.roles.includes(EUserRole.ADMIN)
+                  ? routes.reports
+                  : routes.movements
+              }
               className="p-3 px-6 pt-2 text-white bg-primary rounded-full baseline hover:bg-accent"
             >
               {t('dashboard.title')}
