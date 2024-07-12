@@ -11,15 +11,43 @@ import {
 import { defaultLimit } from '@/lib/contants';
 
 export const logger = () => {
-  const logDir = 'logs';
-  if (fs.existsSync(logDir) === false) {
-    fs.mkdirSync(logDir);
-  }
-
-  const transportsArray: Transport | Transport[] = [
-    new transports.File({ filename: `${logDir}/error.log`, level: 'error' }),
-    new transports.File({ filename: `${logDir}/combined.log` }),
+  // This configuration is special to be able to display logs on Vercel; however, a better option would be to save them to a file. But Vercel does not allow this as the file system it deploys to is read-only.
+  let transportsArray: Transport | Transport[] = [
+    new transports.Console({
+      level: 'error',
+      format: format.combine(
+        format.timestamp({
+          format: 'YYYY-MM-DD HH:mm:ss',
+        }),
+        format.errors({ stack: true }),
+        format.splat(),
+        format.json(),
+      ),
+    }),
+    new transports.Console({
+      level: 'info',
+      format: format.combine(
+        format.timestamp({
+          format: 'YYYY-MM-DD HH:mm:ss',
+        }),
+        format.errors({ stack: true }),
+        format.splat(),
+        format.json(),
+      ),
+    }),
   ];
+
+  if (env.NODE_ENV === 'development') {
+    const logDir = 'logs';
+    if (fs.existsSync(logDir) === false) {
+      fs.mkdirSync(logDir);
+    }
+
+    transportsArray = [
+      new transports.File({ filename: `${logDir}/error.log`, level: 'error' }),
+      new transports.File({ filename: `${logDir}/combined.log` }),
+    ];
+  }
 
   const logger = createLogger({
     level: 'info',
