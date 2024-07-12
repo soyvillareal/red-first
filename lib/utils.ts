@@ -22,7 +22,7 @@ export const SEO = {
     locale: 'en_IE',
     url: env.BASE_URL,
     image: {
-      url: `${env.BASE_URL}/images/home.png`,
+      url: `${env.BASE_URL}/images/open-graph.png`,
       width: '1200',
       height: '630',
     },
@@ -31,7 +31,7 @@ export const SEO = {
     card: 'summary',
     site: '@redfirst',
     creator: '@redfirst',
-    image: `${env.BASE_URL}/images/home.png`,
+    image: `${env.BASE_URL}/images/open-graph.png`,
   },
 };
 
