@@ -39,6 +39,7 @@ next-env.d.ts
 
 # npm
 *.log
+*-lock.json
 
 .env
 certificates
