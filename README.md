@@ -86,7 +86,7 @@ DATABASE_URL=postgresql://username:password@hostname:5432/red_first?schema=publi
   - Usuario: postgres
   - Contraseña: 123456
   - Base de datos: redfirst
-    - Esta base de datos debe ser creada una vez se levante el contenedor de Docker mediante [pgadmin](http://localhost:5050) o por consola.
+    - Esta base de datos debe ser creada una vez se levante el contenedor de Docker mediante [pgadmin](#crear-base-de-datos-docker) o por consola.
 
 ## Configuración del proveedor de correos
 
@@ -138,10 +138,9 @@ cd red-first
 
 docker compose up -d
 
-# Antes de ejecutar esto, asegúrate de haber creado una base de datos mediante pgadmin o la consola.
-
 npm i -g dotenv-cli
 
+# Antes de ejecutar esto, asegúrate de haber creado una base de datos mediante pgadmin o la consola.
 dotenv -e .env.local npx prisma migrate deploy
 ```
 
@@ -156,6 +155,7 @@ npm install
 
 npm i -g dotenv-cli
 
+# Antes de ejecutar esto, asegúrate de haber creado una base de datos mediante pgadmin o la consola.
 dotenv -e .env.local npx prisma migrate deploy
 
 npm run dev
@@ -167,6 +167,20 @@ En caso de querer iniciar el proyecto localmente sin Docker, necesitarás lo sig
 
 - NodeJS >= v18.19.1
 - Postgresql 16.3
+
+### Crear base de datos (Docker)
+
+- Para crear su base de datos una vez haya levantado los contenedores de Docker, deberá dirigirse a [pgadmin](http://localhost:5050)
+- Autentiquese con el correo y contraseña de pgadmin:
+  - Correo: user@example.com
+  - Contraseña: admin
+- Seleccione la opción en la parte izquierda superior que dice “Servidores”, luego haga clic derecho y luego haga clic en “Registrar” > “Servidor”
+- Una vez dentro del formulario, defina el nombre del servidor en el campo “Nombre”. Luego de esto dirijase a “Conexión” y añada los siguientes valores en sus respectivos campos:
+  - `Nombre del host / Dirección`: db
+  - `Puerto`: 5432
+  - `Usuario`: postgres
+  - `Contraseña`: 123456
+- Luego deberá crear una base de datos llamada `redfirst`
 
 ## Despliegue en Vercel
 
