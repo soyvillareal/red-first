@@ -11,16 +11,18 @@ import {
   type TNoStandardQueryDefinitions,
 } from '@/types';
 
+import { env } from './env';
+
 export const currencySite = 'COP';
 
 export const SEO = {
-  url: 'https://redfirst.com',
+  url: env.NEXTAUTH_URL,
   openGraph: {
     type: 'website',
     locale: 'en_IE',
-    url: 'https://redfirst.com',
+    url: env.NEXTAUTH_URL,
     image: {
-      url: '/og-image.png',
+      url: `${env.NEXTAUTH_URL}/images/home.png`,
       width: '1200',
       height: '630',
     },
@@ -29,7 +31,7 @@ export const SEO = {
     card: 'summary',
     site: '@redfirst',
     creator: '@redfirst',
-    image: '/og-image.png',
+    image: `${env.NEXTAUTH_URL}/images/home.png`,
   },
 };
 
