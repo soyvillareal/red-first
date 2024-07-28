@@ -1,6 +1,4 @@
-## Prueba Técnica para Desarrollador Fullstack Senior
-
-## Table of contents:
+## Tabla de contenido:
 
 - [Variables de entorno](#variables-de-entorno)
 - [Configuración del proveedor de correos](#configuración-del-proveedor-de-correos)
